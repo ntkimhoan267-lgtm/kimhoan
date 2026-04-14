@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio – Marketing & AI Creative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --pastel-yellow: #F9E45B;
+    --deep-navy: #0D1B3E;
+    --navy-mid: #1A2E5C;
+    --navy-light: #2D4080;
+    --cream: #FDFAF0;
+    --light-beige: #F5F0E0;
+    --mint: #B8EDD9;
+    --accent-coral: #FF8C69;
+    --text-dark: #0D1B3E;
+    --text-mid: #3A4A7A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* ─── TYPOGRAPHY ─── */
+  .font-display { font-family: 'Playfair Display', serif; }
+  .font-mono { font-family: 'Space Mono', monospace; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    backdrop-filter: blur(16px);
+    background: rgba(253,250,240,0.88);
+    border-bottom: 1px solid rgba(13,27,62,0.08);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 32px rgba(13,27,62,0.10); }
+
+  .nav-link {
+    position: relative; font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dark);
+    text-decoration: none; padding: 4px 0;
+  }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; bottom: -2px;
+    width: 0; height: 2px; background: var(--pastel-yellow);
+    transition: width 0.3s;
+  }
+  .nav-link:hover::after { width: 100%; }
+
+  /* ─── LANG TOGGLE ─── */
+  .lang-toggle {
+    display: flex; align-items: center; gap: 4px;
+    background: var(--deep-navy); border-radius: 20px;
+    padding: 4px 6px; cursor: pointer;
+    font-family: 'Space Mono', monospace; font-size: 0.72rem;
+  }
+  .lang-btn {
+    padding: 3px 10px; border-radius: 14px; color: rgba(255,255,255,0.5);
+    transition: all 0.25s; font-weight: 700; letter-spacing: 0.05em;
+  }
+  .lang-btn.active { background: var(--pastel-yellow); color: var(--deep-navy); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    background: var(--deep-navy);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding-top: 80px;
+  }
+
+  /* geometric decoration */
+  .hero-geo {
+    position: absolute; border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-geo-1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(249,228,91,0.15) 0%, transparent 70%);
+    top: -100px; right: -100px;
+  }
+  .hero-geo-2 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(184,237,217,0.1) 0%, transparent 70%);
+    bottom: 50px; left: 50px;
+  }
+  .hero-lines {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(249,228,91,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(249,228,91,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-photo-wrap {
+    position: relative; display: inline-block;
+  }
+  .hero-photo-frame {
+    width: 280px; height: 340px;
+    border: 2px solid rgba(249,228,91,0.5);
+    border-radius: 120px 120px 80px 80px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(145deg, rgba(249,228,91,0.08), rgba(26,46,92,0.6));
+    transform: rotate(-2deg);
+    transition: transform 0.4s ease;
+  }
+  .hero-photo-frame:hover { transform: rotate(0deg) scale(1.02); }
+  .hero-photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 10px;
+    color: rgba(249,228,91,0.6);
+  }
+  .photo-icon { font-size: 3rem; opacity: 0.5; }
+  .photo-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; }
+
+  .hero-badge {
+    position: absolute;
+    background: var(--pastel-yellow);
+    color: var(--deep-navy);
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; font-weight: 700;
+    padding: 6px 14px; border-radius: 20px;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .badge-top { top: -12px; right: -20px; transform: rotate(8deg); }
+  .badge-bottom { bottom: 20px; left: -24px; transform: rotate(-5deg); background: var(--mint); }
+
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    font-weight: 900;
+  }
+  .hero-headline .accent { color: var(--pastel-yellow); font-style: italic; }
+
+  .hero-sub {
+    font-size: 1.05rem; font-weight: 300;
+    color: rgba(253,250,240,0.65);
+    line-height: 1.7; max-width: 460px;
+  }
+
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--pastel-yellow);
+    color: var(--deep-navy);
+    padding: 14px 32px; border-radius: 4px;
+    font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.25s; position: relative; overflow: hidden;
+  }
+  .cta-btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--mint); transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+  .cta-btn:hover::before { transform: translateX(0); }
+  .cta-btn span { position: relative; z-index: 1; }
+
+  .cta-btn-outline {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 2px solid rgba(249,228,91,0.4);
+    color: var(--pastel-yellow);
+    padding: 13px 28px; border-radius: 4px;
+    font-weight: 600; font-size: 0.9rem;
+    text-decoration: none; cursor: pointer;
+    transition: all 0.25s; background: transparent;
+  }
+  .cta-btn-outline:hover { border-color: var(--pastel-yellow); background: rgba(249,228,91,0.08); }
+
+  .scroll-indicator {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(249,228,91,0.5); font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.1em; animation: bounce 2s infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+  /* ─── SECTION SHARED ─── */
+  section { position: relative; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--navy-light); margin-bottom: 16px;
+  }
+  .section-tag::before {
+    content: ''; display: block; width: 28px; height: 2px; background: var(--pastel-yellow);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900; line-height: 1.1;
+    color: var(--deep-navy);
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--cream); }
+
+  .about-photo {
+    width: 260px; height: 320px;
+    border: 2px solid var(--pastel-yellow);
+    border-radius: 80px 80px 40px 40px;
+    overflow: hidden; background: var(--light-beige);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+    color: var(--navy-mid); transform: rotate(1.5deg);
+    transition: transform 0.4s;
+  }
+  .about-photo:hover { transform: rotate(0deg); }
+
+  .skill-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--light-beige);
+    border: 1px solid rgba(13,27,62,0.12);
+    border-radius: 24px; padding: 6px 16px;
+    font-size: 0.82rem; font-weight: 500; color: var(--deep-navy);
+    transition: all 0.2s;
+  }
+  .skill-pill:hover { background: var(--pastel-yellow); border-color: var(--pastel-yellow); transform: translateY(-2px); }
+  .skill-pill .emoji { font-size: 1rem; }
+
+  .stat-box {
+    border: 1px solid rgba(13,27,62,0.1);
+    border-radius: 8px; padding: 20px 24px;
+    background: white; position: relative; overflow: hidden;
+  }
+  .stat-box::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--pastel-yellow);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif; font-size: 2rem;
+    font-weight: 900; color: var(--deep-navy);
+  }
+  .stat-label { font-size: 0.78rem; color: var(--text-mid); font-weight: 400; margin-top: 4px; }
+
+  /* ─── PROJECTS ─── */
+  #projects { background: var(--deep-navy); }
+
+  .project-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(249,228,91,0.15);
+    border-radius: 12px; overflow: hidden;
+    transition: all 0.35s;
+    cursor: pointer;
+  }
+  .project-card:hover {
+    transform: rotate(1.5deg) translateY(-6px);
+    border-color: rgba(249,228,91,0.5);
+    background: rgba(255,255,255,0.07);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .project-thumb {
+    height: 180px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .project-tag {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--pastel-yellow); color: var(--deep-navy);
+    font-family: 'Space Mono', monospace; font-size: 0.62rem; font-weight: 700;
+    padding: 4px 10px; border-radius: 12px; letter-spacing: 0.06em;
+  }
+  .project-icon { font-size: 3.5rem; opacity: 0.3; }
+  .project-body { padding: 20px 22px 24px; }
+  .project-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--cream); margin-bottom: 8px; }
+  .project-desc { font-size: 0.84rem; color: rgba(253,250,240,0.6); line-height: 1.65; }
+  .project-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .chip {
+    background: rgba(249,228,91,0.1); color: var(--pastel-yellow);
+    font-size: 0.68rem; padding: 3px 10px; border-radius: 10px;
+    font-family: 'Space Mono', monospace; font-weight: 700;
+  }
+
+  /* ─── TALENTS ─── */
+  #talents { background: var(--light-beige); }
+  .talent-card {
+    border: 1px solid rgba(13,27,62,0.1); border-radius: 12px;
+    padding: 28px; background: white; transition: all 0.3s;
+  }
+  .talent-card:hover { transform: rotate(-1.5deg) translateY(-4px); box-shadow: 0 16px 48px rgba(13,27,62,0.12); }
+  .talent-icon { font-size: 2.5rem; margin-bottom: 14px; }
+  .talent-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--deep-navy); margin-bottom: 8px; }
+  .talent-desc { font-size: 0.84rem; color: var(--text-mid); line-height: 1.65; }
+
+  /* ─── VIDEOS ─── */
+  #videos { background: var(--cream); }
+  .video-card {
+    border: 1px solid rgba(13,27,62,0.1);
+    border-radius: 12px; overflow: hidden; background: white;
+    transition: all 0.35s;
+  }
+  .video-card:hover { transform: rotate(1deg) scale(1.02); box-shadow: 0 16px 48px rgba(13,27,62,0.12); }
+  .video-thumb {
+    height: 190px; background: linear-gradient(135deg, var(--deep-navy), var(--navy-light));
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .video-play {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--pastel-yellow);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; color: var(--deep-navy);
+    transition: transform 0.25s;
+  }
+  .video-card:hover .video-play { transform: scale(1.15); }
+  .video-meta { padding: 16px 18px 18px; }
+  .video-title { font-weight: 600; font-size: 0.92rem; color: var(--deep-navy); margin-bottom: 4px; }
+  .video-sub { font-size: 0.78rem; color: var(--text-mid); }
+
+  /* ─── EXPERIENCE TIMELINE ─── */
+  #experience { background: var(--deep-navy); }
+  .timeline-item { display: flex; gap: 24px; position: relative; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: 11px; top: 28px; bottom: -24px;
+    width: 1px; background: rgba(249,228,91,0.2);
+  }
+  .timeline-item:last-child::before { display: none; }
+  .timeline-dot {
+    width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+    background: var(--pastel-yellow); margin-top: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+  }
+  .timeline-content { padding-bottom: 36px; }
+  .timeline-date { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: rgba(249,228,91,0.6); font-weight: 700; letter-spacing: 0.1em; }
+  .timeline-role { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--cream); margin: 4px 0; }
+  .timeline-company { font-size: 0.82rem; color: rgba(253,250,240,0.5); }
+  .timeline-text { font-size: 0.83rem; color: rgba(253,250,240,0.65); line-height: 1.65; margin-top: 8px; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--light-beige); }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-mid); }
+  .form-input {
+    border: 1px solid rgba(13,27,62,0.15); border-radius: 6px;
+    padding: 12px 16px; font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.9rem;
+    color: var(--deep-navy); background: white;
+    transition: border-color 0.25s, box-shadow 0.25s; outline: none;
+    resize: none;
+  }
+  .form-input:focus { border-color: var(--pastel-yellow); box-shadow: 0 0 0 3px rgba(249,228,91,0.2); }
+  .submit-btn {
+    background: var(--deep-navy); color: var(--pastel-yellow);
+    padding: 14px 36px; border-radius: 4px; border: none;
+    font-family: 'Be Vietnam Pro', sans-serif; font-weight: 700; font-size: 0.9rem;
+    cursor: pointer; transition: all 0.25s; letter-spacing: 0.04em;
+    width: 100%;
+  }
+  .submit-btn:hover { background: var(--navy-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,27,62,0.25); }
+
+  .social-icon {
+    width: 46px; height: 46px; border-radius: 10px;
+    background: var(--deep-navy); color: var(--pastel-yellow);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; text-decoration: none;
+    transition: all 0.25s;
+  }
+  .social-icon:hover { background: var(--pastel-yellow); color: var(--deep-navy); transform: rotate(-8deg) scale(1.1); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--deep-navy);
+    border-top: 1px solid rgba(249,228,91,0.1);
+    padding: 28px 32px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-text { font-size: 0.78rem; color: rgba(253,250,240,0.4); }
+  .footer-mark { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-style: italic; color: var(--pastel-yellow); }
+
+  /* ─── MOBILE NAV ─── */
+  #mobile-menu { display: none; }
+  #mobile-menu.open { display: flex; flex-direction: column; gap: 12px; padding: 16px 24px; background: var(--cream); border-top: 1px solid rgba(13,27,62,0.08); }
+
+  /* ─── FADE-IN ANIMATION ─── */
+  .fade-up { opacity: 0; transform: translateY(32px); transition: opacity 0.7s, transform 0.7s; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── TOAST ─── */
+  #toast {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--deep-navy); color: var(--pastel-yellow);
+    padding: 12px 28px; border-radius: 40px; font-weight: 600; font-size: 0.88rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25); transition: transform 0.4s; z-index: 999;
+  }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 768px) {
+    .hero-photo-frame { width: 200px; height: 240px; }
+    .about-photo { width: 200px; height: 240px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ NAV ══════════════════════ -->
+<nav id="navbar">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#hero" class="font-display text-xl font-bold italic" style="color:var(--deep-navy)">
+      Kim Hoàn<span style="color:var(--pastel-yellow)">.</span>Portfolio
+    </a>
+
+    <!-- Desktop Links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#about" class="nav-link" data-en="About" data-vi="Về tôi">About</a>
+      <a href="#design-gallery" class="nav-link" data-en="Design" data-vi="Thiết kế">Design</a>
+      <a href="#projects" class="nav-link" data-en="Projects" data-vi="Dự án">Projects</a>
+      <a href="#talents" class="nav-link" data-en="Talents" data-vi="Tài năng">Talents</a>
+      <a href="#videos" class="nav-link" data-en="MC Videos" data-vi="Video MC">MC Videos</a>
+      <a href="#experience" class="nav-link" data-en="Experience" data-vi="Kinh nghiệm">Experience</a>
+      <a href="#contact" class="nav-link" data-en="Contact" data-vi="Liên hệ">Contact</a>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <!-- Language Toggle -->
+      <div class="lang-toggle" onclick="toggleLang()">
+        <div class="lang-btn active" id="btn-en">EN</div>
+        <div class="lang-btn" id="btn-vi">VI</div>
+      </div>
+      <!-- Hamburger -->
+      <button class="md:hidden flex flex-col gap-1.5 p-1" onclick="toggleMenu()" aria-label="Menu">
+        <span class="block w-6 h-0.5 bg-gray-800"></span>
+        <span class="block w-6 h-0.5 bg-gray-800"></span>
+        <span class="block w-6 h-0.5 bg-gray-800"></span>
+      </button>
+    </div>
+  </div>
+  <!-- Mobile Menu -->
+  <div id="mobile-menu">
+    <a href="#about" class="nav-link" data-en="About" data-vi="Về tôi" onclick="toggleMenu()">About</a>
+    <a href="#design-gallery" class="nav-link" data-en="Design" data-vi="Thiết kế" onclick="toggleMenu()">Design</a>
+    <a href="#projects" class="nav-link" data-en="Projects" data-vi="Dự án" onclick="toggleMenu()">Projects</a>
+    <a href="#talents" class="nav-link" data-en="Talents" data-vi="Tài năng" onclick="toggleMenu()">Talents</a>
+    <a href="#videos" class="nav-link" data-en="MC Videos" data-vi="Video MC" onclick="toggleMenu()">MC Videos</a>
+    <a href="#experience" class="nav-link" data-en="Experience" data-vi="Kinh nghiệm" onclick="toggleMenu()">Experience</a>
+    <a href="#contact" class="nav-link" data-en="Contact" data-vi="Liên hệ" onclick="toggleMenu()">Contact</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<section id="hero">
+  <div class="hero-geo hero-geo-1"></div>
+  <div class="hero-geo hero-geo-2"></div>
+  <div class="hero-lines"></div>
+
+  <div class="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-16 items-center relative z-10">
+    <!-- Text -->
+    <div>
+      <div class="font-mono text-xs tracking-widest mb-6" style="color:rgba(249,228,91,0.6)">
+        ✦ MARKETING · AI · CONTENT CREATOR
+      </div>
+      <h1 class="hero-headline mb-6">
+        <span data-en="Bridging Cultures" data-vi="Kết nối văn hóa">Bridging Cultures</span><br>
+        <span class="accent" data-en="through Digital" data-vi="qua nội dung">through Digital</span><br>
+        <span data-en="Content" data-vi="số sáng tạo">Content</span>
+      </h1>
+      <p class="hero-sub mb-10" data-en="Marketing student with a global mindset — blending AI tools, multilingual storytelling, and creative strategy to craft experiences that connect." data-vi="Sinh viên Marketing với tư duy toàn cầu — kết hợp công cụ AI, kể chuyện đa ngôn ngữ và chiến lược sáng tạo để tạo ra những trải nghiệm kết nối.">
+        Marketing student with a global mindset — blending AI tools, multilingual storytelling, and creative strategy to craft experiences that connect.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a href="#projects" class="cta-btn">
+          <span data-en="Explore My Work" data-vi="Xem dự án của tôi">Explore My Work</span>
+          <span>→</span>
+        </a>
+        <a href="#contact" class="cta-btn-outline" data-en="Let's Talk" data-vi="Liên hệ ngay">Let's Talk</a>
+      </div>
+
+      <!-- AI Badge row -->
+      <div class="flex flex-wrap gap-3 mt-10">
+        <span class="skill-pill" style="background:rgba(249,228,91,0.1);border-color:rgba(249,228,91,0.3);color:var(--pastel-yellow)"><span class="emoji">🤖</span> Claude AI</span>
+        <span class="skill-pill" style="background:rgba(249,228,91,0.1);border-color:rgba(249,228,91,0.3);color:var(--pastel-yellow)"><span class="emoji">✨</span> Gemini</span>
+        <span class="skill-pill" style="background:rgba(249,228,91,0.1);border-color:rgba(249,228,91,0.3);color:var(--pastel-yellow)"><span class="emoji">💻</span> VS Code</span>
+        <span class="skill-pill" style="background:rgba(184,237,217,0.1);border-color:rgba(184,237,217,0.3);color:var(--mint)"><span class="emoji">🌐</span> IELTS 6.0</span>
+        <span class="skill-pill" style="background:rgba(184,237,217,0.1);border-color:rgba(184,237,217,0.3);color:var(--mint)"><span class="emoji">🇰🇷</span> TOPIK 1</span>
+      </div>
+    </div>
+
+    <!-- Photo -->
+    <div class="flex justify-center md:justify-end">
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-frame">
+          <img src="hero.jpg"
+  style="width:100%;height:100%;object-fit:cover;object-position:top;"
+  alt="Kim Hoàn">
+            <div class="photo-icon">📸</div>
+            <div class="photo-label" data-en="Your Portrait Here" data-vi="Ảnh của bạn">Your Portrait Here</div>
+            <div style="font-size:0.65rem;opacity:0.4;font-family:monospace;margin-top:4px;">280 × 340 px</div>
+          </div>
+        </div>
+        <span class="hero-badge badge-top" data-en="Available for Work ✦" data-vi="Sẵn sàng hợp tác ✦">Available for Work ✦</span>
+        <span class="hero-badge badge-bottom" data-en="🌟 Marketing + AI" data-vi="🌟 Marketing + AI">🌟 Marketing + AI</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span data-en="Scroll" data-vi="Kéo xuống">Scroll</span>
+    <div style="width:1px;height:32px;background:rgba(249,228,91,0.3)"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════ ABOUT ══════════════════════ -->
+<section id="about" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-16 items-start">
+      <!-- Photo + Stats -->
+      <div class="fade-up">
+        <div class="flex justify-center md:justify-start mb-10">
+          <div class="about-photo">
+  <img src="about.jpg"
+    style="width:100%;height:100%;object-fit:cover;object-position:top;"
+    alt="Kim Hoàn">
+</div>
+            <div class="photo-icon text-4xl opacity-40">🌟</div>
+            <div class="photo-label text-xs font-mono tracking-widest opacity-50 mt-2" data-en="About Photo" data-vi="Ảnh cá nhân">About Photo</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+          <div class="stat-box text-center">
+            <div class="stat-num">3+</div>
+            <div class="stat-label" data-en="Languages" data-vi="Ngôn ngữ">Languages</div>
+          </div>
+          <div class="stat-box text-center">
+            <div class="stat-num">5+</div>
+            <div class="stat-label" data-en="AI Tools" data-vi="Công cụ AI">AI Tools</div>
+          </div>
+          <div class="stat-box text-center">
+            <div class="stat-num">2</div>
+            <div class="stat-label" data-en="Fanpages" data-vi="Fanpage">Fanpages</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bio -->
+      <div class="fade-up">
+        <div class="section-tag" data-en="About Me" data-vi="Về tôi">About Me</div>
+        <h2 class="section-title mb-6" data-en="The story so far" data-vi="Hành trình của tôi">The story so far</h2>
+        <p class="text-sm leading-relaxed mb-4" style="color:var(--text-mid)" data-en="I'm a Marketing student driven by a passion for bridging cultures through storytelling. From managing social media fanpages to hosting events as an MC, I thrive at the intersection of creativity, communication, and technology." data-vi="Tôi là sinh viên Marketing với niềm đam mê kết nối văn hóa qua nghệ thuật kể chuyện. Từ quản lý fanpage đến dẫn chương trình MC, tôi phát triển ở điểm giao thoa của sáng tạo, giao tiếp và công nghệ.">
+          I'm a Marketing student driven by a passion for bridging cultures through storytelling. From managing social media fanpages to hosting events as an MC, I thrive at the intersection of creativity, communication, and technology.
+        </p>
+        <p class="text-sm leading-relaxed mb-8" style="color:var(--text-mid)" data-en="My background in Tourism & Visa consulting gave me B2B communication skills, while my restaurant work sharpened my customer empathy. I write 100% in English for international audiences and actively use AI tools like Claude and Gemini to amplify my productivity and creativity." data-vi="Kinh nghiệm tư vấn Du lịch & Visa giúp tôi phát triển kỹ năng giao tiếp B2B, còn công việc nhà hàng mài giũa sự đồng cảm với khách hàng. Tôi viết 100% bằng tiếng Anh cho khán giả quốc tế và sử dụng AI như Claude và Gemini để nâng cao năng suất.">
+          My background in Tourism & Visa consulting gave me B2B communication skills, while my restaurant work sharpened my customer empathy. I write 100% in English for international audiences and actively use AI tools like Claude and Gemini to amplify my productivity and creativity.
+        </p>
+
+        <div class="mb-6">
+          <div class="font-mono text-xs tracking-widest mb-3" style="color:var(--text-mid)" data-en="CORE SKILLS" data-vi="KỸ NĂNG CHÍNH">CORE SKILLS</div>
+          <div class="flex flex-wrap gap-2">
+            <span class="skill-pill"><span class="emoji">🤖</span> Claude AI</span>
+            <span class="skill-pill"><span class="emoji">✨</span> Gemini</span>
+            <span class="skill-pill"><span class="emoji">💻</span> VS Code</span>
+            <span class="skill-pill"><span class="emoji">📱</span> Social Media</span>
+            <span class="skill-pill"><span class="emoji">🌍</span> IELTS 6.0</span>
+            <span class="skill-pill"><span class="emoji">🇰🇷</span> TOPIK 1</span>
+            <span class="skill-pill"><span class="emoji">✍️</span> Content Writing</span>
+            <span class="skill-pill"><span class="emoji">🎤</span> MC / Hosting</span>
+            <span class="skill-pill"><span class="emoji">✈️</span> Tourism B2B</span>
+            <span class="skill-pill"><span class="emoji">📊</span> Analytics</span>
+          </div>
+        </div>
+
+        <a href="#contact" class="cta-btn inline-flex" style="background:var(--deep-navy);color:var(--pastel-yellow)">
+          <span data-en="Download CV" data-vi="Tải CV">Download CV</span>
+          <span>↓</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ PROJECTS ══════════════════════ -->
+<section id="projects" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <div class="section-tag justify-center" style="color:rgba(249,228,91,0.7)" data-en="Featured Work" data-vi="Dự án nổi bật">Featured Work</div>
+      <h2 class="section-title mb-4" style="color:var(--cream)" data-en="Projects that move people" data-vi="Những dự án tạo ra ảnh hưởng">Projects that move people</h2>
+      <p class="text-sm" style="color:rgba(253,250,240,0.5);max-width:480px;margin:0 auto" data-en="Each project tells a story — of strategy, creativity, and a global perspective." data-vi="Mỗi dự án kể một câu chuyện — về chiến lược, sáng tạo và tầm nhìn toàn cầu.">Each project tells a story — of strategy, creativity, and a global perspective.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Project 1 -->
+      <div class="project-card fade-up">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#1A2E5C,#0D4A6B)">
+          <span class="project-tag" data-en="Web Dev" data-vi="Phát triển Web">Web Dev</span>
+          <img src="images/project-website.jpg"
+  style="width:100%;height:100%;
+         object-fit:cover;
+         opacity:0.7;"
+  alt="Travel Website">
+        </div>
+        <div class="project-body">
+          <div class="project-title" data-en="Travel Website Development" data-vi="Phát triển Website Du lịch">Travel Website Development</div>
+          <div class="project-desc" data-en="Built a B2B travel and visa consulting website serving international clients. Managed content strategy, SEO structure, and client communications entirely in English." data-vi="Xây dựng website tư vấn du lịch và visa B2B phục vụ khách hàng quốc tế. Quản lý chiến lược nội dung, cấu trúc SEO và giao tiếp khách hàng hoàn toàn bằng tiếng Anh.">Built a B2B travel and visa consulting website serving international clients. Managed content strategy, SEO structure, and client communications entirely in English.</div>
+          <div class="project-chips">
+            <span class="chip">B2B</span><span class="chip">SEO</span><span class="chip">HTML/CSS</span><span class="chip">EN Content</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card fade-up" style="transition-delay:0.1s">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#2D1B5C,#5C1B4A)">
+          <span class="project-tag" data-en="Social Media" data-vi="Mạng xã hội">Social Media</span>
+          <img src="images/project-social.jpg"
+    style="width:100%;height:100%;
+           object-fit:cover;
+           opacity:0.7;"
+    alt="Social Media">
+        </div>
+        <div class="project-body">
+          <div class="project-title" data-en="Social Media Management (2 Fanpages)" data-vi="Quản lý Mạng xã hội (2 Fanpage)">Social Media Management (2 Fanpages)</div>
+          <div class="project-desc" data-en="Managed two active fanpages — growing engagement through creative campaigns, consistent brand voice, and data-driven content calendars." data-vi="Quản lý hai fanpage hoạt động — tăng trưởng tương tác qua các chiến dịch sáng tạo, giọng nói thương hiệu nhất quán và lịch nội dung dựa trên dữ liệu.">Managed two active fanpages — growing engagement through creative campaigns, consistent brand voice, and data-driven content calendars.</div>
+          <div class="project-chips">
+            <span class="chip">Facebook</span><span class="chip">Analytics</span><span class="chip">Copywriting</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-card fade-up" style="transition-delay:0.2s">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#1B3D2D,#0D3B3B)">
+          <span class="project-tag" data-en="Global Content" data-vi="Nội dung Quốc tế">Global Content</span>
+          <img src="images/project-content.jpg"
+    style="width:100%;height:100%;
+           object-fit:cover;
+           opacity:0.7;"
+    alt="Global Content">
+        </div>
+        <div class="project-body">
+          <div class="project-title" data-en="Global Content for Vietnam Reviewers" data-vi="Nội dung Quốc tế cho Vietnam Reviewers">Global Content for Vietnam Reviewers</div>
+          <div class="project-desc" data-en="Wrote 100% English content targeting international readers on behalf of Vietnam Reviewers — bridging local culture with global storytelling standards." data-vi="Viết nội dung 100% tiếng Anh hướng tới độc giả quốc tế cho Vietnam Reviewers — kết nối văn hóa địa phương với tiêu chuẩn kể chuyện toàn cầu.">Wrote 100% English content targeting international readers — bridging local culture with global storytelling standards.</div>
+          <div class="project-chips">
+            <span class="chip">English</span><span class="chip">Storytelling</span><span class="chip">Culture</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="project-card fade-up" style="transition-delay:0.3s">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#3D2A00,#5C4A00)">
+          <span class="project-tag" data-en="AI-Powered" data-vi="Hỗ trợ AI">AI-Powered</span>
+          <img src="images/project-ai.jpg"
+    style="width:100%;height:100%;
+           object-fit:cover;
+           opacity:0.7;"
+    alt="AI-Assisted Marketing">
+        </div>
+        <div class="project-body">
+          <div class="project-title" data-en="AI-Assisted Marketing Campaigns" data-vi="Chiến dịch Marketing với AI">AI-Assisted Marketing Campaigns</div>
+          <div class="project-desc" data-en="Leveraged Claude and Gemini to accelerate campaign ideation, copy generation, and performance analysis — reducing production time by 60%." data-vi="Sử dụng Claude và Gemini để tăng tốc ý tưởng chiến dịch, tạo nội dung và phân tích hiệu suất — giảm 60% thời gian sản xuất.">Leveraged Claude and Gemini to accelerate campaign ideation, copy generation, and performance analysis — reducing production time by 60%.</div>
+          <div class="project-chips">
+            <span class="chip">Claude</span><span class="chip">Gemini</span><span class="chip">Automation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ══════════════════════ DESIGN GALLERY ══════════════════════ -->
+<section id="design-gallery" class="py-24" style="background:var(--cream);overflow:hidden">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-14 fade-up">
+      <div class="section-tag justify-center" data-en="Fanpage Design" data-vi="Thiết kế Fanpage">Fanpage Design</div>
+      <h2 class="section-title mb-4" data-en="Visual content I designed" data-vi="Hình ảnh tôi tự thiết kế">Visual content I designed</h2>
+      <p class="text-sm" style="color:var(--text-mid);max-width:480px;margin:0 auto" data-en="Original graphics I created for fanpages." data-vi="Hình ảnh gốc tôi tạo cho các fanpage.">Original graphics I created for fanpages.</p>
+    </div>
+  </div>
+
+  <!-- Hàng 1 chạy sang trái -->
+  <div class="gallery-strip" style="margin-bottom:16px">
+    <div class="gallery-track track-left">
+      <div class="gallery-slide"><img src="images/design-1.jpg" alt="Design 1" onerror="this.style.display='none'"><div class="slide-placeholder">Design 1</div></div>
+      <div class="gallery-slide"><img src="images/design-2.jpg" alt="Design 2" onerror="this.style.display='none'"><div class="slide-placeholder">Design 2</div></div>
+      <div class="gallery-slide"><img src="images/design-3.jpg" alt="Design 3" onerror="this.style.display='none'"><div class="slide-placeholder">Design 3</div></div>
+      <div class="gallery-slide"><img src="images/design-4.jpg" alt="Design 4" onerror="this.style.display='none'"><div class="slide-placeholder">Design 4</div></div>
+      <div class="gallery-slide"><img src="images/design-5.jpg" alt="Design 5" onerror="this.style.display='none'"><div class="slide-placeholder">Design 5</div></div>
+      <div class="gallery-slide"><img src="images/design-6.jpg" alt="Design 6" onerror="this.style.display='none'"><div class="slide-placeholder">Design 6</div></div>
+      <!-- Bản sao để loop -->
+      <div class="gallery-slide"><img src="images/design-1.jpg" alt="Design 1" onerror="this.style.display='none'"><div class="slide-placeholder">Design 1</div></div>
+      <div class="gallery-slide"><img src="images/design-2.jpg" alt="Design 2" onerror="this.style.display='none'"><div class="slide-placeholder">Design 2</div></div>
+      <div class="gallery-slide"><img src="images/design-3.jpg" alt="Design 3" onerror="this.style.display='none'"><div class="slide-placeholder">Design 3</div></div>
+      <div class="gallery-slide"><img src="images/design-4.jpg" alt="Design 4" onerror="this.style.display='none'"><div class="slide-placeholder">Design 4</div></div>
+      <div class="gallery-slide"><img src="images/design-5.jpg" alt="Design 5" onerror="this.style.display='none'"><div class="slide-placeholder">Design 5</div></div>
+      <div class="gallery-slide"><img src="images/design-6.jpg" alt="Design 6" onerror="this.style.display='none'"><div class="slide-placeholder">Design 6</div></div>
+    </div>
+  </div>
+
+  <!-- Hàng 2 chạy sang phải -->
+  <div class="gallery-strip">
+    <div class="gallery-track track-right">
+      <div class="gallery-slide"><img src="images/design-7.jpg" alt="Design 7" onerror="this.style.display='none'"><div class="slide-placeholder">Design 7</div></div>
+      <div class="gallery-slide"><img src="images/design-8.jpg" alt="Design 8" onerror="this.style.display='none'"><div class="slide-placeholder">Design 8</div></div>
+      <div class="gallery-slide"><img src="images/design-9.jpg" alt="Design 9" onerror="this.style.display='none'"><div class="slide-placeholder">Design 9</div></div>
+      <div class="gallery-slide"><img src="images/design-10.jpg" alt="Design 10" onerror="this.style.display='none'"><div class="slide-placeholder">Design 10</div></div>
+      <div class="gallery-slide"><img src="images/design-11.jpg" alt="Design 11" onerror="this.style.display='none'"><div class="slide-placeholder">Design 11</div></div>
+      <div class="gallery-slide"><img src="images/design-12.jpg" alt="Design 12" onerror="this.style.display='none'"><div class="slide-placeholder">Design 12</div></div>
+      <!-- Bản sao để loop -->
+      <div class="gallery-slide"><img src="images/design-7.jpg" alt="Design 7" onerror="this.style.display='none'"><div class="slide-placeholder">Design 7</div></div>
+      <div class="gallery-slide"><img src="images/design-8.jpg" alt="Design 8" onerror="this.style.display='none'"><div class="slide-placeholder">Design 8</div></div>
+      <div class="gallery-slide"><img src="images/design-9.jpg" alt="Design 9" onerror="this.style.display='none'"><div class="slide-placeholder">Design 9</div></div>
+      <div class="gallery-slide"><img src="images/design-10.jpg" alt="Design 10" onerror="this.style.display='none'"><div class="slide-placeholder">Design 10</div></div>
+      <div class="gallery-slide"><img src="images/design-11.jpg" alt="Design 11" onerror="this.style.display='none'"><div class="slide-placeholder">Design 11</div></div>
+      <div class="gallery-slide"><img src="images/design-12.jpg" alt="Design 12" onerror="this.style.display='none'"><div class="slide-placeholder">Design 12</div></div>
+    </div>
+  </div>
+
+  <div class="text-center mt-12">
+    <p class="text-sm" style="color:var(--text-mid)" data-en="Designed with Canva, Adobe Express & AI tools" data-vi="Thiết kế bằng Canva, Adobe Express & công cụ AI">Designed with Canva, Adobe Express & AI tools</p>
+  </div>
+</section>
+
+<style>
+  .gallery-strip {
+    width:100%; overflow:hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+  .gallery-track { display:flex; gap:16px; width:max-content; padding:8px 0; }
+  .track-left  { animation: scrollLeft  28s linear infinite; }
+  .track-right { animation: scrollRight 32s linear infinite; }
+  .gallery-strip:hover .gallery-track { animation-play-state: paused; }
+  @keyframes scrollLeft  { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  @keyframes scrollRight { from{transform:translateX(-50%)} to{transform:translateX(0)} }
+  .gallery-slide {
+    width:220px; height:220px; flex-shrink:0;
+    border-radius:16px; overflow:hidden; position:relative;
+    border:1px solid rgba(13,27,62,0.1);
+    background:linear-gradient(135deg,var(--light-beige),var(--cream));
+    transition:transform 0.3s, box-shadow 0.3s; cursor:pointer;
+  }
+  .gallery-slide:hover { transform:scale(1.05) rotate(1.5deg); box-shadow:0 16px 48px rgba(13,27,62,0.15); z-index:2; }
+  .gallery-slide img { width:100%; height:100%; object-fit:cover; display:block; }
+  .slide-placeholder {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    font-family:'Space Mono',monospace; font-size:0.68rem;
+    color:var(--text-mid); letter-spacing:0.1em; text-transform:uppercase;
+  }
+  .slide-placeholder::before { content:'🖼'; font-size:2rem; opacity:0.3; }
+</style>
+<!-- ══════════════════════ TALENTS ══════════════════════ -->
+<section id="talents" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <div class="section-tag justify-center" data-en="Hidden Talents" data-vi="Tài năng đặc biệt">Hidden Talents</div>
+      <h2 class="section-title mb-4" data-en="The versatile side of me" data-vi="Phần đa năng của tôi">The versatile side of me</h2>
+      <p class="text-sm" style="color:var(--text-mid);max-width:480px;margin:0 auto" data-en="Marketing is just one facet. Here's what else I bring to the table." data-vi="Marketing chỉ là một khía cạnh. Đây là những gì tôi còn mang lại.">Marketing is just one facet. Here's what else I bring to the table.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="talent-card fade-up">
+        <div class="talent-icon">
+  <img src="images/talent-mc.jpg"
+    style="width:72px;height:72px;
+           border-radius:50%;
+           object-fit:cover;"
+    alt="MC Hosting">
+</div>
+        <div class="talent-title" data-en="Event MC & Hosting" data-vi="MC & Dẫn chương trình">Event MC & Hosting</div>
+        <div class="talent-desc" data-en="Experienced MC for school events, community gatherings, and brand activations. Confident stage presence in both Vietnamese and English." data-vi="MC có kinh nghiệm tại các sự kiện trường, cộng đồng và kích hoạt thương hiệu. Phong thái tự tin trên sân khấu bằng cả tiếng Việt và tiếng Anh.">Experienced MC for school events, community gatherings, and brand activations. Confident stage presence in both Vietnamese and English.</div>
+      </div>
+      <div class="talent-card fade-up" style="transition-delay:0.1s">
+        <div class="talent-icon">
+  <img src="images/talent-community.jpg"
+    style="width:72px;height:72px;
+           border-radius:50%;
+           object-fit:cover;"
+    alt="MC Hosting">
+</div>
+        <div class="talent-title" data-en="Community Organizing" data-vi="Tổ chức cộng đồng">Community Organizing</div>
+        <div class="talent-desc" data-en="Skilled at rallying people around a shared goal — from planning events to building online communities that genuinely engage." data-vi="Khéo léo trong việc tập hợp mọi người hướng đến mục tiêu chung — từ lên kế hoạch sự kiện đến xây dựng cộng đồng trực tuyến thực sự thu hút.">Skilled at rallying people around a shared goal — from planning events to building online communities that genuinely engage.</div>
+      </div>
+      <div class="talent-card fade-up" style="transition-delay:0.2s">
+        <div class="talent-icon">
+  <img src="images/talent-culture.jpg"
+    style="width:72px;height:72px;
+           border-radius:50%;
+           object-fit:cover;"
+    alt="MC Hosting">
+</div>
+        <div class="talent-title" data-en="Cross-Cultural Communication" data-vi="Giao tiếp đa văn hóa">Cross-Cultural Communication</div>
+        <div class="talent-desc" data-en="Trilingual communicator (Vietnamese, English, Korean basics) with real-world experience navigating international client relationships." data-vi="Giao tiếp đa ngôn ngữ (Việt, Anh, Hàn cơ bản) với kinh nghiệm thực tế trong quan hệ khách hàng quốc tế.">Trilingual communicator (Vietnamese, English, Korean basics) with real-world experience navigating international client relationships.</div>
+      </div>
+      <div class="talent-card fade-up" style="transition-delay:0.3s">
+        <div class="talent-icon">
+  <img src="images/talent-service.jpg"
+    style="width:72px;height:72px;
+           border-radius:50%;
+           object-fit:cover;"
+    alt="MC Hosting">
+</div>
+        <div class="talent-title" data-en="Customer Experience" data-vi="Trải nghiệm khách hàng">Customer Experience</div>
+        <div class="talent-desc" data-en="Developed empathy and service excellence through frontline restaurant work — skills that translate directly into customer-centric marketing." data-vi="Phát triển sự đồng cảm và xuất sắc dịch vụ qua công việc nhà hàng — kỹ năng chuyển thẳng vào marketing lấy khách hàng làm trung tâm.">Developed empathy and service excellence through frontline restaurant work — skills that translate directly into customer-centric marketing.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ VIDEO PORTFOLIO ══════════════════════ -->
+<section id="videos" class="py-24" style="background:var(--cream)">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="text-center mb-14 fade-up">
+      <div class="section-tag justify-center" data-en="Daily Video" data-vi="Video hằng ngày">Daily Video</div>
+      <h2 class="section-title mb-4" data-en="Watch my latest" data-vi="Video mới nhất của tôi">Watch my latest</h2>
+      <p class="text-sm" style="color:var(--text-mid);max-width:480px;margin:0 auto" data-en="A daily glimpse into my world — content, creativity, and behind the scenes." data-vi="Một ngày của tôi — nội dung, sáng tạo và hậu trường.">A daily glimpse into my world — content, creativity, and behind the scenes.</p>
+    </div>
+
+    <!-- Video từ máy tính -->
+<div class="fade-up" style="border-radius:20px;overflow:hidden;border:2px solid rgba(13,27,62,0.1);box-shadow:0 24px 64px rgba(13,27,62,0.12)">
+  <video
+    width="100%"
+    controls
+    poster="images/video-thumbnail.jpg">
+    <source src="videos/daily-video.mp4" type="video/mp4">
+  </video>
+</div>
+  </div>
+</section>
+
+<!-- ══════════════════════ EXPERIENCE ══════════════════════ -->
+<section id="experience" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-16 items-start">
+      <div class="fade-up">
+        <div class="section-tag" style="color:rgba(249,228,91,0.7)" data-en="My Journey" data-vi="Hành trình của tôi">My Journey</div>
+        <h2 class="section-title mb-10" style="color:var(--cream)" data-en="Experience &<br>Education" data-vi="Kinh nghiệm &<br>Học vấn">Experience &<br>Education</h2>
+
+        <div class="space-y-0">
+          <div class="timeline-item">
+            <div class="timeline-dot">✦</div>
+            <div class="timeline-content">
+              <div class="timeline-date" data-en="2024 – Present" data-vi="2024 – Hiện tại">2024 – Present</div>
+              <div class="timeline-role" data-en="Social Media Manager" data-vi="Quản lý Mạng xã hội">Social Media Manager</div>
+              <div class="timeline-company" data-en="2 Active Fanpages" data-vi="2 Fanpage đang hoạt động">2 Active Fanpages</div>
+              <div class="timeline-text" data-en="Strategy, content creation, analytics, and community management for two brand fanpages." data-vi="Chiến lược, tạo nội dung, phân tích và quản lý cộng đồng cho hai fanpage thương hiệu.">Strategy, content creation, analytics, and community management for two brand fanpages.</div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot">✦</div>
+            <div class="timeline-content">
+              <div class="timeline-date">2023 – 2024</div>
+              <div class="timeline-role" data-en="Content Writer (EN)" data-vi="Viết nội dung (Tiếng Anh)">Content Writer (EN)</div>
+              <div class="timeline-company">Vietnam Reviewers</div>
+              <div class="timeline-text" data-en="Produced 100% English-language content for international audiences, covering Vietnamese culture and lifestyle." data-vi="Sản xuất nội dung 100% tiếng Anh cho khán giả quốc tế, bao gồm văn hóa và lối sống Việt Nam.">Produced 100% English-language content for international audiences, covering Vietnamese culture and lifestyle.</div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot">✦</div>
+            <div class="timeline-content">
+              <div class="timeline-date">2022 – 2023</div>
+              <div class="timeline-role" data-en="Tourism & Visa Consultant" data-vi="Tư vấn Du lịch & Visa">Tourism & Visa Consultant</div>
+              <div class="timeline-company" data-en="Travel Agency (B2B)" data-vi="Công ty Du lịch (B2B)">Travel Agency (B2B)</div>
+              <div class="timeline-text" data-en="Handled client relationships, documentation, and built the company's web presence for international clients." data-vi="Quản lý quan hệ khách hàng, hồ sơ và xây dựng sự hiện diện web của công ty cho khách hàng quốc tế.">Handled client relationships, documentation, and built the company's web presence for international clients.</div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot">🎓</div>
+            <div class="timeline-content">
+              <div class="timeline-date" data-en="2021 – Present" data-vi="2021 – Hiện tại">2021 – Present</div>
+              <div class="timeline-role" data-en="Marketing Student" data-vi="Sinh viên Marketing">Marketing Student</div>
+              <div class="timeline-company" data-en="University – Marketing Major" data-vi="Đại học – Chuyên ngành Marketing">University – Marketing Major</div>
+              <div class="timeline-text" data-en="IELTS 6.0 · TOPIK 1 · Dean's List candidate. Active in student events and cultural exchange activities." data-vi="IELTS 6.0 · TOPIK 1 · Ứng viên danh sách xuất sắc. Tích cực trong các sự kiện sinh viên và hoạt động giao lưu văn hóa.">IELTS 6.0 · TOPIK 1 · Dean's List candidate. Active in student events and cultural exchange activities.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certifications & Skills bars -->
+      <div class="fade-up">
+        <div class="section-tag" style="color:rgba(249,228,91,0.7)" data-en="Skills & Certs" data-vi="Kỹ năng & Chứng chỉ">Skills & Certs</div>
+        <h2 class="section-title mb-8" style="color:var(--cream)" data-en="What I bring" data-vi="Những gì tôi mang lại">What I bring</h2>
+
+        <div class="space-y-5">
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm font-medium" style="color:var(--cream)">Content Strategy</span>
+              <span class="font-mono text-xs" style="color:var(--pastel-yellow)">90%</span>
+            </div>
+            <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px">
+              <div style="width:90%;height:100%;background:var(--pastel-yellow);border-radius:2px;transition:width 1.5s ease" class="skill-bar"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm font-medium" style="color:var(--cream)">Social Media Management</span>
+              <span class="font-mono text-xs" style="color:var(--pastel-yellow)">85%</span>
+            </div>
+            <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px">
+              <div style="width:85%;height:100%;background:var(--pastel-yellow);border-radius:2px;transition:width 1.5s ease" class="skill-bar"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm font-medium" style="color:var(--cream)">AI Tools (Claude, Gemini)</span>
+              <span class="font-mono text-xs" style="color:var(--pastel-yellow)">88%</span>
+            </div>
+            <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px">
+              <div style="width:88%;height:100%;background:var(--mint);border-radius:2px;transition:width 1.5s ease" class="skill-bar"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm font-medium" style="color:var(--cream)">English Communication</span>
+              <span class="font-mono text-xs" style="color:var(--pastel-yellow)">80%</span>
+            </div>
+            <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px">
+              <div style="width:80%;height:100%;background:var(--pastel-yellow);border-radius:2px;transition:width 1.5s ease" class="skill-bar"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm font-medium" style="color:var(--cream)">Public Speaking / MC</span>
+              <span class="font-mono text-xs" style="color:var(--pastel-yellow)">82%</span>
+            </div>
+            <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px">
+              <div style="width:82%;height:100%;background:var(--mint);border-radius:2px;transition:width 1.5s ease" class="skill-bar"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certs -->
+        <div class="mt-10 space-y-3">
+          <div class="p-4 rounded-lg flex items-center gap-4" style="background:rgba(249,228,91,0.07);border:1px solid rgba(249,228,91,0.2)">
+            <span style="font-size:1.4rem">🏅</span>
+            <div>
+              <div class="text-sm font-semibold" style="color:var(--cream)">IELTS 6.0</div>
+              <div class="text-xs" style="color:rgba(253,250,240,0.5)" data-en="International English Language Testing System" data-vi="Hệ thống kiểm tra tiếng Anh quốc tế">International English Language Testing System</div>
+            </div>
+          </div>
+          <div class="p-4 rounded-lg flex items-center gap-4" style="background:rgba(184,237,217,0.07);border:1px solid rgba(184,237,217,0.2)">
+            <span style="font-size:1.4rem">🇰🇷</span>
+            <div>
+              <div class="text-sm font-semibold" style="color:var(--cream)">TOPIK 1</div>
+              <div class="text-xs" style="color:rgba(253,250,240,0.5)" data-en="Test of Proficiency in Korean – Level 1" data-vi="Kiểm tra năng lực tiếng Hàn – Cấp độ 1">Test of Proficiency in Korean – Level 1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ TESTIMONIALS ══════════════════════ -->
+<section class="py-20" style="background:var(--light-beige)">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="section-tag justify-center mb-10" data-en="What People Say" data-vi="Mọi người nói gì">What People Say</div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="p-6 rounded-xl bg-white border" style="border-color:rgba(13,27,62,0.08)" class="fade-up">
+        <div style="font-size:1.8rem;margin-bottom:12px">💬</div>
+        <p class="text-sm leading-relaxed mb-4" style="color:var(--text-mid)" data-en="&ldquo;An incredibly creative and diligent communicator. The English content consistently exceeded expectations for international reach.&rdquo;" data-vi="&ldquo;Một người giao tiếp vô cùng sáng tạo và chăm chỉ. Nội dung tiếng Anh liên tục vượt kỳ vọng về tiếp cận quốc tế.&rdquo;">"An incredibly creative and diligent communicator. The English content consistently exceeded expectations for international reach."</p>
+        <div class="font-semibold text-sm" style="color:var(--deep-navy)" data-en="— Editor, Vietnam Reviewers" data-vi="— Biên tập viên, Vietnam Reviewers">— Editor, Vietnam Reviewers</div>
+      </div>
+      <div class="p-6 rounded-xl bg-white border" style="border-color:rgba(13,27,62,0.08)" class="fade-up">
+        <div style="font-size:1.8rem;margin-bottom:12px">💬</div>
+        <p class="text-sm leading-relaxed mb-4" style="color:var(--text-mid)" data-en="&ldquo;Her stage presence as MC was magnetic. She kept the audience engaged throughout a 3-hour programme effortlessly.&rdquo;" data-vi="&ldquo;Sự hiện diện sân khấu của cô ấy với tư cách MC thật cuốn hút. Cô ấy giữ khán giả say mê suốt 3 giờ chương trình một cách dễ dàng.&rdquo;">"Her stage presence as MC was magnetic. She kept the audience engaged throughout a 3-hour programme effortlessly."</p>
+        <div class="font-semibold text-sm" style="color:var(--deep-navy)" data-en="— Event Organizer, University Club" data-vi="— Ban tổ chức, CLB Đại học">— Event Organizer, University Club</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ CONTACT ══════════════════════ -->
+<section id="contact" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-16 items-start">
+      <div class="fade-up">
+        <div class="section-tag" data-en="Get In Touch" data-vi="Liên hệ">Get In Touch</div>
+        <h2 class="section-title mb-6" data-en="Let's create something remarkable" data-vi="Hãy cùng tạo ra điều khác biệt">Let's create something remarkable</h2>
+        <p class="text-sm leading-relaxed mb-10" style="color:var(--text-mid)" data-en="Whether you're looking for a creative content partner, a bilingual communicator, or an AI-savvy marketing mind — I'd love to connect." data-vi="Dù bạn đang tìm kiếm một đối tác nội dung sáng tạo, nhà giao tiếp song ngữ hay một chuyên gia marketing am hiểu AI — tôi rất muốn kết nối.">Whether you're looking for a creative content partner, a bilingual communicator, or an AI-savvy marketing mind — I'd love to connect.</p>
+
+        <div class="space-y-4 mb-10">
+          <div class="flex items-center gap-4">
+            <div style="width:40px;height:40px;background:var(--light-beige);border-radius:8px;display:flex;align-items:center;justify-content:center">📧</div>
+            <div>
+              <div class="text-xs font-mono tracking-wider" style="color:var(--text-mid)">EMAIL</div>
+              <div class="text-sm font-semibold" style="color:var(--deep-navy)"><a href="mailto:ntkimhoan@gmail.com">ntkimhoan@gmail.com</a></div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div style="width:40px;height:40px;background:var(--light-beige);border-radius:8px;display:flex;align-items:center;justify-content:center">📍</div>
+            <div>
+              <div class="text-xs font-mono tracking-wider" style="color:var(--text-mid)">LOCATION</div>
+              <div class="text-sm font-semibold" style="color:var(--deep-navy)" data-en="Vietnam · Open to Remote" data-vi="Việt Nam · Sẵn sàng làm từ xa">Vietnam · Open to Remote</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+  <div style="width:40px;height:40px;background:var(--light-beige);border-radius:8px;display:flex;align-items:center;justify-content:center">📞</div>
+  <div>
+    <div class="text-xs font-mono tracking-wider" style="color:var(--text-mid)">PHONE</div>
+    <div class="text-sm font-semibold" style="color:var(--deep-navy)">0944 874 944</div>
+  </div>
+</div>
+        </div>
+
+        <!-- Social Icons -->
+        <div>
+          <div class="text-xs font-mono tracking-widest mb-4" style="color:var(--text-mid)" data-en="FIND ME ON" data-vi="TÌM TÔI TRÊN">FIND ME ON</div>
+          <div class="flex gap-3">
+            <a href="#" class="social-icon" title="LinkedIn" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="#" class="social-icon" title="Facebook" aria-label="Facebook">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="#" class="social-icon" title="Download Portfolio PDF" aria-label="Portfolio PDF">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15h8v2H8zm0-4h8v2H8z"/></svg>
+            </a>
+            <a href="#" class="social-icon" title="Instagram" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="fade-up">
+        <form action="https://formspree.io/f/xbdqlaje" method="POST" class="space-y-5">
+  <input type="hidden" name="_replyto" value="ntkimhoan267@gmail.com">
+  <input type="hidden" name="_subject" value="Tin nhắn mới từ Portfolio Kim Hoàn!">
+  <div class="grid grid-cols-2 gap-4">
+    <div class="form-group">
+      <label class="form-label" data-en="Name" data-vi="Tên">Name</label>
+      <input type="text" name="name" class="form-input" required placeholder="Your name">
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-en="Email" data-vi="Email">Email</label>
+      <input type="email" name="email" class="form-input" required placeholder="you@email.com">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="form-label" data-en="Subject" data-vi="Chủ đề">Subject</label>
+    <input type="text" name="subject" class="form-input" placeholder="Project inquiry / Collaboration ...">
+  </div>
+  <div class="form-group">
+    <label class="form-label" data-en="Message" data-vi="Tin nhắn">Message</label>
+    <textarea name="message" class="form-input" rows="5" required placeholder="Tell me about your project..."></textarea>
+  </div>
+  <button type="submit" class="submit-btn" data-en="Send Message →" data-vi="Gửi tin nhắn →">Send Message →</button>
+</form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer>
+  <div class="footer-mark">Kim Hoàn Portfolio</div>
+  <div class="footer-text" data-en="© 2024 · Made with ♥ and Claude AI · Vietnam" data-vi="© 2024 · Làm với ♥ và Claude AI · Việt Nam">© 2024 · Made with ♥ and Claude AI · Vietnam</div>
+  <a href="#hero" class="social-icon" style="width:36px;height:36px;font-size:0.8rem" aria-label="Back to top">↑</a>
+</footer>
+
+<!-- Toast -->
+<div id="toast">✓ Message sent! I'll be in touch soon.</div>
+
+<!-- ══════════════════════ SCRIPTS ══════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ─── LANGUAGE TOGGLE ───
+  let currentLang = 'en';
+  function toggleLang() {
+    currentLang = currentLang === 'en' ? 'vi' : 'en';
+    document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
+    document.getElementById('btn-vi').classList.toggle('active', currentLang === 'vi');
+
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const text = el.getAttribute('data-' + currentLang);
+      if (text) el.innerHTML = text;
+    });
+
+    // Update placeholders
+    const placeholders = { en: ['Your name','you@email.com','Project inquiry / Collaboration ...','Tell me about your project...'], vi: ['Tên của bạn','ban@email.com','Yêu cầu dự án / Hợp tác ...','Nói với tôi về dự án của bạn...'] };
+    const inputs = ['f-name','f-email','f-subject','f-message'];
+    inputs.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el) el.placeholder = placeholders[currentLang][i];
+    });
+
+    document.documentElement.lang = currentLang;
+  }
+
+  // ─── MOBILE MENU ───
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  }
+
+  // ─── NAV SCROLL ───
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ─── FADE-UP OBSERVER ───
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ─── SKILL BARS (animate on scroll) ───
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { /* bars animate via CSS */ } });
+  });
+  document.querySelectorAll('.skill-bar').forEach(b => barObserver.observe(b));
+
+  // ─── CONTACT FORM ───
+  function handleSubmit(e) {
+    e.preventDefault();
+    const toast = document.getElementById('toast');
+    const msg = currentLang === 'vi' ? '✓ Đã gửi! Tôi sẽ liên hệ sớm.' : '✓ Message sent! I\'ll be in touch soon.';
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+    e.target.reset();
+  }
+</script>
+</body>
+</html>
