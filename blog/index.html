@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog – Kim Hoàn | AI, Marketing & Personal Growth</title>
+<meta name="description" content="Góc nhìn thật về AI, Marketing và hành trình phát triển bản thân — viết bởi Kim Hoàn, sinh viên Marketing tại Việt Nam.">
+<meta property="og:title" content="Tôi là sinh viên Marketing và tôi dùng AI như thế nào mỗi ngày">
+<meta property="og:description" content="AI không phải kẻ thù sắp cướp việc của bạn. Nếu bạn biết dùng nó — nó trở thành người bạn đồng hành tốt nhất.">
+<meta property="og:image" content="https://iamkimhoan.vn/images/blog-1.jpg">
+<meta property="og:url" content="https://iamkimhoan.vn/blog/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pastel-yellow:#F9E45B; --deep-navy:#0D1B3E; --navy-mid:#1A2E5C;
+    --navy-light:#2D4080; --cream:#FDFAF0; --light-beige:#F5F0E0;
+    --mint:#B8EDD9; --text-dark:#0D1B3E; --text-mid:#3A4A7A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;}
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--pastel-yellow);z-index:300;width:0%;transition:width 0.1s linear;}
+
+  /* ── NAV ── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;backdrop-filter:blur(16px);background:rgba(253,250,240,0.92);border-bottom:1px solid rgba(13,27,62,0.08);transition:box-shadow 0.3s;}
+  nav.scrolled{box-shadow:0 4px 32px rgba(13,27,62,0.10);}
+  .nav-inner{max-width:760px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;font-style:italic;color:var(--deep-navy);text-decoration:none;}
+  .nav-logo span{color:var(--pastel-yellow);}
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .nav-back{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--deep-navy);}
+
+  /* ── LANG TOGGLE ── */
+  .lang-toggle{display:flex;align-items:center;gap:4px;background:var(--deep-navy);border-radius:20px;padding:4px 6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.72rem;user-select:none;}
+  .lang-btn{padding:3px 10px;border-radius:14px;color:rgba(255,255,255,0.5);transition:all 0.25s;font-weight:700;letter-spacing:0.05em;}
+  .lang-btn.active{background:var(--pastel-yellow);color:var(--deep-navy);}
+
+  /* ── BILINGUAL LOGIC ── */
+  .vi{display:block;} .en{display:none;}
+  body.lang-en .vi{display:none;} body.lang-en .en{display:block;}
+  span.vi{display:inline;} span.en{display:none;}
+  body.lang-en span.vi{display:none;} body.lang-en span.en{display:inline;}
+
+  /* ── HERO ── */
+  .article-hero{padding:110px 24px 56px;max-width:760px;margin:0 auto;}
+  .kicker{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .kicker::before{content:'';display:block;width:24px;height:2px;background:var(--pastel-yellow);}
+  .article-title{font-family:'Playfair Display',serif;font-size:clamp(1.85rem,4.5vw,2.75rem);font-weight:900;line-height:1.15;color:var(--deep-navy);margin-bottom:18px;}
+  .article-subtitle{font-size:1.05rem;color:var(--text-mid);line-height:1.65;max-width:600px;margin-bottom:28px;font-weight:400;}
+  .article-meta{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid rgba(13,27,62,0.1);}
+  .author-row{display:flex;align-items:center;gap:10px;}
+  .author-avatar{width:36px;height:36px;border-radius:50%;background:var(--navy-mid);display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:var(--pastel-yellow);font-family:'Space Mono',monospace;font-weight:700;overflow:hidden;flex-shrink:0;}
+  .author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top;}
+  .author-name{font-size:0.88rem;font-weight:600;color:var(--deep-navy);}
+  .meta-dot{width:4px;height:4px;border-radius:50%;background:var(--text-mid);opacity:0.35;flex-shrink:0;}
+  .meta-item{font-family:'Space Mono',monospace;font-size:0.67rem;color:var(--text-mid);letter-spacing:0.06em;}
+
+  /* ── ARTICLE BODY ── */
+  .article-body{max-width:760px;margin:0 auto;padding:44px 24px 72px;}
+  .article-body p{font-size:1.05rem;line-height:1.85;color:var(--text-dark);margin-bottom:1.5rem;}
+  .article-body h2{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--deep-navy);margin:3rem 0 1rem;}
+  .article-body strong{color:var(--deep-navy);font-weight:700;}
+  .article-body em{font-style:italic;}
+
+  .pull-quote{border-left:3px solid var(--pastel-yellow);padding:12px 0 12px 24px;margin:2.5rem 0;}
+  .pull-quote p{font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;color:var(--deep-navy);line-height:1.6;margin:0;}
+
+  .highlight-box{background:var(--light-beige);border:1px solid rgba(13,27,62,0.08);border-radius:12px;padding:22px 26px;margin:2rem 0;}
+  .highlight-box p{margin:0;font-size:0.97rem;color:var(--text-mid);}
+
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin:2.5rem 0 0;}
+  .tag{background:var(--light-beige);border:1px solid rgba(13,27,62,0.1);border-radius:20px;padding:5px 14px;font-size:0.78rem;font-weight:500;color:var(--text-mid);transition:all 0.2s;cursor:default;}
+  .tag:hover{background:var(--pastel-yellow);border-color:var(--pastel-yellow);color:var(--deep-navy);}
+
+  /* ── CTA ── */
+  .article-cta{max-width:760px;margin:0 auto;padding:0 24px 72px;}
+  .cta-box{background:var(--deep-navy);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .cta-box h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--cream);margin-bottom:6px;}
+  .cta-box p{font-size:0.85rem;color:rgba(253,250,240,0.55);line-height:1.6;}
+  .cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--pastel-yellow);color:var(--deep-navy);padding:12px 28px;border-radius:4px;font-weight:700;font-size:0.88rem;text-decoration:none;white-space:nowrap;transition:all 0.25s;flex-shrink:0;}
+  .cta-btn:hover{background:var(--mint);transform:translateY(-2px);}
+
+  /* ── RELATED ── */
+  .related{max-width:760px;margin:0 auto;padding:0 24px 80px;border-top:1px solid rgba(13,27,62,0.08);}
+  .related-label{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);margin:44px 0 22px;}
+  .related-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:540px){.related-grid{grid-template-columns:1fr;}}
+  .related-card{border:1px solid rgba(13,27,62,0.1);border-radius:12px;padding:20px;background:white;transition:all 0.25s;text-decoration:none;display:block;opacity:0.65;}
+  .related-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(13,27,62,0.1);opacity:1;}
+  .related-chip{background:var(--light-beige);border-radius:10px;padding:3px 10px;font-size:0.67rem;font-family:'Space Mono',monospace;font-weight:700;color:var(--text-mid);display:inline-block;margin-bottom:10px;}
+  .related-card h4{font-family:'Playfair Display',serif;font-size:0.98rem;font-weight:700;color:var(--deep-navy);line-height:1.35;margin-bottom:6px;}
+  .related-card p{font-size:0.8rem;color:var(--text-mid);line-height:1.55;}
+  .coming-badge{display:inline-block;margin-top:10px;font-family:'Space Mono',monospace;font-size:0.62rem;background:var(--light-beige);color:var(--text-mid);padding:3px 10px;border-radius:10px;}
+
+  /* ── FOOTER ── */
+  footer{background:var(--deep-navy);border-top:1px solid rgba(249,228,91,0.1);padding:24px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .footer-mark{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--pastel-yellow);}
+  .footer-text{font-size:0.75rem;color:rgba(253,250,240,0.4);}
+  .footer-link{font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(253,250,240,0.4);text-decoration:none;}
+
+  /* ── FADE UP ── */
+  .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s,transform 0.6s;}
+  .fade-up.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- ══ NAV ══ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Kim Hoàn<span>.</span></a>
+    <div class="nav-right">
+      <a href="/#blog" class="nav-back">
+        <span class="vi">← Về Portfolio</span>
+        <span class="en">← Back to Portfolio</span>
+      </a>
+      <div class="lang-toggle" onclick="toggleLang()">
+        <div class="lang-btn" id="btn-en">EN</div>
+        <div class="lang-btn active" id="btn-vi">VI</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="article-hero fade-up">
+  <div class="kicker">AI & Marketing · Personal Brand</div>
+
+  <h1 class="article-title">
+    <span class="vi">Tôi là sinh viên Marketing và tôi dùng AI như thế nào mỗi ngày</span>
+    <span class="en">I'm a Marketing Student — Here's How I Use AI Every Single Day</span>
+  </h1>
+
+  <p class="article-subtitle">
+    <span class="vi">AI không phải kẻ thù sắp cướp việc của bạn — nếu bạn biết cách dùng nó như một người bạn đồng hành thật sự.</span>
+    <span class="en">AI isn't the enemy coming to steal your job — not if you know how to use it as a genuine co-pilot.</span>
+  </p>
+
+  <div class="article-meta">
+    <div class="author-row">
+      <div class="author-avatar">
+        <img src="/hero.jpg" alt="Kim Hoàn" onerror="this.style.display='none'">
+      </div>
+      <div class="author-name">Nguyễn Thị Kim Hoàn</div>
+    </div>
+    <div class="meta-dot"></div>
+    <span class="meta-item">
+      <span class="vi">5 phút đọc</span>
+      <span class="en">5 min read</span>
+    </span>
+    <div class="meta-dot"></div>
+    <span class="meta-item">AI · Marketing · <span class="vi">Sinh viên</span><span class="en">Student Life</span></span>
+  </div>
+</header>
+
+<!-- ══ BODY ══ -->
+<article class="article-body">
+
+  <p>
+    <span class="vi">Hồi năm ngoái, mình từng ngồi nhìn màn hình máy tính suốt hai tiếng đồng hồ để nghĩ caption cho một bài đăng fanpage. Không phải vì mình không có ý tưởng — mà vì mình không biết bắt đầu từ đâu. Rồi một người bạn nhắn: <em>"Mày thử ChatGPT chưa?"</em></span>
+    <span class="en">Last year, I sat staring at my laptop for two straight hours trying to write a single caption for a fanpage post. Not because I had no ideas — but because I didn't know where to start. Then a friend texted me: <em>"Have you tried ChatGPT yet?"</em></span>
+  </p>
+
+  <p>
+    <span class="vi">Đó là lần đầu tiên mình "gặp" AI. Và thật ra, cảm giác ban đầu không phải là wow — mà là hoang mang. Nó trả lời nhanh quá, đủ thứ, nhưng lại không hẳn là thứ mình cần. Mình thử Gemini — tốt hơn một chút. Rồi Claude — và đó là lúc mọi thứ bắt đầu thay đổi thật sự.</span>
+    <span class="en">That was my first real encounter with AI. And honestly, my first feeling wasn't wow — it was confusion. It replied too fast, said too much, but none of it was quite what I needed. I tried Gemini — a bit better. Then Claude — and that's when things genuinely started to shift.</span>
+  </p>
+
+  <h2>
+    <span class="vi">AI không thay mình nghĩ — nó giúp mình nghĩ rõ hơn</span>
+    <span class="en">AI doesn't think for me — it helps me think clearer</span>
+  </h2>
+
+  <p>
+    <span class="vi">Điều mình nhận ra sau nhiều tháng thử sai là: AI chỉ giỏi khi bạn biết mình muốn gì. Nếu bạn hỏi mơ hồ, nó trả lời mơ hồ. Nhưng nếu bạn biết đặt câu hỏi đúng — nó có thể cho bạn thứ mà bạn không ngờ tới.</span>
+    <span class="en">What I learned after months of trial and error: AI is only as good as your questions. Vague input, vague output. But when you know how to ask the right thing — it can take you places you never expected.</span>
+  </p>
+
+  <p>
+    <span class="vi">Mình bắt đầu dùng Claude để brainstorm ý tưởng content, chỉnh sửa câu từ tiếng Anh, và thậm chí học cách tư duy chiến lược hơn cho fanpage. Không phải "gõ vào rồi copy" — mà là đối thoại, hỏi đi hỏi lại, tinh chỉnh cho đến khi ra thứ thật sự mang giọng của mình.</span>
+    <span class="en">I started using Claude to brainstorm content ideas, sharpen my English writing, and develop a more strategic mindset for my fanpages. Not "type and copy-paste" — but a real dialogue. Back and forth. Refining until something finally sounded like <em>me</em>.</span>
+  </p>
+
+  <div class="pull-quote">
+    <p>
+      <span class="vi">Đừng nhìn AI như kẻ sắp giành mất công việc của bạn. Hãy dùng nó như người bạn hiểu bạn hơn cả bạn tự hiểu mình.</span>
+      <span class="en">Stop seeing AI as the enemy stealing your future. Start using it as the friend who understands you better than you understand yourself.</span>
+    </p>
+  </div>
+
+  <h2>
+    <span class="vi">Khoảnh khắc mình thật sự tin vào AI</span>
+    <span class="en">The moment I truly believed in AI</span>
+  </h2>
+
+  <p>
+    <span class="vi">Cách đây không lâu, mình quyết định làm một portfolio cá nhân — iamkimhoan.vn. Vấn đề là mình không biết code. Không biết HTML, không biết CSS, không biết gì hết. Bình thường thì mình sẽ phải thuê người thiết kế, hoặc dùng template có sẵn trông giống hàng triệu trang web khác.</span>
+    <span class="en">Not long ago, I decided to build a personal portfolio — iamkimhoan.vn. The problem? I didn't know how to code. No HTML. No CSS. Nothing. Normally I'd have to hire a designer, or settle for a generic template that looks like every other website out there.</span>
+  </p>
+
+  <p>
+    <span class="vi">Nhưng mình thử một cách khác: mô tả cho Claude nghe mình muốn gì — màu sắc, bố cục, cảm giác, tông thương hiệu. Và sau đúng <strong>3 tiếng đồng hồ</strong>, mình có một portfolio được code từ đầu, hoàn toàn theo ý mình, không dùng template nào cả.</span>
+    <span class="en">But I tried something different: I described to Claude exactly what I wanted — colors, layout, vibe, brand tone. And after exactly <strong>3 hours</strong>, I had a fully coded portfolio built from scratch, completely on my own terms, no template needed.</span>
+  </p>
+
+  <div class="highlight-box">
+    <p>
+      <span class="vi">Mình không trở thành lập trình viên sau buổi đó. Nhưng mình học được điều quan trọng hơn: <strong>giới hạn không phải lúc nào cũng là "không biết làm" — đôi khi nó chỉ là "chưa biết hỏi ai."</strong></span>
+      <span class="en">I didn't become a developer that day. But I learned something more important: <strong>limitations aren't always about not knowing how — sometimes they're just about not knowing who to ask.</strong></span>
+    </p>
+  </div>
+
+  <h2>
+    <span class="vi">Vậy thực tế mình dùng AI như thế nào mỗi ngày?</span>
+    <span class="en">So what does my daily AI routine actually look like?</span>
+  </h2>
+
+  <p>
+    <span class="vi"><strong>Buổi sáng:</strong> mở Claude để đọc lại bản draft content hôm qua, hỏi xem có đoạn nào lủng củng không.</span>
+    <span class="en"><strong>Morning:</strong> I open Claude to review yesterday's content draft and ask if anything sounds off or unclear.</span>
+  </p>
+  <p>
+    <span class="vi"><strong>Buổi chiều:</strong> brainstorm 10 ý tưởng bài đăng cho tuần tới — trong 15 phút thay vì 2 tiếng như trước.</span>
+    <span class="en"><strong>Afternoon:</strong> brainstorm 10 post ideas for next week — in 15 minutes instead of the 2 hours it used to take.</span>
+  </p>
+  <p>
+    <span class="vi"><strong>Buổi tối:</strong> nếu có email hay báo cáo cần viết bằng tiếng Anh, mình viết bản nháp trước rồi nhờ AI chỉnh cho tự nhiên hơn — nhưng vẫn giữ đúng giọng của mình.</span>
+    <span class="en"><strong>Evening:</strong> if I have an English email or report to write, I draft it first, then ask AI to refine it — while keeping my voice intact.</span>
+  </p>
+
+  <p>
+    <span class="vi">Mình không dùng AI để thay mình viết. Mình dùng nó để viết <em>nhanh hơn, hay hơn, và tự tin hơn.</em></span>
+    <span class="en">I don't use AI to write for me. I use it to write <em>faster, better, and with more confidence.</em></span>
+  </p>
+
+  <h2>
+    <span class="vi">Bạn cũng làm được</span>
+    <span class="en">You can do this too</span>
+  </h2>
+
+  <p>
+    <span class="vi">Nếu bạn đang đọc bài này và nghĩ "mình không giỏi công nghệ" hay "mình chưa biết dùng AI" — mình ở đúng chỗ đó một năm trước. Bắt đầu từ ChatGPT nếu bạn chưa dùng gì. Chuyển sang Claude nếu bạn cần người "hiểu chuyện" hơn. Không cần khóa học, không cần nền tảng kỹ thuật.</span>
+    <span class="en">If you're reading this thinking "I'm not tech-savvy" or "I don't know how to use AI" — that was me exactly one year ago. Start with ChatGPT if you haven't tried anything. Move to Claude when you need something that gets you better. No courses needed. No technical background required.</span>
+  </p>
+
+  <p>
+    <span class="vi">Chỉ cần bắt đầu. Hỏi. Thử sai. Hỏi lại.</span>
+    <span class="en">Just start. Ask. Fail. Ask again.</span>
+  </p>
+
+  <p>
+    <span class="vi">AI không đến để thay bạn — nó đến để bạn làm được những thứ mà trước giờ bạn tưởng mình không làm được. Và theo mình, đó là thứ đáng sợ nhất với những ai chọn không thích nghi.</span>
+    <span class="en">AI isn't here to replace you — it's here to help you do things you never thought you could. And honestly? That's the scariest thing for anyone who chooses not to adapt.</span>
+  </p>
+
+  <div class="tag-row">
+    <span class="tag">AI</span>
+    <span class="tag">Marketing</span>
+    <span class="tag">Claude</span>
+    <span class="tag">Gemini</span>
+    <span class="tag"><span class="vi">Sinh viên</span><span class="en">Student Life</span></span>
+    <span class="tag">Personal Brand</span>
+    <span class="tag">Content</span>
+  </div>
+
+</article>
+
+<!-- ══ CTA ══ -->
+<div class="article-cta fade-up">
+  <div class="cta-box">
+    <div>
+      <h3>
+        <span class="vi">Bạn muốn kết nối?</span>
+        <span class="en">Want to connect?</span>
+      </h3>
+      <p>
+        <span class="vi">Mình luôn vui khi trò chuyện với những bạn trẻ đang tìm đường trong ngành Marketing & AI. Nhắn mình một tin nhé.</span>
+        <span class="en">I'm always happy to chat with fellow students navigating the world of Marketing & AI. Drop me a message anytime.</span>
+      </p>
+    </div>
+    <a href="/#contact" class="cta-btn">
+      <span class="vi">Liên hệ Kim Hoàn →</span>
+      <span class="en">Contact Kim Hoàn →</span>
+    </a>
+  </div>
+</div>
+
+<!-- ══ RELATED ══ -->
+<div class="related fade-up">
+  <div class="related-label">
+    <span class="vi">Bài viết tiếp theo</span>
+    <span class="en">Up next</span>
+  </div>
+  <div class="related-grid">
+    <div class="related-card">
+      <span class="related-chip">Social Media</span>
+      <h4>
+        <span class="vi">Những sai lầm khi quản lý fanpage đầu tiên</span>
+        <span class="en">Mistakes I made managing my first fanpage</span>
+      </h4>
+      <p>
+        <span class="vi">Bài học thật từ thực chiến — những gì không ai nói với bạn khi mới bắt đầu.</span>
+        <span class="en">Real lessons from the trenches — what nobody tells you when you start.</span>
+      </p>
+      <span class="coming-badge"><span class="vi">Sắp ra mắt</span><span class="en">Coming soon</span></span>
+    </div>
+    <div class="related-card">
+      <span class="related-chip"><span class="vi">Ngôn ngữ</span><span class="en">Language</span></span>
+      <h4>
+        <span class="vi">IELTS 6.0 và hành trình viết content tiếng Anh cho khán giả quốc tế</span>
+        <span class="en">IELTS 6.0 and writing English content for international readers</span>
+      </h4>
+      <p>
+        <span class="vi">AI giúp mình vượt qua rào cản ngôn ngữ như thế nào.</span>
+        <span class="en">How AI helped me bridge the language gap.</span>
+      </p>
+      <span class="coming-badge"><span class="vi">Sắp ra mắt</span><span class="en">Coming soon</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-mark">Kim Hoàn Portfolio</div>
+  <div class="footer-text">© 2025 · Made with ♥ by Kim Hoàn</div>
+  <a href="/" class="footer-link">
+    <span class="vi">← Về trang chủ</span>
+    <span class="en">← Home</span>
+  </a>
+</footer>
+
+<script>
+  // ── LANG TOGGLE ──
+  let lang = 'vi';
+  function toggleLang() {
+    lang = lang === 'vi' ? 'en' : 'vi';
+    document.body.classList.toggle('lang-en', lang === 'en');
+    document.getElementById('btn-vi').classList.toggle('active', lang === 'vi');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang;
+    document.title = lang === 'en'
+      ? 'Blog – Kim Hoàn | I Use AI Every Day as a Marketing Student'
+      : 'Blog – Kim Hoàn | AI, Marketing & Personal Growth';
+  }
+
+  // ── PROGRESS BAR + NAV SHADOW ──
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const pct = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+    document.getElementById('progress-bar').style.width = (pct * 100) + '%';
+    document.getElementById('navbar').classList.toggle('scrolled', doc.scrollTop > 40);
+  });
+
+  // ── FADE UP ──
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
