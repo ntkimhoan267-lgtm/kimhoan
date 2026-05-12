@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog – Kim Hoàn | Một ngày bình thường của mình</title>
+<meta name="description" content="Một ngày trong cuộc sống của mình — sinh viên Marketing, content creator, và người học AI. Không hoàn hảo, nhưng thật.">
+<meta property="og:title" content="Một ngày bình thường của mình — khi bạn vừa là sinh viên, vừa làm content, vừa học AI">
+<meta property="og:description" content="Không phải 'morning routine' 5 giờ sáng hay 10-step productivity hack — chỉ là một ngày thật sự của mình.">
+<meta property="og:image" content="https://iamkimhoan.vn/images/blog-1.jpg">
+<meta property="og:url" content="https://iamkimhoan.vn/blog/mot-ngay-binh-thuong/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pastel-yellow:#F9E45B; --deep-navy:#0D1B3E; --navy-mid:#1A2E5C;
+    --navy-light:#2D4080; --cream:#FDFAF0; --light-beige:#F5F0E0;
+    --mint:#B8EDD9; --text-dark:#0D1B3E; --text-mid:#3A4A7A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;}
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--pastel-yellow);z-index:300;width:0%;transition:width 0.1s linear;}
+
+  /* ── NAV ── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;backdrop-filter:blur(16px);background:rgba(253,250,240,0.92);border-bottom:1px solid rgba(13,27,62,0.08);transition:box-shadow 0.3s;}
+  nav.scrolled{box-shadow:0 4px 32px rgba(13,27,62,0.10);}
+  .nav-inner{max-width:760px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;font-style:italic;color:var(--deep-navy);text-decoration:none;}
+  .nav-logo span{color:var(--pastel-yellow);}
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .nav-back{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--deep-navy);}
+
+  /* ── LANG TOGGLE ── */
+  .lang-toggle{display:flex;align-items:center;gap:4px;background:var(--deep-navy);border-radius:20px;padding:4px 6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.72rem;user-select:none;}
+  .lang-btn{padding:3px 10px;border-radius:14px;color:rgba(255,255,255,0.5);transition:all 0.25s;font-weight:700;letter-spacing:0.05em;}
+  .lang-btn.active{background:var(--pastel-yellow);color:var(--deep-navy);}
+
+  /* ── BILINGUAL LOGIC ── */
+  .vi{display:block;} .en{display:none;}
+  body.lang-en .vi{display:none;} body.lang-en .en{display:block;}
+  span.vi{display:inline;} span.en{display:none;}
+  body.lang-en span.vi{display:none;} body.lang-en span.en{display:inline;}
+
+  /* ── HERO ── */
+  .article-hero{padding:110px 24px 56px;max-width:760px;margin:0 auto;}
+  .kicker{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .kicker::before{content:'';display:block;width:24px;height:2px;background:var(--pastel-yellow);}
+  .article-title{font-family:'Playfair Display',serif;font-size:clamp(1.85rem,4.5vw,2.75rem);font-weight:900;line-height:1.15;color:var(--deep-navy);margin-bottom:18px;}
+  .article-subtitle{font-size:1.05rem;color:var(--text-mid);line-height:1.65;max-width:600px;margin-bottom:28px;font-weight:400;}
+  .article-meta{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid rgba(13,27,62,0.1);}
+  .author-row{display:flex;align-items:center;gap:10px;}
+  .author-avatar{width:36px;height:36px;border-radius:50%;background:var(--navy-mid);display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:var(--pastel-yellow);font-family:'Space Mono',monospace;font-weight:700;overflow:hidden;flex-shrink:0;}
+  .author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top;}
+  .author-name{font-size:0.88rem;font-weight:600;color:var(--deep-navy);}
+  .meta-dot{width:4px;height:4px;border-radius:50%;background:var(--text-mid);opacity:0.35;flex-shrink:0;}
+  .meta-item{font-family:'Space Mono',monospace;font-size:0.67rem;color:var(--text-mid);letter-spacing:0.06em;}
+
+  /* ── ARTICLE BODY ── */
+  .article-body{max-width:760px;margin:0 auto;padding:44px 24px 72px;}
+  .article-body p{font-size:1.05rem;line-height:1.85;color:var(--text-dark);margin-bottom:1.5rem;}
+  .article-body h2{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--deep-navy);margin:3rem 0 1rem;}
+  .article-body strong{color:var(--deep-navy);font-weight:700;}
+  .article-body em{font-style:italic;}
+
+  .pull-quote{border-left:3px solid var(--pastel-yellow);padding:12px 0 12px 24px;margin:2.5rem 0;}
+  .pull-quote p{font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;color:var(--deep-navy);line-height:1.6;margin:0;}
+
+  .highlight-box{background:var(--light-beige);border:1px solid rgba(13,27,62,0.08);border-radius:12px;padding:22px 26px;margin:2rem 0;}
+  .highlight-box p{margin:0;font-size:0.97rem;color:var(--text-mid);}
+
+  .timeline-item{display:flex;gap:20px;margin-bottom:2rem;align-items:flex-start;}
+  .timeline-time{font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700;color:var(--pastel-yellow);background:var(--deep-navy);padding:5px 12px;border-radius:20px;white-space:nowrap;flex-shrink:0;margin-top:4px;}
+  .timeline-content p{margin-bottom:0.5rem;}
+  .timeline-content p:last-child{margin-bottom:0;}
+
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin:2.5rem 0 0;}
+  .tag{background:var(--light-beige);border:1px solid rgba(13,27,62,0.1);border-radius:20px;padding:5px 14px;font-size:0.78rem;font-weight:500;color:var(--text-mid);transition:all 0.2s;cursor:default;}
+  .tag:hover{background:var(--pastel-yellow);border-color:var(--pastel-yellow);color:var(--deep-navy);}
+
+  /* ── CTA ── */
+  .article-cta{max-width:760px;margin:0 auto;padding:0 24px 72px;}
+  .cta-box{background:var(--deep-navy);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .cta-box h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--cream);margin-bottom:6px;}
+  .cta-box p{font-size:0.85rem;color:rgba(253,250,240,0.55);line-height:1.6;}
+  .cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--pastel-yellow);color:var(--deep-navy);padding:12px 28px;border-radius:4px;font-weight:700;font-size:0.88rem;text-decoration:none;white-space:nowrap;transition:all 0.25s;flex-shrink:0;}
+  .cta-btn:hover{background:var(--mint);transform:translateY(-2px);}
+
+  /* ── RELATED ── */
+  .related{max-width:760px;margin:0 auto;padding:0 24px 80px;border-top:1px solid rgba(13,27,62,0.08);}
+  .related-label{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);margin:44px 0 22px;}
+  .related-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:540px){.related-grid{grid-template-columns:1fr;}}
+  .related-card{border:1px solid rgba(13,27,62,0.1);border-radius:12px;padding:20px;background:white;transition:all 0.25s;text-decoration:none;display:block;}
+  .related-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(13,27,62,0.1);}
+  .related-chip{background:var(--light-beige);border-radius:10px;padding:3px 10px;font-size:0.67rem;font-family:'Space Mono',monospace;font-weight:700;color:var(--text-mid);display:inline-block;margin-bottom:10px;}
+  .related-card h4{font-family:'Playfair Display',serif;font-size:0.98rem;font-weight:700;color:var(--deep-navy);line-height:1.35;margin-bottom:6px;}
+  .related-card p{font-size:0.8rem;color:var(--text-mid);line-height:1.55;}
+  .coming-badge{display:inline-block;margin-top:10px;font-family:'Space Mono',monospace;font-size:0.62rem;background:var(--light-beige);color:var(--text-mid);padding:3px 10px;border-radius:10px;}
+
+  /* ── FOOTER ── */
+  footer{background:var(--deep-navy);border-top:1px solid rgba(249,228,91,0.1);padding:24px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .footer-mark{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--pastel-yellow);}
+  .footer-text{font-size:0.75rem;color:rgba(253,250,240,0.4);}
+  .footer-link{font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(253,250,240,0.4);text-decoration:none;}
+
+  /* ── FADE UP ── */
+  .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s,transform 0.6s;}
+  .fade-up.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- ══ NAV ══ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Kim Hoàn<span>.</span></a>
+    <div class="nav-right">
+      <a href="/#blog" class="nav-back">
+        <span class="vi">← Về Portfolio</span>
+        <span class="en">← Back to Portfolio</span>
+      </a>
+      <div class="lang-toggle" onclick="toggleLang()">
+        <div class="lang-btn" id="btn-en">EN</div>
+        <div class="lang-btn active" id="btn-vi">VI</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="article-hero fade-up">
+  <div class="kicker">
+    <span class="vi">Cuộc sống · Personal Brand</span>
+    <span class="en">Daily Life · Personal Brand</span>
+  </div>
+
+  <h1 class="article-title">
+    <span class="vi">Một ngày bình thường của mình — khi bạn vừa là sinh viên, vừa làm content, vừa học AI</span>
+    <span class="en">A Day in My Life — When You're a Student, a Content Creator, and an AI Learner All at Once</span>
+  </h1>
+
+  <p class="article-subtitle">
+    <span class="vi">Không phải "morning routine" 5 giờ sáng hay 10 bước productivity hack — chỉ là một ngày thật sự của mình.</span>
+    <span class="en">No 5am morning routines or 10-step productivity hacks — just an honest look at what my day actually looks like.</span>
+  </p>
+
+  <div class="article-meta">
+    <div class="author-row">
+      <div class="author-avatar">
+        <img src="/hero.jpg" alt="Kim Hoàn" onerror="this.style.display='none'">
+      </div>
+      <div class="author-name">Nguyễn Thị Kim Hoàn</div>
+    </div>
+    <div class="meta-dot"></div>
+    <span class="meta-item">
+      <span class="vi">6 phút đọc</span>
+      <span class="en">6 min read</span>
+    </span>
+    <div class="meta-dot"></div>
+    <span class="meta-item">
+      <span class="vi">Cuộc sống · AI · Content</span>
+      <span class="en">Daily Life · AI · Content</span>
+    </span>
+  </div>
+</header>
+
+<!-- ══ BODY ══ -->
+<article class="article-body">
+
+  <p>
+    <span class="vi">Mình thường thấy trên mạng những bài viết kiểu: "Tôi thức dậy lúc 4:30 sáng, thiền 30 phút, chạy bộ 5km, rồi mới mở laptop." Mình đọc xong thì admire thật — nhưng đó không phải cuộc sống của mình. Ngày của mình lộn xộn hơn, thực tế hơn, và thú thực là cũng thú vị hơn theo cách riêng của nó.</span>
+    <span class="en">I constantly see posts that go: "I wake up at 4:30am, meditate for 30 minutes, run 5km, then open my laptop." Genuinely impressive — but that's not my life. My days are messier, more real, and honestly more interesting in their own way.</span>
+  </p>
+
+  <p>
+    <span class="vi">Bài này là một ngày điển hình của mình — sinh viên Marketing năm 3, đang tự học AI, chạy fanpage, và cố gắng xây dựng cái portfolio mà bạn đang đọc lúc này.</span>
+    <span class="en">This is a typical day for me — a third-year Marketing student, self-teaching AI, running fanpages, and trying to build the very portfolio you're reading right now.</span>
+  </p>
+
+  <h2>
+    <span class="vi">Buổi sáng: bắt đầu chậm nhưng có chủ đích</span>
+    <span class="en">Morning: slow but intentional</span>
+  </h2>
+
+  <div class="timeline-item">
+    <span class="timeline-time">7:30</span>
+    <div class="timeline-content">
+      <p>
+        <span class="vi">Mình thức dậy không có chuông báo thứ hai. Không phải vì mình kỷ luật — mà vì mình đã học cách ngủ đủ giấc thay vì cố thức khuya làm việc. Cái điện thoại đầu tiên mình mở không phải Instagram, mà là app ghi chú để xem hôm qua mình note lại gì trước khi ngủ.</span>
+        <span class="en">I wake up without hitting snooze. Not because I'm disciplined — but because I've learned to sleep enough instead of staying up late to grind. The first app I open isn't Instagram — it's my notes app to check what I jotted down before bed.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-time">8:00</span>
+    <div class="timeline-content">
+      <p>
+        <span class="vi">Cà phê sữa đá. Không thể thiếu. Trong khi chờ pha cà phê, mình đọc lướt qua 2–3 bài trên newsletter về Marketing hoặc AI mình đã subscribe. Không phải để "cập nhật tin tức" mà để nạp chất liệu cho đầu — đôi khi một câu trong bài lại trở thành ý tưởng content cho cả tuần.</span>
+        <span class="en">Iced milk coffee. Non-negotiable. While it brews, I skim 2–3 articles from Marketing or AI newsletters I'm subscribed to. Not to "stay updated" — but to feed my brain raw material. Sometimes one sentence from an article becomes a content idea for the whole week.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-time">8:30</span>
+    <div class="timeline-content">
+      <p>
+        <span class="vi">Mở Claude. Đây là thói quen buổi sáng quan trọng nhất của mình. Mình paste bản draft content đã viết hôm qua vào và hỏi: <em>"Đoạn nào nghe lủng củng? Câu nào có thể viết tự nhiên hơn?"</em> Không phải để Claude viết thay — mà để có thêm một "cặp mắt" đọc lại trước khi mình quyết định đăng.</span>
+        <span class="en">I open Claude. This is my most important morning ritual. I paste yesterday's content draft and ask: <em>"What sounds awkward? Which sentence could flow more naturally?"</em> Not to have Claude write for me — but to get a second pair of eyes before I decide to post.</span>
+      </p>
+    </div>
+  </div>
+
+  <h2>
+    <span class="vi">Buổi trưa: lớp học và khoảnh khắc "à ra thế"</span>
+    <span class="en">Midday: class and those "aha" moments</span>
+  </h2>
+
+  <p>
+    <span class="vi">Hầu hết các ngày trong tuần mình có lịch học từ 9 giờ hoặc 10 giờ sáng. Mình không phải kiểu sinh viên ngồi cuối lớp ngủ gật — mình hay ngồi giữa, vừa nghe giảng vừa mở notes ghi nhanh bất cứ thứ gì mình thấy liên quan đến thực tế, không chỉ lý thuyết thuần túy.</span>
+    <span class="en">Most weekdays I have class from 9 or 10am. I'm not the type to sit in the back and nod off — I usually sit in the middle, half-listening, half-jotting down anything that connects to real-world application, not just pure theory.</span>
+  </p>
+
+  <div class="timeline-item">
+    <span class="timeline-time">12:00</span>
+    <div class="timeline-content">
+      <p>
+        <span class="vi">Ăn trưa với bạn bè. Đây là phần mình trân trọng nhất trong ngày — không phải vì mình hướng ngoại đặc biệt, mà vì những cuộc trò chuyện lúc này thường cho mình góc nhìn mà mình không tìm được trong sách hay AI. Hôm nay bạn mình kể về một fanpage của trường cũ đăng content dở tệ, và mình nhẩm trong đầu: <em>đây là nội dung bài blog tiếp theo rồi.</em></span>
+        <span class="en">Lunch with friends. This is honestly my favorite part of the day — not because I'm particularly extroverted, but because these conversations give me perspectives I can't find in books or AI. Today a friend was complaining about their old school's fanpage posting terrible content, and I was already thinking: <em>there's my next blog post.</em></span>
+      </p>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <p>
+      <span class="vi">Ý tưởng tốt nhất của mình không đến từ brainstorm một mình — nó đến từ những cuộc nói chuyện bình thường nhất.</span>
+      <span class="en">My best ideas don't come from solo brainstorming — they come from the most ordinary conversations.</span>
+    </p>
+  </div>
+
+  <h2>
+    <span class="vi">Buổi chiều: khoảng thời gian làm việc thật sự</span>
+    <span class="en">Afternoon: where the real work happens</span>
+  </h2>
+
+  <div class="timeline-item">
+    <span class="timeline-time">13:30</span>
+    <div class="timeline-content">
+      <p>
+        <span class="vi">Về nhà, pha thêm ly trà, và mở máy tính. Buổi chiều là lúc mình làm việc hiệu quả nhất. Hôm nay mình cần viết 3 bài caption cho fanpage một khách hàng nhỏ mình đang hỗ trợ, và thiết kế 2 tấm ảnh bằng Canva.</span>
+        <span class="en">Back home, brew some tea, open the laptop. Afternoons are when I work best. Today I need to write 3 captions for a small client's fanpage and design 2 graphics in Canva.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-time">14:00</span>
+    <div class="timeline-content">
+      <p>
+        <span class="vi">Mình bắt đầu bằng việc viết bản nháp thô cho cả 3 caption — không cần đẹp, chỉ cần ra ý. Sau đó mình paste cả 3 vào Claude và hỏi: <em>"Bài nào hook yếu nhất? Gợi ý cho mình 2 cách viết lại câu đầu tiên."</em> Mình không chọn blindly câu AI đề xuất — mình đọc, lấy ý, rồi tự viết lại theo giọng của mình.</span>
+        <span class="en">I start by writing rough drafts for all 3 captions — doesn't need to be pretty, just needs to exist. Then I paste all three into Claude and ask: <em>"Which hook is weakest? Give me 2 ways to rewrite the opening line."</em> I don't blindly pick whatever AI suggests — I read it, take the idea, then rewrite it in my own voice.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <p>
+      <span class="vi">Workflow content của mình: <strong>Mình viết bản thô → AI phản hồi điểm yếu → Mình chỉnh → AI kiểm tra lại → Mình quyết định.</strong> AI là công cụ, không phải người ra quyết định. Giọng văn cuối cùng luôn phải là của mình.</span>
+      <span class="en">My content workflow: <strong>I write the rough draft → AI flags the weak spots → I revise → AI checks again → I decide.</strong> AI is a tool, not the decision-maker. The final voice always has to be mine.</span>
+    </p>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-time">15:30</span>
+    <div class="timeline-content">
+      <p>
+        <span class="vi">Canva. Mình không học thiết kế chuyên sâu, nhưng mình đã tự mày mò đủ để tạo ra những tấm ảnh đơn giản mà vẫn trông nhất quán về thương hiệu. Khoảng 45 phút cho 2 graphics — nhanh hơn nhiều so với lúc mới bắt đầu.</span>
+        <span class="en">Canva time. I haven't studied design formally, but I've self-taught enough to create simple visuals that still look brand-consistent. About 45 minutes for 2 graphics — way faster than when I first started.</span>
+      </p>
+    </div>
+  </div>
+
+  <h2>
+    <span class="vi">Buổi tối: học, viết, và dừng lại đúng lúc</span>
+    <span class="en">Evening: learn, write, and know when to stop</span>
+  </h2>
+
+  <div class="timeline-item">
+    <span class="timeline-time">18:30</span>
+    <div class="timeline-content">
+      <p>
+        <span class="vi">Ăn cơm, xem một video ngắn — thường là về AI, Marketing hoặc thứ gì đó mình đang tò mò. Không phải vì mình "hustle" 24/7, mà vì mình thích học theo kiểu này hơn ngồi đọc giáo trình.</span>
+        <span class="en">Dinner, then one short video — usually about AI, Marketing, or something I'm currently curious about. Not because I "hustle" 24/7, but because I genuinely prefer learning this way over reading textbooks.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-time">20:00</span>
+    <div class="timeline-content">
+      <p>
+        <span class="vi">Đây là khoảng thời gian mình viết cho bản thân — nhật ký, draft bài blog, hoặc note lại những gì mình học được trong ngày. Không cần hoàn hảo. Không cần ai đọc ngay. Chỉ cần ghi lại.</span>
+        <span class="en">This is when I write for myself — journal entries, blog drafts, or notes on what I learned today. Doesn't need to be perfect. Doesn't need to be read by anyone yet. Just needs to be written down.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <span class="timeline-time">22:00</span>
+    <div class="timeline-content">
+      <p>
+        <span class="vi">Mình dừng lại. Đây là điều mình mất nhiều thời gian nhất để học — biết khi nào nên đặt máy tính xuống. Không phải vì không còn việc để làm, mà vì làm thêm sau 10 giờ tối thường cho ra kết quả tệ hơn cả không làm. Mình note lại 1–2 việc cần làm ngày mai, rồi đóng máy.</span>
+        <span class="en">I stop. This is the hardest thing I've had to learn — knowing when to close the laptop. Not because there's nothing left to do, but because working past 10pm usually produces worse results than not working at all. I note down 1–2 things for tomorrow, then shut it down.</span>
+      </p>
+    </div>
+  </div>
+
+  <h2>
+    <span class="vi">Điều mình muốn bạn nhớ từ bài này</span>
+    <span class="en">What I want you to take from this</span>
+  </h2>
+
+  <p>
+    <span class="vi">Ngày của mình không hoàn hảo. Có hôm mình ngủ quên mất buổi học. Có hôm cả ngày không viết được một câu ra hồn. Có hôm mình mở Claude 10 lần mà vẫn không ra được content đúng ý.</span>
+    <span class="en">My days aren't perfect. Some days I sleep through a class. Some days I can't write a single decent sentence. Some days I open Claude 10 times and still can't crack the content I'm going for.</span>
+  </p>
+
+  <p>
+    <span class="vi">Nhưng điều mình học được sau nhiều tháng xây dựng thói quen này là: <strong>tính nhất quán quan trọng hơn tính hoàn hảo.</strong> Ngày tốt nhất không phải ngày mình làm được nhiều nhất — mà là ngày mình làm đúng thứ mình cần làm, dù chỉ một chút.</span>
+    <span class="en">But what I've learned after months of building this routine: <strong>consistency matters more than perfection.</strong> The best day isn't the most productive day — it's the day I did the right things, even just a little.</span>
+  </p>
+
+  <p>
+    <span class="vi">Và AI — Claude, ChatGPT hay bất cứ tool nào — không phải bí kíp thần kỳ. Nó chỉ là một phần của quy trình. Phần quan trọng nhất vẫn là <em>bạn — tư duy, giọng văn, và quyết định cuối cùng luôn là của bạn.</em></span>
+    <span class="en">And AI — Claude, ChatGPT, or any tool — isn't a magic shortcut. It's just one part of the process. The most important part is still <em>you — the thinking, the voice, and the final call always belong to you.</em></span>
+  </p>
+
+  <div class="tag-row">
+    <span class="tag"><span class="vi">Cuộc sống sinh viên</span><span class="en">Student Life</span></span>
+    <span class="tag">AI</span>
+    <span class="tag">Content</span>
+    <span class="tag">Marketing</span>
+    <span class="tag">Claude</span>
+    <span class="tag">Canva</span>
+    <span class="tag">Personal Brand</span>
+  </div>
+
+</article>
+
+<!-- ══ CTA ══ -->
+<div class="article-cta fade-up">
+  <div class="cta-box">
+    <div>
+      <h3>
+        <span class="vi">Ngày của bạn trông như thế nào?</span>
+        <span class="en">What does your day look like?</span>
+      </h3>
+      <p>
+        <span class="vi">Mình luôn tò mò về routine của những bạn trẻ đang làm Marketing và Content. Kể cho mình nghe nhé!</span>
+        <span class="en">I'm always curious about the routines of fellow young marketers and content creators. Tell me about yours!</span>
+      </p>
+    </div>
+    <a href="/#contact" class="cta-btn">
+      <span class="vi">Nhắn Kim Hoàn →</span>
+      <span class="en">Message Kim Hoàn →</span>
+    </a>
+  </div>
+</div>
+
+<!-- ══ RELATED ══ -->
+<div class="related fade-up">
+  <div class="related-label">
+    <span class="vi">Bài viết khác</span>
+    <span class="en">More posts</span>
+  </div>
+  <div class="related-grid">
+    <a href="/blog/" class="related-card" style="opacity:1;">
+      <span class="related-chip">AI &amp; Marketing</span>
+      <h4>
+        <span class="vi">Tôi là sinh viên Marketing và tôi dùng AI như thế nào mỗi ngày</span>
+        <span class="en">I'm a Marketing Student — Here's How I Use AI Every Day</span>
+      </h4>
+      <p>
+        <span class="vi">AI không phải kẻ thù — nếu bạn biết dùng nó như người đồng hành thật sự.</span>
+        <span class="en">AI isn't the enemy — not if you know how to use it as a genuine co-pilot.</span>
+      </p>
+    </a>
+    <div class="related-card" style="opacity:0.65;cursor:default;">
+      <span class="related-chip">Social Media</span>
+      <h4>
+        <span class="vi">Những sai lầm khi quản lý fanpage đầu tiên</span>
+        <span class="en">Mistakes I Made Managing My First Fanpage</span>
+      </h4>
+      <p>
+        <span class="vi">Bài học thật từ thực chiến — những gì không ai nói với bạn khi mới bắt đầu.</span>
+        <span class="en">Real lessons from the trenches — what nobody tells you when you start.</span>
+      </p>
+      <span class="coming-badge"><span class="vi">Sắp ra mắt</span><span class="en">Coming soon</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-mark">Kim Hoàn Portfolio</div>
+  <div class="footer-text">© 2025 · Made with ♥ by Kim Hoàn</div>
+  <a href="/" class="footer-link">
+    <span class="vi">← Về trang chủ</span>
+    <span class="en">← Home</span>
+  </a>
+</footer>
+
+<script>
+  // ── LANG TOGGLE ──
+  let lang = 'vi';
+  function toggleLang() {
+    lang = lang === 'vi' ? 'en' : 'vi';
+    document.body.classList.toggle('lang-en', lang === 'en');
+    document.getElementById('btn-vi').classList.toggle('active', lang === 'vi');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang;
+    document.title = lang === 'en'
+      ? 'Blog – Kim Hoàn | A Day in My Life as a Marketing Student'
+      : 'Blog – Kim Hoàn | Một ngày bình thường của mình';
+  }
+
+  // ── PROGRESS BAR + NAV SHADOW ──
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const pct = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+    document.getElementById('progress-bar').style.width = (pct * 100) + '%';
+    document.getElementById('navbar').classList.toggle('scrolled', doc.scrollTop > 40);
+  });
+
+  // ── FADE UP ──
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
