@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ôn thi Lịch sử Đảng Cộng sản Việt Nam</title>
+<style>
+  :root{
+    --ink:#2a1a12; --paper:#fbf4e6; --gold:#d4a13a; --gold-deep:#a9781f;
+    --red:#9a2226; --red-soft:#c94b4f; --leaf:#4f6f4a; --mut:#7a6a5c;
+    --line:#e6dbc4; --card:#fffdf7; --cream2:#f5ead2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--paper);color:var(--ink);
+    line-height:1.6;padding:14px 14px 90px;max-width:820px;margin:0 auto;-webkit-tap-highlight-color:transparent}
+
+  header{text-align:center;padding:14px 0 6px}
+  header .eyebrow{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--red);font-weight:800}
+  header h1{font-size:1.4rem;margin:5px 0 2px;font-weight:800;color:var(--red)}
+  header p{color:var(--mut);font-size:.83rem}
+
+  /* top bar: timer + music */
+  .topbar{position:sticky;top:0;z-index:40;display:flex;gap:8px;align-items:center;justify-content:space-between;
+    background:var(--paper);padding:8px 0;border-bottom:1px solid var(--line);margin-bottom:12px;flex-wrap:wrap}
+  .timer{display:flex;align-items:center;gap:8px}
+  .clock{font-variant-numeric:tabular-nums;font-weight:800;font-size:1.15rem;background:var(--ink);color:var(--paper);
+    padding:5px 12px;border-radius:10px;letter-spacing:.05em}
+  .tbtn{border:none;border-radius:9px;padding:7px 11px;font-weight:700;font-size:.78rem;cursor:pointer;background:var(--cream2);color:var(--ink)}
+  .tbtn.on{background:var(--gold);color:var(--ink)}
+  .tbtn.music.on{background:var(--leaf);color:#fff}
+
+  .tabs{display:flex;gap:6px;margin-bottom:6px}
+  .tab{flex:1;padding:11px 6px;border:none;border-radius:12px;background:var(--cream2);color:var(--ink);
+    font-weight:800;font-size:.8rem;cursor:pointer;transition:.15s;text-align:center;line-height:1.25}
+  .tab small{display:block;font-weight:600;font-size:.68rem;color:var(--mut)}
+  .tab.active{background:var(--red);color:#fff}
+  .tab.active small{color:#f6d9d0}
+
+  .toolrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
+  .chip{border:2px solid var(--line);background:var(--card);border-radius:20px;padding:6px 13px;font-size:.78rem;font-weight:700;cursor:pointer;color:var(--mut)}
+  .chip.on{border-color:var(--gold);background:#fff8e6;color:var(--ink)}
+  .spacer{flex:1}
+  .prog{font-size:.78rem;color:var(--mut);font-weight:700}
+
+  .panel{display:none;animation:fade .25s}
+  .panel.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .q{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:16px 16px 14px;margin-bottom:12px;
+    box-shadow:0 2px 8px rgba(80,50,20,.05)}
+  .q .num{display:inline-block;font-size:.72rem;font-weight:800;color:#fff;background:var(--gold-deep);
+    padding:2px 9px;border-radius:20px;margin-bottom:8px}
+  .q .num.done{background:var(--leaf)}
+  .q .stem{font-weight:700;font-size:.94rem;margin-bottom:11px}
+
+  .opt{display:flex;gap:9px;align-items:flex-start;width:100%;text-align:left;padding:11px 13px;margin-bottom:7px;
+    border:2px solid var(--line);border-radius:11px;background:var(--card);cursor:pointer;font-size:.9rem;
+    font-family:inherit;color:var(--ink);transition:.12s;line-height:1.45}
+  .opt:hover{border-color:var(--gold)}
+  .opt .k{font-weight:800;color:var(--gold-deep);flex:none}
+  .opt.correct{border-color:var(--leaf);background:#eef4ec}
+  .opt.correct .k{color:var(--leaf)}
+  .opt.wrong{border-color:var(--red);background:#fbecec}
+  .opt.wrong .k{color:var(--red)}
+  .opt.lock{cursor:default}
+  .explain{margin-top:6px;font-size:.82rem;color:var(--leaf);font-weight:700;display:none}
+  .explain.show{display:block}
+
+  textarea{width:100%;min-height:90px;border:2px solid var(--line);border-radius:11px;padding:11px;
+    font-family:inherit;font-size:.9rem;resize:vertical;line-height:1.55;background:#fffef9}
+  textarea:focus{outline:none;border-color:var(--gold)}
+  .btn{padding:10px 16px;border:none;border-radius:10px;background:var(--gold);color:var(--ink);font-weight:800;cursor:pointer;font-size:.85rem;margin-top:8px}
+  .btn.ghost{background:transparent;border:2px solid var(--line);color:var(--mut)}
+  .btn.red{background:var(--red);color:#fff}
+  .row{display:flex;gap:8px;flex-wrap:wrap}
+  .ans{background:#fff8e6;border:1px dashed var(--gold);border-radius:11px;padding:12px;margin-top:10px;font-size:.88rem;display:none;line-height:1.6}
+  .ans.show{display:block}
+  .ans b{color:var(--gold-deep)}
+  .ans .line{margin-bottom:3px}
+  .accuracy{font-weight:800;margin-top:9px;font-size:.9rem}
+  .diff-hit{background:#eef4ec;border-radius:3px}
+  .diff-miss{background:#fbecec;border-radius:3px;text-decoration:line-through;opacity:.65}
+
+  .essay-sub{display:flex;gap:6px;margin-bottom:12px}
+  .essay-sub button{flex:1;padding:9px;border:2px solid var(--line);border-radius:10px;background:var(--card);
+    font-weight:700;font-size:.78rem;cursor:pointer;color:var(--mut)}
+  .essay-sub button.on{border-color:var(--red);background:#fbecec;color:var(--red)}
+  .heading{font-size:.98rem;font-weight:800;margin:4px 0;color:var(--gold-deep)}
+  .read p{font-size:.9rem;margin-bottom:10px}
+
+  /* score summary */
+  .summary{background:var(--ink);color:var(--paper);border-radius:15px;padding:18px;text-align:center;margin-bottom:14px;display:none}
+  .summary.show{display:block}
+  .summary .big{font-size:2rem;font-weight:800;color:var(--gold)}
+
+  footer{text-align:center;color:var(--mut);font-size:.72rem;padding:22px 0 6px}
+
+  /* exit modal */
+  .modal-bg{position:fixed;inset:0;background:rgba(20,10,5,.6);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--card);border-radius:16px;padding:22px;max-width:360px;text-align:center}
+  .modal h3{color:var(--red);margin-bottom:8px}
+  .modal p{font-size:.88rem;color:var(--mut);margin-bottom:16px}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Ôn tập cuối kỳ</div>
+  <h1>Lịch sử Đảng Cộng sản Việt Nam</h1>
+  <p>81 câu · Trắc nghiệm · Câu hỏi ngắn · Tự luận</p>
+</header>
+
+<div class="topbar">
+  <div class="timer">
+    <span class="clock" id="clock">00:00</span>
+    <button class="tbtn on" id="btnStart" onclick="toggleTimer()">⏸ Tạm dừng</button>
+    <button class="tbtn" onclick="resetTimer()">↺</button>
+  </div>
+  <button class="tbtn music" id="btnMusic" onclick="toggleMusic()">🔊 Nhạc: Tắt</button>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('p1',this)">Phần 1<small>Trắc nghiệm (45)</small></button>
+  <button class="tab" onclick="showTab('p2',this)">Phần 2<small>Câu ngắn (30)</small></button>
+  <button class="tab" onclick="showTab('p3',this)">Phần 3<small>Tự luận (2)</small></button>
+</div>
+
+<!-- PART 1 -->
+<div class="panel show" id="p1">
+  <div class="toolrow">
+    <span class="chip on" id="chipAll" onclick="filterMCQ('all')">Tất cả</span>
+    <span class="chip" id="chipTodo" onclick="filterMCQ('todo')">Chưa làm</span>
+    <span class="spacer"></span>
+    <span class="prog" id="mcqProg">0/45</span>
+  </div>
+  <div class="summary" id="mcqSummary"></div>
+  <div id="mcqBox"></div>
+  <div class="row" style="margin-top:6px">
+    <button class="btn red" onclick="submitMCQ()">Nộp bài & chấm điểm</button>
+    <button class="btn ghost" onclick="resetMCQ()">Làm lại từ đầu</button>
+  </div>
+</div>
+
+<!-- PART 2 -->
+<div class="panel" id="p2">
+  <div class="toolrow"><span class="prog">Tự nghĩ đáp án rồi bấm "Xem đáp án" để đối chiếu</span></div>
+  <div id="shortBox"></div>
+</div>
+
+<!-- PART 3 -->
+<div class="panel" id="p3">
+  <div class="essay-sub">
+    <button id="es0" class="on" onclick="pickEssay(0)">Thành tựu Đổi mới 1986–2021</button>
+    <button id="es1" onclick="pickEssay(1)">Đường lối Đại hội VI (1986)</button>
+  </div>
+  <div id="essayBox"></div>
+</div>
+
+<footer>Tự học offline · Đáp án trắc nghiệm do tra cứu, nên đối chiếu lại giáo trình · Chúc Hoàn thi tốt 🌷</footer>
+
+<!-- EXIT MODAL -->
+<div class="modal-bg" id="exitModal">
+  <div class="modal">
+    <h3>Thoát bài ôn?</h3>
+    <p>Nếu thoát bây giờ, toàn bộ câu trả lời và tiến trình làm bài sẽ bị mất. Bạn có chắc không?</p>
+    <div class="row" style="justify-content:center">
+      <button class="btn ghost" onclick="closeExit()">Ở lại làm tiếp</button>
+      <button class="btn red" onclick="confirmExit()">Thoát & xóa hết</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==================== DATA ==================== */
+// PART 1 — Trắc nghiệm. correct = index 0-3 (A,B,C,D)
+const MCQ=[
+{s:"Nhiệm vụ của khoa học lịch sử Đảng Cộng sản Việt Nam.",o:["Trình bày có hệ thống Cương lĩnh, đường lối của Đảng","Tái hiện tiến trình lịch sử lãnh đạo, đấu tranh của Đảng","Tổng kết lịch sử của Đảng","Tất cả các phương án đều đúng"],c:3},
+{s:"Phương pháp nghiên cứu môn Lịch sử Đảng Cộng sản Việt Nam gồm những phương pháp nào?",o:["Phương pháp lịch sử; phương pháp logic","Phương pháp lịch sử; logic; tổng kết thực tiễn lịch sử","Phương pháp lịch sử; logic; tổng kết thực tiễn lịch sử; so sánh","Phương pháp logic; tổng kết thực tiễn lịch sử; so sánh"],c:2},
+{s:"Chức năng của khoa học Lịch sử Đảng Cộng sản Việt Nam.",o:["Nhận thức; giáo dục; dự báo và phê phán","Nhận thức; giáo dục","Giáo dục; dự báo và phê phán","Nhận thức; dự báo và phê phán"],c:0},
+{s:"Năm 1929 ở Việt Nam đã xuất hiện các tổ chức cộng sản nào?",o:["Đông Dương Cộng sản Đảng","An Nam Cộng sản Đảng","Đông Dương Cộng sản Liên đoàn","Tất cả các phương án đều đúng"],c:3},
+{s:"Hội nghị thành lập Đảng năm 1930 do ai chủ trì?",o:["Nguyễn Đức Cảnh","Trịnh Đình Cửu","Nguyễn Ái Quốc","Trần Phú"],c:2},
+{s:"Đảng Cộng sản Việt Nam thành lập ngày, tháng, năm nào?",o:["Ngày 03 tháng 2 năm 1930","Ngày 06 tháng 2 năm 1930","Ngày 24 tháng 2 năm 1930","Ngày 07 tháng 3 năm 1930"],c:0},
+{s:"Cương lĩnh chính trị đầu tiên do Nguyễn Ái Quốc soạn thảo xác định phương hướng chiến lược của cách mạng Việt Nam là gì?",o:["Tư sản dân quyền cách mạng và thổ địa cách mạng để đi tới xã hội cộng sản","Tư sản dân quyền cách mạng và thổ địa cách mạng","Thổ địa cách mạng","Tư sản dân quyền"],c:0},
+{s:"Ai là Tổng Bí thư đầu tiên của Đảng Cộng sản Việt Nam?",o:["Trịnh Đình Cửu","Trần Phú","Lê Hồng Phong","Hà Huy Tập"],c:1},
+{s:"Khi nào phong trào công nhân Việt Nam hoàn toàn trở thành một phong trào tự giác?",o:["Năm 1920 (công hội ở Sài Gòn)","Năm 1925 (bãi công Ba Son)","Năm 1929 (ba tổ chức cộng sản)","Năm 1930 (Đảng Cộng sản Việt Nam ra đời)"],c:3},
+{s:"Luận cương chính trị tháng 10 năm 1930 do ai soạn thảo?",o:["Trần Phú","Nguyễn Ái Quốc","Trịnh Đình Cửu","Nguyễn Đức Cảnh"],c:0},
+{s:"Vai trò lãnh đạo của Đảng trong Luận cương Chính trị tháng 10-1930 được xác định như thế nào?",o:["Sự lãnh đạo của Đảng là điều kiện cốt yếu cho thắng lợi của cách mạng","Làm cách mạng tư sản dân quyền và thổ địa cách mạng","Đoàn kết rộng rãi các tầng lớp nhân dân chống thực dân, phong kiến","Đánh đuổi thực dân Pháp xâm lược"],c:0},
+{s:"Tháng 6-1932, Chương trình hành động của Đảng Cộng sản Đông Dương gồm những nội dung nào?",o:["Đòi các quyền tự do, bỏ luật hình đặc biệt, trả tự do tù chính trị...","Bỏ thuế thân, thuế ngụ cư và các thứ thuế vô lý khác","Bỏ các độc quyền về rượu, muối và thuốc phiện","Tất cả các phương án đều đúng"],c:3},
+{s:"Ngày 16-8-1945, Quốc dân Đại hội họp tại Tân Trào quyết định những vấn đề gì?",o:["Tán thành Tổng khởi nghĩa và Mười chính sách của Việt Minh","Đặt tên nước Việt Nam Dân chủ Cộng hòa, quốc kỳ, quốc ca","Thành lập Ủy ban dân tộc giải phóng do Hồ Chí Minh làm Chủ tịch","Tất cả các phương án đều đúng"],c:3},
+{s:"Ngày 16-8-1945, Ủy ban dân tộc giải phóng do ai làm chủ tịch?",o:["Hồ Chí Minh","Phạm Văn Đồng","Võ Nguyên Giáp","Trường Chinh"],c:0},
+{s:"Việt Nam Tuyên truyền giải phóng quân được thành lập ngày, tháng, năm nào?",o:["Ngày 19 tháng 12 năm 1944","Ngày 20 tháng 12 năm 1944","Ngày 21 tháng 12 năm 1944","Ngày 22 tháng 12 năm 1944"],c:3},
+{s:"Chỉ thị \"Kháng chiến, kiến quốc\" (25-11-1945) xác định ai là kẻ thù chính?",o:["Phát xít Nhật","Quân đội Tưởng Giới Thạch","Thực dân Pháp xâm lược","Thực dân Anh"],c:2},
+{s:"Lời kêu gọi Toàn quốc kháng chiến của Chủ tịch Hồ Chí Minh viết vào ngày nào?",o:["Ngày 18 tháng 12 năm 1946","Ngày 19 tháng 12 năm 1946","Ngày 20 tháng 12 năm 1946","Ngày 21 tháng 12 năm 1946"],c:1},
+{s:"Đường lối kháng chiến (1945-1954) thể hiện tập trung trong những văn kiện nào?",o:["Toàn dân kháng chiến (12/12/1946)","Lời kêu gọi toàn quốc kháng chiến (19/12/1946)","Kháng chiến nhất định thắng lợi (1947) – Trường Chinh","Tất cả các phương án đều đúng"],c:3},
+{s:"Phiên họp đầu tiên của Chính phủ lâm thời (3-9-1945) xác định nhiệm vụ lớn trước mắt nào?",o:["Diệt giặc đói","Diệt giặc dốt","Diệt giặc ngoại xâm","Tất cả các phương án đều đúng"],c:3},
+{s:"Ban Thường trực Quốc hội khóa I (2-3-1946) do ai làm Chủ tịch?",o:["Trường Chinh","Phạm Văn Đồng","Huỳnh Thúc Kháng","Nguyễn Văn Tố"],c:3},
+{s:"Lực lượng vũ trang được xây dựng trong kháng chiến chống Pháp gồm những lực lượng nào?",o:["Bộ đội chủ lực","Bộ đội địa phương","Dân quân du kích","Tất cả các phương án đều đúng"],c:3},
+{s:"Tháng 9/1954, Bộ Chính trị đề ra nhiệm vụ chủ yếu trước mắt của miền Bắc là gì?",o:["Hàn gắn vết thương chiến tranh, phục hồi kinh tế quốc dân","Giảm tô, giảm tức và cải cách ruộng đất","Đưa miền Bắc tiến lên chủ nghĩa xã hội","Xây dựng nền văn hóa mới, con người mới"],c:0},
+{s:"Nghị quyết Bộ Chính trị (9-1954) nêu nhiệm vụ trước mắt của cách mạng miền Nam là gì?",o:["Đấu tranh đòi thi hành Hiệp định","Chuyển hướng công tác cho phù hợp điều kiện mới","Tập hợp mọi lực lượng dân tộc, dân chủ, hòa bình, thống nhất...","Tất cả các phương án đều đúng"],c:3},
+{s:"Mặt trận Dân tộc giải phóng miền Nam Việt Nam (20/12/1960) do ai làm chủ tịch?",o:["Nguyễn Thị Bình","Nguyễn Thị Định","Huỳnh Tấn Phát","Nguyễn Hữu Thọ"],c:3},
+{s:"Đại hội đại biểu toàn quốc lần thứ III của Đảng họp tại Hà Nội vào tháng năm nào?",o:["Tháng 8 năm 1960","Tháng 9 năm 1960","Tháng 10 năm 1960","Tháng 11 năm 1960"],c:1},
+{s:"Trận \"Điện Biên Phủ trên không\" diễn ra thời gian nào?",o:["Từ 18 đến 30 tháng 12 năm 1972","Từ 18 đến 24 tháng 12 năm 1972","Từ 18 đến 26 tháng 12 năm 1972","Từ 18 đến 28 tháng 12 năm 1972"],c:0},
+{s:"Hiệp định Paris về chấm dứt chiến tranh, lập lại hòa bình ở Việt Nam ký kết ngày nào?",o:["Ngày 27 tháng 1 năm 1973","Ngày 28 tháng 1 năm 1973","Ngày 29 tháng 1 năm 1973","Ngày 30 tháng 1 năm 1973"],c:0},
+{s:"Cuộc Tổng tiến công và nổi dậy mùa Xuân 1975 bắt đầu bằng chiến dịch nào?",o:["Chiến dịch giải phóng Phước Long","Chiến dịch giải phóng Đà Nẵng","Chiến dịch Tây Nguyên","Chiến dịch giải phóng Huế"],c:2},
+{s:"Chiến dịch Hồ Chí Minh giải phóng Sài Gòn – Gia Định bắt đầu ngày nào?",o:["Ngày 25 tháng 4 năm 1975","Ngày 26 tháng 4 năm 1975","Ngày 27 tháng 4 năm 1975","Ngày 28 tháng 4 năm 1975"],c:1},
+{s:"Cuộc tổng tiến công và nổi dậy Xuân 1975 toàn thắng, kết thúc vào ngày nào?",o:["Ngày 27 tháng 4 năm 1975","Ngày 28 tháng 4 năm 1975","Ngày 29 tháng 4 năm 1975","Ngày 30 tháng 4 năm 1975"],c:3},
+{s:"Kỳ họp thứ nhất Quốc hội nước Việt Nam thống nhất (24/6–3/7/1976) quyết định những vấn đề gì?",o:["Đặt tên nước CHXHCN Việt Nam, quốc kỳ, thủ đô, quốc ca, quốc huy","Đổi tên Sài Gòn thành Thành phố Hồ Chí Minh","Bầu Tôn Đức Thắng làm Chủ tịch nước, lập Ủy ban dự thảo Hiến pháp","Tất cả các phương án đều đúng"],c:3},
+{s:"Đại hội lần thứ mấy là đại hội toàn thắng của sự nghiệp giải phóng dân tộc, thống nhất Tổ quốc?",o:["Đại hội lần thứ IV","Đại hội lần thứ V","Đại hội lần thứ VI","Đại hội lần thứ VII"],c:0},
+{s:"Đại hội nào xác định hai nhiệm vụ chiến lược: xây dựng CNXH và bảo vệ Tổ quốc XHCN?",o:["Đại hội lần thứ IV","Đại hội lần thứ V","Đại hội lần thứ VI","Đại hội lần thứ VII"],c:1},
+{s:"Đại hội nào cho phép đảng viên làm kinh tế tư nhân (kể cả tư bản tư nhân)?",o:["Đại hội lần thứ IX","Đại hội lần thứ X","Đại hội lần thứ XI","Đại hội lần thứ XII"],c:1},
+{s:"Vấn đề trọng tâm trong xây dựng văn hóa (Hội nghị TW 9 khóa XI) là gì?",o:["Xây dựng lối sống \"mỗi người vì mọi người...\"","Xây dựng nền văn hóa tiên tiến, đậm đà bản sắc dân tộc","Chăm lo xây dựng con người có nhân cách, lối sống tốt đẹp","Giáo dục nghệ thuật, nâng cao năng lực thẩm mỹ"],c:2},
+{s:"Thế nào là văn hóa tiên tiến (Nghị quyết TW 9 khóa XI)?",o:["Yêu nước và tiến bộ, cốt lõi là độc lập dân tộc và CNXH theo Mác–Lênin, tư tưởng Hồ Chí Minh","Giá trị văn hóa truyền thống bền vững của các dân tộc Việt Nam","Lòng nhân ái, khoan dung, trọng tình nghĩa, đạo lý","Đức tính cần cù, sáng tạo trong lao động"],c:0},
+{s:"Vai trò của đội ngũ trí thức trong xây dựng, phát triển văn hóa (TW 9 khóa XI)?",o:["Cùng công nhân, nông dân là nền tảng của sự nghiệp xây dựng và phát triển văn hóa","Tham gia sự nghiệp xây dựng và phát triển văn hóa nước nhà","Đi đầu trong xây dựng và phát triển văn hóa, con người Việt Nam","Góp phần giáo dục, rèn luyện con người về nhân cách, lối sống"],c:0},
+{s:"Nguyên tắc cơ bản trong chính sách đối ngoại (Hội nghị TW 8 khóa XI) là gì?",o:["Nắm vững hai mặt hợp tác và đấu tranh trong quan hệ quốc tế","Tôn trọng độc lập chủ quyền, không can thiệp nội bộ","Thúc đẩy hợp tác, cân bằng lợi ích","Chủ động, tích cực hội nhập; là bạn, đối tác tin cậy..."],c:0},
+{s:"Ba đột phá chiến lược trong Chiến lược phát triển KT-XH 2011-2020 (Đại hội XI) gồm?",o:["Hoàn thiện thể chế kinh tế thị trường định hướng XHCN","Phát triển nhanh nguồn nhân lực, nhất là nhân lực chất lượng cao","Xây dựng hệ thống kết cấu hạ tầng đồng bộ","Tất cả các phương án đều đúng"],c:3},
+{s:"Theo Đại hội XII, động lực chủ yếu để đẩy mạnh công nghiệp hóa, hiện đại hóa là gì?",o:["Nguồn nhân lực chất lượng cao","Khoa học và công nghệ","Khoa học, công nghệ, tri thức và nguồn nhân lực chất lượng cao","Nguồn lực về tài chính"],c:2},
+{s:"Mục đích nền kinh tế thị trường định hướng XHCN (Đại hội XII) là gì?",o:["Phát triển kinh tế nhiều hình thức sở hữu, nhiều thành phần","Thực hiện \"dân giàu, nước mạnh, dân chủ, công bằng, văn minh\"; nâng cao đời sống nhân dân","Phát huy vai trò làm chủ của nhân dân, bảo đảm quản lý của Nhà nước","Phát huy vai trò làm chủ xã hội của nhân dân"],c:1},
+{s:"Vai trò của kinh tế tư nhân (Hội nghị TW 5 khóa XII) là gì?",o:["Là một động lực quan trọng của nền kinh tế","Điều tiết nền kinh tế, tạo môi trường thúc đẩy các thành phần","Giữ vai trò chủ đạo, là lực lượng vật chất quan trọng của Nhà nước","Là lực lượng vật chất để Nhà nước định hướng, điều tiết nền kinh tế"],c:0},
+{s:"Chủ trương \"Bảo đảm lợi ích tối cao của quốc gia – dân tộc...; là bạn, đối tác tin cậy...\" do Đại hội nào xác định?",o:["Đại hội XII","Đại hội XI","Đại hội X","Đại hội IX"],c:0},
+{s:"Cấu trúc hệ thống chính trị ở Việt Nam hiện nay gồm những bộ phận nào?",o:["Đảng Cộng sản Việt Nam","Nhà nước","Mặt trận Tổ quốc Việt Nam và các đoàn thể chính trị – xã hội","Tất cả đều đúng"],c:3},
+{s:"Đại hội XII chủ trương hội nhập quốc tế lấy lĩnh vực nào làm trọng tâm?",o:["Chính trị","Kinh tế","Văn hóa, xã hội","Quốc phòng, an ninh"],c:1}
+];
+
+// PART 2 — Câu hỏi ngắn (đáp án lấy nguyên từ file)
+const SHORT=[
+{s:"Đối tượng nghiên cứu của khoa học Lịch sử Đảng Cộng sản Việt Nam.",a:"Sự ra đời, phát triển và hoạt động lãnh đạo của Đảng qua các thời kỳ."},
+{s:"Thời gian, địa điểm, thành phần dự Hội nghị thành lập Đảng Cộng sản Việt Nam.",a:"Thời gian: 6/1 đến 7/2/1930. Địa điểm: Cửu Long (Hồng Kông). Thành phần: 2 đại biểu Đông Dương CSĐ (Trịnh Đình Cửu, Nguyễn Đức Cảnh), 2 đại biểu An Nam CSĐ (Châu Văn Liêm, Nguyễn Thiệu), dưới sự chủ trì của Nguyễn Ái Quốc – đại biểu Quốc tế Cộng sản."},
+{s:"Cương lĩnh chính trị đầu tiên xác định nhiệm vụ chủ yếu trước mắt của cách mạng Việt Nam là gì?",a:"Đánh đổ đế quốc chủ nghĩa Pháp, làm cho nước Nam hoàn toàn độc lập."},
+{s:"Cương lĩnh chính trị đầu tiên xác định lực lượng cách mạng.",a:"Công nhân, nông dân là lực lượng cơ bản, trong đó giai cấp công nhân lãnh đạo; đồng thời chủ trương đoàn kết tất cả các giai cấp, các lực lượng tiến bộ yêu nước, tập trung chống đế quốc và tay sai."},
+{s:"Quy luật ra đời của Đảng Cộng sản Việt Nam.",a:"Kết hợp 3 yếu tố: chủ nghĩa Mác – Lênin, phong trào công nhân và phong trào yêu nước."},
+{s:"Vai trò lãnh đạo của Đảng trong Luận cương Chính trị tháng 10 năm 1930.",a:"Sự lãnh đạo của Đảng là điều kiện cốt yếu cho thắng lợi của cách mạng."},
+{s:"Nhiệm vụ trung tâm của Đảng và nhân dân trong chuyển hướng chỉ đạo chiến lược (1939-1945) là gì?",a:"Xúc tiến chuẩn bị khởi nghĩa vũ trang."},
+{s:"Ý nghĩa chủ trương chuyển hướng chiến lược của Đảng giai đoạn 1939-1945.",a:"Là ngọn cờ dẫn đường cho nhân dân ta tiến lên giành thắng lợi trong sự nghiệp đánh Pháp, đuổi Nhật, giành độc lập cho dân tộc và tự do cho nhân dân."},
+{s:"Ba nguyên tắc xây dựng nền văn hóa mới trong Đề cương văn hóa Việt Nam 1943 (Trường Chinh).",a:"Dân tộc hóa – Khoa học hóa – Đại chúng hóa."},
+{s:"Ý nghĩa Tuyên ngôn Độc lập ngày 2-9-1945.",a:"Là thiên anh hùng ca chiến đấu và chiến thắng, chứa chan sức mạnh và niềm tin, tràn đầy lòng tự hào và ý chí đấu tranh của nhân dân Việt Nam trong sự nghiệp giành và giữ nền độc lập, tự do."},
+{s:"Nhiệm vụ đầu tiên về xây dựng văn hóa của nước Việt Nam độc lập (Hồ Chí Minh, 3-9-1945).",a:"Chống nạn mù chữ và giáo dục lại tinh thần nhân dân."},
+{s:"Bốn nhiệm vụ chủ yếu, cấp bách trong chỉ thị \"Kháng chiến, kiến quốc\" (25-11-1945).",a:"Củng cố chính quyền cách mạng; chống thực dân Pháp xâm lược; bài trừ nội phản; cải thiện đời sống nhân dân."},
+{s:"Thời gian, địa điểm Đại hội đại biểu toàn quốc lần thứ II.",a:"Thời gian: từ ngày 11 đến 19/2/1951. Địa điểm: xã Vinh Quang, huyện Chiêm Hóa, tỉnh Tuyên Quang."},
+{s:"Thế nào là kháng chiến toàn dân?",a:"Là đem toàn bộ sức dân, lực dân, tài dân, động viên toàn dân tích cực tham gia kháng chiến."},
+{s:"Ý nghĩa của Hội nghị Geneve 1954 đối với cách mạng Việt Nam.",a:"Mở ra một trang sử mới cho dân tộc Việt Nam, mở đường cho cuộc đấu tranh giành độc lập, thống nhất hoàn toàn cho nhân dân 3 nước Đông Dương sau này."},
+{s:"Tinh thần cơ bản của Nghị quyết Hội nghị Trung ương 15 (tháng 1-1959) về cách mạng miền Nam.",a:"Tiếp tục cuộc cách mạng dân chủ nhân dân, sử dụng bạo lực cách mạng với 2 lực lượng chính trị và vũ trang, kết hợp đấu tranh chính trị với quân sự, tiến tới khởi nghĩa vũ trang giành chính quyền về tay nhân dân."},
+{s:"Đường lối chung của cách mạng Việt Nam do Đại hội III (9-1960) xác định là gì?",a:"Đẩy mạnh cách mạng XHCN ở miền Bắc, tiến hành cách mạng dân tộc dân chủ nhân dân ở miền Nam, thực hiện thống nhất nước nhà, hoàn thành độc lập và dân chủ trong cả nước."},
+{s:"Triển vọng cuộc kháng chiến chống Mỹ cứu nước do Đại hội III (9-1960) nêu ra.",a:"Thắng lợi cuối cùng nhất định thuộc về nhân dân ta, Nam Bắc nhất định sum họp một nhà."},
+{s:"Ngày 15-2-1961, các lực lượng vũ trang ở miền Nam được thống nhất với tên gọi gì?",a:"Quân giải phóng miền Nam Việt Nam."},
+{s:"Cuộc Tổng tiến công và nổi dậy Xuân 1975 diễn ra trong thời gian nào?",a:"Diễn ra trong 55 ngày đêm, từ ngày 10/3 đến 30/4/1975. Vào 11h30 ngày 30/4/1975, lá cờ cách mạng được cắm trên nóc Dinh Độc Lập, đánh dấu kết thúc cuộc kháng chiến chống Mỹ, cứu nước vĩ đại của dân tộc."},
+{s:"Nền kinh tế thị trường định hướng XHCN ở nước ta hiện nay nhằm mục tiêu gì?",a:"Dân giàu, nước mạnh, dân chủ, công bằng, văn minh."},
+{s:"Các yếu tố chủ yếu để tăng trưởng kinh tế trong CNH, HĐH? Yếu tố nào quyết định?",a:"5 yếu tố chủ yếu: vốn; khoa học và công nghệ; con người; cơ cấu kinh tế; thể chế chính trị và quản lý nhà nước. Con người là yếu tố quyết định."},
+{s:"Đối tác trong chính sách đối ngoại theo Nghị quyết TW 8 (khóa XI).",a:"Những ai tôn trọng độc lập, chủ quyền, thiết lập và mở rộng quan hệ hữu nghị, hợp tác bình đẳng, cùng có lợi với Việt Nam là đối tác."},
+{s:"Trọng tâm trong xây dựng văn hóa theo Nghị quyết TW 9 (khóa XI).",a:"Chăm lo xây dựng con người có nhân cách, lối sống tốt đẹp với các đặc tính cơ bản: yêu nước, nhân ái, nghĩa tình, trung thực, đoàn kết, cần cù, sáng tạo."},
+{s:"Vai trò của văn hóa đối với sự phát triển xã hội.",a:"Văn hóa là nền tảng tinh thần của xã hội, là mục tiêu, là động lực phát triển bền vững của xã hội."},
+{s:"Đặc trưng mới về xã hội XHCN được bổ sung trong Cương lĩnh 2011 (Đại hội XI).",a:"Bổ sung 2 đặc trưng bao trùm, tổng quát: \"Dân giàu, nước mạnh, dân chủ, công bằng, văn minh\" và \"Có Nhà nước pháp quyền XHCN của nhân dân, do nhân dân, vì nhân dân do Đảng Cộng sản lãnh đạo\"."},
+{s:"Các thành phần kinh tế đang hình thành, phát triển theo Đại hội XII.",a:"Kinh tế nhà nước, kinh tế tập thể, kinh tế tư nhân và kinh tế có vốn đầu tư nước ngoài."},
+{s:"Động lực chủ yếu để đẩy mạnh CNH, HĐH theo Đại hội XII.",a:"Khoa học, công nghệ, tri thức và nguồn nhân lực chất lượng cao."},
+{s:"Mối quan hệ giữa hội nhập kinh tế và các lĩnh vực khác theo Đại hội XII.",a:"Hội nhập kinh tế là trọng tâm, các lĩnh vực khác phải tạo thuận lợi cho hội nhập kinh tế."},
+{s:"Những thắng lợi vĩ đại của cách mạng Việt Nam dưới sự lãnh đạo của Đảng từ 1930 đến nay.",a:"Thắng lợi của Cách mạng Tháng Tám năm 1945, thành lập nước Việt Nam Dân chủ Cộng hòa; thắng lợi của các cuộc kháng chiến oanh liệt để giải phóng dân tộc, bảo vệ Tổ quốc; thắng lợi của sự nghiệp đổi mới và từng bước đưa đất nước quá độ lên CNXH."}
+];
+
+// PART 3 — Tự luận (2 câu lấy từ bản trước)
+const ESSAY=[
+{
+  intro:"Trình bày những thành tựu cơ bản trong công cuộc đổi mới đất nước (1986–2021). Theo anh (chị) để phát huy những thành tựu đó trong thực hiện nghị quyết Đại hội XIII giai đoạn 2021–2026 Đảng ta cần phải làm gì?",
+  sections:[
+    {head:"Thành tựu (2.000 điểm)"},
+    {tag:"Thành tựu",pts:"0.250 điểm",q:"Thành tựu về kinh tế",
+     text:"Đất nước ra khỏi khủng hoảng kinh tế – xã hội và tình trạng kém phát triển. Kinh tế tăng trưởng khá, nền kinh tế thị trường định hướng xã hội chủ nghĩa từng bước hình thành, phát triển."},
+    {tag:"Thành tựu",pts:"0.250 điểm",q:"Thành tựu về chính trị – xã hội, quốc phòng, an ninh",
+     text:"Chính trị – xã hội ổn định; quốc phòng, an ninh được tăng cường. Dân chủ xã hội chủ nghĩa được phát huy và ngày càng mở rộng. Đại đoàn kết toàn dân tộc được củng cố và tăng cường."},
+    {tag:"Thành tựu",pts:"0.500 điểm",q:"Thành tựu về văn hoá, xã hội",
+     text:"Văn hoá, xã hội đạt được những thành tựu quan trọng, đời sống vật chất và tinh thần của nhân dân được nâng lên, một số mặt đạt trình độ của các nước phát triển trung bình."},
+    {tag:"Thành tựu",pts:"0.500 điểm",q:"Thành tựu về xây dựng Đảng, Nhà nước và hệ thống chính trị",
+     text:"Công tác xây dựng Đảng, xây dựng Nhà nước pháp quyền và cả hệ thống chính trị được đẩy mạnh. Sức mạnh về mọi mặt của đất nước được nâng lên. Kiên quyết, kiên trì đấu tranh bảo vệ độc lập, chủ quyền, thống nhất, toàn vẹn lãnh thổ và chế độ xã hội chủ nghĩa."},
+    {tag:"Thành tựu",pts:"0.500 điểm",q:"Thành tựu về đối ngoại",
+     text:"Quan hệ đối ngoại ngày càng mở rộng và đi vào chiều sâu, vị thế và uy tín của Việt Nam trên trường quốc tế được nâng cao."},
+    {head:"Liên hệ đối với sinh viên (1.500 điểm)"},
+    {tag:"Liên hệ sinh viên",pts:"0.500 điểm",q:"Chấp hành đường lối, pháp luật",
+     text:"Chấp hành đường lối chủ trương chính sách của Đảng, pháp luật của Nhà nước."},
+    {tag:"Liên hệ sinh viên",pts:"0.500 điểm",q:"Rèn luyện đạo đức",
+     text:"Rèn luyện, học tập theo tấm gương đạo đức Hồ Chí Minh: cần, kiệm, liêm, chính."},
+    {tag:"Liên hệ sinh viên",pts:"0.500 điểm",q:"Trau dồi chuyên môn, nhận thức",
+     text:"Trau dồi những kiến thức về chuyên môn nghiệp vụ, tiếp thu kiến thức khoa học, công nghệ tiên tiến của thời đại, họ còn cần phải có được nhận thức đúng đắn về độc lập dân tộc gắn liền với chủ nghĩa xã hội, về vai trò lãnh đạo của Đảng, về sức mạnh đại đoàn kết toàn dân tộc."},
+    {tag:"Yêu cầu",pts:"0.500 điểm",q:"Yêu cầu trình bày",
+     text:"Trình bày rõ ràng, mạch lạc."}
+  ]
+},
+{
+  intro:"Phân tích nội dung đường lối đổi mới toàn diện đất nước được Đảng Cộng sản Việt Nam đề ra tại Đại hội VI (1986). Những bài học kinh nghiệm mà Đảng ta đã đúc kết cho công cuộc phát triển đất nước trong giai đoạn hiện nay?",
+  sections:[
+    {head:"Nội dung đường lối đổi mới toàn diện (Đại hội VI, 1986)"},
+    {tag:"Nội dung",pts:"0.500 điểm",q:"Đổi mới tư duy lý luận",
+     text:"Đổi mới tư duy lý luận: nhận thức hơn rõ về chủ nghĩa xã hội và thời kỳ quá độ lên chủ nghĩa xã hội, những đặc trưng và quy luật khách quan trong thời kỳ quá độ."},
+    {tag:"Nội dung",pts:"0.500 điểm",q:"Đổi mới quan điểm chính sách kinh tế",
+     text:"Đổi mới quan điểm chính sách kinh tế."},
+    {tag:"Nội dung",pts:"",q:"Đổi mới cơ cấu kinh tế",
+     text:"Đổi mới cơ cấu kinh tế: có chính sách sử dụng đúng đắn các thành phần kinh tế, xác định nền kinh tế có cơ cấu nhiều thành phần là một đặc trưng của thời kỳ quá độ; tập trung thực hiện ba chương trình mục tiêu về lương thực – thực phẩm, hàng tiêu dùng, hàng xuất khẩu."},
+    {tag:"Nội dung",pts:"",q:"Đổi mới cơ chế quản lý",
+     text:"Đổi mới cơ chế quản lý: xóa bỏ cơ chế quản lý tập trung quan liêu, hành chính, bao cấp."},
+    {tag:"Nội dung",pts:"0.250 điểm",q:"Đổi mới chính sách đối ngoại, kinh tế đối ngoại",
+     text:"Đổi mới chính sách đối ngoại, mở rộng và nâng cao hiệu quả kinh tế đối ngoại: công bố chính sách khuyến khích nước ngoài đầu tư vào nước ta dưới nhiều hình thức; cần có chính sách và biện pháp tạo điều kiện thuận lợi cho người nước ngoài và Việt kiều vào nước ta để hợp tác kinh doanh."},
+    {tag:"Nội dung",pts:"0.250 điểm",q:"Đổi mới vai trò quản lý, điều hành của Nhà nước",
+     text:"Đổi mới về vai trò quản lý, điều hành của Nhà nước: tăng cường bộ máy nhà nước từ trung ương đến địa phương, có sự phân biệt rõ chức năng quản lý hành chính kinh tế với chức năng quản lý sản xuất kinh doanh; kết hợp quản lý theo ngành với quản lý theo địa phương và vùng lãnh thổ."},
+    {tag:"Nội dung",pts:"0.500 điểm",q:"Đổi mới nội dung và phong cách lãnh đạo của Đảng",
+     text:"Đổi mới nội dung và phong cách lãnh đạo của Đảng: tăng cường sức chiến đấu và năng lực tổ chức thực tiễn của Đảng; đấu tranh chống các biểu hiện tiêu cực, nâng cao sức chiến đấu của tổ chức cơ sở, tăng cường đoàn kết nhất trí trong Đảng."},
+    {head:"Bài học kinh nghiệm cho công cuộc phát triển đất nước (2.000 điểm)"},
+    {tag:"Bài học",pts:"0.500 điểm",q:"Cải cách thể chế kinh tế",
+     text:"Đổi mới phải gắn với cải cách thể chế kinh tế nhằm tạo điều kiện thuận lợi cho các doanh nghiệp và thành phần kinh tế phát triển. Cần thúc đẩy chính sách hỗ trợ doanh nghiệp nhỏ và vừa, tạo môi trường kinh doanh bình đẳng."},
+    {tag:"Bài học",pts:"0.500 điểm",q:"Công nghệ và chuyển đổi số",
+     text:"Thúc đẩy công nghệ và chuyển đổi số nhằm tăng năng suất lao động, tối ưu hóa nguồn lực và nâng cao hiệu quả kinh tế. Các doanh nghiệp cần được khuyến khích ứng dụng công nghệ và tham gia vào nền kinh tế số."},
+    {tag:"Bài học",pts:"0.500 điểm",q:"Giáo dục và nguồn nhân lực",
+     text:"Cần đầu tư vào giáo dục và đào tạo, phát triển nguồn nhân lực chất lượng cao; để có lực lượng lao động có tay nghề cao, đáp ứng yêu cầu của công cuộc công nghiệp hóa, hiện đại hóa và chuyển đổi số."},
+    {tag:"Bài học",pts:"0.500 điểm",q:"Ổn định chính trị – xã hội",
+     text:"Ổn định chính trị – xã hội là yếu tố quan trọng trong phát triển đất nước. Cần bảo đảm sự gắn kết xã hội, củng cố niềm tin của nhân dân vào sự lãnh đạo của Đảng và Nhà nước, và kiên quyết đấu tranh chống tham nhũng, lãng phí."}
+  ]
+}
+];
+
+/* ==================== STATE ==================== */
+const KEYS=['A','B','C','D'];
+let mcqAnswers={};     // {index: chosen}
+let mcqFilter='all';
+let allowExit=false;
+
+/* ==================== TABS ==================== */
+function showTab(id,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));document.getElementById(id).classList.add('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ==================== PART 1: MCQ ==================== */
+function buildMCQ(){
+  const box=document.getElementById('mcqBox');box.innerHTML='';
+  MCQ.forEach((m,i)=>{
+    if(mcqFilter==='todo' && mcqAnswers[i]!==undefined) return;
+    const div=document.createElement('div');div.className='q';div.id='q'+i;
+    const done=mcqAnswers[i]!==undefined;
+    let h=`<span class="num ${done?'done':''}">Câu ${i+1}</span><div class="stem">${m.s}</div>`;
+    m.o.forEach((opt,j)=>{
+      h+=`<button class="opt" onclick="answerMCQ(${i},${j})"><span class="k">${KEYS[j]}.</span><span>${opt}</span></button>`;
+    });
+    h+=`<div class="explain" id="exp${i}">Đáp án đúng: ${KEYS[m.c]}</div>`;
+    div.innerHTML=h;box.appendChild(div);
+    if(done) paintMCQ(i);
+  });
+  updateMCQProg();
+}
+function answerMCQ(i,j){
+  if(mcqAnswers[i]!==undefined) return; // lock after first answer
+  mcqAnswers[i]=j; paintMCQ(i); updateMCQProg();
+  document.querySelector('#q'+i+' .num').classList.add('done');
+}
+function paintMCQ(i){
+  const m=MCQ[i];const opts=document.querySelectorAll('#q'+i+' .opt');
+  opts.forEach((o,j)=>{
+    o.classList.add('lock');
+    if(j===m.c) o.classList.add('correct');
+    if(j===mcqAnswers[i] && j!==m.c) o.classList.add('wrong');
+  });
+  document.getElementById('exp'+i).classList.add('show');
+}
+function updateMCQProg(){
+  const done=Object.keys(mcqAnswers).length;
+  document.getElementById('mcqProg').textContent=done+'/'+MCQ.length;
+}
+function filterMCQ(f){
+  mcqFilter=f;
+  document.getElementById('chipAll').classList.toggle('on',f==='all');
+  document.getElementById('chipTodo').classList.toggle('on',f==='todo');
+  buildMCQ();
+}
+function submitMCQ(){
+  let correct=0,answered=0;
+  MCQ.forEach((m,i)=>{if(mcqAnswers[i]!==undefined){answered++;if(mcqAnswers[i]===m.c)correct++;}});
+  const pct=Math.round(correct/MCQ.length*100);
+  const s=document.getElementById('mcqSummary');
+  s.className='summary show';
+  s.innerHTML=`<div class="big">${correct}/${MCQ.length}</div>
+    <div>Đúng ${pct}% · Đã làm ${answered} câu</div>
+    <div style="font-size:.82rem;color:#e6c98a;margin-top:6px">${pct>=80?'Xuất sắc! 🎉':pct>=60?'Khá tốt, ôn lại câu sai nha 👍':'Cần ôn thêm 💪'}</div>`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function resetMCQ(){
+  mcqAnswers={};document.getElementById('mcqSummary').className='summary';
+  filterMCQ('all');
+}
+
+/* ==================== PART 2: SHORT ==================== */
+function buildShort(){
+  const box=document.getElementById('shortBox');box.innerHTML='';
+  SHORT.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='q';
+    div.innerHTML=`
+      <span class="num">Câu ${46+i}</span>
+      <div class="stem">${q.s}</div>
+      <textarea id="sa${i}" placeholder="Gõ câu trả lời của bạn..."></textarea>
+      <div class="row">
+        <button class="btn" onclick="checkShort(${i})">Chấm độ khớp</button>
+        <button class="btn ghost" onclick="toggleShort(${i})">Xem đáp án</button>
+      </div>
+      <div class="accuracy" id="sacc${i}"></div>
+      <div class="ans" id="sans${i}"><b>Đáp án:</b><br>${q.a}</div>`;
+    box.appendChild(div);
+  });
+}
+function normWords(s){return s.toLowerCase().replace(/[.,;:–—()"'*]/g,' ').replace(/-/g,' ').replace(/\s+/g,' ').trim().split(' ').filter(Boolean)}
+function checkShort(i){
+  const q=SHORT[i];const user=document.getElementById('sa'+i).value;
+  const target=normWords(q.a);const got={};normWords(user).forEach(w=>got[w]=1);
+  let hit=0;const marked=target.map(w=>{if(got[w]){hit++;return`<span class="diff-hit">${w}</span>`}return`<span class="diff-miss">${w}</span>`}).join(' ');
+  const pct=target.length?Math.round(hit/target.length*100):0;
+  document.getElementById('sacc'+i).innerHTML=`Độ khớp: <span style="color:${pct>=80?'var(--leaf)':pct>=55?'var(--gold-deep)':'var(--red)'}">${pct}%</span> — ${pct>=80?'🎉 Tốt lắm!':pct>=55?'👍 Ổn, ôn chỗ đỏ':'💪 Luyện thêm'}`;
+  const an=document.getElementById('sans'+i);
+  an.innerHTML=`<b>Đối chiếu (đỏ = từ còn thiếu):</b><br>${marked}<br><br><b>Đáp án đầy đủ:</b><br>${q.a}`;
+  an.classList.add('show');
+}
+function toggleShort(i){const q=SHORT[i];const an=document.getElementById('sans'+i);
+  an.innerHTML=`<b>Đáp án:</b><br>${q.a}`;an.classList.toggle('show')}
+
+/* ==================== PART 3: ESSAY ==================== */
+let ei=0;
+function pickEssay(n){ei=n;
+  document.getElementById('es0').classList.toggle('on',n===0);
+  document.getElementById('es1').classList.toggle('on',n===1);
+  buildEssay();
+}
+function buildEssay(){
+  const box=document.getElementById('essayBox');box.innerHTML='';
+  const E=ESSAY[ei];
+  const intro=document.createElement('div');intro.className='q';
+  intro.innerHTML=`<span class="num" style="background:var(--red)">Đề bài</span><div class="stem">${E.intro}</div>`;
+  box.appendChild(intro);
+  E.sections.forEach((sec,i)=>{
+    if(sec.head){
+      const h=document.createElement('p');h.className='heading';h.textContent=sec.head;box.appendChild(h);return;
+    }
+    const div=document.createElement('div');div.className='q';
+    div.innerHTML=`
+      <span class="num">${sec.q}${sec.pts?` · ${sec.pts}`:''}</span>
+      <textarea id="ea${ei}_${i}" placeholder="Viết lại nguyên văn ý này..."></textarea>
+      <div class="row">
+        <button class="btn" onclick="checkEssay(${i})">Chấm độ khớp</button>
+        <button class="btn ghost" onclick="toggleEssay(${i})">Xem nguyên văn</button>
+      </div>
+      <div class="accuracy" id="eacc${i}"></div>
+      <div class="ans" id="eans${i}"><b>Nguyên văn:</b><br>${sec.text}</div>`;
+    box.appendChild(div);
+  });
+}
+function checkEssay(i){
+  const sec=ESSAY[ei].sections[i];const user=document.getElementById('ea'+ei+'_'+i).value;
+  const target=normWords(sec.text);const got={};normWords(user).forEach(w=>got[w]=1);
+  let hit=0;const marked=target.map(w=>{if(got[w]){hit++;return`<span class="diff-hit">${w}</span>`}return`<span class="diff-miss">${w}</span>`}).join(' ');
+  const pct=target.length?Math.round(hit/target.length*100):0;
+  document.getElementById('eacc'+i).innerHTML=`Độ khớp: <span style="color:${pct>=90?'var(--leaf)':pct>=70?'var(--gold-deep)':'var(--red)'}">${pct}%</span> — ${pct>=90?'🎉 Gần như hoàn hảo!':pct>=70?'👍 Khá tốt':'💪 Luyện thêm'}`;
+  const an=document.getElementById('eans'+i);
+  an.innerHTML=`<b>Đối chiếu (đỏ = từ còn thiếu):</b><br>${marked}<br><br><b>Nguyên văn:</b><br>${sec.text}`;
+  an.classList.add('show');
+}
+function toggleEssay(i){const sec=ESSAY[ei].sections[i];const an=document.getElementById('eans'+i);
+  an.innerHTML=`<b>Nguyên văn:</b><br>${sec.text}`;an.classList.toggle('show')}
+
+/* ==================== TIMER ==================== */
+let secs=0,timerRunning=true,timerInt=null;
+function fmt(s){const m=Math.floor(s/60),ss=s%60;return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0')}
+function tick(){secs++;document.getElementById('clock').textContent=fmt(secs)}
+function startTimer(){if(timerInt)clearInterval(timerInt);timerInt=setInterval(tick,1000);timerRunning=true;
+  document.getElementById('btnStart').textContent='⏸ Tạm dừng';document.getElementById('btnStart').classList.add('on');}
+function toggleTimer(){
+  if(timerRunning){clearInterval(timerInt);timerRunning=false;
+    document.getElementById('btnStart').textContent='▶ Tiếp tục';document.getElementById('btnStart').classList.remove('on');}
+  else startTimer();
+}
+function resetTimer(){secs=0;document.getElementById('clock').textContent='00:00';if(!timerRunning)return;startTimer();}
+
+/* ==================== MUSIC (Web Audio, offline) ==================== */
+let audioCtx=null,musicOn=false,musicNodes=[],musicTimer=null;
+// gentle ambient: soft pad + slow arpeggio in pentatonic
+function startMusic(){
+  audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  const master=audioCtx.createGain();master.gain.value=0.10;master.connect(audioCtx.destination);
+  musicNodes.push(master);
+  // warm pad drone
+  [110,164.81,220].forEach(f=>{
+    const o=audioCtx.createOscillator();o.type='sine';o.frequency.value=f;
+    const g=audioCtx.createGain();g.gain.value=0.25;
+    o.connect(g);g.connect(master);o.start();musicNodes.push(o,g);
+  });
+  // slow pentatonic arpeggio
+  const scale=[261.63,293.66,329.63,392.00,440.00,523.25];
+  let step=0;
+  function note(){
+    if(!musicOn)return;
+    const f=scale[Math.floor(Math.random()*scale.length)];
+    const o=audioCtx.createOscillator();o.type='triangle';o.frequency.value=f;
+    const g=audioCtx.createGain();g.gain.setValueAtTime(0,audioCtx.currentTime);
+    g.gain.linearRampToValueAtTime(0.18,audioCtx.currentTime+0.15);
+    g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+1.6);
+    o.connect(g);g.connect(master);o.start();o.stop(audioCtx.currentTime+1.7);
+    step++;
+  }
+  note();musicTimer=setInterval(note,1400);
+}
+function stopMusic(){
+  if(musicTimer)clearInterval(musicTimer);
+  musicNodes.forEach(n=>{try{n.stop&&n.stop()}catch(e){}try{n.disconnect()}catch(e){}});
+  musicNodes=[];
+}
+function toggleMusic(){
+  musicOn=!musicOn;const b=document.getElementById('btnMusic');
+  if(musicOn){startMusic();b.textContent='🎵 Nhạc: Bật';b.classList.add('on');}
+  else{stopMusic();b.textContent='🔊 Nhạc: Tắt';b.classList.remove('on');}
+}
+
+/* ==================== EXIT WARNING ==================== */
+window.addEventListener('beforeunload',function(e){
+  if(allowExit)return;
+  e.preventDefault();e.returnValue='';
+  return '';
+});
+// in-app exit button behavior (shown via modal)
+function openExit(){document.getElementById('exitModal').classList.add('show')}
+function closeExit(){document.getElementById('exitModal').classList.remove('show')}
+function confirmExit(){
+  allowExit=true;
+  mcqAnswers={};resetMCQ();
+  document.querySelectorAll('textarea').forEach(t=>t.value='');
+  document.querySelectorAll('.ans').forEach(a=>a.classList.remove('show'));
+  document.querySelectorAll('.accuracy').forEach(a=>a.innerHTML='');
+  resetTimer();secs=0;document.getElementById('clock').textContent='00:00';
+  closeExit();
+  setTimeout(()=>{allowExit=false;},500);
+  alert('Đã xóa toàn bộ tiến trình. Bạn có thể bắt đầu lại từ đầu.');
+}
+
+/* ==================== INIT ==================== */
+buildMCQ();buildShort();pickEssay(0);startTimer();
+</script>
+</body>
+</html>
