@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minigame Ôn Tập Tư Tưởng Hồ Chí Minh</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Paytone+One&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#B3202C; --red-dark:#8E1520; --gold:#E8B437; --gold-soft:#F6E3B4;
+    --paper:#FFF9EE; --card:#FFFFFF; --ink:#2A1E1A; --muted:#8A776E;
+    --green:#2E7D4F; --green-soft:#E3F2E9; --wrong:#C4362F; --wrong-soft:#FBE7E5;
+    --radius:18px; --shadow:0 6px 24px rgba(142,21,32,.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
+  body{font-family:'Be Vietnam Pro',system-ui,sans-serif; background:var(--paper); color:var(--ink); min-height:100vh;}
+  .wrap{max-width:640px; margin:0 auto; padding:20px 16px 48px;}
+
+  .top{display:flex; align-items:center; gap:10px; margin-bottom:18px;}
+  .star{width:34px; height:34px; flex:none;}
+  h1{font-family:'Paytone One',sans-serif; font-size:1.1rem; line-height:1.3; color:var(--red-dark); font-weight:400;}
+  .sub{font-size:.78rem; color:var(--muted);}
+
+  .mode-card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px 20px; margin-bottom:14px; cursor:pointer; transition:transform .12s ease;}
+  .mode-card:active{transform:scale(.98);}
+  .mode-card h2{font-family:'Paytone One',sans-serif; font-weight:400; font-size:1.05rem; color:var(--red); margin-bottom:6px;}
+  .mode-card p{font-size:.85rem; color:var(--muted); line-height:1.5;}
+  .badge{display:inline-block; background:var(--gold-soft); color:#8a6a12; font-size:.72rem; font-weight:700; padding:3px 10px; border-radius:99px; margin-top:10px; margin-right:6px;}
+  .note{font-size:.78rem; color:var(--muted); text-align:center; margin-top:10px; line-height:1.5;}
+  .chunk-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+  .chunk-btn{flex:1 1 40%; background:var(--paper); border:2px solid var(--gold-soft); border-radius:12px; padding:10px 8px; font-family:inherit; font-size:.8rem; font-weight:700; color:var(--red-dark); cursor:pointer;}
+  .chunk-btn:active{background:var(--gold-soft);}
+
+  .bar{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-size:.8rem; font-weight:600; color:var(--muted);}
+  .bar .score{color:var(--red); font-weight:800;}
+  .progress{height:8px; background:#F0E4D2; border-radius:99px; overflow:hidden; margin-bottom:18px;}
+  .progress i{display:block; height:100%; background:linear-gradient(90deg,var(--gold),var(--red)); border-radius:99px; transition:width .3s ease;}
+  .qcard{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px;}
+  .qnum{font-size:.72rem; font-weight:800; letter-spacing:.08em; color:var(--gold); text-transform:uppercase; margin-bottom:8px;}
+  .qtext{font-size:1rem; font-weight:700; line-height:1.55; margin-bottom:16px; white-space:pre-line;}
+  .opt{display:flex; gap:10px; align-items:flex-start; width:100%; text-align:left; background:var(--paper); border:2px solid #EFE3CE; border-radius:14px; padding:12px 14px; margin-bottom:10px; font-family:inherit; font-size:.9rem; line-height:1.5; color:var(--ink); cursor:pointer; transition:border-color .12s, background .12s;}
+  .opt .key{flex:none; width:26px; height:26px; border-radius:50%; background:#fff; border:2px solid var(--gold); color:var(--red-dark); font-weight:800; font-size:.8rem; display:flex; align-items:center; justify-content:center;}
+  .opt.correct{background:var(--green-soft); border-color:var(--green);}
+  .opt.correct .key{background:var(--green); border-color:var(--green); color:#fff;}
+  .opt.wrong{background:var(--wrong-soft); border-color:var(--wrong);}
+  .opt.wrong .key{background:var(--wrong); border-color:var(--wrong); color:#fff;}
+  .opt:disabled{cursor:default; opacity:.92;}
+  .feedback{margin-top:6px; padding:12px 14px; border-radius:12px; font-size:.88rem; font-weight:600; line-height:1.5;}
+  .feedback.ok{background:var(--green-soft); color:var(--green);}
+  .feedback.no{background:var(--wrong-soft); color:var(--wrong);}
+
+  .answer-box{background:var(--gold-soft); border:2px dashed var(--gold); border-radius:14px; padding:14px 16px; margin-top:14px; font-size:.92rem; line-height:1.6; white-space:pre-line;}
+  .self-grade{display:flex; gap:10px; margin-top:14px;}
+  .self-grade button{flex:1;}
+
+  .btn{display:block; width:100%; border:none; border-radius:14px; padding:14px; font-family:inherit; font-size:.95rem; font-weight:800; cursor:pointer; transition:transform .1s ease;}
+  .btn:active{transform:scale(.98);}
+  .btn-red{background:var(--red); color:#fff; margin-top:14px;}
+  .btn-gold{background:var(--gold); color:var(--red-dark);}
+  .btn-green{background:var(--green); color:#fff;}
+  .btn-wrong{background:var(--wrong); color:#fff;}
+  .btn-ghost{background:transparent; color:var(--muted); font-weight:600; margin-top:10px; font-size:.85rem;}
+
+  .result{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:32px 22px; text-align:center;}
+  .result .big{font-family:'Paytone One',sans-serif; font-size:2.6rem; color:var(--red); font-weight:400;}
+  .result .label{font-size:.85rem; color:var(--muted); margin-bottom:6px;}
+  .result .msg{font-size:.95rem; font-weight:700; margin:14px 0 4px; line-height:1.5;}
+  .stars{font-size:1.6rem; letter-spacing:.15em; margin:10px 0;}
+  .review{margin-top:18px; text-align:left;}
+  .review h3{font-size:.85rem; color:var(--muted); margin-bottom:10px;}
+  .review-item{background:var(--wrong-soft); border-radius:12px; padding:12px 14px; margin-bottom:10px; font-size:.84rem; line-height:1.55;}
+  .review-item b{color:var(--wrong);}
+  .review-item .ra{color:var(--green); font-weight:700; white-space:pre-line;}
+  .hidden{display:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <svg class="star" viewBox="0 0 24 24" fill="#E8B437"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 9.3l7.1-.7z"/></svg>
+    <div>
+      <h1>Minigame Ôn Tập Tư Tưởng Hồ Chí Minh</h1>
+      <div class="sub">TTHCM · Bộ câu hỏi ôn tập dành cho sinh viên</div>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <div id="home">
+    <div class="mode-card">
+      <h2>🎯 Vòng 1 — Trắc nghiệm</h2>
+      <p>90 câu khá dài nên bạn có thể chơi theo từng chặng 30 câu, hoặc chơi hết một lượt. Có phản hồi ngay và tổng kết câu sai cuối vòng.</p>
+      <div class="chunk-row">
+        <button class="chunk-btn" onclick="startQuizChunk(0,30)">Chặng 1 · Câu 1–30</button>
+        <button class="chunk-btn" onclick="startQuizChunk(30,60)">Chặng 2 · Câu 31–60</button>
+        <button class="chunk-btn" onclick="startQuizChunk(60,90)">Chặng 3 · Câu 61–90</button>
+        <button class="chunk-btn" onclick="startQuizChunk(0,90)">🔥 Cả 90 câu</button>
+      </div>
+    </div>
+    <div class="mode-card" onclick="startShort()">
+      <h2>💭 Vòng 2 — Câu hỏi ngắn</h2>
+      <p>Đọc câu hỏi, tự trả lời trong đầu (hoặc nói to), rồi bấm xem đáp án và tự chấm Đúng / Sai.</p>
+      <span class="badge" id="shortCount"></span>
+    </div>
+    <p class="note">Câu hỏi được xáo trộn ngẫu nhiên mỗi lần chơi.<br>Đáp án do Claude tự xác định theo giáo trình TTHCM — thấy câu nào lệch với đề cương của giảng viên thì báo lại nhé! 🌟</p>
+  </div>
+
+  <!-- GAME -->
+  <div id="game" class="hidden">
+    <div class="bar">
+      <span id="counter"></span>
+      <span class="score" id="scoreLabel"></span>
+    </div>
+    <div class="progress"><i id="progressBar" style="width:0%"></i></div>
+    <div class="qcard" id="qcard"></div>
+    <button class="btn btn-ghost" onclick="goHome()">← Về trang chính</button>
+  </div>
+
+  <!-- RESULT -->
+  <div id="resultScreen" class="hidden"></div>
+</div>
+
+<script>
+/* ====== DỮ LIỆU sẽ được chèn ở phần 2 ====== */
+const MCQ = [
+{q:"Thuật ngữ “Tư tưởng Hồ Chí Minh” được Đảng ta chính thức sử dụng bắt đầu từ khi nào?",o:["Từ năm 1969","Từ năm 1986","Từ năm 1990","Từ năm 1991"],a:3},
+{q:"Thuật ngữ “Tư tưởng Hồ Chí Minh” được dùng theo nghĩa nào?",o:["Tư tưởng của một cá nhân","Tư tưởng của lãnh tụ","Tư tưởng của một giai cấp, một dân tộc","Tất cả những nghĩa trên"],a:2},
+{q:"\"Đảng lấy chủ nghĩa Mác-Lênin và tư tưởng Hồ Chí Minh làm nền tảng tư tưởng và kim chỉ nam cho mọi hành động cách mạng”. Câu nói trên được Đảng ta khẳng định lần đầu tiên tại Đại hội đại biểu toàn quốc lần thứ mấy?",o:["Đại hội lần thứ V","Đại hội lần thứ VI","Đại hội lần thứ VII","Đại hội lần thứ VIII"],a:2},
+{q:"Tư tưởng Hồ Chí Minh là gì?",o:["Tư tưởng Hồ Chí Minh là kết quả của sự vận dụng sáng tạo chủ nghĩa Mác - Lênin vào điều kiện thực tế của nước ta","Tư tưởng Hồ Chí Minh là kết quả của sự vận dụng và phát triển sáng tạo chủ nghĩa Mác - Lênin vào điều kiện cụ thể của nước ta","Tư tưởng Hồ Chí Minh là kết quả của sự phát triển sáng tạo chủ nghĩa Mác - Lênin vào điều kiện thực tế của nước ta","Tư tưởng Hồ Chí Minh là chủ nghĩa Mác – Lênin ở Việt Nam"],a:1},
+{q:"\"Dân tộc ta, nhân dân ta, non sông đất nước ta đã sinh ra Hồ Chủ tịch, người anh hùng dân tộc vĩ đại, và chính Người đã làm rạng rỡ dân tộc ta, nhân dân ta và non sông đất nước ta\". Câu nói trên ở trong văn kiện nào?",o:["Lời kêu gọi của Ban chấp hành Trung ương Đảng Lao động Việt Nam ngày 3/9/1969","Điếu văn của Ban Chấp hành Trung ương Đảng Lao động Việt Nam đọc tại lễ truy điệu Chủ tịch Hồ Chí Minh ngày 9/9/1969","Diễn văn của Ban Chấp hành Trung ương Đảng Lao động Việt Nam đọc tại lễ kỷ niệm 80 năm ngày sinh của Hồ Chí Minh","Diễn văn của Ban Chấp hành Trung ương Đảng Cộng sản Việt Nam đọc tại lễ kỷ niệm 100 năm ngày sinh của Hồ Chí Minh"],a:1},
+{q:"Đối tượng của bộ môn Tư tưởng Hồ Chí Minh là gì?",o:["Quá trình sản sinh tư tưởng","Quá trình hiện thực hoá tư tưởng","Là hệ thống quan điểm toàn diện và sâu sắc về những vấn đề cơ bản của cách mạng Việt Nam và quá trình “hiện thực hóa” hệ thống quan điểm đó trong quá trình phát triển của dân tộc Việt Nam","Quá trình Đảng Cộng sản Việt Nam vận dụng tư tưởng Hồ Chí Minh"],a:2},
+{q:"Tư tưởng Hồ Chí Minh có vị trí như thế nào trong hệ thống tư tưởng của Đảng Cộng sản Việt Nam?",o:["Là một bộ phận trong hệ thống tư tưởng của Đảng","Là bộ phận quan trọng trong hệ thống tư tưởng của Đảng","Là bộ phận rất quan trọng trong hệ thống tư tưởng của Đảng","Là bộ phận nền tảng, kim chỉ nam cho hành động của Đảng"],a:3},
+{q:"Vai trò của chủ nghĩa Mác - Lênin, tư tưởng Hồ Chí Minh được Đảng ta xác định như thế nào?",o:["Chủ nghĩa Mác - Lênin là nền tảng tư tưởng, kim chỉ nam cho hành động của Đảng ta","Tư tưởng Hồ Chí Minh là nền tảng tư tưởng, kim chỉ nam cho hành động của Đảng ta","Cùng với chủ nghĩa Mác - Lênin, tư tưởng Hồ Chí Minh là nền tảng tư tưởng và kim chỉ nam cho hành động cách mạng của Đảng ta","Cùng với chủ nghĩa Mác - Lênin, tư tưởng Hồ Chí Minh là kim chỉ nam cho hành động cách mạng của Đảng ta"],a:2},
+{q:"Khi nghiên cứu tư tưởng Hồ Chí Minh, cần quán triệt nguyên tắc và quan điểm phương pháp luận nào sau đây?",o:["Thống nhất tính đảng và tính khoa học","Thống nhất lý luận và thực tiễn","Quan điểm lịch sử - cụ thể","Tất cả các phương án đều đúng"],a:3},
+{q:"Ý nghĩa của việc thực hiện phương châm của Hồ Chí Minh về giáo dục: Học đi đôi với hành, lý luận liên hệ với thực tế; học tập kết hợp với lao động; kết hợp gia đình – nhà trường – xã hội là gì?",o:["Để có chất lượng và hiệu quả cao trong học tập","Để tạo ra phong trào rộng rãi trong cả nước","Tận dụng tất cả các điều kiện cho học tập","Để mọi người đều có cơ hội học tập"],a:0},
+{q:"Trong thời gian ở nước ngoài, Nguyễn Tất Thành đã làm những công việc gì?",o:["Phụ bếp, cào tuyết","Thợ ảnh, làm bánh","Đốt lò, bán báo","Tất cả các công việc trên"],a:3},
+{q:"Hồ Chí Minh đã tiếp thu những yếu tố nào của Phật giáo?",o:["Lòng thương người","Tinh thần cứu khổ, cứu nạn","Tinh thần từ bi, bác ái","Cả A, B, C"],a:3},
+{q:"Quốc hội đầu tiên của nước Việt Nam mới họp phiên đầu tiên vào thời gian nào?",o:["Ngày 2 tháng 3 năm 1945","Ngày 2 tháng 3 năm 1946","Ngày 2 tháng 3 năm 1947","Ngày 2 tháng 3 năm 1948"],a:1},
+{q:"Để có một nhà nước hợp pháp, hợp hiến, việc làm đầu tiên của Hồ Chí Minh sau cách mạng tháng Tám năm 1945 là gì?",o:["Thiết kế mô hình nhà nước cách mạng","Lựa chọn, sắp xếp cán bộ","Tổ chức tổng tuyển cử trong cả nước","Kêu gọi thế giới công nhận chính quyền mới"],a:2},
+{q:"Quan điểm cơ bản nhất của Chủ tịch Hồ Chí Minh về xây dựng nhà nước cách mạng là gì?",o:["Nhà nước pháp quyền Việt Nam","Nhà nước công - nông","Nhà nước chuyên chính vô sản","Nhà nước do nhân dân lao động làm chủ"],a:3},
+{q:"Cuối thế kỷ XIX – đầu thế kỷ XX, trong xã hội Việt Nam tồn tại mâu thuẫn nào?",o:["Giữa giai cấp nông dân với địa chủ phong kiến","Giữa công nhân Việt Nam với giai cấp tư sản","Giữa toàn thể nhân dân Việt Nam với thực dân Pháp","Tất cả các phương án đều đúng"],a:3},
+{q:"Truyền thống quý báu nhất của dân tộc Việt Nam được Hồ Chí Minh kế thừa và phát triển là gì?",o:["Lòng nhân ái","Chủ nghĩa yêu nước","Tinh thần hiếu học","Cần cù lao động"],a:1},
+{q:"Nguồn gốc hình thành tư tưởng Hồ Chí Minh là gì?",o:["Giá trị truyền thống của dân tộc Việt Nam","Tinh hoa văn hóa nhân loại (trong đó có chủ nghĩa Mác – Lênin)","Nhân tố chủ quan Hồ Chí Minh","Tất cả các phương án đều đúng"],a:3},
+{q:"Theo Hồ Chí Minh, ưu điểm lớn nhất của học thuyết Khổng Tử là gì?",o:["Tinh thần hiếu học","Quản lý xã hội bằng đạo đức","Sự tu dưỡng đạo đức cá nhân","Tự do"],a:2},
+{q:"Hồ Chí Minh đã kế thừa và phát triển tư tưởng nào của Lão giáo?",o:["Tư tưởng vị tha, từ bi bác ái","Tư tưởng thoát mọi ràng buộc của vòng danh lợi","Tư tưởng chống phân biệt đẳng cấp","Tư tưởng dùng nhân trị, đức trị để quản lý xã hội"],a:1},
+{q:"Trong những tiền đề lý luận sau đây, tiền đề nào quyết định bước phát triển mới về chất trong tư tưởng Hồ Chí Minh?",o:["Chủ nghĩa Mác - Lênin","Tinh hoa văn hoá nhân loại","Giá trị truyền thống tốt đẹp của dân tộc","Tất cả các tiền đề trên"],a:0},
+{q:"Tư tưởng nào của cụ Nguyễn Sinh Sắc có ảnh hưởng quyết định đến tư tưởng xây dựng một nhà nước của dân, do dân, vì dân của Hồ Chí Minh?",o:["Tư tưởng “thân dân”","Lòng yêu nước","Lòng căm thù bọn xâm lược","Thương yêu người nghèo"],a:0},
+{q:"Nguyễn Tất Thành ra nước ngoài tìm đường cứu nước vào thời gian nào?",o:["Ngày 6 tháng 5 năm 1911","Ngày 4 tháng 6 năm 1911","Ngày 2 tháng 6 năm 1911","Ngày 5 tháng 6 năm 1911"],a:3},
+{q:"Theo Hồ Chí Minh, việc học phải được tiến hành như thế nào?",o:["Học ở mọi lúc, mọi nơi, suốt đời","Học ở mọi người","Tự học, tự đào tạo và đào tạo lại","Cả A, B, C"],a:3},
+{q:"Nguyễn Ái Quốc gửi bản yêu sách của nhân dân An Nam tới hội nghị Véc-xây vào năm nào?",o:["Năm 1918","Năm 1919","Năm 1920","Năm 1921"],a:1},
+{q:"Nguyễn Ái Quốc đọc Luận cương của Lênin về vấn đề dân tộc và thuộc địa vào năm nào?",o:["Năm 1918","Năm 1919","Năm 1920","Năm 1921"],a:2},
+{q:"Bác Hồ tham gia sáng lập Đảng Cộng sản Pháp và trở thành người Cộng sản Việt Nam đầu tiên năm nào?",o:["Năm 1918","Năm 1919","Năm 1920","Năm 1921"],a:2},
+{q:"Thời kỳ hình thành những nội dung cơ bản tư tưởng về cách mạng Việt Nam được tính từ:",o:["Năm 1911 đến năm 1920","Năm 1920 đến năm 1930","Năm 1930 đến năm 1941","Năm 1941 đến năm 1969"],a:1},
+{q:"“Luận cương của Lênin làm cho tôi rất phấn khởi, sáng tỏ, tin tưởng biết bao. Tôi vui mừng đến phát khóc lên. Ngồi một mình trong buồng mà tôi nói to lên như đang nói trước quần chúng đông đảo: Hỡi đồng bào bị đoạ đầy đau khổ! Đây là cái cần thiết cho chúng ta, đây là con đường giải phóng chúng ta”. Câu trên được trích dẫn từ tác phẩm nào của Nguyễn Ái Quốc?",o:["Đời hoạt động của Hồ Chủ tịch","Con đường dẫn tôi đến với chủ nghĩa Lênin","Lênin vĩ đại","Cách mạng tháng Mười và con đường giải phóng thuộc địa"],a:1},
+{q:"Tác phẩm “Bản án chế độ thực dân Pháp” của Bác Hồ được viết năm nào?",o:["Năm 1925","Năm 1927","Năm 1928","Năm 1929"],a:0},
+{q:"Phương hướng vận dụng và phát triển tư tưởng Hồ Chí Minh trong sự nghiệp đổi mới là:",o:["Nắm vững quan điểm thực tiễn","Vận dụng và phát triển sáng tạo tư tưởng Hồ Chí Minh","Giải quyết đúng những vấn đề do thực tiễn đặt ra","Cả A, B, C"],a:3},
+{q:"“Tất cả các dân tộc trên thế giới đều sinh ra bình đẳng, dân tộc nào cũng có quyền sống, quyền sung sướng và quyền tự do”. Câu trên của Hồ Chí Minh được trích trong văn kiện nào?",o:["Tuyên ngôn độc lập","Bản án chế độ thực dân Pháp","Đường Cách mệnh","Lời kêu gọi toàn quốc kháng chiến"],a:0},
+{q:"Theo Hồ Chí Minh, cách mạng giải phóng dân tộc muốn giành được thắng lợi phải đi theo con đường nào?",o:["Cách mạng tư sản","Cách mạng vô sản","Con đường cách mạng phản đế","Con đường đấu tranh giải phóng"],a:1},
+{q:"Mối quan hệ giữa cách mạng ở các nước thuộc địa và cách mạng ở chính quốc theo quan điểm của Hồ Chí Minh là gì?",o:["Cách mạng giải phóng dân tộc giành thắng lợi đồng thời với thắng lợi cách mạng vô sản ở chính quốc","Thắng lợi của cách mạng vô sản ở thuộc địa phải phụ thuộc vào thắng lợi của cách mạng vô sản ở chính quốc","Thắng lợi của cách mạng vô sản tồn tại song song với thắng lợi của các cuộc cách mạng tư sản","Cách mạng giải phóng dân tộc ở thuộc địa có khả năng giành được thắng lợi trước cách mạng vô sản ở chính quốc"],a:3},
+{q:"“Toàn thể dân tộc Việt Nam quyết đem tất cả tinh thần và lực lượng, tính mạng và của cải để giữ vững quyền tự do, độc lập ấy”. Đoạn văn trên trích từ bài viết nào của Hồ Chí Minh?",o:["Thư kêu gọi Tổng khởi nghĩa","Tuyên ngôn độc lập","Lời kêu gọi toàn quốc kháng chiến","Thư gởi đồng bào Nam bộ"],a:1},
+{q:"Kiên trì con đường Chủ tịch Hồ Chí Minh đã lựa chọn nghĩa là:",o:["Giữ vững nền độc lập dân tộc","Thực hiện triệt để cuộc cách mạng dân tộc dân chủ nhân dân","Thực hiện mục tiêu độc lập dân tộc gắn liền với chủ nghĩa xã hội","Hội nhập với nền kinh tế thế giới"],a:2},
+{q:"Theo Hồ Chí Minh, vai trò lãnh đạo của giai cấp công nhân trong cách mạng Việt Nam do yếu tố nào quy định?",o:["Do ý muốn của Đảng Cộng sản","Do số lượng giai cấp công nhân","Do địa vị kinh tế, chính trị, xã hội khách quan của giai cấp công nhân","Do kinh tế của giai cấp công nhân"],a:2},
+{q:"Theo Hồ Chí Minh, đặc trưng kinh tế nổi bật nhất của chủ nghĩa xã hội là gì?",o:["Sở hữu xã hội về tư liệu sản xuất","Cơ cấu công – nông nghiệp hợp lý","Sở hữu về của cải","Khoa học – kỹ thuật"],a:0},
+{q:"Hồ Chí Minh đã dùng hình tượng nào dưới đây để chỉ chủ nghĩa tư bản?",o:["Con bạch tuộc","Con đỉa hai vòi","Con chim đại bàng","Con kền kền"],a:1},
+{q:"Theo tư tưởng Hồ Chí Minh, nguyên tắc phân phối chủ yếu trong chủ nghĩa xã hội là gì?",o:["Làm theo năng lực, hưởng theo nhu cầu","Làm theo năng lực, hưởng theo lao động","Phân phối bình quân cho tất cả mọi người","Làm ít hưởng vừa đủ"],a:1},
+{q:"Theo tư tưởng Hồ Chí Minh, đặc trưng nổi bật nhất về chính trị của chủ nghĩa xã hội là gì?",o:["Đảng Cộng sản lãnh đạo","Thực hiện một nền dân chủ triệt để","Mọi người được hưởng nhân quyền","Thực hiện dân quyền"],a:1},
+{q:"“… Tôi chỉ có một ham muốn, ham muốn tột bậc, là làm sao cho nước ta được hoàn toàn độc lập, dân ta được hoàn toàn tự do, đồng bào ai cũng có cơm ăn áo mặc, ai cũng được học hành”. Câu nói trên của Chủ tịch Hồ Chí Minh được dẫn từ tác phẩm nào của Người dưới đây?",o:["Bài nói chuyện tại lớp nghiên cứu chính trị khoá I, Trường Đại học nhân dân Việt Nam (7/1956)","Diễn văn khai mạc Đại hội Đại biểu toàn quốc lần thứ III của Đảng Lao động Việt Nam (9/1960)","Nâng cao đạo đức cách mạng, quét sạch chủ nghĩa cá nhân (3/2/1969)","Trả lời các nhà báo nước ngoài (1/1946)"],a:3},
+{q:"Theo Hồ Chí Minh, muốn xây dựng chủ nghĩa xã hội trước hết cần có cái gì?",o:["Khoa học – kỹ thuật","Kinh tế phát triển","Con người toàn diện","Con người xã hội chủ nghĩa"],a:3},
+{q:"Theo Hồ Chí Minh, mục tiêu tổng quát của chủ nghĩa xã hội là gì?",o:["Một nền kinh tế hiện đại, có sức tăng trưởng cao","Không ngừng cải thiện và nâng cao đời sống của nhân dân lao động","Phát triển mạnh mẽ khoa học – kỹ thuật","Không ngừng phát triển kinh tế"],a:1},
+{q:"Theo Hồ Chí Minh, động lực quyết định nhất của chủ nghĩa xã hội là gì?",o:["Khoa học – kỹ thuật","Con người","Chính trị","Sự giúp đỡ, ủng hộ quốc tế"],a:1},
+{q:"Ai soạn thảo “Chánh cương vắn tắt”, “Sách lược vắn tắt”, “Chương trình, Điều lệ vắn tắt của Đảng”?",o:["Nguyễn Ái Quốc","Trịnh Đình Cửu","Trần Phú","Lê Hồng Phong"],a:0},
+{q:"Ai chủ trì hội nghị hợp nhất 3 tổ chức cộng sản của nước ta?",o:["Trịnh Đình Cửu","Trần Phú","Nguyễn Ái Quốc","Lê Hồng Phong"],a:2},
+{q:"Đảng Cộng sản Việt Nam, do Hồ Chí Minh sáng lập và lãnh đạo, hoạt động vì lợi ích của ai?",o:["Vì lợi ích của dân tộc Việt Nam","Vì lợi ích của giai cấp công nhân","Vì lợi ích của công nhân, nông dân, trí thức","Vì lợi ích của bản thân Đảng"],a:0},
+{q:"Đảng lãnh đạo là nhân tố có ý nghĩa thế nào đối với thắng lợi cách mạng nước ta?",o:["Có ý nghĩa quyết định hàng đầu","Có ý nghĩa rất quan trọng","Có ý nghĩa quan trọng đặc biệt","Có ý nghĩa quan trọng"],a:0},
+{q:"Trong các thuật ngữ chỉ vai trò Đảng lãnh đạo xã hội mà Chủ tịch Hồ Chí Minh thường dùng sau đây thì thuật ngữ nào phản ánh rõ nhất, chính xác nhất vai trò lãnh đạo của Đảng?",o:["Đảng nắm quyền","Đảng lãnh đạo chính quyền","Đảng cầm quyền","Các thuật ngữ trên đều phản ánh rõ vai trò của Đảng"],a:2},
+{q:"Trong tư tưởng Hồ Chí Minh, là người lãnh đạo, Đảng phải có những phẩm chất gì?",o:["Tư cách, đạo đức, năng lực cần thiết","Phải có khả năng làm cho dân tin, dân mến, dân phục, dân theo","Đảng phải gắn bó mật thiết với nhân dân, nghe ý kiến của dân, học nhân dân, chịu sự kiểm soát của nhân dân…","Tất cả các phương án đều đúng"],a:3},
+{q:"Quan điểm của Hồ Chí Minh: “Đảng ta vừa là người lãnh đạo, vừa là người đầy tớ thật trung thành của nhân dân” được hiểu như thế nào?",o:["Là tận tâm, tận lực phụng sự quần chúng","Là việc gì có lợi cho dân thì phải hết sức làm, việc gì có hại cho dân thì phải hết sức tránh","Là khổ trước thiên hạ, vui sau thiên hạ","Tất cả các phương án đều đúng"],a:3},
+{q:"Theo Hồ Chí Minh, nền tảng tư tưởng của Đảng Cộng sản Việt Nam là:",o:["Tinh hoa văn hóa dân tộc Việt Nam","Tinh hoa văn hóa nhân loại","Tinh hoa dân tộc và tinh hoa văn hóa nhân loại","Chủ nghĩa Mác - Lênin"],a:3},
+{q:"Trong tư tưởng Hồ Chí Minh, luận điểm: “Sự lãnh đạo của Đảng là nhân tố hàng đầu đưa cách mạng nước ta đến thắng lợi” là để:",o:["Xác định vị thế cầm quyền của Đảng","Xác định mục đích của Đảng","Xác định vai trò lãnh đạo của Đảng","Xác định nhiệm vụ của Đảng"],a:2},
+{q:"Luận điểm “Đảng Cộng sản là đảng của giai cấp công nhân, của nhân dân lao động và của cả dân tộc” là nhằm:",o:["Xác định vai trò lãnh đạo của Đảng","Xác định vị thế cầm quyền của Đảng","Xác định bản chất của Đảng","Xác định chức năng, nhiệm vụ của Đảng"],a:2},
+{q:"Theo Hồ Chí Minh, Đảng lãnh đạo Nhà nước bằng phương thức nào?",o:["Đường lối, chủ trương, chính sách","Qua các tổ chức đảng, đảng viên trong bộ máy nhà nước","Bằng công tác kiểm tra","Tất cả các phương án đều đúng"],a:3},
+{q:"“Đảng muốn vững, phải có chủ nghĩa làm cốt, trong Đảng ai cũng phải hiểu, ai cũng phải theo chủ nghĩa ấy. Đảng mà không có chủ nghĩa cũng như người không có trí khôn, tàu không có bàn chỉ nam”. Chủ nghĩa mà Hồ Chí Minh nói ở đây là chủ nghĩa gì?",o:["Chủ nghĩa quốc gia - dân tộc","Chủ nghĩa Mác - Lênin","Chủ nghĩa quốc tế","Chủ nghĩa tam dân"],a:1},
+{q:"“Đảng ta là một Đảng cầm quyền, các đồng chí từ chi bộ đến trung ương phải giữ gìn sự đoàn kết nhất trí trong Đảng như giữ gìn con ngươi của mắt mình”. Câu trên trích từ tác phẩm nào của Hồ Chí Minh?",o:["Diễn văn chính trị tại Đại hội III của Đảng","Bài nói chuyện tại trường Nguyễn Ái Quốc trung ương năm 1957","Di chúc","Bài nói chuyện với cán bộ cao cấp quân đội nhân dân Việt Nam"],a:2},
+{q:"Theo tư tưởng Hồ Chí Minh, trong xã hội ta lực lượng nào có quyền lực cao nhất?",o:["Đảng Cộng sản Việt Nam","Nhân dân Việt Nam","Quốc hội nước Cộng hòa xã hội chủ nghĩa Việt Nam","Chính phủ nước Cộng hòa xã hội chủ nghĩa Việt Nam"],a:1},
+{q:"Theo Hồ Chí Minh, muốn xây dựng nhà nước trong sạch vững mạnh, cần chống những căn bệnh nào?",o:["Đặc quyền, đặc lợi","Tham ô, lãng phí, quan liêu","Tư túng, chia rẽ, kiêu ngạo","Tất cả những căn bệnh trên"],a:3},
+{q:"Theo Hồ Chí Minh, đại đoàn kết dân tộc có ý nghĩa thế nào trong sự nghiệp cách mạng?",o:["Rất quan trọng","Đặc biệt quan trọng","Là vấn đề chiến lược","Là vấn đề có ý nghĩa sách lược"],a:2},
+{q:"“Sông to, biển rộng thì bao nhiêu nước cũng chứa được, vì độ lượng nó sâu. Cái chén nhỏ, cái đĩa cạn, thì một chút nước đã tràn đầy, vì độ lượng nó hẹp nhỏ. Người mà tự kiêu, tự mãn, cũng như cái chén, cái đĩa cạn”. Câu trên của Bác Hồ ngụ ý gì?",o:["Phê bình một số cán bộ, đảng viên kiêu căng, tự mãn","Phê phán lối sống hẹp hòi, ích kỷ","Giáo dục cán bộ, đảng viên và quần chúng lòng khoan dung, độ lượng với những người có sai lầm, khuyết điểm","Tất cả các phương án đều đúng"],a:2},
+{q:"\"Đoàn kết là một truyền thống cực kỳ quý báu của Đảng và của dân ta. Các đồng chí từ Trung ương đến các chi bộ cần phải giữ gìn sự đoàn kết nhất trí của Đảng như giữ gìn con ngươi của mắt mình\". Câu viết trên ở trong tác phẩm nào của Hồ Chí Minh?",o:["Đạo đức cách mạng","Sửa đổi lối làm việc","Thường thức chính trị","Di chúc"],a:3},
+{q:"Hình thức tổ chức của khối đại đoàn kết dân tộc là gì?",o:["Mặt trận dân tộc thống nhất","Nhà nước của dân, do dân, vì dân","Các tổ chức hội, đoàn của quần chúng","Đảng Cộng sản"],a:0},
+{q:"Theo Hồ Chí Minh, chúng ta cần đoàn kết với những đối tượng quốc tế nào?",o:["Phong trào cộng sản và công nhân thế giới","Phong trào đấu tranh giải phóng dân tộc","Lực lượng tiến bộ, yêu chuộng hòa bình, dân chủ, tự do và công lý","Tất cả các phương án đều đúng"],a:3},
+{q:"Đối với Phong trào cộng sản và công nhân quốc tế, Hồ Chí Minh đã giương cao ngọn cờ gì để xây dựng khối đoàn kết quốc tế?",o:["Độc lập dân tộc gắn liền với chủ nghĩa xã hội","Độc lập, tự do và quyền bình đẳng giữa các dân tộc","Hòa bình trong công lý","Cả 3 ngọn cờ trên"],a:0},
+{q:"Đối với các dân tộc trên thế giới, Hồ Chí Minh đã giương cao ngọn cờ gì để xây dựng khối đoàn kết quốc tế?",o:["Độc lập dân tộc gắn liền với chủ nghĩa xã hội","Độc lập, tự do và quyền bình đẳng giữa các dân tộc","Hòa bình trong công lý","Cả 3 ngọn cờ trên"],a:1},
+{q:"Trong những khẩu hiệu tập hợp lực lượng dưới đây, khẩu hiệu nào do Hồ Chí Minh nêu lên?",o:["Nhân dân yêu chuộng hòa bình và công lý trên thế giới đoàn kết lại","Vô sản tất cả các nước liên hiệp lại","Vô sản các nước và các dân tộc bị áp bức trên thế giới đoàn kết lại","Lao động tất cả các nước đoàn kết lại"],a:2},
+{q:"Theo Hồ Chí Minh, lực lượng giải phóng dân tộc gồm những thành phần giai cấp nào trong xã hội?",o:["Công nhân, nông dân","Công nhân, nông dân, trí thức","Toàn dân tộc","Công nhân, tiểu tư sản"],a:2},
+{q:"Câu “chủ trương làm tư sản dân quyền cách mạng và thổ địa cách mạng để đi tới một xã hội cộng sản” trích từ văn kiện nào?",o:["Chánh cương, Sách lược vắn tắt","Đường cách mệnh","Chương trình tóm tắt của Đảng","Chương trình của Mặt trận Việt Minh"],a:0},
+{q:"“Hỡi đồng bào yêu quý! Giờ quyết định vận mệnh của dân tộc đã đến. Toàn quốc đồng bào hãy đứng dậy, đem sức ta mà giải phóng cho ta”. Lời kêu gọi trên được trích từ văn kiện nào?",o:["Quân lệnh số một của Uỷ ban khởi nghĩa toàn quốc","Lời kêu gọi toàn quốc kháng chiến của Hồ Chủ tịch","Hiệu triệu tổng khởi nghĩa","Tuyên ngôn độc lập"],a:2},
+{q:"\"Chiến tranh có thể kéo dài 5 năm, 10 năm, 20 năm hoặc lâu hơn nữa..., song nhân dân Việt Nam quyết không sợ! Không có gì quý hơn độc lập tự do. Đến ngày thắng lợi nhân dân ta sẽ xây dựng lại đất nước ta đàng hoàng hơn, to đẹp hơn\". Câu nói trên của Chủ tịch Hồ Chí Minh vào thời gian nào?",o:["Lời kêu gọi của Hồ Chí Minh ngày 19/12/1946","Lời kêu gọi của Hồ Chí Minh ngày 17/7/1966","Thư chúc tết đầu Xuân 1969","Bản Di chúc của Hồ Chí Minh được công bố tại lễ truy điệu Người ngày 9/9/1969"],a:1},
+{q:"“Cương lĩnh đầu tiên của Đảng” do Bác Hồ khởi thảo vào năm nào?",o:["Năm 1930","Năm 1931","Năm 1932","Năm 1933"],a:0},
+{q:"Thử thách mà Hồ Chí Minh phải vượt qua trong giai đoạn 1930 – 1945 là thử thách gì?",o:["Bị đế quốc cầm tù","Quan điểm tả khuynh của Quốc tế Cộng sản thời kỳ đó","Đời sống khổ cực của người cách mạng trong điều kiện hoạt động bí mật","Bị bệnh hiểm nghèo"],a:1},
+{q:"Những căn bệnh nào trong bộ máy nhà nước mà Hồ Chí Minh gọi là \"giặc nội xâm\"?",o:["Cậy thế, hủ hoá, tư túng","Tham ô, lãng phí, quan liêu","Trái phép, chia rẽ, kiêu ngạo","Đặc quyền, đặc lợi"],a:1},
+{q:"Hồ Chí Minh đánh giá cao nhất yếu tố nào trong giá trị văn hóa dân tộc?",o:["Ý thức đoàn kết cộng đồng","Yêu lao động","Lòng yêu nước","Lòng thương người"],a:2},
+{q:"Trong tư tưởng Hồ Chí Minh, đạo đức cách mạng có vai trò gì?",o:["Là nền tảng lý luận của người cách mạng","Là phương châm hành động của người cách mạng","Là cái gốc, là nền tảng của người cách mạng","Là lẽ sống của người cách mạng"],a:2},
+{q:"“Cũng như sông thì có nguồn mới có nước, không có nguồn thì sông cạn. Cây phải có gốc, không có gốc thì cây héo. Người cách mạng phải có đạo đức, không có đạo đức thì dù tài giỏi mấy cũng không lãnh đạo được nhân dân”. Câu trên trích từ tác phẩm nào của Hồ Chí Minh?",o:["Đường cách mạng","Chính cương sách lược vắn tắt","Di chúc","Đạo đức cách mạng"],a:3},
+{q:"Theo Hồ Chí Minh, đạo đức con người được thể hiện ở mối quan hệ nào?",o:["Trong quan hệ với công việc","Trong quan hệ với người khác","Trong quan hệ với bản thân mình","Cả 3 mối quan hệ trên"],a:3},
+{q:"Theo Hồ Chí Minh, chữ “người” nghĩa là gì?",o:["Gia đình, anh em, họ hàng, bầu bạn","Loài người","Đồng bào cả nước","Tất cả các phương án đều đúng"],a:3},
+{q:"“Việc gì có lợi cho dân, ta phải hết sức làm; việc gì có hại cho dân, ta phải hết sức tránh”. Câu trên trích từ tác phẩm nào của Bác Hồ?",o:["Đường cách mệnh","Sửa đổi lề lối làm việc","Đạo đức cách mạng","Thư gửi Uỷ ban nhân dân các kỳ, tỉnh, huyện và làng ngày 17 tháng 10 năm 1945"],a:3},
+{q:"Phương hướng vận dụng và phát triển tư tưởng Hồ Chí Minh trong sự nghiệp đổi mới là:",o:["Nắm vững quan điểm thực tiễn","Vận dụng và phát triển sáng tạo tư tưởng Hồ Chí Minh","Giải quyết đúng những vấn đề do thực tiễn đặt ra","Tất cả các phương án đều đúng"],a:3},
+{q:"Phẩm chất nào dưới đây là phẩm chất trung tâm của đạo đức cách mạng trong tư tưởng đạo đức của Hồ Chí Minh?",o:["Trung với nước, hiếu với dân","Yêu thương con người, sống có nghĩa, có tình","Cần, kiệm, liêm, chính, chí công, vô tư","Tinh thần quốc tế trong sáng"],a:2},
+{q:"\"Việc gì lợi cho dân, ta phải hết sức làm. Việc gì hại đến dân, ta phải hết sức tránh. Chúng ta phải yêu dân, kính dân thì dân mới yêu ta, kính ta\". Những câu trên trích từ bài viết nào của Hồ Chí Minh?",o:["Bài phát biểu tại kỳ họp đầu tiên của Quốc hội khoá I, năm 1946","Thư gửi các đồng chí tỉnh nhà","Thư gửi Ủy ban nhân dân các kỳ, tỉnh, huyện và làng","Thư gửi các đồng chí Bắc Bộ"],a:2},
+{q:"Theo Hồ Chí Minh, vai trò của đạo đức được xác định là:",o:["Nền tảng của người cách mạng","Chỗ dựa của người cách mạng","Vũ khí của người cách mạng","Hành trang của người cách mạng"],a:0},
+{q:"Để xây dựng những phẩm chất đạo đức tốt đẹp và chống lại những cái vô đạo đức có kết quả, theo quan điểm của Hồ Chí Minh phải:",o:["Tạo thành phong trào quần chúng rộng rãi","Động viên từng cá nhân thực hiện","Bắt buộc từng cá nhân thực hiện","Chống chủ nghĩa cá nhân"],a:0},
+{q:"Theo tư tưởng Hồ Chí Minh, mục tiêu của văn hoá giáo dục là:",o:["Nâng cao dân trí","Bồi dưỡng tư tưởng đúng đắn và tình cảm cao đẹp","Bồi dưỡng những phẩm chất tốt đẹp, những phong cách lành mạnh","Thực hiện cả ba chức năng của văn hoá bằng giáo dục"],a:3},
+{q:"Nội dung giáo dục theo tư tưởng Hồ Chí Minh phải bao gồm:",o:["Văn hoá","Chính trị","Khoa học - kĩ thuật, chuyên môn nghiệp vụ","Toàn diện"],a:3},
+{q:"Chủ tịch Hồ Chí Minh xác định yếu tố nào là gốc của người cách mạng?",o:["Tài năng","Phẩm chất chính trị","Đạo đức","Cả A, B, C"],a:2},
+{q:"Chọn đáp án trả lời đúng nhất: Việc tu dưỡng đạo đức ở mỗi người phải được thực hiện trong:",o:["Mọi hoạt động thực tiễn","Mọi mối quan hệ xã hội","Mọi hoạt động thực tiễn, mọi mối quan hệ xã hội","Trong đời tư và đời công"],a:2}
+];
+
+const SHORT = [
+{q:"Nêu những cơ sở lý luận hình thành Tư tưởng Hồ Chí Minh?",a:"• Giá trị truyền thống tốt đẹp của dân tộc Việt Nam (cốt lõi là chủ nghĩa yêu nước)\n• Tinh hoa văn hóa nhân loại (phương Đông và phương Tây)\n• Chủ nghĩa Mác – Lênin (cơ sở lý luận quyết định)"},
+{q:"Cùng với chủ nghĩa Mác - Lênin, tư tưởng Hồ Chí Minh có vị trí như thế nào trong hệ thống tư tưởng của Đảng Cộng sản Việt Nam?",a:"Là nền tảng tư tưởng và kim chỉ nam cho hành động của Đảng"},
+{q:"Ban Chấp hành Trung ương Đảng tôn vinh Hồ Chí Minh là gì?",a:"Anh hùng dân tộc vĩ đại (Người đã làm rạng rỡ dân tộc ta, nhân dân ta và non sông đất nước ta)"},
+{q:"Năm 1919, thay mặt người dân Việt Nam yêu nước tại Pháp, Nguyễn Ái Quốc gửi Hội nghị Véc-xây văn bản gì?",a:"Bản Yêu sách của nhân dân An Nam (gồm 8 điểm)"},
+{q:"Quốc tế Cộng sản còn có tên gọi khác là gì?",a:"Quốc tế III (Đệ tam Quốc tế)"},
+{q:"Trong những tiền đề lý luận, tiền đề nào quyết định bước phát triển mới về chất trong tư tưởng Hồ Chí Minh?",a:"Chủ nghĩa Mác – Lênin"},
+{q:"Các văn kiện do Hồ Chí Minh khởi thảo và thông qua tại Hội nghị hợp nhất các tổ chức cộng sản Việt Nam được coi là gì?",a:"Cương lĩnh chính trị đầu tiên của Đảng Cộng sản Việt Nam"},
+{q:"Trong Chánh cương vắn tắt của Đảng (năm 1930), Hồ Chí Minh xác định mục tiêu chính trị của Đảng ta là gì?",a:"Đánh đổ đế quốc chủ nghĩa Pháp và bọn phong kiến, làm cho nước Nam được hoàn toàn độc lập"},
+{q:"Theo tư tưởng Hồ Chí Minh, nguyên tắc phân phối chủ yếu trong chủ nghĩa xã hội là gì?",a:"Làm theo năng lực, hưởng theo lao động"},
+{q:"Đối tượng của cách mạng thuộc địa theo quan điểm của Hồ Chí Minh là gì?",a:"Chủ nghĩa thực dân và tay sai phản động"},
+{q:"Con đường cứu nước của Hồ Chí Minh đã gắn độc lập dân tộc với điều gì?",a:"Gắn độc lập dân tộc với chủ nghĩa xã hội"},
+{q:"Trình tự giải phóng dân tộc theo quan điểm Hồ Chí Minh là gì?",a:"Giải phóng dân tộc → giải phóng giai cấp (giai cấp công nhân) → giải phóng xã hội → giải phóng con người"},
+{q:"Tính chất và nhiệm vụ của cách mạng ở thuộc địa theo quan điểm của Hồ Chí Minh là gì?",a:"Tính chất: cách mạng giải phóng dân tộc.\nNhiệm vụ hàng đầu: chống đế quốc, giành độc lập dân tộc"},
+{q:"Tư tưởng Hồ Chí Minh về phương pháp cách mạng trong cách mạng giải phóng dân tộc là gì?",a:"Cách mạng giải phóng dân tộc phải được tiến hành bằng con đường cách mạng bạo lực (bạo lực cách mạng của quần chúng, kết hợp đấu tranh chính trị với đấu tranh vũ trang)"},
+{q:"Thống nhất với quan điểm của C. Mác, Hồ Chí Minh xác định cách mạng là sự nghiệp của ai?",a:"Cách mạng là sự nghiệp của quần chúng nhân dân"},
+{q:"Đặc trưng của chủ nghĩa xã hội theo quan điểm Hồ Chí Minh là gì?",a:"• Xã hội do nhân dân lao động làm chủ\n• Có nền kinh tế phát triển\n• Phát triển cao về văn hóa, đạo đức\n• Xã hội công bằng, văn minh\n• Toàn dân tham gia xây dựng chủ nghĩa xã hội do Đảng lãnh đạo"},
+{q:"Theo Hồ Chí Minh, khi bước vào thời kỳ quá độ lên chủ nghĩa xã hội, nước ta có đặc điểm lớn nhất là gì?",a:"Từ một nước nông nghiệp lạc hậu tiến thẳng lên chủ nghĩa xã hội, không phải kinh qua giai đoạn phát triển tư bản chủ nghĩa"},
+{q:"Trong thời kỳ quá độ đi lên chủ nghĩa xã hội, về chính trị, nội dung quan trọng nhất theo tư tưởng Hồ Chí Minh là phải làm gì?",a:"Giữ vững và phát huy vai trò lãnh đạo của Đảng Cộng sản Việt Nam"},
+{q:"Theo Hồ Chí Minh, nhiệm vụ lịch sử của thời kỳ quá độ đi lên chủ nghĩa xã hội là gì?",a:"• Xây dựng nền tảng vật chất và kỹ thuật cho chủ nghĩa xã hội\n• Cải tạo xã hội cũ, xây dựng xã hội mới, kết hợp cải tạo và xây dựng, trong đó lấy xây dựng làm trọng tâm"},
+{q:"Theo tư tưởng Hồ Chí Minh, động lực chủ yếu nhất để xây dựng chủ nghĩa xã hội ở nước ta là gì?",a:"Con người (nhân dân lao động, nòng cốt là công - nông - trí thức); phát huy sức mạnh nội lực của toàn dân"},
+{q:"Tiến lên chủ nghĩa xã hội ở các nước tiền tư bản chủ nghĩa, bỏ qua chế độ tư bản chủ nghĩa là con đường quá độ gì?",a:"Quá độ gián tiếp"},
+{q:"Theo Hồ Chí Minh, sự ra đời của Đảng Cộng sản Việt Nam là kết quả của sự kết hợp các nhân tố nào?",a:"Chủ nghĩa Mác – Lênin + phong trào công nhân + phong trào yêu nước"},
+{q:"Theo quan điểm Hồ Chí Minh, Đảng Cộng sản Việt Nam là đảng của ai?",a:"Đảng của giai cấp công nhân, của nhân dân lao động và của cả dân tộc Việt Nam"},
+{q:"Theo tư tưởng Hồ Chí Minh, mục đích của xây dựng, chỉnh đốn Đảng là gì?",a:"Xây dựng Đảng cầm quyền; chỉnh đốn làm cho Đảng luôn trong sạch, vững mạnh, giữ vững vai trò tiên phong của giai cấp, của dân tộc"},
+{q:"Theo Hồ Chí Minh, nguyên tắc cơ bản nhất về tổ chức và hoạt động của Đảng là nguyên tắc nào?",a:"Nguyên tắc tập trung dân chủ"},
+{q:"Trong quan điểm của Hồ Chí Minh, vai trò của Đảng Cộng sản Việt Nam thể hiện ở những khía cạnh nào?",a:"• Là chủ thể hoạch định chủ trương, đường lối\n• Tập hợp, giáo dục, giác ngộ, hướng dẫn quần chúng\n• Liên minh, đoàn kết quốc tế"},
+{q:"Trong quá trình lãnh đạo xây dựng nhà nước Việt Nam, Hồ Chí Minh thường nhắc nhở mọi người đề phòng và khắc phục những tiêu cực nào?",a:"Một là: đặc quyền, đặc lợi\nHai là: tham ô, lãng phí, quan liêu"},
+{q:"Sự cần thiết phải xây dựng khối đại đoàn kết được Hồ Chí Minh xác định bởi các lý do nào?",a:"Phải thực hiện đoàn kết vì đoàn kết là sức mạnh, là lực lượng, là nhu cầu và nguyện vọng của tất cả các tầng lớp nhân dân"},
+{q:"Chủ thể của khối đại đoàn kết dân tộc theo quan điểm Hồ Chí Minh là ai?",a:"Toàn thể nhân dân Việt Nam — \"mọi con dân nước Việt\", cả trong nước và kiều bào ở nước ngoài, không phân biệt dân tộc, tôn giáo, giai cấp"},
+{q:"Nền tảng của khối đại đoàn kết dân tộc theo quan điểm Hồ Chí Minh là gì?",a:"Liên minh công nhân – nông dân – trí thức, dưới sự lãnh đạo của Đảng"},
+{q:"Hình thức tổ chức khối đại đoàn kết dân tộc theo tư tưởng Hồ Chí Minh là gì?",a:"Mặt trận dân tộc thống nhất (nay là Mặt trận Tổ quốc Việt Nam)"},
+{q:"Trong Mặt trận dân tộc thống nhất, Đảng giữ vai trò gì?",a:"Đảng vừa là thành viên của Mặt trận, vừa là lực lượng lãnh đạo Mặt trận"},
+{q:"Chủ tịch Hồ Chí Minh đã đề ra những nguyên tắc nào trong đoàn kết quốc tế?",a:"• Đoàn kết trên cơ sở thống nhất mục tiêu và lợi ích, có lý, có tình\n• Đoàn kết trên cơ sở độc lập, tự chủ, tự lực tự cường"},
+{q:"Theo tư tưởng Hồ Chí Minh, văn hóa có vai trò như thế nào?",a:"• Văn hóa là mục tiêu, động lực của cách mạng\n• Văn hóa là một mặt trận\n• Văn hóa phục vụ quần chúng nhân dân"},
+{q:"Theo tư tưởng Hồ Chí Minh, văn hóa Việt Nam có những tính chất cơ bản nào?",a:"Tính dân tộc, tính khoa học, tính đại chúng"},
+{q:"Nêu các chuẩn mực đạo đức cách mạng theo quan điểm của Hồ Chí Minh?",a:"• Trung với nước, hiếu với dân\n• Cần, kiệm, liêm, chính, chí công vô tư\n• Thương yêu con người, sống có tình có nghĩa\n• Tinh thần quốc tế trong sáng"},
+{q:"Theo tư tưởng Hồ Chí Minh, “Cần” nghĩa là gì?",a:"Lao động cần cù, siêng năng; lao động có kế hoạch, sáng tạo, có năng suất cao; lao động với tinh thần tự lực cánh sinh, không lười biếng"},
+{q:"Theo tư tưởng Hồ Chí Minh, “Kiệm” nghĩa là gì?",a:"Tiết kiệm sức lao động, thì giờ, tiền của của dân, của nước, của bản thân mình; không xa xỉ, không hoang phí, không bừa bãi"},
+{q:"Quan điểm của Hồ Chí Minh về mối quan hệ giữa tài và đức?",a:"Đạo đức là \"gốc\", là \"nền tảng\", là nhân tố \"chủ chốt\" của người cách mạng. Đức là tiêu chuẩn cho mục đích hành động, tài là phương tiện để thực hiện mục đích"},
+{q:"Để rèn luyện đạo đức mới, theo Hồ Chí Minh cần quán triệt các nguyên tắc nào?",a:"• Nói đi đôi với làm, nêu gương về đạo đức\n• Xây đi đôi với chống\n• Tu dưỡng đạo đức suốt đời"}
+];
+
+/* ================= LOGIC ================= */
+const $ = id => document.getElementById(id);
+let mode, deck, idx, score, wrongList;
+
+document.addEventListener('DOMContentLoaded', () => {
+  $('shortCount').textContent = SHORT.length + " câu";
+});
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function goHome(){
+  $('home').classList.remove('hidden');
+  $('game').classList.add('hidden');
+  $('resultScreen').classList.add('hidden');
+  window.scrollTo(0,0);
+}
+
+let lastChunk = null;
+function startQuizChunk(from, to){
+  lastChunk = [from, to];
+  startGame('mcq', MCQ.slice(from, to));
+}
+function startShort(){ lastChunk = null; startGame('short', SHORT); }
+
+function startGame(m, source){
+  mode = m; idx = 0; score = 0; wrongList = [];
+  deck = shuffle(source);
+  $('home').classList.add('hidden');
+  $('resultScreen').classList.add('hidden');
+  $('game').classList.remove('hidden');
+  render();
+}
+
+function updateBar(){
+  $('counter').textContent = "Câu " + (idx+1) + " / " + deck.length;
+  $('scoreLabel').textContent = "⭐ " + score + " điểm";
+  $('progressBar').style.width = (idx / deck.length * 100) + "%";
+}
+
+function render(){
+  updateBar();
+  window.scrollTo(0,0);
+  const item = deck[idx];
+  const card = $('qcard');
+
+  if(mode === 'mcq'){
+    let html = '<div class="qnum">Trắc nghiệm</div><div class="qtext">' + esc(item.q) + '</div>';
+    item.o.forEach((opt,i) => {
+      html += '<button class="opt" onclick="answerMCQ('+i+')"><span class="key">'+"ABCD"[i]+'</span><span>'+esc(opt)+'</span></button>';
+    });
+    html += '<div id="fb"></div>';
+    card.innerHTML = html;
+  } else {
+    let html = '<div class="qnum">Câu hỏi ngắn</div><div class="qtext">' + esc(item.q) + '</div>';
+    html += '<button class="btn btn-gold" onclick="revealAnswer()">💡 Xem đáp án</button>';
+    html += '<div id="ansArea"></div>';
+    card.innerHTML = html;
+  }
+}
+
+function esc(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function answerMCQ(chosen){
+  const item = deck[idx];
+  const buttons = document.querySelectorAll('.opt');
+  buttons.forEach(b => b.disabled = true);
+  buttons[item.a].classList.add('correct');
+  const correct = chosen === item.a;
+  if(correct){
+    score++;
+  } else {
+    buttons[chosen].classList.add('wrong');
+    wrongList.push({q:item.q, ra:"ABCD"[item.a] + ". " + item.o[item.a]});
+  }
+  $('fb').innerHTML =
+    '<div class="feedback ' + (correct ? 'ok">🎉 Chính xác! Giỏi quá!' : 'no">😅 Chưa đúng rồi. Đáp án đúng là <b>' + "ABCD"[item.a] + '</b>.') + '</div>' +
+    '<button class="btn btn-red" onclick="next()">' + (idx + 1 < deck.length ? 'Câu tiếp theo →' : 'Xem kết quả 🏁') + '</button>';
+  $('scoreLabel').textContent = "⭐ " + score + " điểm";
+}
+
+function revealAnswer(){
+  const item = deck[idx];
+  $('ansArea').innerHTML =
+    '<div class="answer-box"><b>Đáp án:</b>\n' + esc(item.a) + '</div>' +
+    '<p style="font-size:.8rem;color:var(--muted);margin-top:12px;">Bạn trả lời đúng không? Tự chấm nhé:</p>' +
+    '<div class="self-grade">' +
+    '<button class="btn btn-green" onclick="gradeShort(true)">✔ Mình đúng</button>' +
+    '<button class="btn btn-wrong" onclick="gradeShort(false)">✘ Mình sai</button>' +
+    '</div>';
+  document.querySelector('.btn-gold').style.display = 'none';
+}
+
+function gradeShort(ok){
+  const item = deck[idx];
+  if(ok){ score++; }
+  else { wrongList.push({q:item.q, ra:item.a}); }
+  next();
+}
+
+function next(){
+  idx++;
+  if(idx < deck.length){ render(); }
+  else { showResult(); }
+}
+
+function showResult(){
+  $('game').classList.add('hidden');
+  const r = $('resultScreen');
+  r.classList.remove('hidden');
+  const pct = Math.round(score / deck.length * 100);
+  let stars, msg;
+  if(pct >= 90){ stars = "⭐⭐⭐⭐⭐"; msg = "Xuất sắc! Kiến thức của bạn rất vững, tự tin đi thi nhé! 🎓"; }
+  else if(pct >= 75){ stars = "⭐⭐⭐⭐"; msg = "Rất tốt! Chỉ cần ôn lại vài câu là hoàn hảo. 💪"; }
+  else if(pct >= 50){ stars = "⭐⭐⭐"; msg = "Khá ổn! Ôn lại các câu sai bên dưới rồi chơi lại nha. 📖"; }
+  else { stars = "⭐⭐"; msg = "Cố lên! Xem kỹ các câu sai bên dưới rồi thử lại, lần sau chắc chắn cao hơn! 🔥"; }
+
+  const replay = mode === 'mcq'
+    ? 'startQuizChunk(' + lastChunk[0] + ',' + lastChunk[1] + ')'
+    : 'startShort()';
+
+  let html = '<div class="result">' +
+    '<div class="label">Kết quả vòng ' + (mode === 'mcq' ? 'Trắc nghiệm' : 'Câu hỏi ngắn') + '</div>' +
+    '<div class="big">' + score + '/' + deck.length + '</div>' +
+    '<div class="stars">' + stars + '</div>' +
+    '<div class="msg">' + msg + '</div>';
+
+  if(wrongList.length){
+    html += '<div class="review"><h3>📌 Các câu cần ôn lại (' + wrongList.length + '):</h3>';
+    wrongList.forEach(w => {
+      html += '<div class="review-item"><b>Câu hỏi:</b> ' + esc(w.q) + '<br><span class="ra">Đáp án đúng: ' + esc(w.ra).replace(/\n/g,'<br>') + '</span></div>';
+    });
+    html += '</div>';
+  }
+
+  html += '<button class="btn btn-red" onclick="' + replay + '">🔄 Chơi lại vòng này</button>' +
+    '<button class="btn btn-ghost" onclick="goHome()">← Về trang chính</button></div>';
+  r.innerHTML = html;
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
