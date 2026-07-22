@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog – Kim Hoàn | 25 tuổi, hai con nhỏ, tôi vẫn đang đi học</title>
+<meta name="description" content="Gửi những ai đang nghĩ rằng mình đã 'trễ'. Tôi 22 tuổi quay lại giảng đường với một đứa con 6 tháng tuổi — và đó là quyết định đúng đắn nhất đời mình.">
+<meta property="og:title" content="25 tuổi, hai con nhỏ, tôi vẫn đang đi học — và tôi không hối hận">
+<meta property="og:description" content="Gửi những ai đang nghĩ rằng mình đã 'trễ'. Câu chuyện của một người mẹ trẻ chọn bản thân — thay vì chọn sự thoải mái.">
+<meta property="og:image" content="https://iamkimhoan.vn/images/blog-1.jpg">
+<meta property="og:url" content="https://iamkimhoan.vn/blog/25-tuoi-di-hoc-lai/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pastel-yellow:#F9E45B; --deep-navy:#0D1B3E; --navy-mid:#1A2E5C;
+    --navy-light:#2D4080; --cream:#FDFAF0; --light-beige:#F5F0E0;
+    --mint:#B8EDD9; --text-dark:#0D1B3E; --text-mid:#3A4A7A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;}
+
+  #progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--pastel-yellow);z-index:300;width:0%;transition:width 0.1s linear;}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;backdrop-filter:blur(16px);background:rgba(253,250,240,0.92);border-bottom:1px solid rgba(13,27,62,0.08);transition:box-shadow 0.3s;}
+  nav.scrolled{box-shadow:0 4px 32px rgba(13,27,62,0.10);}
+  .nav-inner{max-width:760px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;font-style:italic;color:var(--deep-navy);text-decoration:none;}
+  .nav-logo span{color:var(--pastel-yellow);}
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .nav-back{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--deep-navy);}
+
+  .lang-toggle{display:flex;align-items:center;gap:4px;background:var(--deep-navy);border-radius:20px;padding:4px 6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.72rem;user-select:none;}
+  .lang-btn{padding:3px 10px;border-radius:14px;color:rgba(255,255,255,0.5);transition:all 0.25s;font-weight:700;letter-spacing:0.05em;}
+  .lang-btn.active{background:var(--pastel-yellow);color:var(--deep-navy);}
+
+  .vi{display:block;} .en{display:none;}
+  body.lang-en .vi{display:none;} body.lang-en .en{display:block;}
+  span.vi{display:inline;} span.en{display:none;}
+  body.lang-en span.vi{display:none;} body.lang-en span.en{display:inline;}
+
+  .article-hero{padding:110px 24px 56px;max-width:760px;margin:0 auto;}
+  .kicker{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .kicker::before{content:'';display:block;width:24px;height:2px;background:var(--pastel-yellow);}
+  .article-title{font-family:'Playfair Display',serif;font-size:clamp(1.85rem,4.5vw,2.75rem);font-weight:900;line-height:1.15;color:var(--deep-navy);margin-bottom:18px;}
+  .article-subtitle{font-size:1.05rem;color:var(--text-mid);line-height:1.65;max-width:600px;margin-bottom:28px;font-weight:400;font-style:italic;}
+  .article-meta{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid rgba(13,27,62,0.1);}
+  .author-row{display:flex;align-items:center;gap:10px;}
+  .author-avatar{width:36px;height:36px;border-radius:50%;background:var(--navy-mid);display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:var(--pastel-yellow);font-family:'Space Mono',monospace;font-weight:700;overflow:hidden;flex-shrink:0;}
+  .author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top;}
+  .author-name{font-size:0.88rem;font-weight:600;color:var(--deep-navy);}
+  .meta-dot{width:4px;height:4px;border-radius:50%;background:var(--text-mid);opacity:0.35;flex-shrink:0;}
+  .meta-item{font-family:'Space Mono',monospace;font-size:0.67rem;color:var(--text-mid);letter-spacing:0.06em;}
+
+  .article-body{max-width:760px;margin:0 auto;padding:44px 24px 72px;}
+  .article-body p{font-size:1.05rem;line-height:1.9;color:var(--text-dark);margin-bottom:1.6rem;}
+  .article-body h2{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--deep-navy);margin:3.5rem 0 1.2rem;}
+  .article-body strong{color:var(--deep-navy);font-weight:700;}
+  .article-body em{font-style:italic;}
+
+  .pull-quote{border-left:3px solid var(--pastel-yellow);padding:14px 0 14px 24px;margin:2.5rem 0;}
+  .pull-quote p{font-family:'Playfair Display',serif;font-size:1.22rem;font-style:italic;color:var(--deep-navy);line-height:1.65;margin:0;}
+
+  .highlight-box{background:var(--light-beige);border:1px solid rgba(13,27,62,0.08);border-radius:12px;padding:24px 28px;margin:2rem 0;}
+  .highlight-box p{margin:0;font-size:0.97rem;color:var(--text-mid);line-height:1.75;}
+
+  .divider{width:40px;height:2px;background:var(--pastel-yellow);margin:3rem auto;}
+
+  .closing-signature{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--text-mid);margin-top:2.5rem;}
+
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin:2.5rem 0 0;}
+  .tag{background:var(--light-beige);border:1px solid rgba(13,27,62,0.1);border-radius:20px;padding:5px 14px;font-size:0.78rem;font-weight:500;color:var(--text-mid);transition:all 0.2s;cursor:default;}
+  .tag:hover{background:var(--pastel-yellow);border-color:var(--pastel-yellow);color:var(--deep-navy);}
+
+  .article-cta{max-width:760px;margin:0 auto;padding:0 24px 72px;}
+  .cta-box{background:var(--deep-navy);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .cta-box h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--cream);margin-bottom:6px;}
+  .cta-box p{font-size:0.85rem;color:rgba(253,250,240,0.55);line-height:1.6;}
+  .cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--pastel-yellow);color:var(--deep-navy);padding:12px 28px;border-radius:4px;font-weight:700;font-size:0.88rem;text-decoration:none;white-space:nowrap;transition:all 0.25s;flex-shrink:0;}
+  .cta-btn:hover{background:var(--mint);transform:translateY(-2px);}
+
+  .related{max-width:760px;margin:0 auto;padding:0 24px 80px;border-top:1px solid rgba(13,27,62,0.08);}
+  .related-label{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);margin:44px 0 22px;}
+  .related-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:540px){.related-grid{grid-template-columns:1fr;}}
+  .related-card{border:1px solid rgba(13,27,62,0.1);border-radius:12px;padding:20px;background:white;transition:all 0.25s;text-decoration:none;display:block;}
+  .related-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(13,27,62,0.1);}
+  .related-chip{background:var(--light-beige);border-radius:10px;padding:3px 10px;font-size:0.67rem;font-family:'Space Mono',monospace;font-weight:700;color:var(--text-mid);display:inline-block;margin-bottom:10px;}
+  .related-card h4{font-family:'Playfair Display',serif;font-size:0.98rem;font-weight:700;color:var(--deep-navy);line-height:1.35;margin-bottom:6px;}
+  .related-card p{font-size:0.8rem;color:var(--text-mid);line-height:1.55;}
+
+  footer{background:var(--deep-navy);border-top:1px solid rgba(249,228,91,0.1);padding:24px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .footer-mark{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--pastel-yellow);}
+  .footer-text{font-size:0.75rem;color:rgba(253,250,240,0.4);}
+  .footer-link{font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(253,250,240,0.4);text-decoration:none;}
+
+  .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s,transform 0.6s;}
+  .fade-up.visible{opacity:1;transform:translateY(0);}
+
+  @media(max-width:600px){
+    .cta-box{padding:28px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Kim Hoàn<span>.</span></a>
+    <div class="nav-right">
+      <a href="/#blog" class="nav-back">
+        <span class="vi">← Về Portfolio</span>
+        <span class="en">← Back to Portfolio</span>
+      </a>
+      <div class="lang-toggle" onclick="toggleLang()">
+        <div class="lang-btn" id="btn-en">EN</div>
+        <div class="lang-btn active" id="btn-vi">VI</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="article-hero fade-up">
+  <div class="kicker">
+    <span class="vi">Câu chuyện · Làm mẹ · Không bao giờ trễ</span>
+    <span class="en">Personal Story · Motherhood · It's Never Too Late</span>
+  </div>
+
+  <h1 class="article-title">
+    <span class="vi">25 tuổi, hai con nhỏ, tôi vẫn đang đi học — và tôi không hối hận</span>
+    <span class="en">25 Years Old, Two Kids, Still in School — and I Have No Regrets</span>
+  </h1>
+
+  <p class="article-subtitle">
+    <span class="vi">Gửi những ai đang nghĩ rằng mình đã "trễ".</span>
+    <span class="en">For everyone who thinks they're already "too late".</span>
+  </p>
+
+  <div class="article-meta">
+    <div class="author-row">
+      <div class="author-avatar">
+        <img src="/hero.jpg" alt="Kim Hoàn" onerror="this.style.display='none'">
+      </div>
+      <div class="author-name">Nguyễn Thị Kim Hoàn</div>
+    </div>
+    <div class="meta-dot"></div>
+    <span class="meta-item">
+      <span class="vi">10 phút đọc</span>
+      <span class="en">10 min read</span>
+    </span>
+    <div class="meta-dot"></div>
+    <span class="meta-item">
+      <span class="vi">Câu chuyện cá nhân</span>
+      <span class="en">Personal Story</span>
+    </span>
+  </div>
+</header>
+
+<!-- ══ BODY ══ -->
+<article class="article-body">
+
+  <p>
+    <span class="vi">Có những buổi chiều tôi ngồi trong giảng đường, nắng xuyên qua khung cửa sổ rọi xuống trang giáo trình, và tôi bỗng thấy bàn tay mình — bàn tay vừa bế con lúc sáng, vừa pha sữa lúc đêm qua, vừa cầm bút ghi bài lúc này — đang hơi run.</span>
+    <span class="en">Some afternoons I sit in the lecture hall, sunlight cutting through the window onto my textbook, and I catch a glimpse of my own hands — the same hands that held my baby this morning, mixed formula last night, and are now holding a pen — trembling slightly.</span>
+  </p>
+
+  <p>
+    <span class="vi">Năm nay tôi 25 tuổi. Bên cạnh tôi là những đứa em kém tôi 6, 7 tuổi, đang cười nói rôm rả về cái quán trà sữa mới mở. Còn tôi thì len lén nhìn đồng hồ, lo không kịp về đón con.</span>
+    <span class="en">I'm 25. Around me are classmates 6 or 7 years younger, chatting cheerfully about a new bubble tea spot. Meanwhile I keep sneaking glances at my watch, anxious about making it home to pick up my kids.</span>
+  </p>
+
+  <p>
+    <span class="vi">Và tôi đã có hai đứa nhỏ ở nhà.</span>
+    <span class="en">And I have two little ones waiting at home.</span>
+  </p>
+
+  <p>
+    <span class="vi">Nếu bạn hỏi tôi có ngại không, tôi sẽ trả lời thật lòng: <strong>Có.</strong> Nhưng tôi đã học được một điều — cảm giác chỉ là cảm giác. Còn cuộc đời mình, không ai sống thay được.</span>
+    <span class="en">If you ask whether I feel out of place, I'll be honest: <strong>Yes.</strong> But I've learned something — feelings are just feelings. And no one else can live your life for you.</span>
+  </p>
+
+  <h2>
+    <span class="vi">Khởi đầu đẹp, rồi tôi đánh rơi</span>
+    <span class="en">A good start — that I let slip away</span>
+  </h2>
+
+  <p>
+    <span class="vi">Tôi từng là học sinh Phan Châu Trinh — một trong những trường cấp 3 tốt nhất Đà Nẵng. Nghe thì oách, nhưng đó chỉ là một khởi đầu đẹp cho những ai biết trân trọng nó. Còn tôi thì không.</span>
+    <span class="en">I attended Phan Châu Trinh — one of the best high schools in Đà Nẵng. Sounds impressive, but a good starting point only matters if you make something of it. I didn't.</span>
+  </p>
+
+  <p>
+    <span class="vi">Ba năm cấp 3 trôi qua như một cơn gió. Tôi lười học, đi học muộn. Mỗi độ đầu đông, khi những cơn gió lạnh đầu tiên tràn về thành phố, căn bệnh viêm tai giữa lại hành hạ tôi — đau nhức từ trong màng nhĩ, đau đến mức tôi chỉ muốn cuộn tròn trong chăn, kéo kín đầu, và quên đi cả thế giới ngoài kia. Tiếng chuông báo thức vang lên mỗi sáng, tôi tắt đi. Tắt luôn cả ngày hôm đó.</span>
+    <span class="en">Three high school years swept by like a storm. I was lazy, always late. Every winter, when the first cold winds rolled into Đà Nẵng, my middle ear infection would flare up — a deep, relentless pain that made me want to curl under the blankets and block out the entire world. The alarm would ring each morning. I'd turn it off. And switch off the whole day along with it.</span>
+  </p>
+
+  <p>
+    <span class="vi">Rồi cái "nghỉ vì bệnh" dần thành thói quen. Tôi quen với việc ở nhà. Quen với mùi chăn gối buổi trưa. Quen với cảm giác trốn tránh. Trong khi bạn bè đang chạy đua với từng đề thi thử, tôi nằm đó — nhìn trần nhà, nghe tiếng xe máy ngoài đường — và để từng ngày trôi qua như nước chảy qua kẽ tay.</span>
+    <span class="en">"Sick days" slowly became a habit. I got comfortable staying home. Comfortable with the smell of afternoon sheets. Comfortable with avoidance. While my friends were grinding through practice exams, I was lying there — staring at the ceiling, listening to motorbikes outside — letting each day slip through my fingers like water.</span>
+  </p>
+
+  <p>
+    <span class="vi">Năm 12, tôi thi đậu sư phạm. Nhưng tôi không muốn làm giáo viên. Tôi chọn Quản trị Kinh doanh — dù thú thật, tôi chẳng hiểu ngành đó là gì. Tôi chỉ đi theo bạn bè. Vào Greenwich được một thời gian, rồi vì vài lý do gia đình, tôi dừng lại.</span>
+    <span class="en">In Year 12, I passed the entrance exam for teacher's college. But I didn't want to be a teacher. I chose Business Administration — honestly, without knowing what it even was. I just followed my friends. I enrolled at Greenwich for a while, then stopped for family reasons.</span>
+  </p>
+
+  <p>
+    <span class="vi">Giai đoạn đó, tôi sống như một chiếc lá — gió thổi hướng nào thì trôi hướng đó. Thời gian — thứ duy nhất không bao giờ đợi ai — cứ lặng lẽ lướt qua vai tôi. Và tôi, vẫn đứng yên tại chỗ.</span>
+    <span class="en">During that period, I drifted like a leaf in the wind — no direction, no destination. Time — the only thing that never waits for anyone — kept quietly slipping past. And I remained completely still.</span>
+  </p>
+
+  <h2>
+    <span class="vi">Cú rẽ bất ngờ — và một câu hỏi không thể bỏ qua</span>
+    <span class="en">An unexpected turn — and a question I couldn't avoid</span>
+  </h2>
+
+  <p>
+    <span class="vi">Rồi tôi gặp chồng mình. Anh học UEH — Đại học Kinh tế TP.HCM. Anh cũng ham chơi như tôi, nhưng ít ra, anh có cái gì đó hơn tôi ở thời điểm ấy.</span>
+    <span class="en">Then I met my husband. He studied at UEH — the University of Economics Ho Chi Minh City. He was just as carefree as me, but at least he had something I didn't back then.</span>
+  </p>
+
+  <p>
+    <span class="vi">Quen nhau được một năm, những buổi hẹn hò của chúng tôi gần như là <em>study date</em> — anh gõ laptop làm việc, tôi bên cạnh luyện tiếng Anh. Hai ly cà phê, một góc quán, ánh đèn vàng hắt xuống bàn gỗ — đó là quãng thời gian đẹp nhất trước cơn bão.</span>
+    <span class="en">After a year of dating, our meetups looked more like <em>study dates</em> — him typing away on his laptop, me drilling English beside him. Two coffees, a corner table, warm yellow light falling across the wood — that was our most beautiful time before the storm.</span>
+  </p>
+
+  <p>
+    <span class="vi">Rồi một ngày — <strong>bùm</strong> — tôi có em bé.</span>
+    <span class="en">Then one day — <strong>just like that</strong> — I was pregnant.</span>
+  </p>
+
+  <p>
+    <span class="vi">Tôi 21 tuổi. Tôi vẫn nhớ buổi sáng hôm đó. Bầu trời Đà Nẵng trong vắt, nắng đổ xuống như mật ong, và tôi cầm que thử thai trong tay, đứng lặng giữa phòng tắm, nghe tim mình đập mạnh đến mức tưởng như cả căn phòng cũng rung theo. Ngoài cửa sổ, một con chim sẻ đậu trên dây điện, rồi bay đi. Tôi thì chưa kịp bay đi đâu cả — tôi vừa trở thành một người mẹ.</span>
+    <span class="en">I was 21. I still remember that morning. The Đà Nẵng sky was crystal clear, sunlight pouring down like honey, and I stood frozen in the bathroom holding a pregnancy test, my heart pounding so hard the whole room seemed to shake. Outside the window, a sparrow perched on a power line, then flew away. I hadn't gone anywhere yet — and I had just become a mother.</span>
+  </p>
+
+  <p>
+    <span class="vi">Hư không? Có lẽ vậy. Nhưng cuộc đời đâu chờ ai sẵn sàng mới bắt đầu. Chúng tôi cưới. Ngày 2 tháng 3 năm 2023, Happy — đứa con đầu lòng của tôi — chào đời. Và trong đêm nằm nghe tiếng thở nhỏ xíu của con bên cạnh, tôi lần đầu tiên thật sự đối diện với câu hỏi mà mình không thể né tránh thêm được nữa:</span>
+    <span class="en">Irresponsible? Maybe. But life doesn't wait until you're ready. We got married. On March 2nd, 2023, Happy — my firstborn — came into the world. And lying there that night, listening to my baby's tiny breaths beside me, I finally faced the question I could no longer run from:</span>
+  </p>
+
+  <div class="pull-quote">
+    <p>
+      <span class="vi">"Nếu mình dừng lại ở đây, 10 năm sau mình sẽ là ai?"</span>
+      <span class="en">"If I stop here, who will I be in 10 years?"</span>
+    </p>
+  </div>
+
+  <p>
+    <span class="vi">Tôi từng là đứa chỉ giỏi mỗi việc học. Không phải giỏi hơn ai — chỉ đơn giản là, trong tất cả những gì tôi làm, học là thứ tôi làm tốt nhất. Vậy mà cái duy nhất tôi làm tốt nhất, tôi cũng đã bỏ lỡ. Rồi con tôi sau này sẽ ra sao, nếu mẹ nó là một người từng buông tay chính mình?</span>
+    <span class="en">I was only ever really good at one thing: studying. Not better than anyone — just that among everything I'd tried, school was where I functioned best. And that one thing I was actually good at — I had let go of it. What kind of example would I be for my child, if their mother was someone who had once given up on herself?</span>
+  </p>
+
+  <h2>
+    <span class="vi">Trở lại trường — ở tuổi 22</span>
+    <span class="en">Back to school — at 22</span>
+  </h2>
+
+  <p>
+    <span class="vi">Tôi thuyết phục chồng cho tôi đi học đại học lại. Happy tròn 6 tháng tuổi — và tôi bước vào giảng đường lần đầu tiên với tư cách một người mẹ.</span>
+    <span class="en">I convinced my husband to let me go back to university. Happy was exactly six months old — and I walked into a lecture hall for the first time as a mother.</span>
+  </p>
+
+  <p>
+    <span class="vi">Bạn biết cảm giác đó không? Bước vào giảng đường ở tuổi mà người ta đang chuẩn bị ra trường. Buổi sáng đầu tiên, tôi đứng trước cổng trường, trời còn sớm, sương mù lãng đãng, và tôi hít một hơi thật sâu. Tim đập thình thịch như thể tôi lại là cô bé lớp 1 ngày khai giảng.</span>
+    <span class="en">You know what that feels like? Walking into a lecture hall at the age when everyone around you is preparing to graduate. That first morning, I stood at the school gate, the air still misty and cool, and I breathed in deeply. My heart was pounding like I was a first-grader on opening day all over again.</span>
+  </p>
+
+  <p>
+    <span class="vi">Ngại. Dị. Sợ ánh nhìn. Tôi bước vào giảng đường, chọn một chỗ cuối lớp. Những đứa em mười tám, mười chín tuổi ngồi xung quanh, tóc vuốt keo, son môi căng mọng, đang cười nói về những thứ mà tôi đã không còn quan tâm từ lâu. Tôi cúi xuống, mở vở, và tự hỏi: <em>Điều gì quan trọng nhất với mình lúc này?</em></span>
+    <span class="en">Self-conscious. Awkward. Scared of what others thought. I walked in and chose a seat in the back. Eighteen and nineteen-year-olds surrounded me — glossy hair, fresh lip gloss, chatting about things I'd stopped caring about long ago. I bent my head, opened my notebook, and asked myself: <em>What actually matters to me right now?</em></span>
+  </p>
+
+  <p>
+    <span class="vi">Không phải tấm bằng. Không phải ánh nhìn của người khác. Mà là <strong>tôi không muốn trở thành một người mẹ không dám làm gương cho con mình.</strong></span>
+    <span class="en">Not a diploma. Not other people's opinions. It was this: <strong>I refused to become a mother who was afraid to set an example for her own child.</strong></span>
+  </p>
+
+  <p>
+    <span class="vi">Ngày đầu tiên đến trường, tôi mang theo tất cả những nỗi sợ. Ngày thứ hai cũng vậy. Ngày thứ ba, thứ tư… rồi dần dần, mọi thứ quen đi. Hóa ra nỗi sợ lớn nhất của con người chỉ là nỗi sợ ngày đầu tiên. Bước qua được nó, mọi thứ sẽ ổn.</span>
+    <span class="en">That first day, I carried every fear I had with me. The second day too. By the third, the fourth — things gradually settled. Turns out the biggest fear is always the fear of the first day. Once you get past it, everything else finds a way to be okay.</span>
+  </p>
+
+  <p>
+    <span class="vi">Năm nhất, tôi nhận bằng khen Sinh viên Xuất sắc. Tôi cầm tờ giấy đó trên tay, không khóc, nhưng mắt cay. Tôi không tự hào vì tấm bằng khen — tôi tự hào vì nó chứng minh một điều: <strong>lần này, tôi học thật sự. Không đối phó. Không bỏ cuộc giữa chừng.</strong></span>
+    <span class="en">In my first year, I received an Outstanding Student award. I held that certificate in my hands, didn't cry, but my eyes stung. I wasn't proud because of the award itself — I was proud because it proved something: <strong>this time, I was actually learning. No shortcuts. No giving up halfway.</strong></span>
+  </p>
+
+  <h2>
+    <span class="vi">Làm mẹ, làm sinh viên, làm vợ — và làm chính mình</span>
+    <span class="en">Being a mother, a student, a wife — and still being myself</span>
+  </h2>
+
+  <p>
+    <span class="vi">Lịch trình của tôi những năm đó gần như không có khoảng trống.</span>
+    <span class="en">My schedule in those years had almost no breathing room.</span>
+  </p>
+
+  <p>
+    <span class="vi">5 giờ sáng, tiếng con khóc đánh thức tôi dậy. Pha sữa, thay tã, dỗ con ngủ lại. 6 giờ, tôi đứng trong bếp, vừa hâm cháo vừa học thuộc mấy từ vựng tiếng Anh dán trên cửa tủ lạnh. 7 giờ, tôi khoác áo, đội mũ bảo hiểm, nổ máy xe — con bé đứng ở cửa nhìn theo, miệng bi bô <em>"mẹ ơi"</em>, và tim tôi như có ai bóp chặt. Nhưng tôi vẫn phải đi.</span>
+    <span class="en">5am — my baby's cry would wake me. Mix formula, change diapers, rock her back to sleep. By 6, I'd be standing in the kitchen, reheating rice porridge while memorizing English vocabulary stuck to the refrigerator door. At 7, jacket on, helmet buckled, engine running — my little girl standing at the door watching me leave, her voice small and sweet: <em>"Mẹ ơi."</em> My heart would clench every single time. But I still had to go.</span>
+  </p>
+
+  <p>
+    <span class="vi">Trên đường đến trường, gió tạt vào mặt, tôi nhìn bầu trời Đà Nẵng xanh ngắt buổi sáng, và tự nhủ: <em>"Ráng thêm một ngày nữa thôi."</em></span>
+    <span class="en">On the road to school, wind pressing against my face, I'd look up at Đà Nẵng's deep blue morning sky and tell myself: <em>"Just one more day. You can do one more day."</em></span>
+  </p>
+
+  <p>
+    <span class="vi">Chiều tan học, tôi lao về nhà, cởi áo sơ mi còn chưa kịp thay đã bế con. Tối đến, khi cả thành phố đã tắt đèn, tôi ngồi bên giường, đọc sách cho con nghe dưới ánh đèn ngủ màu vàng ấm. Tôi dạy Happy nhận biết cờ các nước — con bé chỉ tay vào lá cờ Nhật Bản, reo lên <em>"chấm đỏ!"</em>, và tôi bật cười. Mỗi ngày nhìn con lớn lên, tôi thấy mình cũng đang lớn lên theo — chững chạc hơn, kiên nhẫn hơn, và dũng cảm hơn.</span>
+    <span class="en">When afternoon classes ended, I'd race home and scoop my daughter up before I'd even changed out of my shirt. At night, when the whole city had gone quiet, I'd sit by her bed and read to her under the warm yellow glow of her nightlight. I taught Happy to recognize world flags — she'd point to Japan and shout <em>"red dot!"</em> and I'd burst out laughing. Watching her grow every day, I could feel myself growing too — steadier, more patient, braver.</span>
+  </p>
+
+  <div class="highlight-box">
+    <p>
+      <span class="vi">Cũng có những đêm tôi kiệt sức. Có những đêm con khóc không dỗ được, tôi ôm con trong tay, nước mắt rơi xuống tóc con, và tôi lớn tiếng — rồi ngay sau đó thấy mình thật tệ. Nhưng chỉ một cái ôm của con, một nụ cười, một câu <em>"mẹ ơi"</em> ngọng nghịu — mọi mệt mỏi lại tan đi như sương sớm.</span>
+      <span class="en">There were nights I was completely drained. Nights when Happy wouldn't stop crying no matter what I did, and I'd hold her in my arms, my own tears falling into her hair, voice raised — and immediately hate myself for it. But then one hug, one smile, one tiny mispronounced <em>"Mẹ ơi"</em> — and every last drop of exhaustion would dissolve like morning mist.</span>
+    </p>
+  </div>
+
+  <h2>
+    <span class="vi">Cú sốc thứ hai — và lần này tôi không dừng lại</span>
+    <span class="en">The second surprise — and this time I didn't stop</span>
+  </h2>
+
+  <p>
+    <span class="vi">Rồi cú sốc thứ hai đến: tôi có em bé thứ hai.</span>
+    <span class="en">Then the second surprise arrived: I was pregnant again.</span>
+  </p>
+
+  <p>
+    <span class="vi">Cơ thể tôi yếu dần. Tôi gầy đi, quầng thâm hằn dưới mắt, và có những buổi chiều tôi ngồi trong giảng đường mà đầu nặng trĩu, chỉ muốn gục xuống bàn. Mẹ chồng la tôi: <em>"Sao lại có em bé nữa?"</em></span>
+    <span class="en">My body started to wear down. I grew thinner, dark circles deepening under my eyes, and there were afternoons in class when my head felt so heavy I just wanted to lay it on the desk. My mother-in-law scolded me: <em>"Why another baby?"</em></span>
+  </p>
+
+  <p>
+    <span class="vi">Nhưng điều gì đến rồi sẽ đến. Và lần này — tôi không để điều đó làm chậm mình lại.</span>
+    <span class="en">But what comes, comes. And this time — I refused to let it slow me down.</span>
+  </p>
+
+  <p>
+    <span class="vi">Suốt thời gian mang thai Sunrise, tôi vẫn đăng ký học hè — bụng ngày một to, người ngày một nặng, nhưng tôi vẫn ngồi trong lớp, vẫn làm bài, vẫn thi. Tôi muốn ra trường đúng hạn. Tôi không muốn trễ hạn vì bất cứ lý do gì. Dù có cực một chút — nhưng nhìn lại, tôi thấy thật xứng đáng vì đã cố gắng.</span>
+    <span class="en">Throughout the pregnancy with Sunrise, I kept attending summer classes — belly growing bigger, body heavier, but I still sat in class, still did assignments, still took exams. I wanted to graduate on time. I refused to fall behind for any reason. It was hard — but looking back, I'm proud I pushed through.</span>
+  </p>
+
+  <p>
+    <span class="vi">Ngày 3 tháng 10 năm 2025, Sunrise chào đời. Tôi bảo lưu học kỳ I để ở nhà với con. Và khi bé tròn 3 tháng, tháng 1 năm 2026 — tôi quay lại giảng đường.</span>
+    <span class="en">On October 3rd, 2025, Sunrise was born. I took a leave of absence for the first semester to stay home with her. And when she turned three months old, in January 2026 — I walked back into the lecture hall.</span>
+  </p>
+
+  <p>
+    <span class="vi">Vẫn là sáng đi học, tối chăm con, đêm phụ chồng việc nhà. Có những đêm hai giờ sáng, tôi ngồi ở bàn học, ánh đèn vàng hắt xuống trang giấy, một tay cầm bút, một tay đặt nhẹ lên nôi ru con — tôi nhìn ra cửa sổ, bầu trời đen kịt, chỉ có một ngôi sao le lói, và tôi tự nhủ: <em>"Mình sẽ không bỏ cuộc."</em></span>
+    <span class="en">Back to the same rhythm — mornings at school, evenings with the kids, nights helping with housework. Some nights at 2am I'd sit at my desk, lamplight falling on the page, one hand holding a pen, the other resting gently on the baby's crib — I'd look out the window at the pitch-black sky with just one faint star, and tell myself: <em>"I will not give up."</em></span>
+  </p>
+
+  <p>
+    <span class="vi">Bạn bè tôi lúc ấy đang tung tăng ở Đà Lạt, Phú Quốc, Hàn Quốc, Thái Lan. Instagram của họ đầy những bức ảnh hoàng hôn, những ly cocktail, những chuyến phiêu lưu không cần kế hoạch. Còn tôi ở nhà với hai đứa nhỏ và một cuốn giáo trình. Đôi khi tôi cũng tủi thân. Nhưng rồi tôi nhìn hai đứa đang ngủ — bàn tay bé xíu của Sunrise đặt trên má Happy — và tôi biết: tôi đang có thứ mà không phải ai cũng có được.</span>
+    <span class="en">My friends were off in Đà Lạt, Phú Quốc, Korea, Thailand. Their Instagrams were full of golden sunsets, cocktails, unplanned adventures. I was home with two little ones and a textbook. Sometimes I felt the sting of it. But then I'd watch my two girls sleeping — Sunrise's tiny hand resting on Happy's cheek — and I'd know: I have something not everyone gets to have.</span>
+  </p>
+
+  <div class="pull-quote">
+    <p>
+      <span class="vi">Tôi biết ơn chồng mình — vì anh đã tạo điều kiện để tôi được đi học lại. Tôi biết ơn mẹ chồng — vì mẹ đã bế con, tắm con, cho con ăn những lúc tôi không thể. Không có họ, tôi đã không đi được tới đây.</span>
+      <span class="en">I'm grateful to my husband — for making it possible for me to go back to school. I'm grateful to my mother-in-law — for holding my babies, bathing them, feeding them when I couldn't. Without them, I would never have made it this far.</span>
+    </p>
+  </div>
+
+  <h2>
+    <span class="vi">2027 — ngày tôi đang hướng tới</span>
+    <span class="en">2027 — the day I'm walking toward</span>
+  </h2>
+
+  <p>
+    <span class="vi">Tôi chưa tốt nghiệp. Ngày đó là năm 2027 — còn phía trước. Nhưng tôi đã có thể hình dung rõ mồn một từng chi tiết của buổi sáng hôm ấy.</span>
+    <span class="en">I haven't graduated yet. That day is in 2027 — still ahead of me. But I can already picture every detail of that morning with absolute clarity.</span>
+  </p>
+
+  <p>
+    <span class="vi">Trời Đà Nẵng nắng đẹp. Bầu trời xanh không một gợn mây. Tôi đứng giữa sân trường trong chiếc áo cử nhân, cầm tấm bằng trên tay — và lần đầu tiên sau nhiều năm, tôi khóc. Không phải vì mệt. Mà vì tôi đã làm được.</span>
+    <span class="en">The Đà Nẵng sun will be bright. The sky cloudless and impossibly blue. I'll be standing in the courtyard in my graduation gown, holding my diploma — and for the first time in years, I'll cry. Not from exhaustion. But because I did it.</span>
+  </p>
+
+  <p>
+    <span class="vi">Happy sẽ chạy ào tới ôm chân tôi, ngước lên gọi <em>"mẹ"</em>. Sunrise sẽ còn đang tập chạy, chân bước lẫm chẫm theo sau chị. Và tôi sẽ biết — mọi đêm thức trắng, mọi buổi chiều lê bước về nhà, mọi lần muốn bỏ cuộc — <strong>tất cả đều xứng đáng.</strong></span>
+    <span class="en">Happy will run up and wrap herself around my legs, look up and call out <em>"Mẹ."</em> Sunrise will be toddling right behind her sister on unsteady little feet. And I'll know — every sleepless night, every afternoon I dragged myself home, every moment I wanted to quit — <strong>all of it was worth it.</strong></span>
+  </p>
+
+  <p>
+    <span class="vi">Giờ đây, tôi đang chuẩn bị cho bước tiếp theo: sau tốt nghiệp, học thạc sĩ, để một ngày nào đó đứng trên bục giảng với tư cách một giảng viên. Không phải vì tôi thích sự an toàn — mà vì tôi muốn chứng minh với hai đứa con rằng: học không có điểm dừng, và giấc mơ không có hạn sử dụng.</span>
+    <span class="en">After graduation, the plan is a master's degree — and one day, standing at the front of a classroom as a lecturer. Not because I want a safe path — but because I want to show my two girls that learning has no finish line, and dreams have no expiry date.</span>
+  </p>
+
+  <h2>
+    <span class="vi">Nếu bạn đang đọc những dòng này…</span>
+    <span class="en">If you're reading this…</span>
+  </h2>
+
+  <p>
+    <span class="vi">Tôi viết câu chuyện này không phải để khoe. Tôi viết cho bạn — người đang đọc, người có thể đang ngồi trong một căn phòng nào đó, nhìn ra cửa sổ, và tự hỏi: <em>"Liệu mình có còn kịp không?"</em></span>
+    <span class="en">I'm not writing this to show off. I'm writing it for you — the one reading this right now, maybe sitting in a room somewhere, looking out a window, wondering: <em>"Is it still possible for me?"</em></span>
+  </p>
+
+  <p>
+    <span class="vi"><strong>Bạn chưa trễ đâu.</strong></span>
+    <span class="en"><strong>You're not too late.</strong></span>
+  </p>
+
+  <p>
+    <span class="vi">Bạn chỉ trễ khi bạn thôi cố gắng. Bạn chỉ trễ khi bạn để ánh nhìn của người khác quyết định cuộc đời mình. Bạn chỉ trễ khi bạn tự nói với bản thân rằng <em>"thôi, kệ đi."</em></span>
+    <span class="en">You're only too late when you stop trying. You're only too late when you let other people's opinions decide your life. You're only too late when you tell yourself <em>"it doesn't matter anymore."</em></span>
+  </p>
+
+  <p>
+    <span class="vi">Nếu bạn muốn học đại học — hãy đi học. Nếu bạn muốn đổi nghề — hãy đổi. Nếu bạn muốn bắt đầu lại — hãy bắt đầu, ngay hôm nay. Đừng quay đầu nhìn lại những năm tháng đã mất. Hãy ngẩng đầu lên và tự hỏi:</span>
+    <span class="en">If you want to go to university — go. If you want to change careers — change. If you want to start over — start, today. Don't look back at the years you've lost. Look forward and ask yourself:</span>
+  </p>
+
+  <div class="pull-quote">
+    <p>
+      <span class="vi">"Một năm sau, mình muốn trở thành ai?"</span>
+      <span class="en">"One year from now, who do I want to be?"</span>
+    </p>
+  </div>
+
+  <p>
+    <span class="vi">Rồi bước đi, dù chậm. Một bước hôm nay. Một bước ngày mai. Một năm sau quay lại nhìn, bạn sẽ ngạc nhiên vì mình đã đi được bao xa.</span>
+    <span class="en">Then walk. Even slowly. One step today. One step tomorrow. Look back a year from now, and you'll be amazed at how far you've come.</span>
+  </p>
+
+  <p>
+    <span class="vi">Câu chuyện của tôi không có gì đặc biệt. Không có khoảnh khắc vỡ òa kiểu phim ảnh. Không có hành trình "từ số không thành tỷ phú". Tôi chỉ là một cô gái bình thường, từng lạc lối, rồi tìm lại đường về.</span>
+    <span class="en">My story isn't extraordinary. No dramatic movie moment. No "rags to riches" arc. I'm just an ordinary girl who lost her way — and then found it again.</span>
+  </p>
+
+  <p>
+    <span class="vi">Nhưng tôi tự hào. Tự hào vì ngày đó tôi dám bước vào giảng đường khi ai cũng nghĩ đã muộn. Tự hào vì tôi đã chọn bản thân — thay vì chọn sự thoải mái. Tự hào vì hai đứa con của tôi sau này lớn lên, sẽ biết rằng mẹ chúng không bỏ cuộc.</span>
+    <span class="en">But I am proud. Proud that I walked into that classroom when everyone thought it was too late. Proud that I chose myself — over comfort. Proud that when my two daughters grow up, they'll know their mother never quit.</span>
+  </p>
+
+  <p>
+    <span class="vi">Cuộc đời không trao huy chương cho người đến đích sớm nhất. Nó trao cho những người không bao giờ dừng bước.</span>
+    <span class="en">Life doesn't give medals to those who finish first. It gives them to those who never stop moving.</span>
+  </p>
+
+  <p>
+    <span class="vi"><em>Và bạn — bạn vẫn đang đi. Thế là đủ.</em></span>
+    <span class="en"><em>And you — you're still going. That's enough.</em></span>
+  </p>
+
+  <p class="closing-signature">— Kim Hoàn</p>
+
+  <div class="tag-row">
+    <span class="tag"><span class="vi">Câu chuyện cá nhân</span><span class="en">Personal Story</span></span>
+    <span class="tag"><span class="vi">Làm mẹ</span><span class="en">Motherhood</span></span>
+    <span class="tag"><span class="vi">Sinh viên</span><span class="en">Student Life</span></span>
+    <span class="tag">Marketing</span>
+    <span class="tag"><span class="vi">Không bao giờ trễ</span><span class="en">Never Too Late</span></span>
+    <span class="tag">Đà Nẵng</span>
+  </div>
+
+</article>
+
+<!-- ══ CTA ══ -->
+<div class="article-cta fade-up">
+  <div class="cta-box">
+    <div>
+      <h3>
+        <span class="vi">Câu chuyện của bạn là gì?</span>
+        <span class="en">What's your story?</span>
+      </h3>
+      <p>
+        <span class="vi">Mình luôn muốn nghe về hành trình của những người không từ bỏ. Nhắn mình một tin nhé.</span>
+        <span class="en">I always want to hear from people who didn't give up. Drop me a message.</span>
+      </p>
+    </div>
+    <a href="/#contact" class="cta-btn">
+      <span class="vi">Nhắn Kim Hoàn →</span>
+      <span class="en">Message Kim Hoàn →</span>
+    </a>
+  </div>
+</div>
+
+<!-- ══ RELATED ══ -->
+<div class="related fade-up">
+  <div class="related-label">
+    <span class="vi">Bài viết khác</span>
+    <span class="en">More posts</span>
+  </div>
+  <div class="related-grid">
+    <a href="/blog/" class="related-card">
+      <span class="related-chip">AI &amp; Marketing</span>
+      <h4>
+        <span class="vi">Tôi là sinh viên Marketing và tôi dùng AI như thế nào mỗi ngày</span>
+        <span class="en">I'm a Marketing Student — Here's How I Use AI Every Day</span>
+      </h4>
+      <p>
+        <span class="vi">AI không phải kẻ thù — nếu bạn biết dùng nó như người đồng hành thật sự.</span>
+        <span class="en">AI isn't the enemy — not if you know how to use it as a genuine co-pilot.</span>
+      </p>
+    </a>
+    <a href="/blog/mot-ngay-binh-thuong/" class="related-card">
+      <span class="related-chip"><span class="vi">Cuộc sống</span><span class="en">Daily Life</span></span>
+      <h4>
+        <span class="vi">Một ngày bình thường của mình — sinh viên, content creator &amp; người học AI</span>
+        <span class="en">A Day in My Life — Student, Content Creator &amp; AI Learner</span>
+      </h4>
+      <p>
+        <span class="vi">Không phải morning routine hoàn hảo — chỉ là một ngày thật sự của mình.</span>
+        <span class="en">No perfect morning routine — just an honest look at what my day actually looks like.</span>
+      </p>
+    </a>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-mark">Kim Hoàn Portfolio</div>
+  <div class="footer-text">© 2025 · Made with ♥ by Kim Hoàn</div>
+  <a href="/" class="footer-link">
+    <span class="vi">← Về trang chủ</span>
+    <span class="en">← Home</span>
+  </a>
+</footer>
+
+<script>
+  let lang = 'vi';
+  function toggleLang() {
+    lang = lang === 'vi' ? 'en' : 'vi';
+    document.body.classList.toggle('lang-en', lang === 'en');
+    document.getElementById('btn-vi').classList.toggle('active', lang === 'vi');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang;
+    document.title = lang === 'en'
+      ? 'Blog – Kim Hoàn | 25 Years Old, Two Kids, Still in School'
+      : 'Blog – Kim Hoàn | 25 tuổi, hai con nhỏ, tôi vẫn đang đi học';
+  }
+
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const pct = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+    document.getElementById('progress-bar').style.width = (pct * 100) + '%';
+    document.getElementById('navbar').classList.toggle('scrolled', doc.scrollTop > 40);
+  });
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
