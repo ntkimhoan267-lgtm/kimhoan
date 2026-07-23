@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy Flash Card 🎌</title>
+<style>
+  :root{
+    --navy:#16233F; --navy2:#1f3157; --gold:#C9A24B; --gold2:#E2C77E;
+    --cream:#F5EFE2; --green:#3FA96A; --red:#D95757; --ink:#0e1729;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    background:radial-gradient(circle at 50% -10%,#24365f 0%,var(--navy) 55%,#0d1526 100%);
+    color:var(--cream);min-height:100%;display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-start;padding:16px;overflow-x:hidden;
+  }
+  .app{width:100%;max-width:480px}
+
+  /* Top bar */
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .brand{font-size:1.15rem;font-weight:800;letter-spacing:.5px;
+    background:linear-gradient(90deg,var(--gold2),var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .brand small{font-weight:600;opacity:.8}
+  .icon-btn{background:rgba(255,255,255,.08);border:1px solid rgba(201,162,75,.35);
+    color:var(--cream);width:42px;height:42px;border-radius:12px;font-size:1.1rem;
+    cursor:pointer;display:grid;place-items:center;transition:.15s}
+  .icon-btn:active{transform:scale(.92)}
+  .controls{display:flex;gap:8px}
+
+  .card{background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+    border:1px solid rgba(201,162,75,.25);border-radius:22px;padding:22px 18px;
+    box-shadow:0 18px 40px rgba(0,0,0,.4)}
+
+  /* Progress */
+  .progress-wrap{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:.8rem;opacity:.9}
+  .bar{flex:1;height:8px;background:rgba(255,255,255,.12);border-radius:99px;overflow:hidden}
+  .bar > i{display:block;height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .4s}
+  .stats{display:flex;justify-content:space-between;margin-bottom:14px;font-size:.85rem}
+  .stats b{color:var(--gold2)}
+  .chip{display:inline-flex;align-items:center;gap:4px}
+
+  /* Flag */
+  .flag{display:flex;justify-content:center;margin:8px 0 6px;user-select:none}
+  .flag img{width:220px;max-width:80%;aspect-ratio:3/2;object-fit:cover;
+    border-radius:12px;border:2px solid rgba(255,255,255,.25);
+    box-shadow:0 10px 26px rgba(0,0,0,.5);background:rgba(255,255,255,.05)}
+  .ask{text-align:center;opacity:.85;margin-bottom:16px;font-size:.95rem}
+
+  /* Options */
+  .opts{display:grid;gap:10px}
+  .opt{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+    color:var(--cream);padding:13px 14px;border-radius:14px;text-align:left;
+    cursor:pointer;font-size:1rem;transition:.15s;line-height:1.25}
+  .opt .en{display:block;font-size:.78rem;opacity:.65;margin-top:2px}
+  .opt:active{transform:scale(.98)}
+  .opt.correct{background:rgba(63,169,106,.28);border-color:var(--green);animation:pop .3s}
+  .opt.wrong{background:rgba(217,87,87,.28);border-color:var(--red);animation:shake .3s}
+  .opt:disabled{cursor:default}
+  @keyframes pop{0%{transform:scale(.96)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+  /* Screens (start / end) */
+  .screen{text-align:center;padding:10px 4px}
+  .screen h1{font-size:1.9rem;margin:6px 0 2px;
+    background:linear-gradient(90deg,var(--gold2),var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .screen p{opacity:.85;margin:6px 0 18px;font-size:.95rem}
+  .big-flag{font-size:3rem;margin-bottom:4px}
+  .start-flags{display:flex;gap:8px;justify-content:center;margin-bottom:8px}
+  .start-flags img{width:52px;aspect-ratio:3/2;object-fit:cover;border-radius:6px;
+    border:1px solid rgba(255,255,255,.25);box-shadow:0 4px 10px rgba(0,0,0,.4)}
+  .mode-title{font-size:.8rem;opacity:.7;text-transform:uppercase;letter-spacing:1px;margin:18px 0 8px}
+  .btn{width:100%;padding:14px;border-radius:14px;border:none;font-size:1rem;font-weight:700;
+    cursor:pointer;margin-top:10px;transition:.15s}
+  .btn:active{transform:scale(.98)}
+  .btn-gold{background:linear-gradient(90deg,var(--gold),var(--gold2));color:var(--ink)}
+  .btn-ghost{background:rgba(255,255,255,.07);color:var(--cream);border:1px solid rgba(201,162,75,.35)}
+
+  .score-big{font-size:3.4rem;font-weight:800;color:var(--gold2);margin:4px 0}
+  .score-sub{opacity:.8}
+
+  .hidden{display:none!important}
+
+  /* Praise (lời khen khi đúng) */
+  .praise{position:fixed;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;pointer-events:none;z-index:40;opacity:0}
+  .praise.show{animation:praiseIn 1s ease forwards}
+  .praise-t{font-size:2.4rem;font-weight:800;color:#fff;text-align:center;
+    text-shadow:0 4px 18px rgba(201,162,75,.9),0 2px 6px rgba(0,0,0,.5);
+    background:linear-gradient(90deg,var(--gold2),var(--gold));
+    -webkit-background-clip:text;background-clip:text;padding:0 20px}
+  .praise-s{font-size:1.2rem;font-weight:700;color:var(--gold2);margin-top:6px;
+    text-shadow:0 2px 8px rgba(0,0,0,.6)}
+  @keyframes praiseIn{
+    0%{opacity:0;transform:scale(.4)}
+    25%{opacity:1;transform:scale(1.15)}
+    40%{transform:scale(1)}
+    75%{opacity:1;transform:scale(1)}
+    100%{opacity:0;transform:scale(1.05)}
+  }
+
+  /* Exit modal */
+  .overlay{position:fixed;inset:0;background:rgba(8,12,24,.72);backdrop-filter:blur(4px);
+    display:grid;place-items:center;padding:20px;z-index:50;animation:fade .2s}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .modal{background:linear-gradient(160deg,#20325a,#16233F);border:1px solid rgba(201,162,75,.4);
+    border-radius:20px;padding:24px 20px;max-width:340px;width:100%;text-align:center;
+    box-shadow:0 20px 50px rgba(0,0,0,.6)}
+  .modal .q{font-size:2.2rem;margin-bottom:6px}
+  .modal h2{margin:0 0 4px;font-size:1.25rem}
+  .modal p{opacity:.8;font-size:.88rem;margin:0 0 18px}
+  .modal .row{display:flex;gap:10px}
+  .modal .row .btn{margin-top:0}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="topbar">
+    <div class="brand">🎌 Happy Flash Card <small>Flags</small></div>
+    <div class="controls">
+      <button class="icon-btn" id="soundBtn" title="Bật/tắt nhạc">🔊</button>
+      <button class="icon-btn" id="exitBtn" title="Thoát">✕</button>
+    </div>
+  </div>
+
+  <!-- START -->
+  <div class="card screen" id="startScreen">
+    <div class="start-flags">
+      <img src="https://flagcdn.com/w80/vn.png" alt="Vietnam">
+      <img src="https://flagcdn.com/w80/jp.png" alt="Japan">
+      <img src="https://flagcdn.com/w80/fr.png" alt="France">
+      <img src="https://flagcdn.com/w80/br.png" alt="Brazil">
+    </div>
+    <h1>Happy Flash Card</h1>
+    <p>Học thuộc 100 lá cờ các nước<br>Learn 100 country flags</p>
+    <div class="mode-title">Chọn chế độ / Choose mode</div>
+    <button class="btn btn-gold" data-mode="all">🌍 Ngẫu nhiên 100 nước<br><small style="font-weight:500;opacity:.8">Random – all countries</small></button>
+    <button class="btn btn-ghost" data-mode="asia">🌏 Châu Á / Asia</button>
+    <button class="btn btn-ghost" data-mode="europe">🌍 Châu Âu / Europe</button>
+    <button class="btn btn-ghost" data-mode="america">🌎 Châu Mỹ / America</button>
+    <button class="btn btn-ghost" data-mode="africa_oceania">🌍 Phi & Đại Dương / Africa & Oceania</button>
+  </div>
+
+  <!-- GAME -->
+  <div class="card hidden" id="gameScreen">
+    <div class="progress-wrap">
+      <span id="qCount">1/10</span>
+      <div class="bar"><i id="barFill"></i></div>
+    </div>
+    <div class="stats">
+      <span class="chip">⭐ Điểm: <b id="score">0</b></span>
+      <span class="chip" style="color:var(--green)">✅ <b id="right">0</b></span>
+      <span class="chip" style="color:var(--red)">❌ <b id="wrong">0</b></span>
+    </div>
+    <div class="flag" id="flag"></div>
+    <div class="ask">Đây là cờ nước nào? / Which country is this?</div>
+    <div class="opts" id="opts"></div>
+    <div class="praise" id="praise"></div>
+  </div>
+
+  <!-- END -->
+  <div class="card screen hidden" id="endScreen">
+    <div class="big-flag" id="endEmoji">🎉</div>
+    <h1 id="endTitle">Hoàn thành!</h1>
+    <div class="score-big"><span id="finalScore">0</span></div>
+    <p class="score-sub"><span id="finalRight">0</span> đúng · <span id="finalWrong">0</span> sai<br><span id="finalMsg"></span></p>
+    <button class="btn btn-gold" id="againBtn">🔄 Chơi lại / Play again</button>
+    <button class="btn btn-ghost" id="homeBtn">🏠 Về trang chủ / Home</button>
+  </div>
+
+</div>
+
+<!-- Exit modal -->
+<div class="overlay hidden" id="exitModal">
+  <div class="modal">
+    <div class="q">🚪</div>
+    <h2>Bạn có muốn thoát không?</h2>
+    <p>Tiến trình hiện tại sẽ bị mất.<br>Your current progress will be lost.</p>
+    <div class="row">
+      <button class="btn btn-ghost" id="stayBtn">Không / No</button>
+      <button class="btn btn-gold" id="confirmExitBtn">Có / Yes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- 100 quốc kỳ (song ngữ Việt – Anh) ---------- */
+const FLAGS = [
+  // Châu Á / Asia
+  {c:"vn",vi:"Việt Nam",en:"Vietnam",g:"asia"},
+  {c:"jp",vi:"Nhật Bản",en:"Japan",g:"asia"},
+  {c:"kr",vi:"Hàn Quốc",en:"South Korea",g:"asia"},
+  {c:"cn",vi:"Trung Quốc",en:"China",g:"asia"},
+  {c:"th",vi:"Thái Lan",en:"Thailand",g:"asia"},
+  {c:"sg",vi:"Singapore",en:"Singapore",g:"asia"},
+  {c:"my",vi:"Malaysia",en:"Malaysia",g:"asia"},
+  {c:"id",vi:"Indonesia",en:"Indonesia",g:"asia"},
+  {c:"ph",vi:"Philippines",en:"Philippines",g:"asia"},
+  {c:"in",vi:"Ấn Độ",en:"India",g:"asia"},
+  {c:"pk",vi:"Pakistan",en:"Pakistan",g:"asia"},
+  {c:"bd",vi:"Bangladesh",en:"Bangladesh",g:"asia"},
+  {c:"lk",vi:"Sri Lanka",en:"Sri Lanka",g:"asia"},
+  {c:"np",vi:"Nepal",en:"Nepal",g:"asia"},
+  {c:"kh",vi:"Campuchia",en:"Cambodia",g:"asia"},
+  {c:"la",vi:"Lào",en:"Laos",g:"asia"},
+  {c:"mm",vi:"Myanmar",en:"Myanmar",g:"asia"},
+  {c:"sa",vi:"Ả Rập Xê Út",en:"Saudi Arabia",g:"asia"},
+  {c:"ae",vi:"UAE",en:"United Arab Emirates",g:"asia"},
+  {c:"il",vi:"Israel",en:"Israel",g:"asia"},
+  {c:"tr",vi:"Thổ Nhĩ Kỳ",en:"Turkey",g:"asia"},
+  {c:"ir",vi:"Iran",en:"Iran",g:"asia"},
+  {c:"iq",vi:"Iraq",en:"Iraq",g:"asia"},
+  {c:"kz",vi:"Kazakhstan",en:"Kazakhstan",g:"asia"},
+  {c:"mn",vi:"Mông Cổ",en:"Mongolia",g:"asia"},
+  {c:"ge",vi:"Georgia",en:"Georgia",g:"asia"},
+  {c:"am",vi:"Armenia",en:"Armenia",g:"asia"},
+  {c:"az",vi:"Azerbaijan",en:"Azerbaijan",g:"asia"},
+  // Châu Âu / Europe
+  {c:"gb",vi:"Anh",en:"United Kingdom",g:"europe"},
+  {c:"fr",vi:"Pháp",en:"France",g:"europe"},
+  {c:"de",vi:"Đức",en:"Germany",g:"europe"},
+  {c:"it",vi:"Ý",en:"Italy",g:"europe"},
+  {c:"es",vi:"Tây Ban Nha",en:"Spain",g:"europe"},
+  {c:"pt",vi:"Bồ Đào Nha",en:"Portugal",g:"europe"},
+  {c:"nl",vi:"Hà Lan",en:"Netherlands",g:"europe"},
+  {c:"be",vi:"Bỉ",en:"Belgium",g:"europe"},
+  {c:"ch",vi:"Thụy Sĩ",en:"Switzerland",g:"europe"},
+  {c:"at",vi:"Áo",en:"Austria",g:"europe"},
+  {c:"se",vi:"Thụy Điển",en:"Sweden",g:"europe"},
+  {c:"no",vi:"Na Uy",en:"Norway",g:"europe"},
+  {c:"dk",vi:"Đan Mạch",en:"Denmark",g:"europe"},
+  {c:"fi",vi:"Phần Lan",en:"Finland",g:"europe"},
+  {c:"is",vi:"Iceland",en:"Iceland",g:"europe"},
+  {c:"ie",vi:"Ireland",en:"Ireland",g:"europe"},
+  {c:"pl",vi:"Ba Lan",en:"Poland",g:"europe"},
+  {c:"cz",vi:"Séc",en:"Czech Republic",g:"europe"},
+  {c:"gr",vi:"Hy Lạp",en:"Greece",g:"europe"},
+  {c:"hu",vi:"Hungary",en:"Hungary",g:"europe"},
+  {c:"ro",vi:"Romania",en:"Romania",g:"europe"},
+  {c:"ru",vi:"Nga",en:"Russia",g:"europe"},
+  {c:"ua",vi:"Ukraine",en:"Ukraine",g:"europe"},
+  {c:"hr",vi:"Croatia",en:"Croatia",g:"europe"},
+  {c:"rs",vi:"Serbia",en:"Serbia",g:"europe"},
+  {c:"bg",vi:"Bulgaria",en:"Bulgaria",g:"europe"},
+  {c:"sk",vi:"Slovakia",en:"Slovakia",g:"europe"},
+  {c:"lu",vi:"Luxembourg",en:"Luxembourg",g:"europe"},
+  // Châu Mỹ / America
+  {c:"us",vi:"Hoa Kỳ",en:"United States",g:"america"},
+  {c:"ca",vi:"Canada",en:"Canada",g:"america"},
+  {c:"mx",vi:"Mexico",en:"Mexico",g:"america"},
+  {c:"br",vi:"Brazil",en:"Brazil",g:"america"},
+  {c:"ar",vi:"Argentina",en:"Argentina",g:"america"},
+  {c:"cl",vi:"Chile",en:"Chile",g:"america"},
+  {c:"co",vi:"Colombia",en:"Colombia",g:"america"},
+  {c:"pe",vi:"Peru",en:"Peru",g:"america"},
+  {c:"ve",vi:"Venezuela",en:"Venezuela",g:"america"},
+  {c:"ec",vi:"Ecuador",en:"Ecuador",g:"america"},
+  {c:"uy",vi:"Uruguay",en:"Uruguay",g:"america"},
+  {c:"py",vi:"Paraguay",en:"Paraguay",g:"america"},
+  {c:"bo",vi:"Bolivia",en:"Bolivia",g:"america"},
+  {c:"cu",vi:"Cuba",en:"Cuba",g:"america"},
+  {c:"jm",vi:"Jamaica",en:"Jamaica",g:"america"},
+  {c:"cr",vi:"Costa Rica",en:"Costa Rica",g:"america"},
+  {c:"pa",vi:"Panama",en:"Panama",g:"america"},
+  {c:"gt",vi:"Guatemala",en:"Guatemala",g:"america"},
+  {c:"do",vi:"Cộng hòa Dominica",en:"Dominican Republic",g:"america"},
+  // Châu Phi & Đại Dương / Africa & Oceania
+  {c:"eg",vi:"Ai Cập",en:"Egypt",g:"africa_oceania"},
+  {c:"za",vi:"Nam Phi",en:"South Africa",g:"africa_oceania"},
+  {c:"ng",vi:"Nigeria",en:"Nigeria",g:"africa_oceania"},
+  {c:"ke",vi:"Kenya",en:"Kenya",g:"africa_oceania"},
+  {c:"et",vi:"Ethiopia",en:"Ethiopia",g:"africa_oceania"},
+  {c:"gh",vi:"Ghana",en:"Ghana",g:"africa_oceania"},
+  {c:"ma",vi:"Maroc",en:"Morocco",g:"africa_oceania"},
+  {c:"dz",vi:"Algeria",en:"Algeria",g:"africa_oceania"},
+  {c:"tn",vi:"Tunisia",en:"Tunisia",g:"africa_oceania"},
+  {c:"sn",vi:"Senegal",en:"Senegal",g:"africa_oceania"},
+  {c:"cm",vi:"Cameroon",en:"Cameroon",g:"africa_oceania"},
+  {c:"ci",vi:"Bờ Biển Ngà",en:"Ivory Coast",g:"africa_oceania"},
+  {c:"tz",vi:"Tanzania",en:"Tanzania",g:"africa_oceania"},
+  {c:"ug",vi:"Uganda",en:"Uganda",g:"africa_oceania"},
+  {c:"zw",vi:"Zimbabwe",en:"Zimbabwe",g:"africa_oceania"},
+  {c:"ao",vi:"Angola",en:"Angola",g:"africa_oceania"},
+  {c:"mz",vi:"Mozambique",en:"Mozambique",g:"africa_oceania"},
+  {c:"ly",vi:"Libya",en:"Libya",g:"africa_oceania"},
+  {c:"sd",vi:"Sudan",en:"Sudan",g:"africa_oceania"},
+  {c:"au",vi:"Úc",en:"Australia",g:"africa_oceania"},
+  {c:"nz",vi:"New Zealand",en:"New Zealand",g:"africa_oceania"},
+  {c:"fj",vi:"Fiji",en:"Fiji",g:"africa_oceania"},
+  {c:"pg",vi:"Papua New Guinea",en:"Papua New Guinea",g:"africa_oceania"},
+  {c:"ws",vi:"Samoa",en:"Samoa",g:"africa_oceania"},
+  {c:"to",vi:"Tonga",en:"Tonga",g:"africa_oceania"},
+  {c:"vu",vi:"Vanuatu",en:"Vanuatu",g:"africa_oceania"},
+  {c:"sb",vi:"Quần đảo Solomon",en:"Solomon Islands",g:"africa_oceania"}
+];
+
+/* ---------- Âm thanh (Web Audio API) ---------- */
+let audioCtx=null, musicOn=true, musicNodes=[];
+function ac(){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); return audioCtx; }
+
+function beep(freqs, dur, type="sine", vol=.25){
+  const c=ac(); const t=c.currentTime;
+  freqs.forEach((fr,i)=>{
+    const o=c.createOscillator(), g=c.createGain();
+    o.type=type; o.frequency.value=fr;
+    const st=t+i*0.09;
+    g.gain.setValueAtTime(0,st);
+    g.gain.linearRampToValueAtTime(vol,st+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,st+dur);
+    o.connect(g); g.connect(c.destination);
+    o.start(st); o.stop(st+dur+0.05);
+  });
+}
+const soundRight=()=>beep([880,1174.7],0.28,"triangle",0.3);   // ding vui
+const soundWrong=()=>beep([196,155.6],0.32,"sawtooth",0.22);   // buzz sai
+
+/* nhạc nền: vòng lặp hợp âm nhẹ */
+let musicTimer=null;
+function startMusic(){
+  if(!musicOn) return;
+  const notes=[261.6,329.6,392,329.6]; let i=0;
+  const play=()=>{
+    if(!musicOn) return;
+    const c=ac(), t=c.currentTime;
+    const o=c.createOscillator(), g=c.createGain();
+    o.type="sine"; o.frequency.value=notes[i%notes.length];
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(0.05,t+0.1);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.9);
+    o.connect(g); g.connect(c.destination);
+    o.start(t); o.stop(t+1);
+    i++;
+  };
+  play(); musicTimer=setInterval(play,900);
+}
+function stopMusic(){ if(musicTimer){clearInterval(musicTimer);musicTimer=null;} }
+
+/* ---------- Trạng thái game ---------- */
+const TOTAL=10; // số câu mỗi lượt (lấy ngẫu nhiên từ pool)
+let deck=[], idx=0, score=0, right=0, wrong=0, locked=false;
+
+const $=id=>document.getElementById(id);
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+
+function startGame(mode){
+  ac(); if(musicOn) startMusic();
+  let pool = mode==="all" ? FLAGS.slice() : FLAGS.filter(f=>f.g===mode);
+  deck = shuffle(pool).slice(0, Math.min(TOTAL, pool.length));
+  idx=0; score=0; right=0; wrong=0;
+  $("startScreen").classList.add("hidden");
+  $("endScreen").classList.add("hidden");
+  $("gameScreen").classList.remove("hidden");
+  render();
+}
+
+function render(){
+  locked=false;
+  const q=deck[idx];
+  $("flag").innerHTML=`<img src="https://flagcdn.com/w320/${q.c}.png" alt="${q.en}"
+    onerror="this.onerror=null;this.src='https://flagcdn.com/${q.c}.svg'">`;
+  $("qCount").textContent=(idx+1)+"/"+deck.length;
+  $("barFill").style.width=((idx)/deck.length*100)+"%";
+  $("score").textContent=score;
+  $("right").textContent=right;
+  $("wrong").textContent=wrong;
+
+  // 4 đáp án: 1 đúng + 3 sai
+  const wrongs=shuffle(FLAGS.filter(f=>f.en!==q.en)).slice(0,3);
+  const options=shuffle([q,...wrongs]);
+  const box=$("opts"); box.innerHTML="";
+  options.forEach(o=>{
+    const b=document.createElement("button");
+    b.className="opt";
+    b.innerHTML=`${o.vi}<span class="en">${o.en}</span>`;
+    b.onclick=()=>choose(b,o,q);
+    box.appendChild(b);
+  });
+}
+
+/* Lời khen ngẫu nhiên khi trả lời đúng */
+const PRAISES=[
+  {t:"Con giỏi quá! 🌟",s:"Good job!"},
+  {t:"Tuyệt vời! 🎉",s:"Awesome!"},
+  {t:"Con siêu ghê! 🚀",s:"Amazing!"},
+  {t:"Đúng rồi nè! 👏",s:"That's right!"},
+  {t:"Bé thông minh quá! 🧠",s:"So smart!"},
+  {t:"Giỏi lắm con yêu! 💛",s:"Well done!"},
+  {t:"Xuất sắc! ⭐",s:"Excellent!"},
+  {t:"Hoan hô! 🎊",s:"Hooray!"},
+  {t:"Con làm được rồi! 🏆",s:"You did it!"},
+  {t:"Quá đỉnh luôn! 🔥",s:"Super!"}
+];
+function showPraise(){
+  const p=PRAISES[Math.floor(Math.random()*PRAISES.length)];
+  const box=$("praise");
+  box.innerHTML=`<div class="praise-t">${p.t}</div><div class="praise-s">${p.s}</div>`;
+  box.classList.remove("show"); void box.offsetWidth; // reset animation
+  box.classList.add("show");
+}
+
+function choose(btn,chosen,correct){
+  if(locked) return; locked=true;
+  const buttons=[...$("opts").children];
+  buttons.forEach(b=>b.disabled=true);
+  if(chosen.en===correct.en){
+    btn.classList.add("correct"); score+=10; right++; soundRight(); showPraise();
+  }else{
+    btn.classList.add("wrong"); wrong++; soundWrong();
+    buttons.find(b=>b.textContent.includes(correct.en))?.classList.add("correct");
+  }
+  $("score").textContent=score; $("right").textContent=right; $("wrong").textContent=wrong;
+  setTimeout(()=>{
+    idx++;
+    if(idx<deck.length) render();
+    else endGame();
+  }, chosen.en===correct.en?900:1500);
+}
+
+function endGame(){
+  stopMusic();
+  $("gameScreen").classList.add("hidden");
+  $("endScreen").classList.remove("hidden");
+  $("finalScore").textContent=score;
+  $("finalRight").textContent=right;
+  $("finalWrong").textContent=wrong;
+  const pct=right/deck.length;
+  let emoji,msg;
+  if(pct===1){emoji="🏆";msg="Tuyệt vời! Hoàn hảo 100%! / Perfect!";}
+  else if(pct>=.7){emoji="🎉";msg="Giỏi lắm! / Great job!";}
+  else if(pct>=.4){emoji="💪";msg="Cố lên, luyện thêm nhé! / Keep practicing!";}
+  else{emoji="🌱";msg="Đừng nản, thử lại nào! / Try again!";}
+  $("endEmoji").textContent=emoji;
+  $("finalMsg").textContent=msg;
+}
+
+function goHome(){
+  stopMusic();
+  $("gameScreen").classList.add("hidden");
+  $("endScreen").classList.add("hidden");
+  $("startScreen").classList.remove("hidden");
+}
+
+/* ---------- Sự kiện ---------- */
+document.querySelectorAll("[data-mode]").forEach(b=>{
+  b.onclick=()=>startGame(b.dataset.mode);
+});
+$("againBtn").onclick=()=>goHome();
+$("homeBtn").onclick=()=>goHome();
+
+$("soundBtn").onclick=()=>{
+  musicOn=!musicOn;
+  $("soundBtn").textContent=musicOn?"🔊":"🔇";
+  if(musicOn){ ac(); if(!$("gameScreen").classList.contains("hidden")) startMusic(); }
+  else stopMusic();
+};
+
+/* Xác nhận thoát */
+function isInGame(){ return !$("gameScreen").classList.contains("hidden"); }
+$("exitBtn").onclick=()=>{ $("exitModal").classList.remove("hidden"); };
+$("stayBtn").onclick=()=>{ $("exitModal").classList.add("hidden"); };
+$("confirmExitBtn").onclick=()=>{
+  $("exitModal").classList.add("hidden");
+  goHome();
+};
+
+/* Cảnh báo khi bấm thoát / đóng tab / back trong lúc đang chơi */
+window.addEventListener("beforeunload",e=>{
+  if(isInGame()){ e.preventDefault(); e.returnValue=""; }
+});
+history.pushState(null,"",location.href);
+window.addEventListener("popstate",()=>{
+  if(isInGame()){
+    history.pushState(null,"",location.href);
+    $("exitModal").classList.remove("hidden");
+  }
+});
+</script>
+</body>
+</html>
