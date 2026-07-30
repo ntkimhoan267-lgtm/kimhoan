@@ -437,7 +437,7 @@
       <a href="#design-gallery" class="nav-link" data-en="Design" data-vi="Thiết kế">Design</a>
       <a href="#projects" class="nav-link" data-en="Projects" data-vi="Dự án">Projects</a>
       <a href="#talents" class="nav-link" data-en="Talents" data-vi="Tài năng">Talents</a>
-      <a href="#videos" class="nav-link" data-en="MC Videos" data-vi="Video MC">MC Videos</a>
+      <!-- <a href="#videos" class="nav-link" data-en="MC Videos" data-vi="Video MC">MC Videos</a> -->
       <a href="#experience" class="nav-link" data-en="Experience" data-vi="Kinh nghiệm">Experience</a>
       <a href="#blog" class="nav-link" data-en="Blog" data-vi="Blog">Blog</a>
       <a href="#contact" class="nav-link" data-en="Contact" data-vi="Liên hệ">Contact</a>
@@ -463,7 +463,7 @@
     <a href="#design-gallery" class="nav-link" data-en="Design" data-vi="Thiết kế" onclick="toggleMenu()">Design</a>
     <a href="#projects" class="nav-link" data-en="Projects" data-vi="Dự án" onclick="toggleMenu()">Projects</a>
     <a href="#talents" class="nav-link" data-en="Talents" data-vi="Tài năng" onclick="toggleMenu()">Talents</a>
-    <a href="#videos" class="nav-link" data-en="MC Videos" data-vi="Video MC" onclick="toggleMenu()">MC Videos</a>
+    <!-- <a href="#videos" class="nav-link" data-en="MC Videos" data-vi="Video MC" onclick="toggleMenu()">MC Videos</a> -->
     <a href="#experience" class="nav-link" data-en="Experience" data-vi="Kinh nghiệm" onclick="toggleMenu()">Experience</a>
     <a href="#blog" class="nav-link" data-en="Blog" data-vi="Blog">Blog</a>
     <a href="#contact" class="nav-link" data-en="Contact" data-vi="Liên hệ" onclick="toggleMenu()">Contact</a>
@@ -829,6 +829,9 @@
 </section>
 
 <!-- ══════════════════════ VIDEO PORTFOLIO ══════════════════════ -->
+<!-- TẠM ẨN: chưa có file videos/daily-video.mp4.
+     Để bật lại: upload video vào videos/daily-video.mp4, bỏ comment block dưới đây,
+     và bỏ comment 2 nav link "MC Videos" (desktop + mobile) ở phần NAV.
 <section id="videos" class="py-24" style="background:var(--cream)">
   <div class="max-w-4xl mx-auto px-6">
     <div class="text-center mb-14 fade-up">
@@ -837,17 +840,18 @@
       <p class="text-sm" style="color:var(--text-mid);max-width:480px;margin:0 auto" data-en="A daily glimpse into my world — content, creativity, and behind the scenes." data-vi="Một ngày của tôi — nội dung, sáng tạo và hậu trường.">A daily glimpse into my world — content, creativity, and behind the scenes.</p>
     </div>
 
-    <!-- Video từ máy tính -->
-<div class="fade-up" style="border-radius:20px;overflow:hidden;border:2px solid rgba(13,27,62,0.1);box-shadow:0 24px 64px rgba(13,27,62,0.12)">
-  <video
-    width="100%"
-    controls
-    poster="images/video-thumbnail.jpg">
-    <source src="videos/daily-video.mp4" type="video/mp4">
-  </video>
-</div>
+    <div class="fade-up" style="border-radius:20px;overflow:hidden;border:2px solid rgba(13,27,62,0.1);box-shadow:0 24px 64px rgba(13,27,62,0.12)">
+      <video
+        width="100%"
+        controls
+        poster="images/video-thumbnail.jpg">
+        <source src="videos/daily-video.mp4" type="video/mp4">
+      </video>
+    </div>
   </div>
 </section>
+-->
+
 
 <!-- ══════════════════════ EXPERIENCE ══════════════════════ -->
 <section id="experience" class="py-24">
@@ -1008,7 +1012,7 @@
             <div style="width:40px;height:40px;background:var(--light-beige);border-radius:8px;display:flex;align-items:center;justify-content:center">📧</div>
             <div>
               <div class="text-xs font-mono tracking-wider" style="color:var(--text-mid)">EMAIL</div>
-              <div class="text-sm font-semibold" style="color:var(--deep-navy)"><a href="mailto:ntkimhoan@gmail.com">ntkimhoan@gmail.com</a></div>
+              <div class="text-sm font-semibold" style="color:var(--deep-navy)"><a href="mailto:ntkimhoan267@gmail.com">ntkimhoan267@gmail.com</a></div>
             </div>
           </div>
           <div class="flex items-center gap-4">
@@ -1245,7 +1249,7 @@
 <div id="toast">✓ Message sent! I'll be in touch soon.</div>
 
 <!-- ══════════════════════ SCRIPTS ══════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // ─── LANGUAGE TOGGLE ───
   let currentLang = 'en';
   function toggleLang() {
