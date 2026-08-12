@@ -660,7 +660,7 @@ const ASSURANCE = [
 // Nút liên hệ. Để trống "" thì nút đó tự ẩn — nhớ điền số thật của Kimhoan.
 const CONTACT = {
   phone: "",        // VD: "0905 123 456"
-  zalo:  "",        // VD: "0905123456"  (chỉ số, không dấu cách)
+  zalo:  "0944874944",  // chỉ số, không dấu cách — nút chỉ ghi "Nhắn Zalo", không hiện số
   email: "ntkimhoan267@gmail.com",
   office_vi: "Văn phòng: 33 Cao Thắng, phường Hải Châu, Đà Nẵng",
   office_en: "Office: 33 Cao Thang, Hai Chau Ward, Da Nang"
@@ -684,7 +684,7 @@ const CONTACT = {
   if (box) {
     let h = "";
     if (CONTACT.phone) h += '<a href="tel:' + CONTACT.phone.replace(/\s/g, "") + '">☎ ' + CONTACT.phone + '</a>';
-    if (CONTACT.zalo)  h += '<a href="https://zalo.me/' + CONTACT.zalo + '" target="_blank" rel="noopener">Zalo ' + CONTACT.zalo + '</a>';
+    if (CONTACT.zalo)  h += '<a href="https://zalo.me/' + CONTACT.zalo + '" target="_blank" rel="noopener" data-vi="💬 Nhắn Zalo" data-en="💬 Chat on Zalo">💬 Nhắn Zalo</a>';
     if (CONTACT.email) h += '<a href="mailto:' + CONTACT.email + '">✉ ' + CONTACT.email + '</a>';
     if (CONTACT.office_vi) h += '<a href="#" onclick="return false" data-vi="' + CONTACT.office_vi + '" data-en="' + (CONTACT.office_en || CONTACT.office_vi) + '">' + CONTACT.office_vi + '</a>';
     box.innerHTML = h;
