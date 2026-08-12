@@ -20,133 +20,261 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --pastel-yellow:#F9E45B; --deep-navy:#0D1B3E; --navy-mid:#1A2E5C;
-    --navy-light:#2D4080; --cream:#FDFAF0; --light-beige:#F5F0E0;
+    --pastel-yellow:#F9E45B; --yellow-deep:#E4C93A;
+    --deep-navy:#0D1B3E; --navy-mid:#16264F; --navy-light:#2D4080;
+    --cream:#FDFAF0; --light-beige:#F5F0E0;
     --mint:#B8EDD9; --text-dark:#0D1B3E; --text-mid:#3A4A7A;
     --line:#DDD8CE; --stamp:#C0392B; --ok:#1F7A55;
-    --radius:12px;
+    --radius:14px;
+    --wrap:700px;
+    /* Vân bảo an (guilloche) dùng lại ở hero + con dấu */
+    --guilloche:
+      repeating-linear-gradient(115deg, rgba(249,228,91,.055) 0 1px, transparent 1px 7px),
+      repeating-linear-gradient(-115deg, rgba(249,228,91,.04) 0 1px, transparent 1px 9px);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  body{font-family:'Be Vietnam Pro',system-ui,sans-serif,'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji';background:var(--cream);color:var(--text-dark);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
   .mono{font-family:'Space Mono',monospace;}
+  ::selection{background:var(--pastel-yellow);color:var(--deep-navy);}
 
   /* ── NAV ── */
-  nav{position:fixed;top:0;left:0;right:0;z-index:200;backdrop-filter:blur(16px);background:rgba(253,250,240,0.92);border-bottom:1px solid rgba(13,27,62,0.08);transition:box-shadow 0.3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;backdrop-filter:blur(16px);background:rgba(253,250,240,0.92);border-bottom:1px solid rgba(13,27,62,0.08);transition:box-shadow .3s;}
   nav.scrolled{box-shadow:0 4px 32px rgba(13,27,62,0.10);}
-  .nav-inner{max-width:680px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-  .nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;font-style:italic;color:var(--deep-navy);text-decoration:none;}
-  .nav-logo span{color:var(--pastel-yellow);}
+  .nav-inner{max-width:var(--wrap);margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .nav-logo{font-family:'Playfair Display',serif;font-size:1.12rem;font-weight:700;font-style:italic;color:var(--deep-navy);text-decoration:none;position:relative;}
+  .nav-logo span{color:var(--yellow-deep);}
+  .nav-logo::after{content:'';position:absolute;left:0;right:0;bottom:-3px;height:2px;background:var(--pastel-yellow);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+  .nav-logo:hover::after{transform:scaleX(1);}
   .nav-right{display:flex;align-items:center;gap:14px;}
-  .nav-back{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;transition:color 0.2s;}
-  .nav-back:hover{color:var(--deep-navy);}
+  .nav-back{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;transition:color .2s,transform .2s;}
+  .nav-back:hover{color:var(--deep-navy);transform:translateX(-3px);}
+  /* thanh tiến độ cuộn trang */
+  #scrollBar{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:linear-gradient(90deg,var(--pastel-yellow),var(--mint));transition:width .12s linear;}
 
-  /* ── LANG TOGGLE ── */
-  .lang-toggle{display:flex;align-items:center;gap:4px;background:var(--deep-navy);border-radius:20px;padding:4px 6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.72rem;user-select:none;}
-  .lang-btn{padding:3px 10px;border-radius:14px;color:rgba(255,255,255,0.5);transition:all 0.25s;font-weight:700;letter-spacing:0.05em;}
+  /* ── ĐỔI NGÔN NGỮ ── */
+  .lang-toggle{display:flex;align-items:center;gap:4px;background:var(--deep-navy);border-radius:20px;padding:4px 6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:.72rem;user-select:none;transition:box-shadow .25s;}
+  .lang-toggle:hover{box-shadow:0 0 0 3px rgba(249,228,91,.35);}
+  .lang-btn{padding:3px 10px;border-radius:14px;color:rgba(255,255,255,.5);transition:all .25s;font-weight:700;letter-spacing:.05em;}
   .lang-btn.active{background:var(--pastel-yellow);color:var(--deep-navy);}
 
-  /* ── HERO ── */
-  header{background:var(--deep-navy);color:#fff;padding:96px 20px 0;}
-  .header-inner{max-width:680px;margin:0 auto;}
-  .kicker{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(249,228,91,0.9);display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+  /* ── HERO: TRANG THÔNG TIN HỘ CHIẾU ── */
+  header{position:relative;background:var(--deep-navy);color:#fff;padding:104px 20px 34px;overflow:hidden;isolation:isolate;}
+  header::before{content:'';position:absolute;inset:0;background-image:var(--guilloche);z-index:-2;}
+  /* vùng sáng đi theo con trỏ */
+  header::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(420px circle at var(--mx,70%) var(--my,20%), rgba(249,228,91,.16), rgba(184,237,217,.05) 45%, transparent 68%);
+    opacity:0;transition:opacity .5s;}
+  header.lit::after{opacity:1;}
+  .header-inner{max-width:var(--wrap);margin:0 auto;position:relative;}
+  .kicker{font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(249,228,91,.9);display:flex;align-items:center;gap:10px;margin-bottom:18px;}
   .kicker::before{content:'';display:block;width:24px;height:2px;background:var(--pastel-yellow);flex:none;}
-  h1{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,5vw,2.5rem);font-weight:900;line-height:1.18;margin-bottom:14px;color:var(--cream);}
-  .sub{color:rgba(253,250,240,0.68);font-size:0.98rem;line-height:1.65;max-width:48ch;padding-bottom:22px;}
-  .mrz{font-family:'Space Mono',monospace;font-size:0.7rem;letter-spacing:0.14em;color:rgba(249,228,91,0.45);border-top:1px dashed rgba(253,250,240,0.2);padding:12px 0 14px;white-space:nowrap;overflow:hidden;user-select:none;}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,5.2vw,2.65rem);font-weight:900;line-height:1.16;margin-bottom:16px;color:var(--cream);}
+  h1 .swash{background-image:linear-gradient(transparent 66%, rgba(249,228,91,.30) 66%, rgba(249,228,91,.30) 92%, transparent 92%);}
+  .sub{color:rgba(253,250,240,.7);font-size:1rem;line-height:1.68;max-width:50ch;}
+  /* ── QUY TRÌNH LÀM VIỆC ── */
+  .flow{max-width:var(--wrap);margin:0 auto;padding:34px 20px 6px;}
+  .flow-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--deep-navy);margin-bottom:4px;}
+  .flow-lead{font-size:.85rem;color:var(--text-mid);line-height:1.6;margin-bottom:20px;}
+  .flow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  @media(max-width:640px){.flow-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:400px){.flow-grid{grid-template-columns:1fr;}}
+  .fl{position:relative;background:#fff;border:1px solid rgba(13,27,62,.1);border-radius:12px;padding:16px 14px 15px;
+    transition:transform .3s,border-color .3s,box-shadow .3s;}
+  .fl:hover{transform:translateY(-4px);border-color:var(--deep-navy);box-shadow:0 16px 34px -20px rgba(13,27,62,.5);}
+  .fl-no{font-family:'Space Mono',monospace;font-size:.62rem;font-weight:700;letter-spacing:.12em;color:var(--text-mid);}
+  .fl-name{font-weight:700;font-size:.92rem;color:var(--deep-navy);margin:7px 0 5px;line-height:1.35;}
+  .fl-desc{font-size:.78rem;color:var(--text-mid);line-height:1.55;}
+  .fl::after{content:'→';position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--yellow-deep);font-size:.9rem;font-weight:700;}
+  .fl:last-child::after{display:none;}
+  @media(max-width:640px){.fl::after{display:none;}}
+
+  /* ── KHỐI LIÊN HỆ / CAM KẾT ── */
+  .assure{max-width:var(--wrap);margin:0 auto;padding:0 20px;}
+  .assure-box{background:var(--light-beige);border:1px solid var(--line);border-left:4px solid var(--pastel-yellow);
+    border-radius:12px;padding:18px 20px;margin-top:26px;}
+  .assure-box h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--deep-navy);margin-bottom:10px;}
+  .assure-box ul{list-style:none;display:grid;gap:9px;}
+  .assure-box li{font-size:.85rem;color:var(--text-mid);line-height:1.55;padding-left:24px;position:relative;}
+  .assure-box li::before{content:'✓';position:absolute;left:0;top:0;color:var(--ok);font-weight:700;}
+  .assure-contact{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+  .assure-contact a{font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-decoration:none;
+    color:var(--deep-navy);background:#fff;border:1px solid var(--deep-navy);border-radius:999px;padding:9px 15px;transition:all .2s;}
+  .assure-contact a:hover{background:var(--deep-navy);color:var(--pastel-yellow);transform:translateY(-2px);}
+
+  /* ── DẢI ẢNH QUỐC GIA (tự thêm ảnh của bạn ở mảng COUNTRY_IMAGES phía dưới) ── */
+  .strip{position:relative;background:var(--deep-navy);padding:0 0 30px;overflow:hidden;}
+  .strip-head{max-width:var(--wrap);margin:0 auto 14px;padding:0 20px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
+  .strip-title{font-family:'Space Mono',monospace;font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(249,228,91,.85);}
+  .strip-note{font-size:.72rem;color:rgba(253,250,240,.45);}
+  .marquee{position:relative;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);}
+  .track{display:flex;gap:16px;width:max-content;padding:8px 16px 14px;animation:slide 46s linear infinite;}
+  .marquee:hover .track,.marquee:focus-within .track{animation-play-state:paused;}
+  @keyframes slide{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+  .pc{flex:none;width:190px;background:#fff;padding:7px 7px 0;border-radius:6px;
+    box-shadow:0 10px 26px rgba(0,0,0,.34);cursor:pointer;transform:rotate(-1.4deg);
+    transition:transform .4s cubic-bezier(.2,.9,.3,1),box-shadow .4s;}
+  .track .pc:nth-child(even){transform:rotate(1.6deg);}
+  .pc:hover{transform:rotate(0deg) scale(1.07) translateY(-6px);box-shadow:0 20px 44px rgba(0,0,0,.45);z-index:3;}
+  .pc-img{position:relative;height:132px;border-radius:3px;overflow:hidden;background:var(--light-beige);
+    display:flex;align-items:center;justify-content:center;font-size:2.5rem;border:1px solid rgba(13,27,62,.1);}
+  .pc-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.9,.3,1);}
+  .pc:hover .pc-img img{transform:scale(1.12);}
+  .pc-img.ph{background-image:var(--guilloche),linear-gradient(150deg,#1A2E5C,#2D4080);color:rgba(255,255,255,.9);}
+  .pc-cap{display:flex;align-items:center;gap:7px;padding:9px 4px 10px;border-top:1px dashed var(--line);margin-top:7px;}
+  .pc-flag{font-size:.95rem;line-height:1;}
+  .pc-name{font-size:.78rem;font-weight:600;color:var(--deep-navy);line-height:1.3;}
+  .pc-code{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--text-mid);margin-left:auto;letter-spacing:.06em;}
 
   /* ── FORM ── */
-  main{max-width:680px;margin:0 auto;padding:26px 20px 64px;}
-  .card{background:#fff;border:1px solid rgba(13,27,62,0.1);border-radius:var(--radius);padding:24px 22px;margin-bottom:18px;}
-  .step{display:flex;align-items:center;gap:11px;margin-bottom:6px;}
-  .step .no{font-family:'Space Mono',monospace;font-size:0.75rem;font-weight:700;color:var(--deep-navy);background:var(--pastel-yellow);border:1.5px solid var(--deep-navy);border-radius:50%;width:28px;height:28px;flex:none;display:inline-flex;align-items:center;justify-content:center;}
-  .step h2{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--deep-navy);}
-  .step-note{font-size:0.82rem;color:var(--text-mid);line-height:1.6;margin-bottom:4px;}
-  label{display:block;font-size:0.82rem;font-weight:500;color:var(--text-mid);margin:15px 0 6px;}
+  main{max-width:var(--wrap);margin:0 auto;padding:30px 20px 64px;}
+  .card{position:relative;background:#fff;border:1px solid rgba(13,27,62,.1);border-radius:var(--radius);padding:26px 24px;margin-bottom:20px;
+    box-shadow:0 1px 0 rgba(13,27,62,.04);transition:box-shadow .35s,border-color .35s;
+    will-change:transform;}
+  .card:hover{border-color:rgba(13,27,62,.2);box-shadow:0 18px 40px -22px rgba(13,27,62,.35);}
+  .card::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .4s;
+    background:radial-gradient(240px circle at var(--cx,50%) var(--cy,0%), rgba(249,228,91,.16), transparent 70%);}
+  .card:hover::after{opacity:1;}
+  .card-code{position:absolute;top:14px;right:16px;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.14em;
+    color:rgba(58,74,122,.5);text-transform:uppercase;}
+  .step{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+  .step .no{font-family:'Space Mono',monospace;font-size:.75rem;font-weight:700;color:var(--deep-navy);background:var(--pastel-yellow);
+    border:1.5px solid var(--deep-navy);border-radius:50%;width:30px;height:30px;flex:none;display:inline-flex;align-items:center;justify-content:center;
+    box-shadow:2px 2px 0 var(--deep-navy);transition:transform .3s;}
+  .card:hover .step .no{transform:rotate(-8deg);}
+  .step h2{font-family:'Playfair Display',serif;font-size:1.22rem;font-weight:700;color:var(--deep-navy);}
+  .step-note{font-size:.82rem;color:var(--text-mid);line-height:1.6;margin-bottom:4px;}
+  .rule{height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 5px,transparent 5px 10px);margin:14px 0 2px;}
+  label{display:block;font-size:.82rem;font-weight:500;color:var(--text-mid);margin:16px 0 6px;}
   .req{color:var(--stamp);}
   input[type=text],input[type=tel],input[type=email],input[type=password],select,textarea{
     width:100%;font:inherit;font-size:1rem;padding:12px 14px;
-    border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text-dark);
+    border:1px solid var(--line);border-radius:10px;background:#FDFDFB;color:var(--text-dark);
+    transition:border-color .2s,box-shadow .2s,background .2s;
   }
-  input:focus,select:focus,textarea:focus{outline:2px solid var(--deep-navy);outline-offset:1px;border-color:var(--deep-navy);}
-  textarea{resize:vertical;min-height:76px;}
+  input:hover,select:hover,textarea:hover{border-color:#BFC8D8;}
+  input:focus,select:focus,textarea:focus{outline:none;background-color:#fff;border-color:var(--deep-navy);box-shadow:0 0 0 3px rgba(249,228,91,.45);}
+  textarea{resize:vertical;min-height:78px;}
+  select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--text-mid) 50%),linear-gradient(135deg,var(--text-mid) 50%,transparent 50%);
+    background-position:calc(100% - 20px) 55%,calc(100% - 14px) 55%;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:42px;}
 
   /* ── KHUNG SCAN ── */
-  .slot{position:relative;border:1.5px dashed var(--line);border-radius:12px;padding:18px 14px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;margin-top:8px;background:#FDFDFB;}
-  .slot:hover,.slot:focus-visible{border-color:var(--deep-navy);background:var(--light-beige);outline:none;}
+  .slot{position:relative;border:1.5px dashed var(--line);border-radius:12px;padding:20px 14px;text-align:center;cursor:pointer;
+    transition:border-color .2s,background .2s,transform .2s;margin-top:10px;background:#FDFDFB;}
+  .slot:hover,.slot:focus-visible,.slot.drag{border-color:var(--deep-navy);background:var(--light-beige);outline:none;transform:translateY(-2px);}
+  .slot.drag{border-style:solid;box-shadow:0 0 0 3px rgba(249,228,91,.5);}
   .slot.filled{border-style:solid;border-color:var(--ok);background:#F3FAF6;}
-  .slot::before,.slot::after,.slot .c::before,.slot .c::after{content:"";position:absolute;width:16px;height:16px;border-color:var(--deep-navy);border-style:solid;}
+  .slot::before,.slot::after,.slot .c::before,.slot .c::after{content:"";position:absolute;width:16px;height:16px;border-color:var(--deep-navy);border-style:solid;transition:border-color .25s;}
   .slot::before{top:6px;left:6px;border-width:2px 0 0 2px;}
   .slot::after{top:6px;right:6px;border-width:2px 2px 0 0;}
   .slot .c::before{bottom:6px;left:6px;border-width:0 0 2px 2px;}
   .slot .c::after{bottom:6px;right:6px;border-width:0 2px 2px 0;}
   .slot.filled::before,.slot.filled::after,.slot.filled .c::before,.slot.filled .c::after{border-color:var(--ok);}
-  .slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-  .slot .icon{font-size:1.5rem;line-height:1;margin-bottom:6px;}
-  .slot .name{font-weight:700;font-size:0.95rem;color:var(--deep-navy);}
-  .slot .hint{font-size:0.78rem;color:var(--text-mid);margin-top:3px;}
-  .slot .done{display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;font-weight:700;color:var(--ok);margin-top:4px;}
-  .slot img.preview{max-width:100%;max-height:170px;border-radius:8px;display:block;margin:0 auto 8px;}
-  .tip{font-size:0.8rem;color:var(--text-mid);background:var(--light-beige);border-radius:8px;padding:11px 13px;margin-top:16px;line-height:1.55;}
+  /* tia quét khi hover / kéo file vào */
+  .slot .laser{position:absolute;left:0;right:0;top:0;height:2px;pointer-events:none;opacity:0;
+    background:linear-gradient(90deg,transparent,var(--pastel-yellow),transparent);
+    box-shadow:0 0 14px 3px rgba(249,228,91,.55);}
+  .slot:hover .laser,.slot:focus-visible .laser,.slot.drag .laser{opacity:1;animation:scanline 1.6s ease-in-out infinite;}
+  .slot.filled .laser{display:none;}
+  @keyframes scanline{0%{transform:translateY(0)}50%{transform:translateY(var(--scanH,120px))}100%{transform:translateY(0)}}
+  .slot .content{position:relative;z-index:1;}
+  .slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:3;}
+  .slot .icon{font-size:1.6rem;line-height:1;margin-bottom:6px;transition:transform .3s;}
+  .slot:hover .icon{transform:translateY(-2px) scale(1.08);}
+  .slot .name{font-weight:700;font-size:.95rem;color:var(--deep-navy);}
+  .slot .hint{font-size:.78rem;color:var(--text-mid);margin-top:4px;}
+  .slot .done{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;color:var(--ok);margin-top:4px;
+    animation:pop .45s cubic-bezier(.2,1.7,.4,1) both;}
+  @keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+  .slot img.preview{position:relative;z-index:1;max-width:100%;max-height:180px;border-radius:8px;display:block;margin:0 auto 8px;box-shadow:0 6px 18px rgba(13,27,62,.18);}
+  .tip{font-size:.8rem;color:var(--text-mid);background:var(--light-beige);border-left:3px solid var(--pastel-yellow);border-radius:8px;padding:12px 14px;margin-top:18px;line-height:1.58;}
 
   /* ── NÚT GỬI ── */
-  button.submit{width:100%;font:inherit;font-size:1.02rem;font-weight:700;background:var(--deep-navy);color:var(--pastel-yellow);border:none;border-radius:10px;padding:16px;cursor:pointer;transition:all .25s;}
-  button.submit:hover{background:var(--navy-mid);transform:translateY(-2px);}
-  button.submit:disabled{background:#9AA7B8;color:#fff;cursor:wait;transform:none;}
+  button.submit{position:relative;overflow:hidden;width:100%;font:inherit;font-size:1.04rem;font-weight:700;background:var(--deep-navy);color:var(--pastel-yellow);
+    border:none;border-radius:10px;padding:17px;cursor:pointer;letter-spacing:.01em;transition:all .25s;box-shadow:0 8px 22px -10px rgba(13,27,62,.8);}
+  button.submit::before{content:'';position:absolute;top:0;left:-120%;width:60%;height:100%;transform:skewX(-20deg);
+    background:linear-gradient(90deg,transparent,rgba(249,228,91,.28),transparent);transition:left .6s;}
+  button.submit:hover{background:var(--navy-mid);transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(13,27,62,.85);}
+  button.submit:hover::before{left:130%;}
+  button.submit:active{transform:translateY(0);}
+  button.submit:disabled{background:#9AA7B8;color:#fff;cursor:wait;transform:none;box-shadow:none;}
+  button.submit:disabled::before{display:none;}
   button.submit:focus-visible{outline:3px solid var(--pastel-yellow);outline-offset:2px;}
-  .privacy{font-size:0.75rem;color:var(--text-mid);text-align:center;margin-top:12px;line-height:1.55;}
-  .error{display:none;background:#FBEBE8;color:var(--stamp);border:1px solid #EAC4BD;border-radius:10px;padding:12px 14px;font-size:0.9rem;margin-bottom:14px;}
-  .error.show{display:block;}
+  .privacy{font-size:.75rem;color:var(--text-mid);text-align:center;margin-top:14px;line-height:1.55;}
+  .error{display:none;background:#FBEBE8;color:var(--stamp);border:1px solid #EAC4BD;border-left:4px solid var(--stamp);border-radius:10px;padding:13px 15px;font-size:.9rem;margin-bottom:14px;}
+  .error.show{display:block;animation:shake .4s;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 
   /* ── MÀN HÌNH THÀNH CÔNG ── */
-  #success{display:none;text-align:center;padding:48px 20px;}
+  #success{display:none;text-align:center;padding:52px 20px;}
   #success.show{display:block;}
-  .stamp-seal{width:150px;height:150px;margin:0 auto 24px;border:4px solid var(--deep-navy);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--deep-navy);background:var(--mint);transform:rotate(-8deg);font-weight:800;animation:stampIn .45s cubic-bezier(.2,1.6,.4,1) both;}
+  .stamp-seal{position:relative;width:158px;height:158px;margin:0 auto 26px;border:4px solid var(--deep-navy);border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--deep-navy);background:var(--mint);
+    transform:rotate(-8deg);font-weight:800;animation:stampIn .45s cubic-bezier(.2,1.6,.4,1) both;
+    box-shadow:0 10px 26px -12px rgba(13,27,62,.6);}
+  .stamp-seal::before{content:'';position:absolute;inset:7px;border:1.5px dashed rgba(13,27,62,.45);border-radius:50%;}
   @keyframes stampIn{from{transform:rotate(-8deg) scale(2.2);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:1}}
-  @media (prefers-reduced-motion:reduce){.stamp-seal{animation:none}}
-  .stamp-seal .big{font-family:'Space Mono',monospace;font-size:0.92rem;letter-spacing:0.06em;text-align:center;padding:0 8px;}
-  .stamp-seal .seal-sub{font-family:'Space Mono',monospace;font-size:0.66rem;margin-top:5px;letter-spacing:0.08em;}
-  #success h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;margin-bottom:10px;color:var(--deep-navy);}
-  #success p{color:var(--text-mid);line-height:1.65;max-width:44ch;margin:0 auto 8px;}
-  #success .code{font-family:'Space Mono',monospace;font-weight:700;color:var(--deep-navy);font-size:1.05rem;background:var(--pastel-yellow);padding:2px 10px;border-radius:6px;}
+  @media (prefers-reduced-motion:reduce){.stamp-seal{animation:none}.track{animation:none}}
+  .stamp-seal .big{font-family:'Space Mono',monospace;font-size:.92rem;letter-spacing:.06em;text-align:center;padding:0 10px;}
+  .stamp-seal .seal-sub{font-family:'Space Mono',monospace;font-size:.66rem;margin-top:6px;letter-spacing:.08em;}
+  #success h2{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:900;margin-bottom:12px;color:var(--deep-navy);}
+  #success p{color:var(--text-mid);line-height:1.68;max-width:44ch;margin:0 auto 10px;}
+  #success .code{font-family:'Space Mono',monospace;font-weight:700;color:var(--deep-navy);font-size:1.05rem;background:var(--pastel-yellow);padding:3px 11px;border-radius:6px;}
   .spinner{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;vertical-align:-3px;margin-right:8px;animation:spin .8s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg)}}
 
   /* ── FOOTER ── */
-  footer{border-top:1px solid rgba(13,27,62,0.08);text-align:center;padding:32px 20px 40px;}
-  .footer-mark{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:1rem;color:var(--deep-navy);margin-bottom:6px;}
-  .footer-text{font-size:0.78rem;color:var(--text-mid);line-height:1.6;}
-  footer a{color:var(--deep-navy);font-weight:600;}
+  footer{border-top:1px solid rgba(13,27,62,.08);text-align:center;padding:34px 20px 44px;}
+  .footer-mark{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:1.05rem;color:var(--deep-navy);margin-bottom:7px;}
+  .footer-text{font-size:.78rem;color:var(--text-mid);line-height:1.6;}
+  footer a{color:var(--deep-navy);font-weight:600;text-decoration:none;border-bottom:1px solid var(--pastel-yellow);}
+  footer a:hover{background:var(--pastel-yellow);}
 
   /* ── KHỐI HÀN QUỐC ── */
   #krBlock{display:none;}
   #krBlock.show{display:block;}
-  .kr-sub{font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--deep-navy);margin:22px 0 4px;padding-top:16px;border-top:1px dashed var(--line);}
+  .kr-sub{font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--deep-navy);
+    margin:24px 0 4px;padding-top:16px;border-top:1px dashed var(--line);}
   .kr-sub:first-of-type{border-top:none;padding-top:6px;}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   @media(max-width:480px){.grid2{grid-template-columns:1fr;}}
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
-  .chips label{margin:0;cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:0.88rem;color:var(--text-dark);background:#fff;transition:all .15s;user-select:none;font-weight:500;}
+  .chips label{margin:0;cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:9px 15px;font-size:.88rem;color:var(--text-dark);
+    background:#fff;transition:all .18s;user-select:none;font-weight:500;}
+  .chips label:hover{border-color:var(--deep-navy);transform:translateY(-1px);}
   .chips input{position:absolute;opacity:0;width:0;height:0;}
-  .chips label.on{background:var(--deep-navy);border-color:var(--deep-navy);color:#fff;}
+  .chips label.on{background:var(--deep-navy);border-color:var(--deep-navy);color:#fff;box-shadow:0 4px 12px -6px rgba(13,27,62,.9);}
   .chips label.on span{color:#fff;}
   .chips label:has(input:checked){background:var(--deep-navy);border-color:var(--deep-navy);color:#fff;}
   .chips label:has(input:checked) span{color:#fff;}
+  .chips label:focus-within{box-shadow:0 0 0 3px rgba(249,228,91,.55);}
   .travel-row{display:grid;grid-template-columns:2fr 1.2fr 1fr 1.2fr;gap:6px;margin-top:6px;}
-  .travel-row input{padding:9px 10px;font-size:0.9rem;}
-  .travel-head{display:grid;grid-template-columns:2fr 1.2fr 1fr 1.2fr;gap:6px;font-size:0.72rem;color:var(--text-mid);margin-top:12px;font-weight:500;}
+  .travel-row input{padding:10px;font-size:.9rem;}
+  .travel-head{display:grid;grid-template-columns:2fr 1.2fr 1fr 1.2fr;gap:6px;font-size:.72rem;color:var(--text-mid);margin-top:12px;font-weight:500;}
   @media(max-width:560px){
     .travel-head{display:none;}
     .travel-row{grid-template-columns:1fr 1fr;gap:5px;padding:10px;border:1px solid var(--line);border-radius:10px;background:#FDFDFB;}
   }
-  .kr-hint{font-size:0.78rem;color:var(--text-mid);margin-top:5px;line-height:1.55;}
+  .kr-hint{font-size:.78rem;color:var(--text-mid);margin-top:5px;line-height:1.55;}
   .spouse-box{display:none;}
-  .spouse-box.show{display:block;}
+  .spouse-box.show{display:block;animation:slideDown .35s ease both;}
+  @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
   .pw-wrap{position:relative;}
   .pw-wrap input{padding-right:46px;}
   .pw-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem;padding:6px 8px;line-height:1;border-radius:6px;}
   .pw-toggle:hover{background:var(--light-beige);}
-  .warn{font-size:0.76rem;color:var(--stamp);background:#FBEBE8;border:1px solid #EAC4BD;border-radius:8px;padding:9px 11px;margin-top:8px;line-height:1.5;}
+  .warn{font-size:.76rem;color:var(--stamp);background:#FBEBE8;border:1px solid #EAC4BD;border-radius:8px;padding:10px 12px;margin-top:8px;line-height:1.5;}
+
+  /* ── HIỆN DẦN KHI CUỘN ── */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1);}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+    .slot:hover .laser,.slot.drag .laser{animation:none;}
+  }
 </style>
 </head>
 <body>
@@ -162,23 +290,51 @@
       </div>
     </div>
   </div>
+  <div id="scrollBar"></div>
 </nav>
 
-<header>
+<header id="hero">
   <div class="header-inner">
     <div class="kicker" data-en="Visa Service · Central Vietnam" data-vi="Dịch vụ Visa · Khu vực Miền Trung">Dịch vụ Visa · Khu vực Miền Trung</div>
-    <h1 data-en="Japan · Korea · China Visa Application" data-vi="Nộp hồ sơ visa Nhật · Hàn · Trung">Nộp hồ sơ visa Nhật · Hàn · Trung</h1>
+    <h1><span class="swash" data-en="Japan · Korea · China" data-vi="Nộp hồ sơ visa">Nộp hồ sơ visa</span> <span data-en="visa application" data-vi="Nhật · Hàn · Trung">Nhật · Hàn · Trung</span></h1>
     <p class="sub" data-en="Visa service for Central Vietnam. Submit your passport and ID here — we review your file and contact you during business hours." data-vi="Dịch vụ visa khu vực Miền Trung. Gửi hộ chiếu và CCCD ngay tại đây — hồ sơ được kiểm tra và liên hệ tư vấn trong giờ làm việc.">Dịch vụ visa khu vực Miền Trung. Gửi hộ chiếu và CCCD ngay tại đây — hồ sơ được kiểm tra và liên hệ tư vấn trong giờ làm việc.</p>
-    <div class="mrz" aria-hidden="true">P&lt;VNMKIMHOAN&lt;&lt;VISA&lt;JAPAN&lt;KOREA&lt;CHINA&lt;&lt;CENTRAL&lt;VIETNAM&lt;&lt;&lt;&lt;&lt;&lt;</div>
   </div>
 </header>
+
+<!-- ══════════ DẢI ẢNH QUỐC GIA ══════════ -->
+<section class="strip" aria-label="Ảnh các điểm đến">
+  <div class="strip-head">
+    <div class="strip-title" data-en="Destinations we handle" data-vi="Những điểm đến chúng tôi làm visa">Những điểm đến chúng tôi làm visa</div>
+    <div class="strip-note" data-en="Hover to pause" data-vi="Đưa chuột vào để dừng">Đưa chuột vào để dừng</div>
+  </div>
+  <div class="marquee">
+    <div class="track" id="strip"></div>
+  </div>
+</section>
+
+<section class="flow" aria-label="Quy trinh lam viec">
+  <h2 class="flow-title" data-en="How your application is handled" data-vi="Hồ sơ của bạn được xử lý thế nào">Hồ sơ của bạn được xử lý thế nào</h2>
+  <p class="flow-lead" data-en="Four steps, and you always know which one your file is on." data-vi="Bốn bước, và bạn luôn biết hồ sơ đang ở bước nào.">Bốn bước, và bạn luôn biết hồ sơ đang ở bước nào.</p>
+  <div class="flow-grid reveal" id="flowGrid"></div>
+</section>
+
+<div class="assure">
+  <div class="assure-box reveal">
+    <h3 data-en="What we commit to" data-vi="Điều chúng tôi cam kết">Điều chúng tôi cam kết</h3>
+    <ul id="assureList"></ul>
+    <div class="assure-contact" id="assureContact"></div>
+  </div>
+</div>
 
 <main>
   <form id="visaForm" novalidate>
 
     <!-- ══════════ BƯỚC 1 ══════════ -->
-    <div class="card">
+    <div class="card reveal">
+      <div class="card-code mono">SEC · 01</div>
       <div class="step"><span class="no mono">1</span><h2 data-en="Contact details" data-vi="Thông tin liên hệ">Thông tin liên hệ</h2></div>
+      <p class="step-note" data-en="So we can reach you about your application." data-vi="Để chúng tôi liên hệ lại với bạn về hồ sơ.">Để chúng tôi liên hệ lại với bạn về hồ sơ.</p>
+      <div class="rule"></div>
 
       <label for="full_name" data-en="Full name <span class='req'>*</span>" data-vi="Họ và tên <span class='req'>*</span>">Họ và tên <span class="req">*</span></label>
       <input type="text" id="full_name" name="full_name" required autocomplete="name" placeholder="Nguyễn Văn A" data-ph-en="Nguyen Van A" data-ph-vi="Nguyễn Văn A">
@@ -203,11 +359,14 @@
     </div>
 
     <!-- ══════════ BƯỚC 2 ══════════ -->
-    <div class="card">
+    <div class="card reveal">
+      <div class="card-code mono">SEC · 02</div>
       <div class="step"><span class="no mono">2</span><h2 data-en="Document photos" data-vi="Ảnh giấy tờ">Ảnh giấy tờ</h2></div>
+      <p class="step-note" data-en="Tap a frame to choose a photo, or drag a file onto it." data-vi="Bấm vào khung để chọn ảnh, hoặc kéo file vào khung.">Bấm vào khung để chọn ảnh, hoặc kéo file vào khung.</p>
+      <div class="rule"></div>
 
       <div class="slot" id="slot-passport" tabindex="0">
-        <span class="c"></span>
+        <span class="c"></span><span class="laser"></span>
         <input type="file" accept="image/*,application/pdf" data-key="passport" aria-label="Hộ chiếu">
         <div class="content">
           <div class="prev"></div>
@@ -219,11 +378,11 @@
       </div>
 
       <div class="slot" id="slot-front" tabindex="0">
-        <span class="c"></span>
+        <span class="c"></span><span class="laser"></span>
         <input type="file" accept="image/*,application/pdf" data-key="cccd_front" aria-label="CCCD mặt trước">
         <div class="content">
           <div class="prev"></div>
-          <div class="icon">🪪</div>
+          <div class="icon">🆔</div>
           <div class="name" data-en="ID card — front" data-vi="CCCD — mặt trước">CCCD — mặt trước</div>
           <div class="hint" data-en="The side with your portrait photo" data-vi="Mặt có ảnh chân dung">Mặt có ảnh chân dung</div>
           <div class="done" hidden></div>
@@ -231,11 +390,11 @@
       </div>
 
       <div class="slot" id="slot-back" tabindex="0">
-        <span class="c"></span>
+        <span class="c"></span><span class="laser"></span>
         <input type="file" accept="image/*,application/pdf" data-key="cccd_back" aria-label="CCCD mặt sau">
         <div class="content">
           <div class="prev"></div>
-          <div class="icon">🪪</div>
+          <div class="icon">🆔</div>
           <div class="name" data-en="ID card — back" data-vi="CCCD — mặt sau">CCCD — mặt sau</div>
           <div class="hint" data-en="The side with fingerprint / QR code" data-vi="Mặt có vân tay / mã QR">Mặt có vân tay / mã QR</div>
           <div class="done" hidden></div>
@@ -247,6 +406,7 @@
 
     <!-- ══════════ BƯỚC 3 — CHỈ HIỆN KHI CHỌN HÀN QUỐC ══════════ -->
     <div class="card" id="krBlock">
+      <div class="card-code mono">SEC · 03 · KR</div>
       <div class="step"><span class="no mono">3</span><h2 data-en="Korea visa declaration" data-vi="Thông tin khai visa Hàn Quốc">Thông tin khai visa Hàn Quốc</h2></div>
       <p class="kr-hint" data-en="Please fill in completely and accurately. This information is used to complete your Korean visa application form." data-vi="Vui lòng khai đầy đủ, chính xác. Thông tin dùng để điền đơn xin visa Hàn Quốc.">Vui lòng khai đầy đủ, chính xác. Thông tin dùng để điền đơn xin visa Hàn Quốc.</p>
 
@@ -368,7 +528,7 @@
           </div>
         </div>
       </div>
-      <div class="warn" data-en="⚠ Only fill this in when our staff explicitly asks for it. Change your VSSID password once your application is complete." data-vi="⚠ Chỉ điền khi nhân viên yêu cầu. Hãy đổi mật khẩu VSSID sau khi hồ sơ hoàn tất.">⚠ Chỉ điền khi nhân viên yêu cầu. Hãy đổi mật khẩu VSSID sau khi hồ sơ hoàn tất.</div>
+      <div class="warn" data-en="⚠ Change your VSSID password once your application is complete." data-vi="⚠ Hãy đổi mật khẩu VSSID sau khi hồ sơ hoàn tất.">⚠ Hãy đổi mật khẩu VSSID sau khi hồ sơ hoàn tất.</div>
 
       <div class="kr-sub" data-en="Planned travel dates to Korea" data-vi="Ngày dự kiến đi Hàn Quốc">Ngày dự kiến đi Hàn Quốc</div>
       <div class="grid2">
@@ -384,7 +544,7 @@
 
       <div class="kr-sub" data-en="Attach completed declaration form (if any)" data-vi="Đính kèm tờ khai đã điền (nếu có)">Đính kèm tờ khai đã điền (nếu có)</div>
       <div class="slot" id="slot-declaration" tabindex="0">
-        <span class="c"></span>
+        <span class="c"></span><span class="laser"></span>
         <input type="file" accept="image/*,application/pdf,.doc,.docx" data-key="declaration" aria-label="Tờ khai đã điền">
         <div class="content">
           <div class="prev"></div>
@@ -425,6 +585,111 @@
 // https://script.google.com/macros/s/AKfy.../exec
 const API_URL = "https://script.google.com/macros/s/AKfycbzqfFeLhoHLERC_I6r33-oy8aTUMTyw-sifl3asruNEmWZn0wzKzODmu3K_EC_yMzm0Pg/exec";
 // ════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════
+//  DẢI ẢNH QUỐC GIA — CHỈ CẦN SỬA MẢNG NÀY
+//  src: để trống "" thì hiện khung hoa văn + cờ (không lỗi ảnh).
+//  Thêm ảnh: bỏ ảnh vào cùng thư mục rồi ghi "tokyo.jpg",
+//  hoặc dán link ảnh https://... ; ảnh nên khoảng 600×420px.
+//  Muốn thêm/bớt thẻ: thêm/bớt dòng trong mảng, dải ảnh tự nhân đôi.
+// ═══════════════════════════════════════════════════════════════
+const COUNTRY_IMAGES = [
+  { flag: "🇯🇵", vi: "Tokyo",          en: "Tokyo",          code: "JPN", src: "" },
+  { flag: "🇯🇵", vi: "Núi Phú Sĩ",     en: "Mount Fuji",     code: "JPN", src: "" },
+  { flag: "🇯🇵", vi: "Kyoto",          en: "Kyoto",          code: "JPN", src: "" },
+  { flag: "🇰🇷", vi: "Seoul",          en: "Seoul",          code: "KOR", src: "" },
+  { flag: "🇰🇷", vi: "Đảo Jeju",       en: "Jeju Island",    code: "KOR", src: "" },
+  { flag: "🇰🇷", vi: "Busan",          en: "Busan",          code: "KOR", src: "" },
+  { flag: "🇨🇳", vi: "Bắc Kinh",       en: "Beijing",        code: "CHN", src: "" },
+  { flag: "🇨🇳", vi: "Thượng Hải",     en: "Shanghai",       code: "CHN", src: "" }
+];
+
+// ─── DỰNG DẢI ẢNH (nhân đôi để chạy liền mạch) ───
+(function buildStrip(){
+  const track = document.getElementById("strip");
+  if (!track || !COUNTRY_IMAGES.length) return;
+  const html = COUNTRY_IMAGES.map(c => {
+    const img = c.src
+      ? '<img src="' + c.src + '" alt="" loading="lazy" onerror="var p=this.parentNode;this.remove();p.classList.add(\'ph\');p.textContent=\'' + c.flag + '\';">'
+      : c.flag;
+    return '<figure class="pc" tabindex="0">' +
+             '<div class="pc-img' + (c.src ? '' : ' ph') + '">' + img + '</div>' +
+             '<figcaption class="pc-cap">' +
+               '<span class="pc-flag">' + c.flag + '</span>' +
+               '<span class="pc-name" data-vi="' + c.vi + '" data-en="' + c.en + '">' + c.vi + '</span>' +
+               '<span class="pc-code">' + c.code + '</span>' +
+             '</figcaption>' +
+           '</figure>';
+  }).join("");
+  track.innerHTML = html + html;   // nhân đôi cho vòng lặp mượt
+})();
+
+// ═══════════════════════════════════════════════════════════════
+//  NỘI DUNG TẠO NIỀM TIN — KIMHOAN SỬA TRỰC TIẾP Ở ĐÂY
+//  Chỉ ghi những gì đúng thực tế; đừng ghi số liệu chưa kiểm chứng.
+// ═══════════════════════════════════════════════════════════════
+
+// Quy trình 4 bước hiện dưới dải ảnh.
+const PROCESS = [
+  { name_vi: "Bạn gửi hồ sơ online",   name_en: "You submit online",
+    desc_vi: "Điền form này, chụp hộ chiếu và CCCD. Không cần đến văn phòng.",
+    desc_en: "Fill this form, photograph your passport and ID. No office visit needed." },
+  { name_vi: "Nhân viên kiểm tra",     name_en: "We check the file",
+    desc_vi: "Chúng tôi soi từng giấy tờ và gọi lại nếu thiếu hoặc ảnh chưa rõ.",
+    desc_en: "We review every document and call you if something is missing or blurry." },
+  { name_vi: "Hoàn thiện & nộp",       name_en: "Complete & lodge",
+    desc_vi: "Chúng tôi điền đơn, xếp bộ hồ sơ và nộp lên lãnh sự quán.",
+    desc_en: "We fill the forms, assemble the file and lodge it with the consulate." },
+  { name_vi: "Nhận kết quả",           name_en: "Get the result",
+    desc_vi: "Có kết quả là chúng tôi thông báo ngay qua điện thoại hoặc Zalo.",
+    desc_en: "As soon as there is a result, we tell you by phone or Zalo." }
+];
+
+// Danh sách cam kết. Thêm/bớt dòng tuỳ ý.
+const ASSURANCE = [
+  { vi: "Tư vấn và kiểm tra hồ sơ miễn phí trước khi bạn quyết định làm.",
+    en: "Free consultation and file check before you commit." },
+  { vi: "Báo rõ chi phí trước, không phát sinh khoản nào ngoài thoả thuận.",
+    en: "Costs quoted up front, with nothing added later." },
+  { vi: "Ảnh giấy tờ chỉ dùng để làm visa, không chuyển cho bên thứ ba.",
+    en: "Your document photos are used only for the visa, never shared with third parties." },
+  { vi: "Bạn có mã hồ sơ ngay sau khi gửi để hỏi tiến độ bất cứ lúc nào.",
+    en: "You get a reference number right after submitting, so you can ask about progress any time." }
+];
+
+// Nút liên hệ. Để trống "" thì nút đó tự ẩn — nhớ điền số thật của Kimhoan.
+const CONTACT = {
+  phone: "",        // VD: "0905 123 456"
+  zalo:  "",        // VD: "0905123456"  (chỉ số, không dấu cách)
+  email: "",        // VD: "ntkimhoan267@gmail.com"
+  office_vi: "",    // VD: "Văn phòng: 123 Nguyễn Văn Linh, Đà Nẵng"
+  office_en: ""     // VD: "Office: 123 Nguyen Van Linh, Da Nang"
+};
+
+// ─── DỰNG CÁC KHỐI TẠO NIỀM TIN ───
+(function buildTrust(){
+  const grid = document.getElementById("flowGrid");
+  if (grid) grid.innerHTML = PROCESS.map((p, i) =>
+    '<div class="fl">' +
+      '<div class="fl-no">0' + (i + 1) + '</div>' +
+      '<div class="fl-name" data-vi="' + p.name_vi + '" data-en="' + p.name_en + '">' + p.name_vi + '</div>' +
+      '<div class="fl-desc" data-vi="' + p.desc_vi + '" data-en="' + p.desc_en + '">' + p.desc_vi + '</div>' +
+    '</div>').join("");
+
+  const list = document.getElementById("assureList");
+  if (list) list.innerHTML = ASSURANCE.map(a =>
+    '<li data-vi="' + a.vi + '" data-en="' + a.en + '">' + a.vi + '</li>').join("");
+
+  const box = document.getElementById("assureContact");
+  if (box) {
+    let h = "";
+    if (CONTACT.phone) h += '<a href="tel:' + CONTACT.phone.replace(/\s/g, "") + '">☎ ' + CONTACT.phone + '</a>';
+    if (CONTACT.zalo)  h += '<a href="https://zalo.me/' + CONTACT.zalo + '" target="_blank" rel="noopener">Zalo ' + CONTACT.zalo + '</a>';
+    if (CONTACT.email) h += '<a href="mailto:' + CONTACT.email + '">✉ ' + CONTACT.email + '</a>';
+    if (CONTACT.office_vi) h += '<a href="#" onclick="return false" data-vi="' + CONTACT.office_vi + '" data-en="' + (CONTACT.office_en || CONTACT.office_vi) + '">' + CONTACT.office_vi + '</a>';
+    box.innerHTML = h;
+  }
+})();
 
 // ─── THÔNG BÁO SONG NGỮ ───
 const MSG = {
@@ -477,10 +742,68 @@ function applyLang(lang){
 }
 function toggleLang(){ applyLang(currentLang === 'en' ? 'vi' : 'en'); }
 
-// ─── NAV ĐỔ BÓNG KHI CUỘN ───
-window.addEventListener('scroll', () => {
-  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
-});
+// ─── NAV: ĐỔ BÓNG + THANH TIẾN ĐỘ CUỘN ───
+const navEl = document.getElementById('mainNav');
+const barEl = document.getElementById('scrollBar');
+function onScroll(){
+  navEl.classList.toggle('scrolled', window.scrollY > 10);
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  barEl.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// ─── TÔN TRỌNG CHẾ ĐỘ GIẢM CHUYỂN ĐỘNG / THIẾT BỊ CẢM ỨNG ───
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FINE_POINTER = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+// ─── VÙNG SÁNG THEO CON TRỎ TRÊN HERO ───
+const hero = document.getElementById('hero');
+if (hero && FINE_POINTER && !REDUCED) {
+  hero.addEventListener('pointermove', (e) => {
+    const r = hero.getBoundingClientRect();
+    hero.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    hero.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    hero.classList.add('lit');
+  });
+  hero.addEventListener('pointerleave', () => hero.classList.remove('lit'));
+}
+
+// ─── CARD: ÁNH SÁNG + NGHIÊNG 3D NHẸ THEO CHUỘT ───
+// (tự tắt khi đang gõ trong card, khi dùng cảm ứng, hoặc khi giảm chuyển động)
+if (FINE_POINTER && !REDUCED) {
+  document.querySelectorAll('.card').forEach((card) => {
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      card.style.setProperty('--cx', (px * 100) + '%');
+      card.style.setProperty('--cy', (py * 100) + '%');
+      if (card.contains(document.activeElement)) return;   // đang nhập liệu thì không nghiêng
+      const MAX = 1.1;                                     // độ nghiêng tối đa (deg)
+      card.style.transform =
+        'perspective(1100px) rotateY(' + ((px - .5) * 2 * MAX).toFixed(2) + 'deg)' +
+        ' rotateX(' + ((.5 - py) * 2 * MAX).toFixed(2) + 'deg) translateY(-2px)';
+    });
+    card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+    card.addEventListener('focusin',      () => { card.style.transform = ''; });
+  });
+}
+
+// ─── HIỆN DẦN KHI CUỘN ───
+(function revealOnScroll(){
+  const items = document.querySelectorAll('.reveal');
+  if (REDUCED || !('IntersectionObserver' in window)) {
+    items.forEach(el => el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  items.forEach(el => io.observe(el));
+})();
 
 // ─── CHỐNG XSS CHO TÊN FILE ───
 function esc(s){
@@ -489,13 +812,23 @@ function esc(s){
 
 const files = { passport: null, cccd_front: null, cccd_back: null, declaration: null };
 
+// ─── ĐỌC FILE THÀNH DẠNG data: (chạy được cả trong khung xem thử chặn blob:) ───
+function fileToDataURL(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload  = () => res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
 // ─── NÉN ẢNH PHÍA CLIENT (1600px, JPEG 80%) ───
-function compressImage(file, maxDim = 1600, quality = 0.8) {
+async function compressImage(file, maxDim = 1600, quality = 0.8) {
+  let src;
+  try { src = await fileToDataURL(file); } catch (e) { return file; }
   return new Promise((resolve) => {
     const img = new Image();
-    const url = URL.createObjectURL(file);
     img.onload = () => {
-      URL.revokeObjectURL(url);
       let { width: w, height: h } = img;
       if (Math.max(w, h) > maxDim) {
         const s = maxDim / Math.max(w, h);
@@ -511,8 +844,8 @@ function compressImage(file, maxDim = 1600, quality = 0.8) {
         "image/jpeg", quality
       );
     };
-    img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
-    img.src = url;
+    img.onerror = () => resolve(file);
+    img.src = src;
   });
 }
 
@@ -534,7 +867,24 @@ document.querySelectorAll(".slot input[type=file]").forEach((input) => {
     const done = slot.querySelector(".done");
 
     if (isImage) {
-      prev.innerHTML = '<img class="preview" alt="" src="' + URL.createObjectURL(finalFile) + '">';
+      // Ảnh xem trước dùng data: — nếu bản nén không hiện được thì thử lại bằng ảnh gốc
+      prev.innerHTML = "";
+      const im = document.createElement("img");
+      im.className = "preview";
+      im.alt = "";
+      let triedOriginal = false;
+      im.onerror = async () => {
+        if (!triedOriginal) {
+          triedOriginal = true;
+          try { im.src = await fileToDataURL(file); } catch (e) {}
+        } else {
+          im.remove();
+          icon.hidden = false;
+          icon.textContent = "📷";
+        }
+      };
+      prev.appendChild(im);
+      try { im.src = await fileToDataURL(finalFile); } catch (e) { im.onerror(); }
       icon.hidden = true;
     } else {
       prev.innerHTML = "";
@@ -553,11 +903,51 @@ document.querySelectorAll(".slot input[type=file]").forEach((input) => {
   });
 });
 
+// ─── KÉO & THẢ FILE VÀO KHUNG SCAN + TIA QUÉT ĐÚNG CHIỀU CAO KHUNG ───
+document.querySelectorAll(".slot").forEach((slot) => {
+  const input = slot.querySelector('input[type=file]');
+  if (!input) return;
+
+  // độ dài tia quét bằng chiều cao khung
+  const setScan = () => slot.style.setProperty('--scanH', (slot.offsetHeight - 2) + 'px');
+  setScan();
+  window.addEventListener('resize', setScan);
+
+  ["dragenter", "dragover"].forEach(ev =>
+    slot.addEventListener(ev, (e) => { e.preventDefault(); slot.classList.add("drag"); })
+  );
+  ["dragleave", "dragend"].forEach(ev =>
+    slot.addEventListener(ev, () => slot.classList.remove("drag"))
+  );
+  slot.addEventListener("drop", (e) => {
+    e.preventDefault();
+    slot.classList.remove("drag");
+    const dropped = e.dataTransfer && e.dataTransfer.files;
+    if (!dropped || !dropped.length) return;
+    try {
+      const dt = new DataTransfer();
+      dt.items.add(dropped[0]);
+      input.files = dt.files;
+      input.dispatchEvent(new Event("change"));
+    } catch (err) { /* trình duyệt cũ: bấm vào khung để chọn file */ }
+  });
+
+  // Enter / Space mở hộp chọn file khi dùng bàn phím
+  slot.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); input.click(); }
+  });
+});
+
 // ─── ẨN/HIỆN KHỐI HÀN QUỐC ───
 const krBlock = document.getElementById("krBlock");
 const destSelect = document.getElementById("destination");
 function toggleKrBlock() {
-  krBlock.classList.toggle("show", destSelect.value === "Hàn Quốc");
+  const on = destSelect.value === "Hàn Quốc";
+  krBlock.classList.toggle("show", on);
+  if (on) {
+    krBlock.classList.add("in");
+    krBlock.querySelectorAll('.slot').forEach(s => s.style.setProperty('--scanH', (s.offsetHeight - 2) + 'px'));
+  }
 }
 destSelect.addEventListener("change", toggleKrBlock);
 
