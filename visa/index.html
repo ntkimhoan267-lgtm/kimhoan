@@ -663,7 +663,10 @@ const CONTACT = {
   zalo:  "0944874944",  // chỉ số, không dấu cách — nút chỉ ghi "Nhắn Zalo", không hiện số
   email: "ntkimhoan267@gmail.com",
   office_vi: "Văn phòng: 33 Cao Thắng, phường Hải Châu, Đà Nẵng",
-  office_en: "Office: 33 Cao Thang, Hai Chau Ward, Da Nang"
+  office_en: "Office: 33 Cao Thang, Hai Chau Ward, Da Nang",
+  // Link bản đồ. Để trống "" thì nút địa chỉ không bấm được.
+  // Muốn ghim đúng vị trí: mở Google Maps, bấm Chia sẻ, dán link vào đây.
+  office_map: "https://www.google.com/maps/search/?api=1&query=33%20Cao%20Th%E1%BA%AFng%2C%20H%E1%BA%A3i%20Ch%C3%A2u%2C%20%C4%90%C3%A0%20N%E1%BA%B5ng"
 };
 
 // ─── DỰNG CÁC KHỐI TẠO NIỀM TIN ───
@@ -686,7 +689,14 @@ const CONTACT = {
     if (CONTACT.phone) h += '<a href="tel:' + CONTACT.phone.replace(/\s/g, "") + '">☎ ' + CONTACT.phone + '</a>';
     if (CONTACT.zalo)  h += '<a href="https://zalo.me/' + CONTACT.zalo + '" target="_blank" rel="noopener" data-vi="💬 Nhắn Zalo" data-en="💬 Chat on Zalo">💬 Nhắn Zalo</a>';
     if (CONTACT.email) h += '<a href="mailto:' + CONTACT.email + '">✉ ' + CONTACT.email + '</a>';
-    if (CONTACT.office_vi) h += '<a href="#" onclick="return false" data-vi="' + CONTACT.office_vi + '" data-en="' + (CONTACT.office_en || CONTACT.office_vi) + '">' + CONTACT.office_vi + '</a>';
+    if (CONTACT.office_vi) {
+      const oVi = '📍 ' + CONTACT.office_vi;
+      const oEn = '📍 ' + (CONTACT.office_en || CONTACT.office_vi);
+      const attrs = ' data-vi="' + oVi + '" data-en="' + oEn + '">' + oVi + '</a>';
+      h += CONTACT.office_map
+        ? '<a href="' + CONTACT.office_map + '" target="_blank" rel="noopener"' + attrs
+        : '<a href="#" onclick="return false"' + attrs;
+    }
     box.innerHTML = h;
   }
 })();
