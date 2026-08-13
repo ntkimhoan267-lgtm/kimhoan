@@ -771,6 +771,33 @@
     color:var(--text-mid); letter-spacing:0.1em; text-transform:uppercase;
   }
   .slide-placeholder::before { content:'🖼'; font-size:2rem; opacity:0.3; }
+
+  /* ══ DẢI BLOG CUỘN NGANG ══ */
+  .car-wrap{position:relative;margin-bottom:2.5rem;}
+  .carousel{display:flex;gap:24px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;padding:6px 2px 18px;cursor:grab;
+    scrollbar-width:thin;scrollbar-color:rgba(249,228,91,0.55) rgba(253,250,240,0.09);}
+  .carousel.dragging{cursor:grabbing;scroll-behavior:auto;scroll-snap-type:none;}
+  .carousel.dragging a{pointer-events:none;}
+  .carousel::-webkit-scrollbar{height:7px;}
+  .carousel::-webkit-scrollbar-track{background:rgba(253,250,240,0.09);border-radius:99px;}
+  .carousel::-webkit-scrollbar-thumb{background:rgba(249,228,91,0.55);border-radius:99px;}
+  .carousel::-webkit-scrollbar-thumb:hover{background:var(--pastel-yellow);}
+  .carousel > .project-card{flex:0 0 335px;scroll-snap-align:start;}
+  @media(max-width:640px){.carousel > .project-card{flex:0 0 84%;}}
+  .car-btn{position:absolute;top:170px;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;
+    background:var(--pastel-yellow);color:var(--deep-navy);border:none;cursor:pointer;font-size:1.05rem;font-weight:700;
+    display:flex;align-items:center;justify-content:center;z-index:6;transition:all .25s;
+    box-shadow:0 8px 24px rgba(0,0,0,0.35);font-family:'Space Mono',monospace;}
+  .car-btn:hover{background:var(--mint);transform:translateY(-50%) scale(1.09);}
+  .car-btn:focus-visible{outline:3px solid var(--cream);outline-offset:3px;}
+  .car-btn[disabled]{opacity:0;pointer-events:none;}
+  .car-prev{left:-20px;} .car-next{right:-20px;}
+  @media(max-width:1120px){.car-btn{display:none;}}
+  .car-hint{font-family:'Space Mono',monospace;font-size:0.66rem;letter-spacing:0.1em;
+    color:rgba(253,250,240,0.4);text-align:center;margin-bottom:26px;}
+  @media (prefers-reduced-motion:reduce){.carousel{scroll-behavior:auto;}}
+
 </style>
 <!-- ══════════════════════ TALENTS ══════════════════════ -->
 <section id="talents" class="py-24">
@@ -1118,7 +1145,11 @@
       </p>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+    <div class="car-wrap fade-up">
+      <button class="car-btn car-prev" id="carPrev" type="button" data-dir="-1"
+              aria-label="Bài trước / Previous post">←</button>
+      <div class="carousel" id="blogCarousel" tabindex="0"
+           aria-label="Danh sách bài viết mới nhất">
 
       <!-- Card 0 — Hướng dẫn visa Hàn Quốc -->
       <a href="/blog/xin-visa-han-quoc-2026-ho-so-c39/" class="project-card fade-up" style="text-decoration:none;display:block;">
@@ -1217,7 +1248,51 @@
         </div>
       </a>
 
+
+      <!-- Card 4 — Bài AI (cũ nhất) -->
+      <a href="/blog/sinh-vien-marketing-dung-ai-moi-ngay/" class="project-card fade-up" style="text-decoration:none;display:block;">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#1A2E5C,#2D4080);position:relative;">
+          <span class="project-tag" data-en="AI &amp; Marketing" data-vi="AI &amp; Marketing">AI &amp; Marketing</span>
+          <img src="/images/blog-1.jpg" 
+     style="width:100%;height:100%;object-fit:cover;object-position:top;opacity:0.85;" 
+     alt="Blog thumbnail">
+          <span style="position:absolute;top:12px;right:12px;background:var(--mint);color:var(--deep-navy);font-family:'Space Mono',monospace;font-size:0.6rem;font-weight:700;padding:3px 10px;border-radius:12px;letter-spacing:0.06em;"
+                data-en="NEW" data-vi="MỚI">NEW</span>
+        </div>
+        <div class="project-body">
+          <div style="font-family:'Space Mono',monospace;font-size:0.65rem;color:rgba(249,228,91,0.5);letter-spacing:0.1em;margin-bottom:8px;"
+               data-en="5 min read · Personal" data-vi="5 phút đọc · Cá nhân">
+            5 min read · Personal
+          </div>
+          <div class="project-title"
+               data-en="I'm a Marketing Student — Here's How I Use AI Every Day"
+               data-vi="Tôi là sinh viên Marketing và tôi dùng AI như thế nào mỗi ngày">
+            Tôi là sinh viên Marketing và tôi dùng AI như thế nào mỗi ngày
+          </div>
+          <div class="project-desc"
+               data-en="AI isn't the enemy stealing your job. If you know how to use it — it becomes the best co-pilot you've ever had."
+               data-vi="AI không phải kẻ thù sắp cướp việc của bạn. Nếu bạn biết dùng nó — nó trở thành người bạn đồng hành tốt nhất bạn từng có.">
+            AI không phải kẻ thù sắp cướp việc của bạn. Nếu bạn biết dùng nó — nó trở thành người bạn đồng hành tốt nhất bạn từng có.
+          </div>
+          <div class="project-chips" style="margin-top:14px;">
+            <span class="chip">AI</span>
+            <span class="chip">Marketing</span>
+            <span class="chip">Claude</span>
+            <span class="chip" data-en="Student" data-vi="Sinh viên">Sinh viên</span>
+          </div>
+          <div style="margin-top:16px;font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--pastel-yellow);display:flex;align-items:center;gap:6px;">
+            <span data-en="Read article →" data-vi="Đọc bài viết →">Đọc bài viết →</span>
+          </div>
+        </div>
+      </a>
+
+      </div>
+      <button class="car-btn car-next" id="carNext" type="button" data-dir="1"
+              aria-label="Bài sau / Next post">→</button>
     </div>
+
+    <div class="car-hint" data-en="← Drag or swipe to see more posts →"
+         data-vi="← Kéo ngang để xem thêm bài viết →">← Kéo ngang để xem thêm bài viết →</div>
 
     <div class="text-center fade-up">
       <a href="/blog/" class="cta-btn-outline"
@@ -1267,6 +1342,65 @@
   // Đồng bộ chữ hiển thị với nút ngay khi tải trang, để chữ viết cứng
   // trong HTML không bao giờ lệch với ngôn ngữ đang chọn.
   applyLang(currentLang);
+
+
+  // ─── DẢI BLOG CUỘN NGANG ───
+  (function blogCarousel(){
+    const car  = document.getElementById('blogCarousel');
+    const prev = document.getElementById('carPrev');
+    const next = document.getElementById('carNext');
+    if (!car) return;
+
+    const step = () => {
+      const card = car.querySelector('.project-card');
+      return card ? card.offsetWidth + 24 : 340;   // 24 = khoảng cách giữa 2 thẻ
+    };
+
+    // Ẩn mũi tên khi đã ở đầu / cuối dải
+    function syncArrows(){
+      if (!prev || !next) return;
+      const max = car.scrollWidth - car.clientWidth;
+      prev.disabled = car.scrollLeft <= 4;
+      next.disabled = car.scrollLeft >= max - 4;
+    }
+    car.addEventListener('scroll', syncArrows, { passive: true });
+    window.addEventListener('resize', syncArrows);
+    syncArrows();
+
+    [prev, next].forEach(btn => btn && btn.addEventListener('click', () => {
+      car.scrollBy({ left: step() * Number(btn.dataset.dir), behavior: 'smooth' });
+    }));
+
+    // Kéo bằng chuột trên máy tính (điện thoại đã vuốt được sẵn)
+    let down = false, startX = 0, startLeft = 0, moved = 0;
+    car.addEventListener('pointerdown', e => {
+      if (e.pointerType !== 'mouse') return;
+      down = true; moved = 0;
+      startX = e.clientX; startLeft = car.scrollLeft;
+      car.setPointerCapture(e.pointerId);
+    });
+    car.addEventListener('pointermove', e => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) car.classList.add('dragging');   // chỉ chặn click khi kéo thật
+      moved = Math.abs(dx);
+      car.scrollLeft = startLeft - dx;
+    });
+    const endDrag = () => {
+      if (!down) return;
+      down = false;
+      setTimeout(() => car.classList.remove('dragging'), 0);
+    };
+    car.addEventListener('pointerup', endDrag);
+    car.addEventListener('pointercancel', endDrag);
+    car.addEventListener('pointerleave', endDrag);
+
+    // Phím mũi tên khi dải đang được chọn
+    car.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); car.scrollBy({ left:  step(), behavior:'smooth' }); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); car.scrollBy({ left: -step(), behavior:'smooth' }); }
+    });
+  })();
 
   // ─── MOBILE MENU ───
   function toggleMenu() {
