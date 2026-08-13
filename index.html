@@ -1215,7 +1215,6 @@
             <span class="chip" data-en="Student" data-vi="Sinh viên">Sinh viên</span>
             <span class="chip" data-en="Never Too Late" data-vi="Không trễ">Không trễ</span>
           </div>
-        </div>
           <div style="margin-top:16px;font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--pastel-yellow);display:flex;align-items:center;gap:6px;">
             <span data-en="Read article →" data-vi="Đọc bài viết →">Đọc bài viết →</span>
           </div>
@@ -1247,8 +1246,8 @@
 <script>
   // ─── LANGUAGE TOGGLE ───
   let currentLang = 'en';
-  function toggleLang() {
-    currentLang = currentLang === 'en' ? 'vi' : 'en';
+  function applyLang(lang) {
+    currentLang = lang;
     document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
     document.getElementById('btn-vi').classList.toggle('active', currentLang === 'vi');
 
@@ -1267,6 +1266,11 @@
 
     document.documentElement.lang = currentLang;
   }
+  function toggleLang() { applyLang(currentLang === 'en' ? 'vi' : 'en'); }
+
+  // Đồng bộ chữ hiển thị với nút ngay khi tải trang, để chữ viết cứng
+  // trong HTML không bao giờ lệch với ngôn ngữ đang chọn.
+  applyLang(currentLang);
 
   // ─── MOBILE MENU ───
   function toggleMenu() {
