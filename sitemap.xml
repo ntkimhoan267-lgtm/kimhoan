@@ -24,9 +24,16 @@
 
   <url>
     <loc>https://iamkimhoan.vn/blog/</loc>
-    <lastmod>2026-05-12</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://iamkimhoan.vn/blog/sinh-vien-marketing-dung-ai-moi-ngay/</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <url>
