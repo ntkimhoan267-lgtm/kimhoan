@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Phóng viên Tourane – Escape game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --river:#0f2b2e; --river2:#15393c; --paper:#e6e9dc; --paper2:#f3f4ec; --ink:#1f2a44; --muted:#5a6275;
+  --red:#b8322a; --blue:#2d5f9a; --grey:#6f6a60; --scene:#3f6b4f; --gold:#c9a24b; --machine:#8a6a1f;
+  --type:"Special Elite","Courier New",monospace; --body:"Alegreya Sans","Segoe UI",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --river:#0a1f21; --river2:#11302f; } }
+:root[data-theme="dark"]{ --river:#0a1f21; --river2:#11302f; }
+html,body{height:100%}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--river);color:var(--paper);font-family:var(--body);font-size:17px;line-height:1.45;
+  background-image:repeating-linear-gradient(170deg,rgba(255,255,255,.02) 0 3px,transparent 3px 26px);}
+button{font:inherit;cursor:pointer;color:inherit}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:620px;margin:0 auto;padding:12px 14px 110px}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0 12px}
+.brand{font-family:var(--type);color:var(--gold);font-size:1.05rem;line-height:1.1}
+.brand small{display:block;color:#b9c6be;font-family:var(--body);font-size:.85rem}
+.clock{font-family:var(--type);font-size:1.6rem;background:var(--paper);color:var(--ink);padding:2px 12px;border-radius:4px;min-width:96px;text-align:center}
+.clock.low{background:var(--red);color:#fff}
+.stats{font-size:.85rem;color:#b9c6be;text-align:right}
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.tile{position:relative;background:var(--paper);color:var(--ink);border-radius:6px;overflow:hidden;text-align:left;border:0;padding:0;box-shadow:0 6px 16px rgba(0,0,0,.35);display:flex;flex-direction:column}
+.tile .art{aspect-ratio:300/190;background:var(--paper2)}
+.tile .art svg{display:block;width:100%;height:100%}
+.tile .cap{padding:6px 8px 8px;border-top:4px solid var(--c,#999);font-weight:700;font-size:.95rem;line-height:1.2}
+.tile .id{position:absolute;top:6px;left:6px;background:var(--c);color:#fff;font-family:var(--type);min-width:30px;height:30px;border-radius:15px;display:grid;place-items:center;font-size:1rem;padding:0 6px;box-shadow:0 0 0 2px var(--paper)}
+.tile.new{animation:drop .5s ease-out}
+.tile.sel{outline:4px solid var(--gold)}
+@media (prefers-reduced-motion: reduce){.tile.new{animation:none}}
+@keyframes drop{from{transform:translateY(-12px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+.bar{position:fixed;left:0;right:0;bottom:0;background:rgba(10,24,26,.96);border-top:1px solid #2b4a4a;
+  padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;gap:4px}
+.bar button{flex:1;max-width:120px;background:transparent;border:0;padding:6px 2px;border-radius:6px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.78rem;color:#dfe7df}
+.bar button b{font-size:1.35rem;line-height:1}
+.bar button:disabled{opacity:.35;cursor:not-allowed}
+.bar button:not(:disabled):active{background:#1d3b3c}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;justify-content:center;z-index:10}
+.sheet.open{display:flex}
+.panel{background:var(--paper);color:var(--ink);width:100%;max-width:620px;max-height:88%;overflow:auto;border-radius:14px 14px 0 0;padding:16px 16px calc(20px + env(safe-area-inset-bottom,0px))}
+.panel h2{font-family:var(--type);font-weight:400;font-size:1.35rem;margin:0 0 6px;line-height:1.2}
+.panel .close{float:right;background:var(--ink);color:var(--paper);border:0;border-radius:18px;width:36px;height:36px;font-size:1.1rem}
+.cardart{border-radius:6px;overflow:hidden;background:var(--paper2);margin:8px 0 10px;border:1px solid #c9ccbd}
+.cardart svg{display:block;width:100%;height:auto}
+.en{font-size:1.05rem}
+.vi{color:var(--muted);font-style:italic;border-left:3px solid var(--gold);padding-left:10px;margin-top:8px;display:none}
+.vi.show{display:block}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{background:var(--ink);color:var(--paper);border:0;border-radius:6px;padding:11px 16px;font-weight:700}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.gold{background:var(--gold);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chip{background:var(--paper2);border:1.5px solid var(--ink);border-radius:20px;padding:6px 14px;font-family:var(--type)}
+.chip.on{background:var(--ink);color:var(--paper)}
+input.code{font-family:var(--type);font-size:1.6rem;letter-spacing:.3em;width:100%;padding:10px;border:2px solid var(--ink);border-radius:6px;background:var(--paper2);color:var(--ink);text-align:center;text-transform:uppercase}
+.msg{margin-top:10px;padding:10px 12px;border-radius:6px;display:none}
+.msg.show{display:block}
+.msg.bad{background:#f3d6d2;color:#7a1c16}
+.msg.ok{background:#d6ead9;color:#1f4a2b}
+table.reg{width:100%;border-collapse:collapse;font-size:.95rem;margin-top:8px}
+.reg th,.reg td{border-bottom:1px dashed #9aa08c;padding:6px 4px;text-align:left}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pick button{background:var(--paper2);border:1.5px solid #9aa08c;border-radius:6px;padding:10px;text-align:left}
+.pick button.on{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.pick small{display:block;opacity:.75;font-size:.85rem}
+.intro{background:var(--paper);color:var(--ink);border-radius:8px;padding:18px 18px 20px;margin-top:6px}
+.intro h1{font-family:var(--type);font-weight:400;font-size:1.7rem;line-height:1.15;margin:0 0 4px}
+.intro p{margin:8px 0}
+.intro ul{padding-left:20px;margin:8px 0}
+.intro li{margin:4px 0}
+.label-sub{color:var(--muted);font-size:.95rem;margin:0 0 6px}
+.headline{font-family:var(--type);font-size:1.5rem;line-height:1.2;border-top:3px double var(--ink);border-bottom:3px double var(--ink);padding:10px 0;margin:10px 0}
+.stars{font-size:2rem;letter-spacing:4px;color:var(--gold)}
+.vocab{columns:2;column-gap:18px;font-size:.95rem;margin-top:8px}
+.vocab div{break-inside:avoid;margin-bottom:4px}
+.toast{position:fixed;left:50%;top:calc(14px + env(safe-area-inset-top,0px));transform:translateX(-50%);background:var(--red);color:#fff;padding:8px 16px;border-radius:20px;font-weight:700;z-index:20;display:none}
+.toast.show{display:block}
+</style>
+</head>
+<body>
+<div class="wrap" id="root"></div>
+<nav class="bar" id="bar" hidden>
+  <button id="bTake"><b>🂠</b>Lấy thẻ</button>
+  <button id="bComb"><b>➕</b>Ghép</button>
+  <button id="bPhoto"><b>📷</b>Chụp</button>
+  <button id="bMach"><b>⚙️</b>Máy</button>
+  <button id="bHint"><b>💡</b>Gợi ý</button>
+</nav>
+<div class="sheet" id="sheet"><div class="panel" id="panel" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+/* ---------- ART ---------- */
+const S=(inner)=>`<svg viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg" role="img">${inner}</svg>`;
+const badge=(x,y,id,c)=>`<g><circle cx="${x}" cy="${y}" r="13" fill="${c}" stroke="#f3f4ec" stroke-width="2.5"/><text x="${x}" y="${y+5}" text-anchor="middle" font-family="Special Elite,monospace" font-size="14" fill="#fff">${id}</text></g>`;
+const R="#b8322a",B="#2d5f9a",G="#6f6a60",Y="#8a6a1f",SC="#3f6b4f";
+const person=(x,y,s,coat,hat)=>`<g transform="translate(${x},${y}) scale(${s})"><rect x="-16" y="10" width="32" height="46" rx="8" fill="${coat}"/><circle cx="0" cy="0" r="12" fill="#d9b48f"/>${hat||""}</g>`;
+const ART1={
+A:()=>S(`<rect width="300" height="190" fill="#dfe3d3"/><rect y="140" width="300" height="50" fill="#8a7358"/>
+<rect x="20" y="22" width="80" height="62" fill="#b8d0cf" stroke="#4a4a3a" stroke-width="3"/>${[0,1,2,3,4,5].map(i=>`<line x1="20" x2="100" y1="${30+i*9}" y2="${30+i*9}" stroke="#7d8f86" stroke-width="2"/>`).join("")}
+<text x="60" y="100" text-anchor="middle" font-family="Special Elite" font-size="9" fill="#4a4a3a">HÀN GIANG DAILY</text>
+<rect x="110" y="104" width="120" height="40" fill="#6b4f36"/><rect x="118" y="112" width="44" height="22" fill="#57402b" stroke="#3a2a1c"/><circle cx="140" cy="123" r="2.5" fill="#c9a24b"/>
+<rect x="170" y="86" width="44" height="20" rx="3" fill="#2a2a2a"/><rect x="174" y="78" width="36" height="10" fill="#e8e8e0"/>
+<rect x="245" y="30" width="44" height="110" fill="#7b5b3e" stroke="#4a3421" stroke-width="3"/><rect x="252" y="42" width="30" height="14" fill="#e6e9dc"/><text x="267" y="52" text-anchor="middle" font-size="7" font-family="Special Elite" fill="#1f2a44">EDITOR</text>
+<line x1="120" y1="30" x2="120" y2="40" stroke="#4a3421" stroke-width="3"/><path d="M108 40 h24 l6 52 h-36z" fill="#3c5f86"/>
+<path d="M60 150 q10 -6 22 0" stroke="#5f4a34" stroke-width="3" fill="none"/>
+${badge(140,138,7,R)}${badge(120,74,4,B)}${badge(267,88,12,G)}`),
+"12":()=>S(`<rect width="300" height="190" fill="#e3ddc8"/><rect x="0" y="130" width="300" height="60" fill="#6b4f36"/>
+${person(150,70,2.1,"#4b4b4b",`<circle cx="-5" cy="-1" r="4" fill="none" stroke="#222" stroke-width="1.3"/><circle cx="5" cy="-1" r="4" fill="none" stroke="#222" stroke-width="1.3"/><path d="M-10 -8 q10 -9 20 0" fill="#2b2b2b"/><rect x="9" y="-12" width="2" height="12" fill="#c9a24b" transform="rotate(30)"/>`)}
+<rect x="30" y="120" width="70" height="46" fill="#f3f4ec" transform="rotate(-6 65 143)"/><text x="40" y="140" font-family="Special Elite" font-size="10" fill="#1f2a44" transform="rotate(-6 65 143)">STATUE</text><text x="40" y="154" font-family="Special Elite" font-size="10" fill="#1f2a44" transform="rotate(-6 65 143)">STOLEN?</text>
+<rect x="215" y="112" width="44" height="30" rx="4" fill="#1f1f1f"/><circle cx="237" cy="127" r="9" fill="#e6e9dc"/>${badge(260,110,99,Y)}${badge(40,30,"M",SC)}`),
+"7":()=>S(`<rect width="300" height="190" fill="#6b4f36"/><rect x="50" y="45" width="200" height="100" rx="4" fill="#57402b" stroke="#2f2217" stroke-width="4"/><rect x="120" y="85" width="60" height="16" rx="8" fill="#c9a24b"/><circle cx="150" cy="120" r="7" fill="#1d140d"/><rect x="148" y="120" width="4" height="12" fill="#1d140d"/>`),
+"4":()=>S(`<rect width="300" height="190" fill="#dfe3d3"/><path d="M95 20 h110 l24 150 h-158z" fill="#3c5f86"/><path d="M150 20 v150" stroke="#2c4768" stroke-width="3"/><rect x="170" y="100" width="44" height="34" fill="#34547a" stroke="#2c4768" stroke-width="2"/><circle cx="192" cy="96" r="7" fill="none" stroke="#c9a24b" stroke-width="3"/><rect x="190" y="72" width="4" height="20" fill="#c9a24b"/><rect x="194" y="76" width="7" height="3" fill="#c9a24b"/>`),
+"11":()=>S(`<rect width="300" height="190" fill="#e3ddc8"/><rect x="80" y="60" width="140" height="80" rx="6" fill="#222"/><path d="M110 70 l-40 20 v30 l40 20z" fill="#5a3b24"/><circle cx="150" cy="100" r="26" fill="#333" stroke="#c9a24b" stroke-width="4"/><circle cx="150" cy="100" r="13" fill="#8fb3c4"/><rect x="190" y="48" width="20" height="14" fill="#c9a24b"/><text x="150" y="170" text-anchor="middle" font-size="22">📷</text>`),
+M:()=>S(`<rect width="300" height="190" fill="#e7dcc4"/><rect y="148" width="300" height="42" fill="#b59a74"/>
+${[30,110,190].map(x=>`<path d="M${x} 148 v-90 q40 -40 80 0 v90" fill="none" stroke="#9b7f58" stroke-width="6"/>`).join("")}
+<rect x="130" y="112" width="40" height="36" fill="#a58c68" stroke="#6f5a3e" stroke-width="2"/><rect x="124" y="106" width="52" height="8" fill="#8f7757"/>
+<path d="M248 60 l14 10 l-8 12 l12 8" stroke="#555" stroke-width="2" fill="none"/><rect x="236" y="50" width="44" height="50" fill="none" stroke="#6f5a3e" stroke-width="3"/>
+${[0,1,2,3].map(i=>`<ellipse cx="${190+i*18}" cy="${170-i*3}" rx="5" ry="3" fill="#5c4a33"/>`).join("")}
+${person(70,100,1.1,"#3b4a3a",`<rect x="-13" y="-14" width="26" height="7" fill="#223"/>`)}${badge(150,96,36,R)}${badge(70,82,21,G)}`),
+"21":()=>S(`<rect width="300" height="190" fill="#d9d2bc"/>${person(150,70,2.2,"#3b4a3a",`<rect x="-14" y="-15" width="28" height="7" fill="#223"/><rect x="-8" y="-20" width="16" height="6" fill="#223"/><circle cx="-4" cy="0" r="1.5" fill="#222"/><circle cx="4" cy="0" r="1.5" fill="#222"/><path d="M-4 6 q4 -3 8 0" stroke="#222" fill="none"/>`)}<circle cx="190" cy="40" r="4" fill="#9ec3d4"/><circle cx="198" cy="52" r="3" fill="#9ec3d4"/>`),
+"36":()=>S(`<rect width="300" height="190" fill="#e7dcc4"/><rect x="100" y="80" width="100" height="90" fill="#a58c68" stroke="#6f5a3e" stroke-width="3"/><rect x="90" y="70" width="120" height="14" fill="#8f7757"/>
+<ellipse cx="150" cy="70" rx="30" ry="5" fill="none" stroke="#6f5a3e" stroke-dasharray="3 3"/>
+<rect x="112" y="98" width="76" height="30" fill="#f3f4ec" stroke="#6f5a3e"/><text x="150" y="110" text-anchor="middle" font-size="8" font-family="Special Elite" fill="#1f2a44">APSARA DANCER</text><text x="150" y="121" text-anchor="middle" font-size="7" font-family="Special Elite" fill="#1f2a44">sandstone · 118 kg</text>
+<g transform="translate(245 150) rotate(-18)"><path d="M-14 -26 q14 -8 28 0 v30 q-4 18 -14 18 q-10 0 -14 -18z" fill="#6b5840"/><text x="0" y="6" text-anchor="middle" font-size="17" font-family="Special Elite" fill="#5e4c35">58</text>${[0,1,2,3].map(i=>`<line x1="-10" x2="10" y1="${-20+i*5}" y2="${-20+i*5}" stroke="#5e4c35" stroke-width="1.5"/>`).join("")}</g>`),
+"58":()=>S(`<rect width="300" height="190" fill="#c9b894"/>${Array.from({length:40},(_,i)=>`<circle cx="${(i*53)%300}" cy="${(i*37)%190}" r="1.6" fill="#a8956e"/>`).join("")}
+<path d="M90 30 q60 -20 120 0 v80 q-10 60 -60 60 q-50 0 -60 -60z" fill="#5e4c35"/>${[0,1,2,3,4,5,6,7].map(i=>`<line x1="102" x2="198" y1="${48+i*12}" y2="${48+i*12}" stroke="#46382a" stroke-width="3"/>`).join("")}
+<g fill="#b9d3d8" opacity=".9">${[[70,60],[230,90],[240,140],[60,140]].map(([x,y])=>`<path d="M${x} ${y} q8 -8 16 0 q-8 8 -16 0z"/>`).join("")}</g>
+<circle cx="150" cy="150" r="12" fill="none" stroke="#c9a24b" stroke-width="2"/><path d="M150 141 v18 M143 153 q7 7 14 0" stroke="#c9a24b" stroke-width="2" fill="none"/>${badge(40,30,"P",SC)}`),
+P:()=>S(`<rect width="300" height="190" fill="#e8d9b5"/><rect y="110" width="300" height="80" fill="#4f7f86"/>${[0,1,2].map(i=>`<path d="M0 ${130+i*18} q25 -6 50 0 t50 0 t50 0 t50 0 t50 0 t50 0" stroke="#6f9da2" fill="none" stroke-width="2"/>`).join("")}
+<path d="M150 106 h130 l-12 22 h-110z" fill="#2c2c2c"/><rect x="190" y="80" width="18" height="26" fill="#b8322a"/><rect x="220" y="86" width="40" height="20" fill="#f3f4ec"/><text x="240" y="100" text-anchor="middle" font-family="Special Elite" font-size="7" fill="#1f2a44">MARSEILLE</text>
+<rect y="104" width="150" height="10" fill="#7a5f40"/>${["A","B","C"].map((l,i)=>`<rect x="${20+i*36}" y="${76+(i===1?-4:0)}" width="30" height="${28+(i===1?4:0)}" fill="#a07a4c" stroke="#5c4128" stroke-width="2"/><text x="${35+i*36}" y="95" text-anchor="middle" font-family="Special Elite" font-size="12" fill="#3b2a18">${l}</text>`).join("")}
+<rect x="10" y="22" width="56" height="48" fill="#c4b08a" stroke="#6b5840" stroke-width="2"/><path d="M6 24 l32 -16 l32 16" fill="#8a3f2c"/>
+<circle cx="140" cy="46" r="26" fill="#5f8a4f"/><rect x="137" y="60" width="6" height="42" fill="#5c4128"/>${person(118,72,.55,"#f3f4ec")}${person(160,72,.55,"#3b4a3a",`<rect x="-13" y="-14" width="26" height="7" fill="#223"/>`)}
+${person(90,62,.7,"#1f2a44",`<rect x="-14" y="-15" width="28" height="6" fill="#111"/>`)}${badge(38,46,50,Y)}${badge(90,40,17,G)}`),
+"17":()=>S(`<rect width="300" height="190" fill="#cfdcd9"/><rect y="140" width="300" height="50" fill="#4f7f86"/>${person(150,70,2.1,"#1f2a44",`<rect x="-15" y="-16" width="30" height="7" fill="#111"/><rect x="-10" y="-22" width="20" height="8" fill="#f3f4ec"/><circle cx="-4" cy="0" r="1.5"/><circle cx="4" cy="0" r="1.5"/><path d="M-8 8 q8 6 16 0" stroke="#8a6a50" stroke-width="3" fill="none"/>`)}`),
+"50":()=>S(`<rect width="300" height="190" fill="#c4b08a"/><rect x="70" y="30" width="160" height="140" rx="6" fill="#6b4f36" stroke="#3a2a1c" stroke-width="4"/>${[0,1,2,3].map(i=>`<rect x="${88+i*32}" y="80" width="26" height="36" rx="4" fill="#e6e9dc" stroke="#3a2a1c" stroke-width="2"/><text x="${101+i*32}" y="104" text-anchor="middle" font-family="Special Elite" font-size="18" fill="#1f2a44">?</text>`).join("")}<text x="150" y="60" text-anchor="middle" font-family="Special Elite" font-size="11" fill="#e6e9dc">SHIPPING REGISTER</text><text x="150" y="146" text-anchor="middle" font-size="16">⚙️</text>`),
+"27":()=>S(`<rect width="300" height="190" fill="#f3f4ec"/><rect x="30" y="18" width="240" height="160" fill="#fbfaf2" stroke="#9aa08c"/>${[0,1,2,3,4,5,6,7,8].map(i=>`<line x1="40" x2="260" y1="${46+i*14}" y2="${46+i*14}" stroke="#c9ccbd"/>`).join("")}<text x="150" y="36" text-anchor="middle" font-family="Special Elite" font-size="12" fill="#1f2a44">MARSEILLE · CARGO</text><text x="48" y="72" font-family="Special Elite" font-size="10" fill="#1f2a44">A ... 60 kg</text><text x="48" y="100" font-family="Special Elite" font-size="10" fill="#1f2a44">B ... 120 kg</text><text x="48" y="128" font-family="Special Elite" font-size="10" fill="#1f2a44">C ... 35 kg</text>`),
+"62":()=>S(`<rect width="300" height="190" fill="#e3d3b0"/><rect x="18" y="14" width="264" height="162" fill="#b49a6e" stroke="#f3ead6" stroke-width="8"/><circle cx="150" cy="60" r="40" fill="#8a7a55"/><rect x="146" y="90" width="8" height="70" fill="#6a5334"/>${person(110,98,1.25,"#f3f0e4",`<rect x="-14" y="-14" width="28" height="4" fill="#d8d2bd"/>`)}${person(190,98,1.25,"#4a5a48",`<rect x="-13" y="-14" width="26" height="7" fill="#223"/>`)}<rect x="138" y="118" width="22" height="14" fill="#f3f4ec" stroke="#8a7a55" transform="rotate(-10 149 125)"/>`),
+"83":()=>S(`<rect width="300" height="190" fill="#d9d2bc"/>${person(150,70,2.2,"#3b4a3a",`<rect x="-14" y="-15" width="28" height="7" fill="#223"/><rect x="-8" y="-20" width="16" height="6" fill="#223"/><path d="M-6 -2 l4 2 M6 -2 l-4 2" stroke="#222" stroke-width="1.5"/><path d="M-4 8 q4 -4 8 0" stroke="#222" fill="none"/>`)}<circle cx="178" cy="54" r="4" fill="#9ec3d4"/><circle cx="118" cy="58" r="3" fill="#9ec3d4"/><rect x="200" y="120" width="44" height="28" fill="#f3f4ec" stroke="#6f6a60"/><text x="222" y="138" text-anchor="middle" font-size="9" font-family="Special Elite" fill="#1f2a44">500 $</text>`),
+"99":()=>S(`<rect width="300" height="190" fill="#e3ddc8"/><rect x="95" y="80" width="110" height="80" rx="10" fill="#1f1f1f"/><circle cx="150" cy="120" r="26" fill="#e6e9dc" stroke="#111" stroke-width="3"/>${Array.from({length:10},(_,i)=>{const a=i/10*Math.PI*1.6+Math.PI*.7;return `<circle cx="${150+17*Math.cos(a)}" cy="${120+17*Math.sin(a)}" r="3.5" fill="#1f1f1f"/>`}).join("")}<path d="M80 70 q70 -40 140 0 l-10 14 q-60 -26 -120 0z" fill="#111"/>`)
+};
+const CARDS1={
+A:{t:"The Newsroom",tv:"Tòa soạn",k:"scene",shows:["12","7","4"],
+ en:"Tourane, 1936. Morning at the <b>Hàn Giang Daily</b>. The telephone won't stop ringing. Your editor is waiting in his office. Your coat hangs on the hook by the window.",
+ vi:"Tourane (Đà Nẵng), năm 1936. Buổi sáng ở tòa soạn báo Hàn Giang. Điện thoại reo liên hồi. Tổng biên tập đang chờ trong phòng. Áo khoác của bạn treo trên móc cạnh cửa sổ.",
+ h:["Mỗi con số tròn trên tranh là một thẻ bạn được lấy. Bắt đầu bằng thẻ 12 (tổng biên tập).","Thẻ đỏ (ngăn kéo) có thể ghép với thẻ xanh (áo khoác): 7 + 4."]},
+"12":{t:"Editor Bảo",tv:"Tổng biên tập Bảo",k:"char",shows:["M","99"],
+ en:"“A 900-year-old statue has <b>vanished</b> from the Cham Museum! Take the camera from your drawer and go there. Don't come back without a <b>scoop</b>. When you know who did it, <b>file your story</b> on the telephone.”",
+ vi:"“Một bức tượng 900 năm tuổi đã biến mất khỏi Bảo tàng Chàm! Lấy máy ảnh trong ngăn kéo rồi đến đó. Đừng về nếu không có tin độc quyền. Khi biết ai làm, hãy gửi bài qua điện thoại.”",
+ h:["Ông ấy chỉ bạn đến Bảo tàng (thẻ M) và cho biết điện thoại là máy 99 — dùng ở cuối game.","Nhớ lấy máy ảnh trước: ghép ngăn kéo 7 với chìa khóa trong áo 4."]},
+"7":{t:"Desk drawer",tv:"Ngăn kéo bàn",k:"red",shows:[],
+ en:"<b>Locked.</b> Your camera is inside. Where did you put the key?",vi:"Bị khóa. Máy ảnh của bạn ở bên trong. Bạn để chìa khóa ở đâu nhỉ?",
+ h:["Chìa khóa nằm trong một thẻ xanh.","7 + 4 = 11."]},
+"4":{t:"Your coat",tv:"Áo khoác của bạn",k:"blue",shows:[],
+ en:"In the <b>pocket</b>: a small brass key.",vi:"Trong túi áo: một chiếc chìa khóa nhỏ bằng đồng.",h:["Chìa khóa mở thứ gì màu đỏ?","7 + 4 = 11."]},
+"11":{t:"Folding camera",tv:"Máy ảnh xếp",k:"item",shows:[],
+ en:"A <b>state-of-the-art</b> folding camera. To take a photo, press 📷 and enter the number or letter of the <b>scene</b> you want to photograph.",
+ vi:"Một chiếc máy ảnh xếp tối tân. Để chụp ảnh, bấm 📷 rồi nhập số hoặc chữ của cảnh bạn muốn chụp.",
+ h:["Chỉ chụp được ở những cảnh (thẻ chữ cái) có gì đó đáng ngờ.","Ở bến cảng (P) có hai người đang nói chuyện dưới gốc cây…"]},
+M:{t:"The Cham Museum",tv:"Bảo tàng Chàm",k:"scene",shows:["21","36"],
+ en:"The <b>pedestal</b> in the middle of the hall is empty. The back window is broken. Muddy <b>boot prints</b> lead to the door. The night guard looks very tired.",
+ vi:"Bệ tượng giữa sảnh trống trơn. Cửa sổ phía sau bị vỡ. Dấu giày dính bùn dẫn ra cửa. Người gác đêm trông rất mệt mỏi.",
+ h:["Nói chuyện với người gác (21) và xem kỹ bệ tượng (36).","Có một con số ẩn trên thẻ 36."]},
+"21":{t:"Night guard Tư",tv:"Ông Tư – gác đêm",k:"char",shows:[],
+ en:"“I heard a boat <b>whistle</b> from the river at midnight. I was awake the whole time, I promise! I saw <b>nothing</b>.”",
+ vi:"“Tôi nghe tiếng còi thuyền trên sông lúc nửa đêm. Tôi thức suốt, tôi hứa! Tôi không thấy gì cả.”",
+ h:["Ông ấy có vẻ đang giấu điều gì. Có thể bạn cần bằng chứng để ông ấy nói thật.","Cho ông ấy xem bức ảnh bạn chụp ở bến cảng: 21 + 62."]},
+"36":{t:"Empty pedestal",tv:"Bệ tượng trống",k:"red",shows:[],hidden:["58"],
+ en:"The label reads: <i>Apsara Dancer. Sandstone, 11th century. Weight: 118 kg.</i> Below it: <i>The museum opened its doors in 1915.</i> In the dust, one clear boot print.",
+ vi:"Tấm nhãn ghi: Vũ nữ Apsara. Sa thạch, thế kỷ 11. Nặng 118 kg. Bên dưới: Bảo tàng mở cửa năm 1915. Trên lớp bụi có một dấu giày rõ nét.",
+ h:["Nhớ hai con số trên nhãn: cân nặng và năm mở cửa — sẽ cần sau.","Nhìn kỹ đế giày ở góc dưới bên phải: có số ẩn 58. Nhập 58 ở “Lấy thẻ”."]},
+"58":{t:"Boot print",tv:"Dấu giày",k:"doc",shows:["P"],
+ en:"Wet sand and fish <b>scales</b>. The sole is stamped with an <b>anchor</b>. Only dockworkers at the river port wear boots like these.",
+ vi:"Cát ướt và vảy cá. Đế giày có dấu hình mỏ neo. Chỉ công nhân bốc vác ở bến sông mới đi loại giày này.",
+ h:["Mỏ neo, vảy cá, bến sông… Đi đến bến cảng (thẻ P)."]},
+P:{t:"Hàn River port",tv:"Bến cảng sông Hàn",k:"scene",shows:["17","50"],photo:"62",
+ en:"The steamship <b>Marseille</b> leaves tonight. Three <b>crates</b> — A, B and C — wait on the dock. The harbour master stands by his office. Under a tree, two men are talking quietly.",
+ vi:"Tàu hơi nước Marseille rời bến tối nay. Ba thùng hàng A, B, C đang chờ trên bến. Trưởng cảng đứng cạnh văn phòng. Dưới gốc cây, hai người đàn ông đang nói chuyện khe khẽ.",
+ h:["Hai người dưới gốc cây trông rất đáng ngờ. Bạn có máy ảnh…","Bấm 📷 và nhập P."]},
+"17":{t:"Harbour master",tv:"Trưởng cảng",k:"char",shows:[],
+ en:"“The <b>shipping register</b> is locked in that cabinet. The code? The year the museum opened. Everybody in Tourane knows it!”",
+ vi:"“Sổ vận chuyển được khóa trong tủ kia. Mã số à? Năm bảo tàng mở cửa. Cả Tourane ai cũng biết!”",
+ h:["Năm mở cửa ghi trên nhãn bệ tượng (thẻ 36).","Bấm ⚙️, chọn máy 50, nhập 1915."]},
+"50":{t:"Register cabinet",tv:"Tủ sổ vận chuyển",k:"machine",shows:[],
+ en:"A cabinet with a four-digit lock. Press ⚙️ and enter <b>50</b> to open the lock.",vi:"Một chiếc tủ khóa bằng mã 4 chữ số. Bấm ⚙️ và nhập 50 để mở.",
+ h:["Mã là năm bảo tàng mở cửa.","1915."]},
+"27":{t:"Shipping register",tv:"Sổ vận chuyển",k:"doc",shows:[],
+ en:"Cargo for the Marseille, leaving tonight:",vi:"Hàng lên tàu Marseille, khởi hành tối nay:",
+ extra:`<table class="reg"><tr><th>Crate</th><th>Contents</th><th>Weight</th><th>Sender</th></tr><tr><td>A</td><td>Coffee beans</td><td>60 kg</td><td>Mr. Lâm, Hội An</td></tr><tr><td>B</td><td>Tea bowls</td><td>120 kg</td><td>M. Duval</td></tr><tr><td>C</td><td>Silk</td><td>35 kg</td><td>Madame Hoa</td></tr></table>`,
+ h:["Bức tượng nặng bao nhiêu? (thẻ 36)","Bát trà mà nặng 120 kg? Tượng 118 kg + vật liệu đóng gói. Thùng B!"]},
+"62":{t:"Photo: under the tree",tv:"Ảnh: dưới gốc cây",k:"blue",shows:[],
+ en:"A man in a white <b>suit</b> hands an <b>envelope</b> to a man wearing a museum guard's cap.",
+ vi:"Một người đàn ông mặc vest trắng đưa phong bì cho một người đội mũ gác bảo tàng.",
+ h:["Người đội mũ gác bảo tàng là ai nhỉ?","Cho ông Tư xem ảnh: 21 + 62."]},
+"83":{t:"The guard confesses",tv:"Người gác thú nhận",k:"char",shows:[],
+ en:"“Please don't print my name! <b>Monsieur Duval</b> paid me to leave the back door open. His dockworkers carried the statue to the river. I'm so sorry…”",
+ vi:"“Xin đừng đăng tên tôi! Ông Duval trả tiền để tôi mở cửa sau. Đám bốc vác của ông ta khiêng bức tượng ra sông. Tôi xin lỗi…”",
+ h:["Giờ bạn biết hai người liên quan. Còn thùng nào chứa tượng? Xem sổ vận chuyển (27).","Gọi điện gửi bài: ⚙️ máy 99."]},
+"99":{t:"Telephone",tv:"Điện thoại",k:"machine",shows:[],
+ en:"When you are sure, press ⚙️ and enter <b>99</b> to call your editor and file your story.",vi:"Khi đã chắc chắn, bấm ⚙️ và nhập 99 để gọi tổng biên tập và gửi bài.",
+ h:["Cần đủ: ai là thủ phạm (có thể hơn một người) và thùng nào chứa tượng.","Ông Duval + ông Tư, thùng B."]}
+};
+const ART2={
+A:()=>S(`<rect width="300" height="190" fill="#dfe3d3"/><rect y="140" width="300" height="50" fill="#8a7358"/>
+<rect x="20" y="22" width="80" height="62" fill="#b8d0cf" stroke="#4a4a3a" stroke-width="3"/><path d="M30 70 l20 -24 l12 14 l10 -8 l18 18z" fill="#5f8a4f"/><rect x="72" y="30" width="5" height="24" fill="#f3f4ec"/><path d="M69 30 h11 l-5.5 -8z" fill="#b8322a"/>
+<rect x="110" y="104" width="130" height="40" fill="#6b4f36"/>
+<rect x="128" y="90" width="42" height="26" fill="#f3f4ec" stroke="#9aa08c" transform="rotate(-8 149 103)"/><path d="M128 90 l21 13 l21 -13" fill="none" stroke="#9aa08c" transform="rotate(-8 149 103)"/><circle cx="160" cy="112" r="5" fill="#b8322a"/>
+<rect x="185" y="100" width="44" height="4" fill="#c9a24b" transform="rotate(12 207 102)"/>
+<rect x="60" y="112" width="36" height="24" rx="4" fill="#222"/><circle cx="78" cy="124" r="8" fill="#8fb3c4" stroke="#c9a24b" stroke-width="2"/>
+<rect x="245" y="30" width="44" height="110" fill="#7b5b3e" stroke="#4a3421" stroke-width="3"/><rect x="252" y="42" width="30" height="14" fill="#e6e9dc"/><text x="267" y="52" text-anchor="middle" font-size="7" font-family="Special Elite" fill="#1f2a44">EDITOR</text>
+${badge(150,82,31,R)}${badge(215,94,8,B)}${badge(78,104,2,G)}${badge(267,88,5,G)}`),
+"5":()=>ART1["12"]().replace(">99<",">90<").replace(">M<",">L<"),
+"31":()=>S(`<rect width="300" height="190" fill="#6b4f36"/><rect x="60" y="40" width="180" height="110" fill="#f3f4ec" stroke="#9aa08c" stroke-width="2"/><path d="M60 40 l90 60 l90 -60" fill="none" stroke="#9aa08c" stroke-width="2"/><circle cx="150" cy="100" r="14" fill="#b8322a"/><text x="150" y="105" text-anchor="middle" font-size="12" font-family="Special Elite" fill="#f3f4ec">?</text><text x="80" y="140" font-family="Special Elite" font-size="10" fill="#1f2a44">To the reporter</text>`),
+"8":()=>S(`<rect width="300" height="190" fill="#6b4f36"/><path d="M60 100 l170 -14 l14 8 l-14 8 z" fill="#d8c7a0" stroke="#8a6a1f" stroke-width="2"/><rect x="40" y="92" width="36" height="18" rx="6" fill="#c9a24b"/>`),
+"2":()=>ART1["11"](),
+"39":()=>S(`<rect width="300" height="190" fill="#e6e9dc"/><rect x="50" y="14" width="200" height="164" fill="#fbfaf2" stroke="#9aa08c"/>${[0,1,2,3,4,5,6].map(i=>`<rect x="68" y="${34+i*16}" width="${160-(i%3)*24}" height="6" fill="#1f2a44" opacity=".75"/>`).join("")}<text x="228" y="166" text-anchor="end" font-family="Special Elite" font-size="10" fill="#1f2a44">— a friend</text>`),
+L:()=>S(`<rect width="300" height="190" fill="#c7dbe0"/><rect y="150" width="300" height="40" fill="#4f7f86"/><path d="M0 150 q60 -50 140 -40 q60 10 90 40z" fill="#6b8a5a"/>
+<path d="M92 118 l10 -86 h26 l10 86z" fill="#f3f4ec" stroke="#5a6275" stroke-width="2"/>${[0,1,2].map(i=>`<rect x="${97+i*1.5}" y="${50+i*24}" width="${36-i*3}" height="8" fill="#b8322a"/>`).join("")}<rect x="98" y="18" width="34" height="16" fill="#2a2a2a"/><path d="M96 18 h38 l-19 -10z" fill="#1f2a44"/>
+<rect x="160" y="84" width="80" height="56" fill="#e7dcc4" stroke="#6f5a3e" stroke-width="2"/><path d="M154 86 l46 -24 l46 24" fill="#8a3f2c"/><rect x="190" y="108" width="20" height="32" fill="#5c4128"/>
+<rect x="250" y="120" width="22" height="18" fill="#8a3f2c"/><path d="M252 120 q-8 -22 6 -30 M262 120 q2 -26 14 -28 M258 120 q10 -14 22 -12" stroke="#3f6b4f" stroke-width="3" fill="none"/><circle cx="276" cy="92" r="4" fill="#c38bc4"/><circle cx="258" cy="90" r="4" fill="#c38bc4"/>
+<text x="273" y="146" font-family="Special Elite" font-size="8" fill="#5c4128">6</text>
+${person(58,112,.8,"#7a4a5a",`<path d="M-12 -6 q12 -16 24 0" fill="#222"/>`)}${badge(58,90,67,G)}${badge(115,104,14,R)}${badge(200,70,22,G)}`),
+"67":()=>S(`<rect width="300" height="190" fill="#d9d2bc"/>${person(150,70,2.2,"#7a4a5a",`<path d="M-13 -4 q13 -20 26 0 v6 h-26z" fill="#222"/><circle cx="-4" cy="1" r="1.5"/><circle cx="4" cy="1" r="1.5"/><path d="M-4 8 q4 -3 8 0" stroke="#222" fill="none"/>`)}<circle cx="120" cy="60" r="3" fill="#9ec3d4"/>`),
+"6":()=>S(`<rect width="300" height="190" fill="#8a7358"/><circle cx="110" cy="95" r="26" fill="none" stroke="#c9a24b" stroke-width="8"/><rect x="134" y="90" width="90" height="10" fill="#c9a24b"/><rect x="200" y="100" width="8" height="16" fill="#c9a24b"/><rect x="214" y="100" width="8" height="12" fill="#c9a24b"/>`),
+"14":()=>S(`<rect width="300" height="190" fill="#f3f4ec"/><rect x="95" y="20" width="110" height="170" fill="#5c4128" stroke="#3a2a1c" stroke-width="4"/><rect x="142" y="96" width="30" height="26" rx="4" fill="#8a8a8a"/><path d="M147 96 v-10 q10 -14 20 0 v10" stroke="#8a8a8a" stroke-width="5" fill="none"/><circle cx="157" cy="108" r="3" fill="#222"/><text x="150" y="50" text-anchor="middle" font-family="Special Elite" font-size="10" fill="#e6e9dc">LAMP ROOM</text>`),
+"20":()=>S(`<rect width="300" height="190" fill="#2a3440"/><circle cx="150" cy="80" r="44" fill="#6b7a86" stroke="#c9a24b" stroke-width="4"/><circle cx="150" cy="80" r="26" fill="#3f4a55"/>
+<path d="M190 120 q20 10 30 30" stroke="#b8322a" stroke-width="3" fill="none"/><path d="M224 150 q6 6 16 4" stroke="#b8322a" stroke-width="3" fill="none"/>
+<rect x="60" y="150" width="50" height="8" fill="#555" transform="rotate(-10 85 154)"/><rect x="40" y="130" width="54" height="30" fill="#e6e9dc" transform="rotate(8 67 145)"/><path d="M40 130 l10 30" stroke="#2a3440" stroke-width="2" transform="rotate(8 67 145)"/>
+${badge(85,176,43,R)}${badge(70,124,71,G)}`),
+"43":()=>S(`<rect width="300" height="190" fill="#e3ddc8"/><path d="M60 70 l110 30 l-6 14 l-110 -30z M60 130 l110 -30 l-6 -14 l-110 30z" fill="#777" stroke="#333" stroke-width="2"/><path d="M170 100 l50 -14 l6 10 l-50 14z M170 100 l50 14 l6 -10 l-50 -14z" fill="#999" stroke="#333"/><text x="110" y="160" text-anchor="middle" font-family="Special Elite" font-size="10" fill="#1f2a44">DOUANES DE TOURANE</text>`),
+"71":()=>S(`<rect width="300" height="190" fill="#f3f4ec"/><path d="M20 14 h200 l-10 30 l16 30 l-12 40 l14 60 h-208z" fill="#fbfaf2" stroke="#9aa08c"/><text x="40" y="44" font-family="Special Elite" font-size="12" fill="#1f2a44">A ·−   B −···</text><text x="40" y="70" font-family="Special Elite" font-size="12" fill="#1f2a44">C −·−·  D −··</text><text x="40" y="96" font-family="Special Elite" font-size="12" fill="#1f2a44">E ·   F ··−·</text><text x="40" y="122" font-family="Special Elite" font-size="12" fill="#1f2a44">…</text>`),
+"22":()=>S(`<rect width="300" height="190" fill="#6b4f36"/><rect x="30" y="20" width="120" height="150" fill="#fbfaf2"/><rect x="150" y="20" width="120" height="150" fill="#f3f4ec"/><line x1="150" y1="20" x2="150" y2="170" stroke="#9aa08c" stroke-width="2"/>${[0,1,2,3,4,5,6].map(i=>`<line x1="40" x2="140" y1="${40+i*18}" y2="${40+i*18}" stroke="#c9ccbd"/><line x1="160" x2="260" y1="${40+i*18}" y2="${40+i*18}" stroke="#c9ccbd"/>`).join("")}<text x="160" y="72" font-family="Special Elite" font-size="12" fill="#1f2a44">·−−· · ·−</text><text x="160" y="92" font-family="Special Elite" font-size="12" fill="#1f2a44">·−· ·−··</text>`),
+V:()=>S(`<rect width="300" height="190" fill="#e8d9b5"/><rect y="104" width="300" height="86" fill="#3f7079"/>
+<path d="M170 128 h90 l-10 16 h-70z" fill="#5c4128"/><rect x="212" y="60" width="4" height="68" fill="#3a2a1c"/><path d="M216 62 q30 20 0 60z" fill="#b8322a"/>
+${[0,1,2].map(i=>`<path d="M${20+i*44} 104 v-30 l20 -18 l20 18 v30z" fill="#c4b08a" stroke="#6b5840"/>`).join("")}
+<rect x="150" y="54" width="54" height="50" fill="#9a8a6a" stroke="#5c4128" stroke-width="2"/><path d="M146 56 l31 -18 l31 18" fill="#5c4128"/><rect x="170" y="78" width="16" height="26" fill="#3a2a1c"/>
+<path d="M30 150 q20 12 50 0 l-6 8 q-20 8 -38 0z" fill="#8a6a50"/>${person(56,120,.6,"#6d7f86",`<path d="M-16 -8 l16 -10 l16 10z" fill="#d8c79a"/>`)}
+${badge(56,98,48,G)}${badge(177,46,55,Y)}`),
+"48":()=>S(`<rect width="300" height="190" fill="#cfdcd9"/><rect y="140" width="300" height="50" fill="#3f7079"/>${person(150,70,2.1,"#6d7f86",`<path d="M-24 -6 l24 -16 l24 16z" fill="#d8c79a"/><circle cx="-4" cy="1" r="1.5"/><circle cx="4" cy="1" r="1.5"/><path d="M-6 8 q6 4 12 0" stroke="#222" fill="none"/>`)}`),
+"77":()=>S(`<rect width="300" height="190" fill="#e3d3b0"/><rect x="18" y="14" width="264" height="162" fill="#9aa39a" stroke="#f3ead6" stroke-width="8"/><rect x="18" y="120" width="264" height="56" fill="#6d807e"/><path d="M60 128 h170 l-14 20 h-142z" fill="#4a3a28"/><rect x="150" y="50" width="4" height="78" fill="#3a2a1c"/><path d="M154 52 q40 30 0 70z" fill="#7a3a34"/>${person(100,96,.9,"#2c3e60",`<rect x="-13" y="-14" width="26" height="6" fill="#111"/><rect x="-6" y="-19" width="12" height="6" fill="#c9a24b"/>`)}${person(200,96,.9,"#5c4128")}<rect x="126" y="104" width="30" height="20" fill="#a07a4c" stroke="#5c4128"/>`),
+"55":()=>S(`<rect width="300" height="190" fill="#9a8a6a"/><rect x="60" y="40" width="180" height="110" rx="8" fill="#555" stroke="#222" stroke-width="4"/>${[0,1,2,3,4].map(i=>`<rect x="${78+i*30}" y="76" width="24" height="36" rx="4" fill="#e6e9dc" stroke="#222" stroke-width="2"/><text x="${90+i*30}" y="100" text-anchor="middle" font-family="Special Elite" font-size="16" fill="#1f2a44">?</text>`).join("")}<text x="150" y="62" text-anchor="middle" font-family="Special Elite" font-size="10" fill="#e6e9dc">PHÚ &amp; SONS · FISH SAUCE</text><text x="150" y="136" text-anchor="middle" font-size="14">⚙️</text>`),
+"60":()=>S(`<rect width="300" height="190" fill="#3a2f24"/>${[0,1,2,3].map(i=>`<rect x="${20+i*40}" y="${110-(i%2)*20}" width="36" height="${60+(i%2)*20}" fill="#a07a4c" stroke="#5c4128" stroke-width="2"/>`).join("")}<circle cx="60" cy="104" r="4" fill="#f3f4ec"/><circle cx="68" cy="102" r="4" fill="#f3f4ec"/><circle cx="64" cy="96" r="4" fill="#f3f4ec"/>
+<rect x="190" y="30" width="90" height="64" fill="#e3d9b8" stroke="#8a6a1f"/><path d="M200 70 q20 -30 40 -10 q20 20 34 -10" stroke="#3f7079" fill="none" stroke-width="2"/><rect x="200" y="110" width="70" height="56" fill="#f3f4ec" stroke="#9aa08c"/>${[0,1,2].map(i=>`<line x1="208" x2="262" y1="${126+i*12}" y2="${126+i*12}" stroke="#9aa08c"/>`).join("")}
+${badge(235,26,"S",SC)}${badge(235,108,88,G)}`),
+S:()=>S(`<rect width="300" height="190" fill="#e3d9b8"/><path d="M0 0 h300 v190 h-300z" fill="#9cc3c8"/><path d="M40 190 q10 -80 60 -110 q50 -40 110 -30 q60 20 60 70 q-10 40 -40 70z" fill="#c9b98a" stroke="#8a6a1f" stroke-width="2"/><path d="M110 120 q30 -40 70 -20 q30 20 20 50" fill="#8fae7a"/>
+<g><ellipse cx="62" cy="96" rx="12" ry="8" fill="#7d7a70"/><ellipse cx="46" cy="104" rx="7" ry="5" fill="#7d7a70"/></g>
+<g><ellipse cx="170" cy="36" rx="14" ry="7" fill="#7d7a70"/></g>
+<g transform="translate(262 118) rotate(20)"><ellipse cx="0" cy="0" rx="14" ry="10" fill="#6f8f6a"/><circle cx="16" cy="-2" r="5" fill="#6f8f6a"/><ellipse cx="-8" cy="-10" rx="5" ry="3" fill="#6f8f6a"/><ellipse cx="8" cy="-10" rx="5" ry="3" fill="#6f8f6a"/><ellipse cx="-8" cy="10" rx="5" ry="3" fill="#6f8f6a"/><ellipse cx="8" cy="10" rx="5" ry="3" fill="#6f8f6a"/><path d="M-6 -4 l12 0 M-6 4 l12 0" stroke="#4a6a46"/></g>
+${[[78,86,"1"],[184,52,"2"],[250,140,"3"]].map(([x,y,n])=>`<path d="M${x-8} ${y+6} q8 -16 16 0z" fill="#2a2a2a"/><text x="${x}" y="${y+22}" text-anchor="middle" font-family="Special Elite" font-size="12" fill="#1f2a44">Cave ${n}</text>`).join("")}
+<text x="150" y="176" text-anchor="middle" font-family="Special Elite" font-size="11" fill="#1f2a44">SƠN TRÀ PENINSULA</text><path d="M20 20 v20 M14 26 l6 -6 l6 6" stroke="#1f2a44" fill="none"/><text x="20" y="52" text-anchor="middle" font-size="9" fill="#1f2a44">N</text>`),
+"88":()=>S(`<rect width="300" height="190" fill="#f3f4ec"/><rect x="40" y="16" width="220" height="160" fill="#fbfaf2" stroke="#9aa08c"/><text x="150" y="38" text-anchor="middle" font-family="Special Elite" font-size="11" fill="#1f2a44">TIDE TABLE · 4 OCT 1937</text><path d="M50 120 q25 -60 50 0 t50 0 t50 0 t50 0" stroke="#3f7079" stroke-width="2" fill="none"/>`),
+"90":()=>ART1["99"]()
+};
+const CARDS2={
+A:{t:"The Newsroom",tv:"Tòa soạn",k:"scene",shows:["5","31","8","2"],
+ en:"Tourane, October 1937. A year after the Apsara story, you are the best reporter at the <b>Hàn Giang Daily</b>. This morning, a strange envelope is waiting on your desk.",
+ vi:"Tourane, tháng 10 năm 1937. Một năm sau vụ tượng Apsara, bạn đã là phóng viên giỏi nhất của báo Hàn Giang. Sáng nay, một phong bì lạ nằm chờ trên bàn bạn.",
+ h:["Lấy tất cả các thẻ bạn thấy: 5, 31, 8, 2.","Phong bì (đỏ 31) mở bằng dao rọc giấy (xanh 8): 31 + 8."]},
+"5":{t:"Editor Bảo",tv:"Tổng biên tập Bảo",k:"char",shows:["L","90"],
+ en:"“Last night the fishing boat <b>Sao Mai</b> <b>ran aground</b> near Sơn Trà. The lighthouse was <b>dark</b>. The keeper, Mr. Khải, is <b>missing</b>! Go to the lighthouse. Call me on the telephone when you have the whole story.”",
+ vi:"“Đêm qua thuyền đánh cá Sao Mai mắc cạn gần Sơn Trà. Ngọn hải đăng tắt ngấm. Người gác, ông Khải, mất tích! Đến hải đăng đi. Khi có đủ câu chuyện thì gọi điện cho tôi.”",
+ h:["Đi đến hải đăng: thẻ L.","Điện thoại là máy 90 — chỉ dùng ở cuối game."]},
+"31":{t:"Sealed envelope",tv:"Phong bì dán kín",k:"red",shows:[],en:"No stamp. No name. Only: <i>To the reporter.</i>",vi:"Không tem. Không tên. Chỉ ghi: Gửi phóng viên.",h:["Cần một vật để mở phong bì — màu xanh.","31 + 8 = 39."]},
+"8":{t:"Letter opener",tv:"Dao rọc giấy",k:"blue",shows:[],en:"A brass <b>letter opener</b>, sharp enough to open anything made of paper.",vi:"Một con dao rọc giấy bằng đồng, đủ sắc để mở mọi thứ bằng giấy.",h:["Thứ gì bằng giấy đang dán kín?","31 + 8 = 39."]},
+"2":{t:"Folding camera",tv:"Máy ảnh xếp",k:"item",shows:[],en:"Your old friend. Press 📷 and choose a <b>scene</b> to take a photo there.",vi:"Người bạn cũ. Bấm 📷 và chọn một cảnh để chụp.",h:["Chỉ có một cảnh có thứ đáng chụp.","Chiếc thuyền buồm đỏ ở làng chài (V)…"]},
+"39":{t:"Anonymous letter",tv:"Thư nặc danh",k:"doc",shows:["V"],
+ en:"“The light did not <b>fail</b>. Someone <b>switched it off</b>. The keeper saw too much. Ask the fishermen of <b>Mân Thái</b> about the <b>junk</b> with the red sail. — a friend”",
+ vi:"“Ngọn đèn không tự hỏng. Có người đã tắt nó. Người gác đã thấy quá nhiều. Hãy hỏi ngư dân Mân Thái về chiếc thuyền buồm đỏ. — một người bạn”",
+ h:["Làng chài Mân Thái là thẻ V.","Giờ bạn có hai nơi để đi: hải đăng (L) và làng chài (V)."]},
+L:{t:"Tiên Sa lighthouse",tv:"Hải đăng Tiên Sa",k:"scene",shows:["67","22","14"],hidden:["6"],
+ en:"The lighthouse stands above the bay. The door to the <b>lamp room</b> is locked. The keeper's wife is waiting, worried. The keeper's <b>logbook</b> lies in the house. His orchids bloom by the steps.",
+ vi:"Ngọn hải đăng đứng trên vịnh. Cửa phòng đèn bị khóa. Vợ người gác đang lo lắng chờ đợi. Sổ nhật ký của người gác nằm trong nhà. Những chậu lan của ông nở hoa bên bậc thềm.",
+ h:["Nghe bà Hạnh (67) nói gì về chìa khóa dự phòng.","Nhìn kỹ dưới chậu lan ở góc phải: số ẩn 6."]},
+"67":{t:"Mrs. Hạnh",tv:"Bà Hạnh – vợ người gác",k:"char",shows:[],
+ en:"“Khải went up to the lamp at <b>sunset</b>, like every night. At nine, the light went out and he never came down. His keys are gone… but he always hides a <b>spare</b> key under the thing he loves most.”",
+ vi:"“Khải lên phòng đèn lúc hoàng hôn như mọi tối. Chín giờ, đèn tắt và ông ấy không bao giờ xuống nữa. Chìa khóa của ông mất rồi… nhưng ông luôn giấu một chìa dự phòng dưới thứ ông yêu nhất.”",
+ h:["Ông Khải yêu thứ gì nhất? Nhìn lại tranh hải đăng (L).","Chậu lan! Có số ẩn 6 dưới chậu."]},
+"6":{t:"Spare key",tv:"Chìa khóa dự phòng",k:"blue",shows:[],en:"A heavy iron key. It smells of soil and orchids.",vi:"Một chiếc chìa sắt nặng. Có mùi đất và hoa lan.",h:["Cửa nào đang khóa?","14 + 6 = 20."]},
+"14":{t:"Lamp room door",tv:"Cửa phòng đèn",k:"red",shows:[],en:"A thick wooden door with a <b>padlock</b>.",vi:"Một cánh cửa gỗ dày có ổ khóa móc.",h:["Cần một chìa khóa màu xanh.","14 + 6 = 20."]},
+"20":{t:"The lamp room",tv:"Phòng đèn",k:"doc",shows:["43","71"],
+ en:"The great lamp is cold. Its <b>wire</b> has been <b>cut</b>. On the floor: a pair of <b>pliers</b> and a <b>torn</b> page. There is no sign of the keeper.",
+ vi:"Ngọn đèn lớn nguội lạnh. Dây điện đã bị cắt. Trên sàn: một chiếc kìm và một trang giấy rách. Không thấy dấu vết người gác.",
+ h:["Xem kỹ chiếc kìm (43) và trang giấy (71).","Trang giấy là bảng mã Morse — dùng nó để đọc sổ nhật ký (22)."]},
+"43":{t:"Pliers",tv:"Chiếc kìm",k:"doc",shows:[],en:"Heavy pliers. <b>Engraved</b> on the handle: <i>DOUANES DE TOURANE</i> — Tourane <b>Customs</b>.",vi:"Một chiếc kìm nặng. Khắc trên cán: DOUANES DE TOURANE — Sở Thuế quan Tourane.",h:["Ai trong nhóm nghi phạm làm ở Sở Thuế quan?","Trung sĩ thuế quan Lefèvre — xem ảnh chụp ở làng chài."]},
+"71":{t:"Torn page: Morse code",tv:"Trang rách: mã Morse",k:"doc",shows:[],
+ en:"A page from a signal book. Dots (·) are short flashes, dashes (−) are long flashes.",vi:"Một trang trong sách tín hiệu. Chấm (·) là chớp ngắn, gạch (−) là chớp dài.",
+ extra:`<table class="reg" style="font-family:var(--type)"><tr>${"A ·− |B −··· |C −·−· |D −·· |E · |F ··−· |G −−· |H ···· |I ·· |J ·−−− |K −·− |L ·−·· |M −− |N −· |O −−− |P ·−−· |Q −−·− |R ·−· |S ··· |T − |U ··− |V ···− |W ·−− |X −··− |Y −·−− |Z −−··".split("|").map((c,i)=>(i&&i%4===0?"</tr><tr>":"")+`<td>${c.trim()}</td>`).join("")}</tr></table>`,
+ h:["So từng nhóm tín hiệu trong sổ nhật ký (22) với bảng này.","·−−· = P, · = E, ·− = A…"]},
+"22":{t:"Keeper's logbook",tv:"Sổ nhật ký người gác",k:"doc",shows:[],
+ en:"<i>3 Oct, 20:40.</i> Flashes from a junk with a red sail, near the rock that looks like a <b>turtle</b>. They signal the same word every night. I copied it:",
+ vi:"3 tháng 10, 20:40. Có tín hiệu đèn từ một chiếc thuyền buồm đỏ, gần tảng đá trông như con rùa. Đêm nào họ cũng chớp cùng một từ. Tôi đã chép lại:",
+ extra:`<p style="font-family:var(--type);font-size:1.4rem;letter-spacing:.08em;margin:10px 0">·−−· &nbsp;/&nbsp; · &nbsp;/&nbsp; ·− &nbsp;/&nbsp; ·−· &nbsp;/&nbsp; ·−··</p><p class="en"><i>Tomorrow I will tell the customs officer.</i></p>`,
+ vi2:"",
+ h:["Cần bảng mã Morse ở phòng đèn (71).","Từ đó là PEARL (ngọc trai). Nhớ cả tảng đá hình con rùa!"]},
+V:{t:"Mân Thái fishing village",tv:"Làng chài Mân Thái",k:"scene",shows:["48","55"],photo:"77",
+ en:"Round <b>basket boats</b> rest on the sand. An old fisherman is mending his net. A junk with a red sail is <b>anchored</b> in the bay. Behind the houses: a fish-sauce <b>warehouse</b> with a strange lock.",
+ vi:"Những chiếc thuyền thúng nằm trên cát. Một ngư dân già đang vá lưới. Một chiếc thuyền buồm đỏ thả neo trong vịnh. Sau dãy nhà là nhà kho nước mắm với ổ khóa kỳ lạ.",
+ h:["Chụp ảnh chiếc thuyền buồm đỏ: 📷 chọn V.","Nhà kho (55) là máy khóa chữ 5 ký tự."]},
+"48":{t:"Old fisherman Năm",tv:"Ông Năm – ngư dân",k:"char",shows:[],
+ en:"“That red-sail junk belongs to <b>Mr. Phú</b>, the fish-sauce trader. It only comes in at night, and only at <b>high tide</b> — the rocks are too dangerous otherwise. Last night I saw his men carry someone <b>tied up</b> toward the turtle rock.”",
+ vi:"“Chiếc thuyền buồm đỏ đó của ông Phú, lái buôn nước mắm. Nó chỉ vào lúc ban đêm, và chỉ khi nước lớn — không thì đá ngầm nguy hiểm lắm. Đêm qua tôi thấy người của ông ta khiêng một người bị trói về phía hòn đá con rùa.”",
+ h:["Ba manh mối quan trọng: chủ thuyền, ban đêm + nước lớn, hòn đá con rùa.","Nước lớn lúc nào? Cần bảng thủy triều (88)."]},
+"77":{t:"Photo: the red-sail junk",tv:"Ảnh: thuyền buồm đỏ",k:"blue",shows:[],
+ en:"Through the lens: a man in a <b>customs uniform</b> — Sergeant <b>Lefèvre</b> — helps Mr. Phú's men load crates onto the junk.",
+ vi:"Qua ống kính: một người mặc đồng phục thuế quan — trung sĩ Lefèvre — đang giúp người của ông Phú chất thùng lên thuyền.",
+ h:["Người gác hải đăng định báo cho viên chức thuế quan… nhưng viên chức đó lại là đồng bọn.","Kết hợp với chiếc kìm (43): Lefèvre là thủ phạm."]},
+"55":{t:"Warehouse lock",tv:"Khóa nhà kho",k:"machine",shows:[],
+ en:"A lock with five letter wheels. Press ⚙️ and enter <b>55</b>. Maybe the smugglers use their <b>password</b>…",vi:"Ổ khóa có 5 bánh xe chữ. Bấm ⚙️ và nhập 55. Có lẽ bọn buôn lậu dùng mật khẩu của chúng…",
+ h:["Mật khẩu 5 chữ cái được chớp đèn mỗi đêm — xem sổ nhật ký (22).","PEARL."]},
+"60":{t:"Inside the warehouse",tv:"Bên trong nhà kho",k:"doc",shows:["S","88"],
+ en:"No fish sauce here. The crates are full of <b>pearls</b> — <b>smuggled</b> pearls. On the wall: a map of Sơn Trà and a tide table.",
+ vi:"Ở đây chẳng có nước mắm nào. Các thùng đầy ngọc trai — ngọc trai buôn lậu. Trên tường: bản đồ Sơn Trà và bảng thủy triều.",
+ h:["Lấy bản đồ (S) và bảng thủy triều (88).","Tìm hòn đá con rùa trên bản đồ."]},
+S:{t:"Map of Sơn Trà",tv:"Bản đồ Sơn Trà",k:"scene",shows:[],
+ en:"Three <b>caves</b> are marked around the <b>peninsula</b>. Rocks are drawn near each one.",vi:"Ba hang động được đánh dấu quanh bán đảo. Mỗi hang đều có những tảng đá vẽ gần đó.",
+ h:["Nhớ lời ông Năm và sổ nhật ký: tảng đá hình con rùa.","Tảng đá có mai, đầu và bốn chân nằm cạnh Cave 3."]},
+"88":{t:"Tide table",tv:"Bảng thủy triều",k:"doc",shows:[],
+ en:"Tides for <b>today</b>, 4 October 1937:",vi:"Thủy triều hôm nay, 4 tháng 10 năm 1937:",
+ extra:`<table class="reg"><tr><th>Tide</th><th>Time</th></tr><tr><td>Low tide</td><td>03:05</td></tr><tr><td>High tide</td><td>09:12</td></tr><tr><td>Low tide</td><td>15:30</td></tr><tr><td>High tide</td><td>21:40</td></tr></table>`,
+ h:["Thuyền chỉ vào khi nào? Ban đêm VÀ nước lớn.","21:40."]},
+"90":{t:"Telephone",tv:"Điện thoại",k:"machine",shows:[],en:"When you are sure, press ⚙️ and enter <b>90</b> to call your editor.",vi:"Khi đã chắc chắn, bấm ⚙️ và nhập 90 để gọi tổng biên tập.",
+ h:["Cần đủ: ai (nhiều người), hang nào, mấy giờ.","Ông Phú + trung sĩ Lefèvre, Cave 3, 21:40."]}
+};
+
+/* ---------- LEVELS ---------- */
+const LEVELS={
+ 1:{key:"touraneEscape1",name:"Màn 1 · Bức tượng biến mất",year:"Tourane 1936",total:45*60,cards:CARDS1,art:ART1,
+   blurb:"Một bức tượng Chăm quý vừa biến mất khỏi bảo tàng. 45 phút, khoảng 15 thẻ.",
+   combos:{"4+7":"11","21+62":"83"},photoItem:"11",
+   machines:{"50":{need:"50",kind:"code",code:"1915",reward:"27",title:"Khóa 4 số"},"99":{need:"99",kind:"final"}},
+   final:{q:"“So, who took the statue? And where is it now?”",groups:[
+     {label:"Thủ phạm (có thể nhiều người)",multi:true,answer:["tu","duval"],options:[["tu","Ông Tư","night guard"],["duval","M. Duval","French collector"],["lam","Mr. Lâm","coffee trader, Hội An"],["hoa","Madame Hoa","silk merchant"],["hm","Harbour master","trưởng cảng"],["bao","Editor Bảo","tổng biên tập"]]},
+     {label:"Bức tượng ở trong thùng",answer:"B",options:[["A","Crate A"],["B","Crate B"],["C","Crate C"]]}]},
+   win:{head:"STOLEN APSARA FOUND IN A “TEA BOWL” CRATE!",vi:"Tượng Apsara bị đánh cắp được tìm thấy trong thùng “bát trà”!",
+     story:"Nhờ bài phóng sự của bạn, cảnh sát chặn tàu Marseille trước giờ khởi hành. Ông Duval bị bắt, bức tượng trở về bảo tàng.",
+     vocab:[["vanish","biến mất"],["scoop","tin độc quyền"],["file a story","gửi bài báo"],["pedestal","bệ tượng"],["boot print","dấu giày"],["whistle","còi, tiếng huýt"],["sandstone","sa thạch"],["dockworker","công nhân bốc vác"],["scales (fish)","vảy cá"],["anchor","mỏ neo"],["crate","thùng hàng"],["steamship","tàu hơi nước"],["harbour master","trưởng cảng"],["shipping register","sổ vận chuyển"],["cargo","hàng hóa"],["sender","người gửi"],["envelope","phong bì"],["suit","bộ vest"],["confess","thú nhận"],["pocket","túi áo"]]}},
+ 2:{key:"touraneEscape2",name:"Màn 2 · Ngọn hải đăng tắt",year:"Tourane 1937",total:60*60,cards:CARDS2,art:ART2,
+   blurb:"Hải đăng Sơn Trà tắt, người gác mất tích. Khó hơn: mã Morse, bản đồ, thủy triều. 60 phút.",
+   combos:{"8+31":"39","6+14":"20"},photoItem:"2",
+   machines:{"55":{need:"55",kind:"code",code:"PEARL",reward:"60",title:"Khóa 5 chữ cái",text:true},"90":{need:"90",kind:"final"}},
+   final:{q:"“Who is behind this? Where is Mr. Khải? And when should the police be there?”",groups:[
+     {label:"Thủ phạm (có thể nhiều người)",multi:true,answer:["phu","lefevre"],options:[["phu","Mr. Phú","fish-sauce trader"],["lefevre","Sgt. Lefèvre","customs officer"],["nam","Ông Năm","old fisherman"],["hanh","Mrs. Hạnh","keeper's wife"],["khai","Mr. Khải","lighthouse keeper"],["bao","Editor Bảo","tổng biên tập"]]},
+     {label:"Ông Khải bị giữ ở",answer:"3",options:[["1","Cave 1"],["2","Cave 2"],["3","Cave 3"]]},
+     {label:"Cảnh sát nên đến lúc",answer:"21:40",options:[["03:05","03:05"],["09:12","09:12"],["15:30","15:30"],["21:40","21:40"]]}]},
+   win:{head:"LIGHTHOUSE KEEPER RESCUED FROM SMUGGLERS' CAVE!",vi:"Người gác hải đăng được giải cứu khỏi hang của bọn buôn lậu!",
+     story:"Đúng 21:40, khi nước lớn, cảnh sát ập vào hang số 3 cạnh hòn đá con rùa. Ông Khải được cứu, ông Phú và trung sĩ Lefèvre bị bắt cùng những thùng ngọc trai buôn lậu. Ngọn hải đăng Tiên Sa sáng trở lại.",
+     vocab:[["run aground","mắc cạn"],["missing","mất tích"],["lighthouse keeper","người gác hải đăng"],["fail","hỏng, không hoạt động"],["switch off","tắt"],["junk","thuyền buồm (kiểu Á)"],["sunset","hoàng hôn"],["spare key","chìa khóa dự phòng"],["padlock","ổ khóa móc"],["wire","dây điện"],["pliers","cái kìm"],["torn","bị rách"],["engraved","được khắc"],["customs","thuế quan, hải quan"],["logbook","sổ nhật ký"],["basket boat","thuyền thúng"],["anchored","thả neo"],["warehouse","nhà kho"],["high tide / low tide","nước lớn / nước ròng"],["tied up","bị trói"],["password","mật khẩu"],["pearl","ngọc trai"],["smuggled","buôn lậu"],["peninsula","bán đảo"],["cave","hang động"]]}}
+};
+const COLORS={scene:SC,red:R,blue:B,char:G,item:G,doc:G,machine:Y};
+const PEN=120;
+let LV=null,CARDS=null,ART=null,st=null;
+const $=id=>document.getElementById(id);
+function setLevel(n){LV=LEVELS[n];LV.n=n;CARDS=LV.cards;ART=LV.art}
+function save(){try{localStorage.setItem(LV.key,JSON.stringify(st))}catch(e){}}
+function loadK(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}}
+function fresh(){return {rev:["A"],pen:0,hints:0,hintLv:{},start:Date.now(),done:false,endAt:null}}
+function remaining(){const now=st.done?st.endAt:Date.now();return LV.total-Math.floor((now-st.start)/1000)-st.pen*PEN}
+function fmt(s){const n=Math.abs(s),m=Math.floor(n/60),x=n%60;return (s<0?"-":"")+String(m).padStart(2,"0")+":"+String(x).padStart(2,"0")}
+function toast(t){const e=$("toast");e.style.background="";e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),2200)}
+function toast2(t){const e=$("toast");e.style.background="var(--scene)";e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>{e.classList.remove("show");e.style.background=""},1800)}
+function penalty(msg){st.pen++;save();toast("−2 phút · "+msg);renderHeader()}
+/* ---------- MENU ---------- */
+function menu(){
+  clearInterval(game.t);$("bar").hidden=true;
+  const lv=n=>{const s=loadK(LEVELS[n].key);return s?(s.done?"✓ Đã phá đảo":"Đang chơi dở"):""};
+  $("root").innerHTML=`<div class="intro"><h1>Phóng viên Tourane</h1>
+  <p>Bạn là phóng viên của báo <b>Hàn Giang</b> ở Đà Nẵng xưa. Mỗi màn là một vụ án — tìm ra sự thật trước khi hết giờ.</p>
+  <ul><li><b>🂠 Lấy thẻ:</b> nhập số/chữ bạn thấy trên tranh — kể cả số <b>ẩn</b>.</li>
+  <li><b>➕ Ghép:</b> chọn 2 thẻ (thường là <span style="color:#b8322a;font-weight:700">đỏ</span> + <span style="color:#2d5f9a;font-weight:700">xanh</span>), số cộng lại thành thẻ mới.</li>
+  <li><b>📷 Chụp:</b> khi có máy ảnh, chụp một cảnh (thẻ chữ cái).</li>
+  <li><b>⚙️ Máy:</b> mở khóa, nhập mã. <b>💡 Gợi ý:</b> 2 mức cho mỗi thẻ.</li></ul>
+  <p>Sai bị <b>trừ 2 phút</b>. Thẻ bài bằng tiếng Anh — bấm <b>“Dịch”</b> để xem tiếng Việt.</p></div>
+  <div class="modes" style="display:grid;gap:12px;margin-top:14px">${[1,2].map(n=>`<div class="intro" style="margin:0"><h2 style="font-family:var(--type);font-weight:400;margin:0 0 4px">${LEVELS[n].name}</h2><p class="label-sub" style="margin:0">${LEVELS[n].blurb}</p><p style="margin:6px 0 0;font-weight:700">${lv(n)}</p>
+  <div class="row"><button class="btn gold" data-go="${n}">${loadK(LEVELS[n].key)&&!loadK(LEVELS[n].key).done?"Chơi tiếp":"Bắt đầu"}</button>${loadK(LEVELS[n].key)?`<button class="btn alt" data-reset="${n}">Chơi lại</button>`:""}</div></div>`).join("")}</div>`;
+  $("root").querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{setLevel(+b.dataset.go);const s=loadK(LV.key);st=s&&!s.done?s:fresh();save();game()});
+  $("root").querySelectorAll("[data-reset]").forEach(b=>b.onclick=()=>{setLevel(+b.dataset.reset);st=fresh();save();game()});
+}
+/* ---------- GAME ---------- */
+function renderHeader(){
+  const h=$("hdr");if(!h)return;const r=remaining();
+  h.innerHTML=`<button class="brand" id="home" style="background:none;border:0;padding:0;text-align:left">‹ ${LV.year}<small>${st.rev.length}/${Object.keys(CARDS).length} thẻ</small></button>
+  <div class="clock ${r<300?"low":""}" aria-label="Thời gian còn lại">${fmt(r)}</div>
+  <div class="stats">Phạt: ${st.pen}<br>Gợi ý: ${st.hints}</div>`;
+  $("home").onclick=menu;
+}
+function game(){
+  $("bar").hidden=false;
+  $("root").innerHTML=`<header id="hdr"></header><div class="board" id="board"></div>`;
+  renderHeader();renderBoard();updateBar();
+  clearInterval(game.t);game.t=setInterval(renderHeader,1000);
+}
+function tile(id,isNew){const c=CARDS[id],col=COLORS[c.k];
+  return `<button class="tile ${isNew?"new":""}" data-id="${id}" style="--c:${col}"><div class="art">${ART[id]()}</div><span class="id">${id}</span><div class="cap">${c.t}</div></button>`}
+function renderBoard(newId){$("board").innerHTML=st.rev.slice().reverse().map(id=>tile(id,id===newId)).join("");
+  $("board").querySelectorAll(".tile").forEach(b=>b.onclick=()=>openCard(b.dataset.id))}
+function updateBar(){$("bPhoto").disabled=!st.rev.includes(LV.photoItem)}
+function openSheet(html){$("panel").innerHTML=`<button class="close" aria-label="Đóng" id="x">✕</button>`+html;$("sheet").classList.add("open");$("x").onclick=closeSheet;$("x").focus()}
+function closeSheet(){$("sheet").classList.remove("open")}
+$("sheet").addEventListener("click",e=>{if(e.target.id==="sheet")closeSheet()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
+function openCard(id){
+  const c=CARDS[id];const vis=(c.shows||[]).filter(x=>!st.rev.includes(x));
+  openSheet(`<h2>${id} · ${c.t}</h2><p class="label-sub">${c.tv}</p><div class="cardart">${ART[id]()}</div>
+  <div class="en">${c.en}</div>${c.extra||""}<div class="vi" id="vi">${c.vi}</div>
+  <div class="row"><button class="btn alt" id="tr">Dịch</button>${vis.length?`<button class="btn" id="tk">Lấy thẻ ${vis.join(", ")}</button>`:""}</div>`);
+  $("tr").onclick=()=>{$("vi").classList.toggle("show");$("tr").textContent=$("vi").classList.contains("show")?"Ẩn bản dịch":"Dịch"};
+  if($("tk"))$("tk").onclick=()=>{let last;vis.forEach(v=>{if(!st.rev.includes(v)){st.rev.push(v);last=v}});save();closeSheet();renderBoard(last);renderHeader();updateBar();toast2("Đã lấy thẻ "+vis.join(", "))};
+}
+function reveal(id,msg){if(st.rev.includes(id)){toast2("Bạn đã có thẻ "+id);return}st.rev.push(id);save();closeSheet();renderBoard(id);renderHeader();updateBar();toast2(msg||("Lấy được thẻ "+id));setTimeout(()=>openCard(id),350)}
+function visibleSet(){const s=new Set();st.rev.forEach(id=>{(CARDS[id].shows||[]).forEach(x=>s.add(x));(CARDS[id].hidden||[]).forEach(x=>s.add(x))});return s}
+$("bTake").onclick=()=>{
+  const shown=[];st.rev.forEach(id=>(CARDS[id].shows||[]).forEach(x=>{if(!st.rev.includes(x)&&!shown.includes(x))shown.push(x)}));
+  openSheet(`<h2>Lấy thẻ</h2><p class="label-sub">Nhập số hoặc chữ bạn thấy trên các thẻ — kể cả số ẩn trong tranh.</p>
+  ${shown.length?`<div class="chips">${shown.map(x=>`<button class="chip" data-v="${x}">${x}</button>`).join("")}</div>`:""}
+  <input class="code" id="in" maxlength="3" autocomplete="off" aria-label="Số thẻ"><div class="row"><button class="btn" id="ok">Lấy thẻ</button></div>`);
+  $("panel").querySelectorAll(".chip").forEach(c=>c.onclick=()=>reveal(c.dataset.v));
+  const go=()=>{const v=$("in").value.trim().toUpperCase();if(!v)return;
+    if(st.rev.includes(v)){toast2("Bạn đã có thẻ "+v);return}
+    if(visibleSet().has(v)&&CARDS[v])reveal(v);else{closeSheet();penalty("Không thấy thẻ "+v+" ở đâu cả")}};
+  $("ok").onclick=go;$("in").onkeydown=e=>{if(e.key==="Enter")go()};
+};
+$("bComb").onclick=()=>{
+  const list=st.rev.filter(id=>!["scene","machine"].includes(CARDS[id].k)&&!isNaN(+id));let sel=[];
+  openSheet(`<h2>Ghép hai thẻ</h2><p class="label-sub">Chọn 2 thẻ. Số của chúng sẽ được cộng lại.</p><div class="board" id="cb">${list.map(id=>tile(id)).join("")}</div>
+  <div class="row"><button class="btn" id="ok" disabled>Ghép</button></div><p class="label-sub" id="sum"></p>`);
+  $("cb").querySelectorAll(".tile").forEach(b=>b.onclick=()=>{const id=b.dataset.id;
+    if(sel.includes(id))sel=sel.filter(x=>x!==id);else{if(sel.length===2)sel.shift();sel.push(id)}
+    $("cb").querySelectorAll(".tile").forEach(t=>t.classList.toggle("sel",sel.includes(t.dataset.id)));
+    $("ok").disabled=sel.length!==2;$("sum").textContent=sel.length===2?`${sel[0]} + ${sel[1]} = ${(+sel[0])+(+sel[1])}`:""});
+  $("ok").onclick=()=>{const k=sel.map(Number).sort((a,b)=>a-b).join("+");const r=LV.combos[k];
+    if(r)reveal(r,`${sel[0]} + ${sel[1]} = ${r}`);else{closeSheet();penalty("Hai thẻ này không ghép được")}};
+};
+$("bPhoto").onclick=()=>{
+  const scenes=st.rev.filter(id=>CARDS[id].k==="scene");
+  openSheet(`<h2>📷 Chụp ảnh</h2><p class="label-sub">Chọn cảnh bạn muốn chụp.</p><div class="chips">${scenes.map(x=>`<button class="chip" data-v="${x}">${x} · ${CARDS[x].t}</button>`).join("")}</div>`);
+  $("panel").querySelectorAll(".chip").forEach(c=>c.onclick=()=>{const p=CARDS[c.dataset.v].photo;
+    if(p&&!st.rev.includes(p))reveal(p,"Tách! Ảnh đã chụp xong.");else if(p)toast2("Bạn đã chụp cảnh này rồi");else{closeSheet();penalty("Không có gì đáng chụp ở đây")}});
+};
+$("bMach").onclick=()=>{
+  openSheet(`<h2>⚙️ Máy</h2><p class="label-sub">Nhập số của máy (thẻ có viền vàng nâu).</p><input class="code" id="in" maxlength="2" inputmode="numeric" aria-label="Số máy"><div class="row"><button class="btn" id="ok">Mở máy</button></div>`);
+  const go=()=>{const v=$("in").value.trim();const m=LV.machines[v];
+    if(!m||!st.rev.includes(m.need)){closeSheet();penalty("Không có máy số "+v);return}
+    m.kind==="code"?codeLock(v,m):finalCall()};
+  $("ok").onclick=go;$("in").onkeydown=e=>{if(e.key==="Enter")go()};
+};
+function codeLock(id,m){
+  if(st.rev.includes(m.reward)){toast2("Khóa đã mở rồi");closeSheet();return}
+  openSheet(`<h2>Máy ${id} · ${m.title}</h2><div class="cardart">${ART[id]()}</div><input class="code" id="cd" maxlength="${m.code.length}" ${m.text?'autocapitalize="characters"':'inputmode="numeric"'} autocomplete="off" aria-label="Mã khóa"><div class="row"><button class="btn" id="ok">Mở khóa</button></div>`);
+  const go=()=>{if($("cd").value.trim().toUpperCase()===m.code)reveal(m.reward,"Cạch! Khóa đã mở.");else{closeSheet();penalty("Sai mã")}};
+  $("ok").onclick=go;$("cd").onkeydown=e=>{if(e.key==="Enter")go()};
+}
+function finalCall(){
+  const F=LV.final;const ans=F.groups.map(g=>g.multi?new Set():null);
+  openSheet(`<h2>Gọi cho tổng biên tập</h2><p class="en">${F.q}</p>${F.groups.map((g,i)=>`<p class="label-sub" style="margin-top:14px">${g.label}:</p>${g.multi?`<div class="pick" data-g="${i}">${g.options.map(([k,n,d])=>`<button data-k="${k}">${n}<small>${d}</small></button>`).join("")}</div>`:`<div class="chips" data-g="${i}">${g.options.map(([k,n])=>`<button class="chip" data-k="${k}">${n}</button>`).join("")}</div>`}`).join("")}
+  <div class="row"><button class="btn gold" id="ok">Gửi bài</button></div>`);
+  F.groups.forEach((g,i)=>{const box=$("panel").querySelector(`[data-g="${i}"]`);box.querySelectorAll("button").forEach(b=>b.onclick=()=>{const k=b.dataset.k;
+    if(g.multi){ans[i].has(k)?ans[i].delete(k):ans[i].add(k);b.classList.toggle("on")}else{ans[i]=k;box.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b))}})});
+  $("ok").onclick=()=>{
+    if(ans.some(a=>a===null||(a instanceof Set&&!a.size))){toast("Trả lời đủ tất cả các câu trước");return}
+    const right=F.groups.every((g,i)=>g.multi?(ans[i].size===g.answer.length&&g.answer.every(x=>ans[i].has(x))):ans[i]===g.answer);
+    if(right){st.done=true;st.endAt=Date.now();save();closeSheet();win()}else{closeSheet();penalty("Tổng biên tập: “Chưa đủ bằng chứng!”")}
+  };
+}
+function win(){
+  clearInterval(game.t);$("bar").hidden=true;const r=remaining();const W=LV.win;
+  const stars=r>=LV.total/3&&st.hints<=2?3:r>=0?2:1;
+  $("root").innerHTML=`<div class="intro"><p class="label-sub">Hàn Giang Daily · Evening edition</p>
+  <div class="headline">${W.head}</div><p><i>${W.vi}</i></p><p>${W.story}</p>
+  <div class="stars" aria-label="${stars} sao">${"★".repeat(stars)}${"☆".repeat(3-stars)}</div>
+  <p>Thời gian còn lại: <b>${fmt(r)}</b> · Phạt: <b>${st.pen}</b> · Gợi ý: <b>${st.hints}</b></p>
+  <h2 style="font-family:var(--type);font-weight:400;margin:16px 0 4px">Từ vựng trong màn này</h2>
+  <div class="vocab">${W.vocab.map(([e,v])=>`<div><b>${e}</b> – ${v}</div>`).join("")}</div>
+  <div class="row"><button class="btn" id="again">Chơi lại</button><button class="btn alt" id="mn">Chọn màn khác</button></div></div>`;
+  $("again").onclick=()=>{st=fresh();save();game()};$("mn").onclick=menu;
+}
+$("bHint").onclick=()=>{
+  openSheet(`<h2>💡 Gợi ý</h2><p class="label-sub">Chọn thẻ bạn đang bí.</p><div class="chips">${st.rev.map(id=>`<button class="chip" data-v="${id}">${id} · ${CARDS[id].t}</button>`).join("")}</div><div class="msg ok" id="hm"></div><div class="row" id="hr"></div>`);
+  $("panel").querySelectorAll(".chip").forEach(c=>c.onclick=()=>{const id=c.dataset.v,hs=CARDS[id].h;let lv=st.hintLv[id]||0;
+    const show=()=>{$("hm").classList.add("show");$("hm").innerHTML=hs.slice(0,lv).map((t,i)=>`<p style="margin:4px 0"><b>Gợi ý ${i+1}:</b> ${t}</p>`).join("");
+      $("hr").innerHTML=lv<hs.length?`<button class="btn alt" id="more">Xem gợi ý ${lv+1}</button>`:"";
+      if($("more"))$("more").onclick=()=>{lv++;st.hintLv[id]=lv;st.hints++;save();renderHeader();show()}};
+    if(lv===0){$("hm").classList.remove("show");$("hm").innerHTML=""}show();
+    if(lv===0)$("hm").classList.remove("show");
+    $("panel").querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x===c))});
+};
+menu();
+</script>
+</body>
+</html>
