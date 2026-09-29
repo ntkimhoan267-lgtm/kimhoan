@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ôn tiếng Anh – Unlock!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Alegreya+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1d3530; --bg2:#16292500; --panel:#ecdfbf; --ink:#2a2118; --muted:#6d5b43;
+  --brass:#c49a3c; --ok:#2f6b4a; --bad:#9b2d2d; --manor:#4b2a6b; --line:#b99d68;
+  --type:"Special Elite", "Courier New", monospace;
+  --body:"Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#12221f; --panel:#e2d4b2; }
+}
+:root[data-theme="dark"]{ --bg:#12221f; --panel:#e2d4b2; }
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.5;
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 2px,transparent 2px 40px);}
+main{max-width:560px;margin:0 auto;padding:20px 16px 40px}
+h1{font-family:var(--type);color:var(--brass);font-weight:400;font-size:1.7rem;line-height:1.15;margin:8px 0 4px}
+.sub{color:#cfc3a3;margin:0 0 20px;font-size:1rem}
+.ticket{background:var(--panel);border-radius:6px;position:relative;padding:22px 20px 20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  -webkit-mask:radial-gradient(circle 10px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,
+               radial-gradient(circle 10px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat;
+          mask:radial-gradient(circle 10px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,
+               radial-gradient(circle 10px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat;}
+.ticket.manor{border-top:6px solid var(--manor)}
+.ticket.train{border-top:6px solid var(--brass)}
+.punches{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px dashed var(--line)}
+.hole{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line)}
+.hole.ok{background:var(--bg);border-color:var(--bg)}
+.hole.bad{background:var(--bad);border-color:var(--bad)}
+.hole.now{border-color:var(--ink);border-width:2px}
+.meta{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted);margin-bottom:8px}
+.q{font-family:var(--type);font-size:1.3rem;line-height:1.35;margin:4px 0 6px}
+.hint{color:var(--muted);font-size:.95rem;margin:0 0 16px}
+.opts{display:grid;gap:10px}
+button{font:inherit;cursor:pointer}
+.opt{text-align:left;background:#f7efdb;border:1.5px solid var(--line);border-radius:4px;padding:12px 14px;color:var(--ink);font-size:1.05rem;transition:background .15s}
+.opt:hover:not(:disabled){background:#fff8e6}
+.opt:focus-visible,.btn:focus-visible,.mode:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+.opt.right{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.wrong{background:var(--bad);border-color:var(--bad);color:#fff}
+.opt:disabled{cursor:default}
+.explain{margin-top:14px;padding:12px 14px;background:rgba(196,154,60,.18);border-left:3px solid var(--brass);font-size:1rem;display:none}
+.explain.show{display:block}
+.btn{margin-top:16px;width:100%;background:var(--ink);color:var(--panel);border:0;border-radius:4px;padding:14px;font-size:1.05rem;font-weight:700}
+select.opt,textarea.opt,input.opt{font:inherit}
+.btn:disabled{opacity:.6}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.modes{display:grid;gap:10px;margin-top:4px}
+.mode{display:flex;justify-content:space-between;align-items:center;text-align:left;background:#f7efdb;border:1.5px solid var(--line);border-radius:4px;padding:14px;color:var(--ink)}
+.mode small{display:block;color:var(--muted);font-size:.9rem}
+.mode b{font-family:var(--type);font-weight:400;font-size:1.15rem}
+.mode .n{font-family:var(--type);color:var(--muted)}
+.score{font-family:var(--type);font-size:3.2rem;line-height:1;margin:6px 0}
+.review{margin-top:16px}
+.review div{padding:10px 0;border-top:1px dashed var(--line);font-size:1rem}
+.review i{color:var(--muted);font-style:normal}
+.stamp{display:inline-block;font-family:var(--type);border:2px solid currentColor;padding:2px 10px;transform:rotate(-4deg);margin-top:6px}
+.best{color:#cfc3a3;font-size:.95rem;margin-top:14px;text-align:center}
+@media (prefers-reduced-motion: no-preference){
+  .hole.just{animation:punch .35s ease-out}
+  @keyframes punch{0%{transform:scale(1.8)}100%{transform:scale(1)}}
+}
+</style>
+</head>
+<body>
+<main>
+  <h1>Ôn tập tiếng Anh<br>Unlock! Ticket to Ride &amp; Mysterium</h1>
+  <p class="sub">Mỗi câu trả lời đúng sẽ bấm một lỗ trên vé.</p>
+  <div id="app"></div>
+  <p class="best" id="best"></p>
+</main>
+<script>
+const trainVocab=[
+["state-of-the-art","tối tân, hiện đại nhất"],["instant camera","máy ảnh chụp lấy liền"],["departure","sự khởi hành"],
+["railroad tycoon","ông trùm đường sắt"],["bar car","toa quầy bar"],["platform","sân ga"],["locomotive","đầu máy xe lửa"],
+["engine driver","người lái tàu"],["widower","người góa vợ"],["shares","cổ phần"],["gambling debts","nợ cờ bạc"],
+["henchmen","tay sai"],["briefcase","cặp tài liệu"],["matchbook","bao diêm"],["ventilation duct","ống thông gió"],
+["scoop","tin độc quyền"],["hastily","một cách vội vã"],["lever","cần gạt"],["stuck","bị kẹt"],["tunnel","đường hầm"],
+["newsroom","tòa soạn"],["editor-in-chief","tổng biên tập"],["headline","tiêu đề trang nhất"],["fledgling reporter","phóng viên non nghề"],
+["ambitious","đầy tham vọng"],["aficionado","người say mê một lĩnh vực"],["keen on","hứng thú với"],["passionate about","đam mê"],
+["partridge","chim gà gô"],["crook","kẻ lừa đảo"],["hidden agenda","ý đồ giấu kín"],["banished","bị cấm cửa, trục xuất"],
+["northbound","đi về phía bắc"],["suspicious","đáng ngờ"],["red-headed","tóc đỏ"],["leash","dây xích chó"],
+["imminent","sắp xảy ra"],["unhook","tháo móc"],["out of control","mất kiểm soát"],["dazed","choáng váng"]];
+const manorVocab=[
+["manor","trang viên, dinh thự"],["ghost","hồn ma"],["chief superintendent","cảnh sát trưởng"],["housekeeper","quản gia"],
+["gardener","người làm vườn"],["study (room)","phòng làm việc"],["greenhouse","nhà kính"],["shed","nhà kho nhỏ"],
+["rearview mirror","gương chiếu hậu"],["lightning bolt","tia sét"],["Ouija board","bàn cầu cơ"],["marbles","những viên bi"],
+["pendulum","con lắc"],["safe","két sắt"],["medal","huy chương"],["sleeping pills","thuốc ngủ"],["sedated","bị cho uống thuốc an thần"],
+["drowning","chết đuối"],["suspect","nghi phạm"],["culprit","hung thủ"],["evidence","bằng chứng"],["intuition","trực giác"],
+["nephew","cháu trai"],["fountain","đài phun nước"],["stone slab","phiến đá"],["blunt knife","con dao cùn"],["sharpen","mài sắc"],
+["the Count","Bá tước"],["estate","điền trang"],["tragedy","bi kịch"],["thorough search","cuộc lục soát kỹ lưỡng"],
+["treasure","kho báu"],["psychic","nhà ngoại cảm"],["haunt","(ma) ám"],["layout","cách bố trí"],["backward","ngược"],
+["silverware","bộ dao nĩa bạc"],["deafening","chói tai"],["goggles","kính bảo hộ"],["apprehend","bắt giữ"]];
+const grammar=[
+{q:"If only you ___ find a way to arouse his interest!",o:["could","can","will","are"],a:0,e:"If only + S + could/V quá khứ: diễn tả ước muốn, tiếc nuối."},
+{q:"If only the engine driver ___ help you…",o:["could","can","helps","is going to"],a:0,e:"Sau If only dùng could (lùi thì) để nói điều mong mà chưa có."},
+{q:"Walter Baker is ___ busy a man to grant an interview.",o:["too","so","very","enough"],a:0,e:"too + adj + a + N + to V: quá… đến nỗi không thể."},
+{q:"It's about time you ___ up.",o:["showed","show","will show","showing"],a:0,e:"It's about time + S + V quá khứ: đã đến lúc (lẽ ra phải làm rồi)."},
+{q:"The victim ___ heavily sedated before drowning.",o:["was","did","has","were"],a:0,e:"Bị động quá khứ: was/were + V3."},
+{q:"This train ___ banished from my railway network.",o:["is","has","does","be"],a:0,e:"Bị động hiện tại: am/is/are + V3."},
+{q:"The victim was sedated before ___.",o:["drowning","drown","drowned","to drown"],a:0,e:"Sau giới từ (before, after, without…) dùng V-ing."},
+{q:"Someone went to great lengths to make it ___ like an accident.",o:["look","to look","looking","looked"],a:0,e:"make + O + V nguyên mẫu (không to): khiến cái gì trông như thế nào."},
+{q:"Someone went to great lengths ___ make it look like an accident.",o:["to","for","in","of"],a:0,e:"go to great lengths + to V: cố công hết mức để làm gì."},
+{q:"Who wanted him ___?",o:["dead","die","died","death"],a:0,e:"want + O + adj: muốn ai đó ở trạng thái nào."},
+{q:"Roy seems ___ a hurry to hand a briefcase to her.",o:["in","on","at","with"],a:0,e:"in a hurry: đang vội. seem + (to be) + adj/cụm giới từ."},
+{q:"These two people seem ___ up to something.",o:["to be","being","be","been"],a:0,e:"seem + to V: có vẻ như. be up to something: đang giở trò gì đó."},
+{q:"This matter involves more people than you ___ anticipated.",o:["had","have","has","did"],a:0,e:"So sánh với việc đã dự đoán trước đó → quá khứ hoàn thành had + V3."},
+{q:"___ access the instant camera, press the button in the app.",o:["To","For","By","So"],a:0,e:"To + V đầu câu chỉ mục đích: Để làm gì…"},
+{q:"Go to Grand Central, and ___ come back without a scoop!",o:["don't","not","no","doesn't"],a:0,e:"Mệnh lệnh phủ định: Don't + V."},
+{q:"You ___ find a new route as quickly as possible.",o:["have to","has to","having to","had"],a:0,e:"have to + V: phải (bắt buộc từ hoàn cảnh bên ngoài)."},
+{q:"I'm ___ my eye on you!",o:["keeping","keep","kept","keeps"],a:0,e:"Hiện tại tiếp diễn: am/is/are + V-ing. keep an eye on: để mắt tới."},
+{q:"I couldn't care ___ about your so-called intuition.",o:["less","more","least","little"],a:0,e:"couldn't care less: chẳng quan tâm chút nào."},
+{q:"Tell me again how it ___.",o:["went","did it go","goes it","did go"],a:0,e:"Câu hỏi gián tiếp không đảo ngữ: how it went (không phải how did it go)."},
+{q:"How long ___ your trip from New York to Las Vegas?",o:["was","did","were","had"],a:0,e:"How long + be + N? dùng was vì chuyến đi đã xong, chủ ngữ số ít."},
+{q:"Carrie Baker's son doesn't seem too keen ___ trains.",o:["on","in","at","about of"],a:0,e:"keen on + N/V-ing: thích, hứng thú với."},
+{q:"Walter is passionate ___ hunting.",o:["about","on","with","for of"],a:0,e:"passionate about + N/V-ing: đam mê."}
+];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function esc(t){return String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function vocabQs(list,tag,label){
+  const extra=[...trainVocab,...manorVocab,...decks.flatMap(d=>d.words)];
+  return list.map(([en,vi],i)=>{
+    const rev=Math.random()<.4;
+    let pool=shuffle(list.filter((_,k)=>k!==i));
+    if(pool.length<3)pool=pool.concat(shuffle(extra.filter(w=>w[0]!==en&&!pool.some(p=>p[0]===w[0])))).slice(0,3);
+    pool=pool.slice(0,3);
+    if(rev){const o=shuffle([en,...pool.map(p=>p[0])]);return {tag,label,q:`“${vi}” trong tiếng Anh là gì?`,o,a:o.indexOf(en),e:`${en} = ${vi}`}}
+    const o=shuffle([vi,...pool.map(p=>p[1])]);return {tag,label,q:en,h:"Chọn nghĩa đúng:",o,a:o.indexOf(vi),e:`${en} = ${vi}`};
+  });
+}
+function gramQs(){return grammar.map(g=>{const o=shuffle(g.o);return {tag:"grammar",q:g.q,h:"Điền vào chỗ trống:",o,a:o.indexOf(g.o[g.a]),e:g.e}})}
+let decks=[];let dbRef=null;
+const baseModes=[
+ {id:"mix",name:"Trộn tất cả",desc:"Mọi bộ từ + ngữ pháp",n:25,build:()=>shuffle([...vocabQs(trainVocab,"train"),...vocabQs(manorVocab,"manor"),...decks.flatMap(d=>vocabQs(d.words,"deck",d.name)),...gramQs()]).slice(0,25)},
+ {id:"train",name:"Chuyến tàu",desc:"Từ vựng Unlock! Ticket to Ride",n:20,build:()=>shuffle(vocabQs(trainVocab,"train")).slice(0,20)},
+ {id:"manor",name:"Trang viên ma ám",desc:"Từ vựng Unlock! Mysterium",n:20,build:()=>shuffle(vocabQs(manorVocab,"manor")).slice(0,20)},
+ {id:"grammar",name:"Ngữ pháp",desc:"Cấu trúc câu trên thẻ bài",n:grammar.length,build:()=>shuffle(gramQs())}
+];
+function modesList(){
+  const dm=decks.filter(d=>d.words.length).map(d=>({id:"deck:"+d.id,name:d.name,desc:d.words.length+" từ",n:Math.min(20,d.words.length),build:()=>shuffle(vocabQs(d.words,"deck",d.name)).slice(0,20)}));
+  const allNew=decks.flatMap(d=>d.words.map(w=>[w[0],w[1],d.name]));
+  if(dm.length>1)dm.unshift({id:"newall",name:"Tất cả từ mới",desc:"Trộn mọi bộ từ đã thêm",n:Math.min(25,allNew.length),build:()=>shuffle(decks.flatMap(d=>vocabQs(d.words,"deck",d.name))).slice(0,25)});
+  return [baseModes[0],...dm,...baseModes.slice(1)];
+}
+const app=document.getElementById("app");
+let S=null;
+function getBest(){try{return JSON.parse(localStorage.getItem("unlockQuizBest")||"{}")}catch(e){return {}}}
+function setBest(id,p){try{const b=getBest();if(!b[id]||p>b[id]){b[id]=p;localStorage.setItem("unlockQuizBest",JSON.stringify(b))}}catch(e){}}
+function home(){
+  const b=getBest();const modes=modesList();
+  app.innerHTML=`<div class="ticket train"><p class="q" style="margin-top:0">Chọn bài ôn</p><div class="modes">${modes.map(m=>`<button class="mode" data-m="${esc(m.id)}"><span><b>${esc(m.name)}</b><small>${esc(m.desc)}${b[m.id]!=null?` · cao nhất ${b[m.id]}%`:""}</small></span><span class="n">${m.n} câu</span></button>`).join("")}</div>
+  ${dbRef?`<button class="btn ghost" id="add">＋ Thêm từ mới</button>`:""}</div>`;
+  app.querySelectorAll(".mode").forEach(el=>el.onclick=()=>start(el.dataset.m));
+  if(dbRef)document.getElementById("add").onclick=addScreen;
+  document.getElementById("best").textContent="";
+}
+function parseWords(t){return t.split(/\n+/).map(l=>l.trim()).filter(Boolean).map(l=>{const m=l.split(/\s*(?:=|\t|\s[-–]\s|:)\s*/);return m.length>=2?[m[0].trim(),m.slice(1).join(" – ").trim()]:null}).filter(w=>w&&w[0]&&w[1])}
+function slug(t){return (t.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/gi,"d").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"bo-tu").slice(0,60)}
+function addScreen(){
+  app.innerHTML=`<div class="ticket train"><p class="q" style="margin-top:0">Thêm từ mới</p>
+  <p class="hint">Mỗi dòng một từ, dạng <b>english = nghĩa tiếng Việt</b>. Từ đã có trong bộ sẽ được cập nhật nghĩa. Từ bạn thêm được lưu trên trình duyệt này.</p>
+  <label class="hint" for="dk" style="display:block;margin-bottom:4px">Bộ từ</label>
+  <select id="dk" class="opt" style="width:100%">${decks.map(d=>`<option value="${esc(d.id)}">${esc(d.name)} (${d.words.length})</option>`).join("")}<option value="__new">＋ Tạo bộ mới…</option></select>
+  <input id="nn" class="opt" style="width:100%;margin-top:8px;display:${decks.length?"none":"block"}" placeholder="Tên bộ mới, ví dụ: Tourane màn 3">
+  <textarea id="tx" class="opt" rows="8" style="width:100%;margin-top:10px;font-family:inherit" placeholder="lighthouse = hải đăng&#10;smuggle = buôn lậu"></textarea>
+  <p class="hint" id="pv" style="margin-top:8px"></p>
+  <button class="btn" id="sv">Lưu từ</button><button class="btn ghost" id="bk">Quay lại</button></div>`;
+  const dk=document.getElementById("dk"),nn=document.getElementById("nn"),tx=document.getElementById("tx"),pv=document.getElementById("pv");
+  if(!decks.length)dk.value="__new";
+  dk.onchange=()=>{nn.style.display=dk.value==="__new"?"block":"none"};
+  tx.oninput=()=>{const w=parseWords(tx.value);pv.textContent=w.length?`Sẽ lưu ${w.length} từ.`:""};
+  document.getElementById("bk").onclick=home;
+  document.getElementById("sv").onclick=async()=>{
+    const w=parseWords(tx.value);if(!w.length){pv.textContent="Chưa đọc được từ nào. Dùng dạng: english = nghĩa";return}
+    let id=dk.value,name;
+    if(id==="__new"){name=nn.value.trim();if(!name){pv.textContent="Đặt tên cho bộ từ mới.";return}id=slug(name)}
+    const cur=decks.find(d=>d.id===id);name=name||(cur&&cur.name)||id;
+    const map=new Map((cur?cur.words:[]).map(x=>[x[0].toLowerCase(),x]));w.forEach(x=>map.set(x[0].toLowerCase(),x));
+    const words=[...map.values()].map(([en,vi])=>({en,vi}));
+    const btn=document.getElementById("sv");btn.disabled=true;btn.textContent="Đang lưu…";
+    try{await dbRef.collection("decks").doc(id).set({name,words,created:cur?cur.created:Date.now()});pv.textContent=`Đã lưu ${w.length} từ vào “${name}”.`;tx.value="";btn.disabled=false;btn.textContent="Lưu từ"}
+    catch(e){btn.disabled=false;btn.textContent="Lưu từ";pv.textContent=(e&&e.code==="permission_denied"||e&&e.code==="not_granted")?"Bạn không có quyền thêm từ vào quiz này.":"Chưa lưu được. Kiểm tra kết nối rồi bấm Lưu lại."}
+  };
+}
+function start(id){const m=modesList().find(x=>x.id===id);if(!m)return home();S={m,qs:m.build(),i:0,res:[],wrong:[]};render()}
+function render(){
+  const q=S.qs[S.i];const cls=q.tag==="manor"?"manor":"train";
+  const holes=S.qs.map((_,k)=>{const r=S.res[k];return `<span class="hole ${r===true?"ok":r===false?"bad":""} ${k===S.i?"now":""} ${k===S.i-1?"just":""}"></span>`}).join("");
+  const label=q.label||(q.tag==="manor"?"Mysterium":q.tag==="train"?"Ticket to Ride":"Ngữ pháp");
+  app.innerHTML=`<div class="ticket ${cls}"><div class="punches" aria-hidden="true">${holes}</div>
+  <div class="meta"><span>Câu ${S.i+1}/${S.qs.length}</span><span>${esc(label)}</span></div>
+  <p class="q">${esc(q.q)}</p>${q.h?`<p class="hint">${q.h}</p>`:""}
+  <div class="opts">${q.o.map((t,k)=>`<button class="opt" data-k="${k}">${esc(t)}</button>`).join("")}</div>
+  <div class="explain" id="ex" role="status"></div>
+  <button class="btn" id="next" style="display:none">${S.i===S.qs.length-1?"Xem kết quả":"Câu tiếp"}</button></div>`;
+  app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer(+b.dataset.k));
+}
+function answer(k){
+  const q=S.qs[S.i];const ok=k===q.a;S.res[S.i]=ok;if(!ok)S.wrong.push({q,k});
+  app.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=true;if(j===q.a)b.classList.add("right");else if(j===k)b.classList.add("wrong")});
+  const ex=document.getElementById("ex");ex.innerHTML=(ok?"<b>Đúng!</b> ":"<b>Chưa đúng.</b> ")+esc(q.e);ex.classList.add("show");
+  const h=app.querySelectorAll(".hole")[S.i];h.classList.add(ok?"ok":"bad","just");
+  const n=document.getElementById("next");n.style.display="block";n.focus();
+  n.onclick=()=>{S.i++;S.i<S.qs.length?render():finish()};
+}
+function finish(){
+  const c=S.res.filter(Boolean).length,t=S.qs.length,p=Math.round(c/t*100);setBest(S.m.id,p);
+  const msg=p>=90?"Phá đảo!":p>=70?"Gần thoát rồi":p>=50?"Cần thêm gợi ý":"Chơi lại màn này nhé";
+  app.innerHTML=`<div class="ticket ${S.m.id==="manor"?"manor":"train"}"><div class="punches" aria-hidden="true">${S.res.map(r=>`<span class="hole ${r?"ok":"bad"}"></span>`).join("")}</div>
+  <p class="meta"><span>${esc(S.m.name)}</span><span>${c}/${t} câu đúng</span></p>
+  <div class="score">${p}%</div><span class="stamp" style="color:${p>=70?"var(--ok)":"var(--bad)"}">${msg}</span>
+  ${S.wrong.length?`<div class="review"><p class="q" style="font-size:1.1rem">Các câu cần ôn lại</p>${S.wrong.map(w=>`<div>${esc(w.q.q)}<br><i>Bạn chọn: ${esc(w.q.o[w.k])}</i><br><b>${esc(w.q.o[w.q.a])}</b> – ${esc(w.q.e)}</div>`).join("")}</div>`:""}
+  <button class="btn" id="again">Làm lại bài này</button><button class="btn ghost" id="menu">Chọn bài khác</button></div>`;
+  document.getElementById("again").onclick=()=>start(S.m.id);
+  document.getElementById("menu").onclick=home;
+}
+const SEED=[{"id": "tourane-1", "name": "Tourane màn 1 · Bức tượng", "created": 1, "words": [["vanish", "biến mất"], ["scoop", "tin độc quyền"], ["file a story", "gửi bài báo"], ["pedestal", "bệ tượng"], ["boot print", "dấu giày"], ["whistle", "còi, tiếng huýt"], ["sandstone", "sa thạch"], ["dockworker", "công nhân bốc vác"], ["scales (fish)", "vảy cá"], ["anchor", "mỏ neo"], ["crate", "thùng hàng"], ["steamship", "tàu hơi nước"], ["harbour master", "trưởng cảng"], ["shipping register", "sổ vận chuyển"], ["cargo", "hàng hóa"], ["sender", "người gửi"], ["envelope", "phong bì"], ["suit", "bộ vest"], ["confess", "thú nhận"], ["pocket", "túi áo"], ["night guard", "người gác đêm"], ["label", "nhãn"], ["weight", "cân nặng"], ["contents", "hàng bên trong"], ["collector", "nhà sưu tầm"]]}, {"id": "tourane-2", "name": "Tourane màn 2 · Hải đăng", "created": 2, "words": [["run aground", "mắc cạn"], ["missing", "mất tích"], ["lighthouse keeper", "người gác hải đăng"], ["fail", "hỏng, không hoạt động"], ["switch off", "tắt"], ["junk", "thuyền buồm (kiểu Á)"], ["sunset", "hoàng hôn"], ["spare key", "chìa khóa dự phòng"], ["padlock", "ổ khóa móc"], ["wire", "dây điện"], ["pliers", "cái kìm"], ["torn", "bị rách"], ["engraved", "được khắc"], ["customs", "thuế quan, hải quan"], ["logbook", "sổ nhật ký"], ["basket boat", "thuyền thúng"], ["anchored", "thả neo"], ["warehouse", "nhà kho"], ["high tide", "nước lớn"], ["low tide", "nước ròng"], ["tied up", "bị trói"], ["password", "mật khẩu"], ["pearl", "ngọc trai"], ["smuggled", "buôn lậu"], ["peninsula", "bán đảo"], ["cave", "hang động"], ["anonymous letter", "thư nặc danh"], ["letter opener", "dao rọc giấy"], ["signal", "tín hiệu"], ["flash", "chớp sáng"]]}];
+function loadDecks(){let own={};try{own=JSON.parse(localStorage.getItem("quizDecks")||"{}")}catch(e){}
+  const all=new Map(SEED.map(d=>[d.id,{...d,words:d.words.slice()}]));
+  Object.values(own).forEach(d=>{const cur=all.get(d.id);if(cur){const m=new Map(cur.words.map(w=>[w[0].toLowerCase(),w]));d.words.forEach(w=>m.set(w[0].toLowerCase(),w));cur.words=[...m.values()]}else all.set(d.id,d)});
+  decks=[...all.values()].sort((a,b)=>a.created-b.created)}
+dbRef={collection:()=>({doc:id=>({set:async data=>{let own={};try{own=JSON.parse(localStorage.getItem("quizDecks")||"{}")}catch(e){}
+  own[id]={id,name:data.name,created:data.created,words:data.words.map(w=>[w.en,w.vi])};
+  try{localStorage.setItem("quizDecks",JSON.stringify(own))}catch(e){throw {code:"storage"}}loadDecks()}})})};
+loadDecks();home();
+</script>
+</body>
+</html>
