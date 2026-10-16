@@ -1403,29 +1403,38 @@
       car.scrollBy({ left: step() * Number(btn.dataset.dir), behavior: 'smooth' });
     }));
 
-    // Kéo bằng chuột trên máy tính (điện thoại đã vuốt được sẵn)
-    let down = false, startX = 0, startLeft = 0, moved = 0;
+    // Kéo bằng chuột trên máy tính (điện thoại đã vuốt được sẵn).
+    // Chỉ bắt giữ con trỏ khi đã kéo thật quá 5px: bắt giữ ngay lúc nhấn chuột
+    // sẽ chuyển cú click sang dải cuộn và link bài viết không mở được.
+    let down = false, dragging = false, startX = 0, startLeft = 0, pid = null;
     car.addEventListener('pointerdown', e => {
-      if (e.pointerType !== 'mouse') return;
-      down = true; moved = 0;
-      startX = e.clientX; startLeft = car.scrollLeft;
-      car.setPointerCapture(e.pointerId);
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      down = true; dragging = false;
+      startX = e.clientX; startLeft = car.scrollLeft; pid = e.pointerId;
     });
     car.addEventListener('pointermove', e => {
       if (!down) return;
       const dx = e.clientX - startX;
-      if (Math.abs(dx) > 4) car.classList.add('dragging');   // chỉ chặn click khi kéo thật
-      moved = Math.abs(dx);
-      car.scrollLeft = startLeft - dx;
+      if (!dragging && Math.abs(dx) > 5) {
+        dragging = true;
+        car.classList.add('dragging');
+        try { car.setPointerCapture(pid); } catch (err) {}
+      }
+      if (dragging) car.scrollLeft = startLeft - dx;
     });
     const endDrag = () => {
       if (!down) return;
       down = false;
-      setTimeout(() => car.classList.remove('dragging'), 0);
+      if (dragging) setTimeout(() => { car.classList.remove('dragging'); dragging = false; }, 0);
     };
     car.addEventListener('pointerup', endDrag);
     car.addEventListener('pointercancel', endDrag);
-    car.addEventListener('pointerleave', endDrag);
+    // Card là thẻ <a>: tắt kiểu "kéo link" mặc định của trình duyệt, nếu không nó giành mất thao tác kéo
+    car.addEventListener('dragstart', e => e.preventDefault());
+    // Vừa kéo xong thì chặn cú click đi kèm, để thả chuột không mở nhầm bài
+    car.addEventListener('click', e => {
+      if (dragging) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
 
     // Phím mũi tên khi dải đang được chọn
     car.addEventListener('keydown', e => {
