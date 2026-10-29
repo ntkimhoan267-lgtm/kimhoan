@@ -87,24 +87,33 @@ def make_caption(text, dark=False):
     return im
 
 
+POS = dict(top=(.205, .262), low=(.69, .75))  # vị trí (dòng nhỏ, chữ to); "low" khi mặt nằm nửa trên
+
+
 def make_keyword(o):
     im = layer()
+    ys, yb = POS[o.get("pos", "top")]
+    low = o.get("pos") == "low"  # nền phía dưới thường rối (áo, tay) nên thêm viền
     if o.get("small"):
-        text_block(im, int(H * .205), o["small"], font("sans_bold", 46), "white", max_w=960)
+        text_block(im, int(H * ys), o["small"], font("sans_bold", 46 if not low else 48), "white", max_w=960,
+                   stroke=2 if low else 0, stroke_fill="#222222")
     color = {"pink": STYLE["pink"], "white": "white"}.get(o.get("color", "pink"), o.get("color"))
-    text_block(im, int(H * .262), o["big"], font("serif_italic", o.get("size", 108)), color, max_w=1000)
+    text_block(im, int(H * yb), o["big"], font("serif_italic", o.get("size", 108)), color, max_w=1000,
+               stroke=3 if low else 0, stroke_fill="#4A1F2C")
     return im
 
 
 def make_hook(o):
     im = layer()
     l1, l2 = (o["lines"] + [""])[:2]
-    text_block(im, int(H * .19), l1, font("sans_extrabold", 90), "white", 6, "#1E2A2A", max_w=1000)
+    y0 = .65 - .19 if o.get("pos") == "low" else 0
+    text_block(im, int(H * (.19 + y0)), l1, font("sans_extrabold", 90), "white", 6, "#1E2A2A", max_w=1000)
     if l2:
-        text_block(im, int(H * .255), l2, font("sans_extrabold", 86), STYLE["orange"], 6, "#3B1D0A", max_w=1000)
+        text_block(im, int(H * (.255 + y0)), l2, font("sans_extrabold", 86), STYLE["orange"], 6, "#3B1D0A",
+                   max_w=1000)
     if o.get("accent"):
         f = font("sans_bold", 56)
-        top, _ = text_block(im, int(H * .322), o["accent"], f, STYLE["yellow"], 4, "#3B2A00", max_w=900)
+        top, _ = text_block(im, int(H * (.322 + y0)), o["accent"], f, STYLE["yellow"], 4, "#3B2A00", max_w=900)
         half = f.getlength(o["accent"]) / 2
         d = ImageDraw.Draw(im)
         sparkle(d, W / 2 - half - 42, top + 30, 20, STYLE["yellow"])
@@ -183,6 +192,12 @@ def is_image(p):
     return p.lower().endswith((".png", ".jpg", ".jpeg", ".webp"))
 
 
+def is_hdr(p):
+    out = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+                          "stream=color_transfer", "-of", "csv=p=0", p], capture_output=True, text=True).stdout
+    return any(x in out for x in ("arib-std-b67", "smpte2084"))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("plan")
@@ -249,11 +264,8 @@ def main():
                               f"eval=frame,crop={W}:{H},fps={FPS},format=yuv420p,setpts=PTS-STARTPTS+{s:.3f}/TB[b{k}]")
             else:
                 k = add_input(["-i", src])
-                hdr = "arib-std-b67" in subprocess.run(
-                    ["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=color_transfer",
-                     "-of", "csv=p=0", src], capture_output=True, text=True).stdout
                 si = float(o.get("src_in", 0))
-                chains.append(f"[{k}:v]trim={si:.3f}:{si + e - s:.3f},setpts=PTS-STARTPTS,{tm if hdr else ''}{cover},"
+                chains.append(f"[{k}:v]trim={si:.3f}:{si + e - s:.3f},setpts=PTS-STARTPTS,{tm if is_hdr(src) else ''}{cover},"
                               f"fps={FPS},format=yuv420p,{grade},setpts=PTS+{s:.3f}/TB[b{k}]")
             push(f"b{k}", s, e)
         elif o["type"] == "card":
@@ -267,7 +279,7 @@ def main():
                 x, y, bw, bh = media_box(o)
                 j = add_input(["-i", m])
                 si = float(o.get("src_in", 0))
-                chains.append(f"[{j}:v]trim={si:.3f}:{si + e - s:.3f},setpts=PTS-STARTPTS,"
+                chains.append(f"[{j}:v]trim={si:.3f}:{si + e - s:.3f},setpts=PTS-STARTPTS,{tm if is_hdr(m) else ''}"
                               f"scale={bw}:{bh}:flags=lanczos,setsar=1[m{j}]")
                 chains.append(f"[{lab}][m{j}]overlay=x={x}:y={y}:eof_action=repeat[k{k}m]")
                 lab = f"k{k}m"
@@ -300,18 +312,22 @@ def main():
                                           "-of", "csv=p=0", base], capture_output=True, text=True).stdout
     amap = []
     mus = plan.get("music")
+    main_a = "0:a" if has_audio else None
+    if plan.get("audio"):  # track đã trộn sẵn (giọng + hiệu ứng từ sfx.py) thay cho tiếng của base
+        main_a = f"{add_input(['-i', plan['audio']])}:a"
+        has_audio = True
     if mus:
         k = add_input(["-stream_loop", "-1", "-i", mus["src"]])
         vol = mus.get("volume", 0.12 if has_audio else 0.8)
         chains.append(f"[{k}:a]atrim=0:{dur:.3f},volume={vol},afade=t=in:d=0.5,"
                       f"afade=t=out:st={max(dur - 1.5, 0):.3f}:d=1.5[mus]")
         if has_audio:
-            chains.append("[0:a][mus]amix=inputs=2:duration=first:normalize=0[aout]")
+            chains.append(f"[{main_a}][mus]amix=inputs=2:duration=first:normalize=0[aout]")
         else:
             chains.append("[mus]anull[aout]")
         amap = ["-map", "[aout]"]
     elif has_audio:
-        amap = ["-map", "0:a"]
+        amap = ["-map", main_a]
 
     script = os.path.join(tmp, "graph.txt")
     open(script, "w").write(";\n".join(chains))
