@@ -27,7 +27,7 @@ Mọi đường dẫn script dưới đây tính từ thư mục skill này.
 
 ## Quy trình
 
-**Luôn theo thứ tự:** xem footage → viết kịch bản (`references/kich-ban.md`) → người dùng duyệt → (lồng tiếng: `references/long-tieng.md`) → dựng → hiệu ứng âm thanh (`references/am-thanh.md`) → kiểm tra → giao.
+**Luôn theo thứ tự:** xem footage → viết kịch bản (mục **A**) → người dùng duyệt → lồng tiếng nếu có (mục **B**) → dựng → hiệu ứng âm thanh (mục **C**) → kiểm tra → giao.
 
 ### 0. Thu thập đầu vào
 Hỏi người dùng nếu còn thiếu: video gốc, kịch bản (nếu có), b-roll / ảnh chụp màn hình, nhạc nền (tuỳ chọn), thông điệp CTA. Xem video gốc bằng cách cắt khung hình (`ffmpeg -vf fps=1,scale=240:-1,tile=8x4`) để biết nội dung từng đoạn.
@@ -99,11 +99,107 @@ python scripts/voiceover.py words voice.m4a -o work/words.json
 python scripts/voiceover.py layout voice_pieces.json -o work/voice_track.wav --words work/words.json
 python scripts/sfx.py sfx_events.json -o work/mix.wav --voice work/voice_track.wav --total 90
 ```
-Rồi thêm `"audio": "work/mix.wav"` vào plan.json. Chi tiết và quy tắc đặt hiệu ứng: `references/long-tieng.md`, `references/am-thanh.md`.
+Rồi thêm `"audio": "work/mix.wav"` vào plan.json. Chi tiết: mục **B** và **C** bên dưới.
 Ví dụ hoàn chỉnh (video skincare du lịch 90s, footage ngang, có lồng tiếng + hiệu ứng): `examples/skincare-voiceover/`.
 
 ## Font
 `scripts/fonts.py` tự tải **Playfair Display Italic** (serif nghiêng) và **Be Vietnam Pro** (sans) vào `fonts/`. Không tải được thì dùng font hệ thống (FreeSerif / Georgia, Inter / Arial). Muốn dùng font thương hiệu riêng, đặt file `.ttf` vào `fonts/` với đúng tên trong `fonts.py`.
 
 ## Video không có lời (outfit, sản phẩm, du lịch)
-Dùng `cut.py --no-silence` (hoặc `shots.py` nếu quay ngang) để ghép. Bỏ `captions`. Dùng `keyword` cho từng cảnh ("outfit cho" / "ngày ra sân"), `card` cho chi tiết sản phẩm. Vẫn thêm hiệu ứng chuyển cảnh bằng `sfx.py` (không có `--voice`). Video gắn link affiliate: không tự ghép nhạc trend, xem `references/am-thanh.md`.
+Dùng `cut.py --no-silence` (hoặc `shots.py` nếu quay ngang) để ghép. Bỏ `captions`. Dùng `keyword` cho từng cảnh ("outfit cho" / "ngày ra sân"), `card` cho chi tiết sản phẩm. Vẫn thêm hiệu ứng chuyển cảnh bằng `sfx.py` (không có `--voice`). Video gắn link affiliate: không tự ghép nhạc trend, xem mục **C**.
+
+## A. Lên kịch bản (làm TRƯỚC khi dựng, gửi người dùng duyệt)
+
+### A1. Xem footage trước, không viết kịch bản "chay"
+- Cắt ảnh lưới từng clip: `ffmpeg -i clip.mov -vf "fps=1/N,scale=200:-2,tile=8x2" -frames:v 1 sheet.jpg` (N = thời lượng / 16).
+- Cắt ảnh to (960px) ở những khung cầm sản phẩm để **đọc đúng tên trên bao bì**. Không đọc được thì hỏi người dùng, không đoán.
+- Ghi lại: clip nào quay gì, quay ngang hay dọc, khuôn mặt nằm bên nào (để chọn `cx` khi crop), có cảnh nào thiếu (vd thiếu cảnh ngoài trời cho chữ "du lịch").
+
+### A2. Cấu trúc copywriting (video 60–90s)
+| Phần | Thời lượng | Việc của nó |
+|---|---|---|
+| Hook | 0–3s | Đánh vào nỗi đau / tò mò / con số. Vd "Đi biển cả ngày… / tối về da khô căng?" |
+| Lời hứa | 3–5s | Nói rõ người xem nhận được gì: "skincare 4 bước trong vali" |
+| Open loop | 5–8s | Gài một câu hỏi, trả lời ở giữa video: "bước 3 là bước mình không bỏ" → sau đó card "Bước 3 · Đây rồi!" |
+| Các bước | phần thân | Mỗi bước: card nhãn pill → cảnh thao tác + keyword. Biến công dụng thành hình ảnh ("tan thành dầu", "uống nước cho da") |
+| Mẹo đáng lưu | 1 chỗ | Một mẹo nhỏ khiến người xem bấm lưu ("vỗ hết tinh chất còn lại lên da") |
+| Kết quả | 5–10s | Gắn với cảm xúc / bối cảnh ("sáng mai sẵn sàng ra biển"), không cam kết hiệu quả |
+| CTA | 5–8s cuối | Nhắc lại open loop + lý do hành động: "MẶT NẠ BƯỚC 3 / link dưới video / lưu lại trước chuyến đi tới" |
+
+- Video affiliate: sản phẩm gắn link là **nhân vật chính** — đặt open loop vào nó, card riêng, CTA gọi đúng tên nó.
+- Luôn đưa 2–3 phương án hook để người dùng chọn.
+- Kèm gợi ý mô tả khi đăng + hashtag.
+
+### A3. Thông tin sản phẩm & số liệu — tự tra, không bịa
+- Công dụng chỉ lấy từ hãng / nhà bán lẻ (WebSearch), ghi nguồn khi trả lời người dùng.
+- Không biết chính xác dòng sản phẩm (vd hãng có nhiều dòng sữa rửa mặt) → chỉ ghi tên hãng, không ghi công dụng.
+- Hướng dẫn dùng (vd "đắp 10–20 phút") lấy từ bao bì / trang bán.
+- Tên địa điểm: tra tên chính thức (vd "Vinpearl Resort & Golf Nam Hội An").
+
+### A4. Luật quảng cáo mỹ phẩm Việt Nam (áp dụng cả video affiliate)
+- Cấm: "trị", "điều trị", "đặc trị", "chữa", "làm lành", "ngăn ngừa", "trị mụn/nám" (Luật Quảng cáo 2012 khoản 9 Điều 8, TT 06/2011/TT-BYT); không gây hiểu nhầm là thuốc.
+- Tránh (dự thảo mới đề xuất cấm): "tốt nhất", "số 1", "duy nhất", "100%", "hàng đầu", "tuyệt hảo".
+- Không cam kết kết quả có số ("15 phút là mọng nước"). Dùng mô tả cảm giác / công dụng hãng công bố: "cấp ẩm", "làm sạch", "khoá ẩm", "da ẩm mịn".
+- Ẩn dụ ("uống nước cho da") được, nhưng báo người dùng để họ quyết.
+
+### A5. Gửi duyệt
+Bảng: `Giây | Cảnh (clip) | Chữ trên màn hình | Vai trò`, cộng danh sách câu cần người dùng xác nhận (tên sản phẩm chưa rõ, CTA, nhạc). Chỉ dựng khi người dùng nói "ok dựng".
+
+## B. Lồng tiếng
+
+### B1. Viết lời đọc
+- Bám bảng kịch bản đã duyệt: mỗi phần một đoạn lời, câu ngắn, giọng nói chuyện ("…nha", "…nè").
+- Tiếng Việt đọc tự nhiên ~2,5–3 chữ/giây → video 90s chỉ cần ~150–180 chữ, chừa chỗ thở và chỗ cho hiệu ứng.
+- Lời đọc theo cùng luật ở mục **A** (không "trị", không "tốt nhất", không cam kết kết quả).
+- Keyword trên màn hình là cụm đắt nhất của câu đang đọc.
+
+### B2. Chọn giọng — khuyên người dùng tự ghi âm
+Video affiliate: giọng thật của người dùng sản phẩm đáng tin hơn giọng AI. Phương án khác:
+1. Giọng đọc có sẵn của TikTok (Text-to-speech khi đăng) — miễn phí, có giọng nữ tiếng Việt, an toàn điều khoản.
+2. ElevenLabs — chất lượng tốt, gói trả phí cho phép thương mại, cần API key của người dùng.
+3. Endpoint giọng Microsoft không chính thức (vd vi-VN-HoaiMy) — chưa rõ có được dùng thương mại không; phải nói rõ rủi ro trước khi dùng.
+
+Hướng dẫn ghi âm gửi người dùng: app Ghi âm iPhone, cách miệng ~20 cm, phòng kín, tắt quạt/điều hoà; đọc từng đoạn, nghỉ 2 giây giữa các đoạn; vấp thì đọc lại cả câu.
+
+### B3. Xử lý (scripts/voiceover.py)
+```bash
+python scripts/voiceover.py clean  voice.m4a -o work/voice_clean.wav        # lọc ồn, rõ giọng, nén, -15 LUFS
+python scripts/voiceover.py words  voice.m4a -o work/words.json --prompt "tên riêng, thương hiệu"
+python scripts/voiceover.py pauses work/voice_clean.wav                     # khoảng lặng = điểm cắt
+python scripts/voiceover.py layout voice_pieces.json -o work/voice_track.wav --words work/words.json
+```
+- `words`: faster-whisper large-v3, mốc từng chữ. Whisper hay đặt đầu chữ **sớm** hơn thực tế và nghe nhầm chữ (vd "khoá lại độ ẩm" → "khói lại đồ ẩm") — chỉ dùng để lấy mốc, chữ hiển thị lấy từ kịch bản.
+- Đọc transcript để: bỏ câu nói thêm / câu vấp (không đưa vào pieces), bỏ cụm chữ cần đổi (vd người dùng đổi hãng sau khi ghi âm: cho `out` dừng ngay trước tên hãng cũ, card trên hình ghi tên mới).
+- Điểm cắt: lấy giữa khoảng lặng trong `pauses`, không lấy thẳng mốc whisper.
+- `voice_pieces.json` (mẫu: `examples/skincare-voiceover/voice_pieces.json`): mỗi đoạn `in`/`out` theo file gốc + `gap` = khoảng nghỉ chèn sau. Dùng `gap` để kéo video tới thời lượng người dùng yêu cầu (đoạn nghỉ có hình + hiệu ứng, 1–4s mỗi chỗ).
+- **Dựng hình theo giọng**: mọi mốc cảnh / keyword / card lấy từ `voice_track.wav.json` (mốc từng đoạn) và `.words.json` (mốc từng chữ, khoá `t`). Keyword hiện đúng lúc nói chữ đó; card "Bước n" bắt đầu đúng chữ "Bước".
+- Có giọng thì không cần phụ đề chạy theo lời khi keyword đã nhắc lại ý; nhắc người dùng có thể bật phụ đề tự động của TikTok.
+
+### B4. Cài đặt
+`pip install faster-whisper`. Trong môi trường cloud nếu pip báo không phân giải được pypi.org, chạy pip qua proxy: `NO_PROXY=localhost,127.0.0.1 pip install faster-whisper`. Model tải từ huggingface.co lần đầu.
+
+## C. Âm thanh: hiệu ứng chuyển cảnh + nhạc
+
+### Hiệu ứng chuyển cảnh (scripts/sfx.py)
+Tự tổng hợp bằng numpy → không dính bản quyền. Nghe thử: `python scripts/sfx.py --export work/sfx/`.
+
+| Âm | Đặt ở đâu |
+|---|---|
+| `whoosh` (vút dài) | Card mới hiện lên, CTA — đặt sớm 0,12s trước mốc |
+| `ding` | Ngay sau whoosh của card "Bước n", card CTA (+0,12s) |
+| `sparkle` (lấp lánh) | Khoảnh khắc "đây rồi" (card sản phẩm chính), cảnh kết quả |
+| `swish` (vút ngắn) | Mỗi lần đổi cảnh thường |
+| `pop` | Mỗi keyword mới hiện ra; chữ "link" trong CTA; hook ở 0,3s |
+
+```bash
+python scripts/sfx.py sfx_events.json -o work/mix.wav --voice work/voice_track.wav --total 90 [--level 0.8]
+```
+- `sfx_events.json`: `[["whoosh", 12.9], ["ding", 13.3], {"sfx": "pop", "t": 20.2, "gain": 0.8}]` (mẫu: `examples/skincare-voiceover/sfx_events.json`).
+- Đang có giọng thì hiệu ứng tự nhỏ lại x0.6. Người dùng chê to/nhỏ → chỉ chạy lại với `--level`, không cần dựng lại hình.
+- Ghép vào video: thêm `"audio": "work/mix.wav"` vào plan.json (render.py dùng track này thay tiếng gốc).
+- Video không lời vẫn nên có hiệu ứng ở mỗi chuyển cảnh (người dùng hỏi "âm thanh chuyển cảnh đâu" = thiếu phần này).
+
+### Nhạc nền
+- Video có gắn link sản phẩm (affiliate / TikTok Shop) bị tính là **nội dung thương mại** → chỉ dùng nhạc trong **Commercial Music Library** của TikTok hoặc nhạc có license thương mại; sound trend thường có thể bị tắt tiếng / gỡ.
+- Khi người dùng nhờ đề xuất "sound trend": tra WebSearch cho tháng hiện tại, nói rõ nguồn là blog tổng hợp, và hướng dẫn chọn trong app: Thêm âm thanh → mục Commercial → lọc "chill / lofi / acoustic".
+- Mặc định xuất video **không nhạc** để người dùng ghép nhạc trên TikTok; nếu có giọng, dặn để nhạc ~10–15%.
