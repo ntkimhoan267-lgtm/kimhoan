@@ -82,7 +82,7 @@ python scripts/render.py plan.json             # bản 1080x1920
 - Khi giao, kèm bảng timeline ngắn (giây, nội dung) và nói rõ những gì chưa làm được, ví dụ chưa có phụ đề tự động hay chưa có nhạc.
 
 ## Font
-`scripts/fonts.py` tự tải **Playfair Display Italic** (serif nghiêng) và **Be Vietnam Pro** (sans) vào `fonts/`. Không tải được thì dùng font hệ thống (FreeSerif / Georgia, Inter / Arial). Muốn dùng font thương hiệu riêng, đặt file `.ttf` vào `fonts/` với đúng tên trong `fonts.py`.
+Font **Playfair Display Italic** (serif nghiêng) và **Be Vietnam Pro** (sans) đã có sẵn trong `fonts/` (giấy phép OFL, file kèm theo). Nếu thiếu, `scripts/fonts.py` tự tải lại từ raw.githubusercontent.com hoặc jsdelivr. Không tải được thì dùng font hệ thống (FreeSerif / Georgia, Inter / Arial). Muốn dùng font thương hiệu riêng, đặt file `.ttf` vào `fonts/` với đúng tên trong `fonts.py`.
 
 ## Video không có lời (outfit, sản phẩm, du lịch)
 Dùng `cut.py --no-silence` để ghép. Bỏ `captions`. Dùng `keyword` cho từng cảnh ("outfit cho" / "ngày ra sân"), `card` cho chi tiết sản phẩm, và `music` (volume ~0.8) làm âm thanh chính.
