@@ -1,6 +1,6 @@
 ---
 name: tiktok-edit-style
-description: Edit video TikTok/Reels dọc 9:16 theo phong cách "talking-head + chữ keyword serif nghiêng + card nền kem": cắt khoảng lặng và chỗ vấp, phụ đề cụm ngắn, tiêu đề hook mở đầu, chữ keyword theo từng ý, chèn b-roll, card minh hoạ từng bước, CTA cuối. Dùng khi người dùng đưa video gốc (và kịch bản, b-roll, video mẫu) và muốn "edit video", "cắt ghép", "thêm chữ", "làm video TikTok theo style này".
+description: Lên kịch bản, lồng tiếng, thêm hiệu ứng âm thanh và edit video TikTok/Reels dọc 9:16 theo phong cách "talking-head + chữ keyword serif nghiêng + card nền kem": cắt khoảng lặng và chỗ vấp, phụ đề cụm ngắn, tiêu đề hook mở đầu, chữ keyword theo từng ý, chèn b-roll, card minh hoạ từng bước, CTA cuối. Dùng khi người dùng đưa video gốc (và kịch bản, b-roll, video mẫu) và muốn "edit video", "cắt ghép", "thêm chữ", "viết kịch bản", "lồng tiếng", "âm thanh chuyển cảnh", "video affiliate", "làm video TikTok theo style này".
 ---
 
 # TikTok edit style — talking-head + keyword serif + card kem
@@ -26,6 +26,8 @@ Mọi đường dẫn script dưới đây tính từ thư mục skill này.
 - Thứ tự quen thuộc: hook → vấn đề → giải pháp theo từng bước (card) → kết quả → CTA.
 
 ## Quy trình
+
+**Luôn theo thứ tự:** xem footage → viết kịch bản (`references/kich-ban.md`) → người dùng duyệt → (lồng tiếng: `references/long-tieng.md`) → dựng → hiệu ứng âm thanh (`references/am-thanh.md`) → kiểm tra → giao.
 
 ### 0. Thu thập đầu vào
 Hỏi người dùng nếu còn thiếu: video gốc, kịch bản (nếu có), b-roll / ảnh chụp màn hình, nhạc nền (tuỳ chọn), thông điệp CTA. Xem video gốc bằng cách cắt khung hình (`ffmpeg -vf fps=1,scale=240:-1,tile=8x4`) để biết nội dung từng đoạn.
@@ -81,8 +83,27 @@ python scripts/render.py plan.json             # bản 1080x1920
 - Luôn kiểm tra trước khi giao: cắt khoảng 1 khung hình mỗi giây thành ảnh lưới rồi xem. Kiểm tra chữ có đè mặt, đè nhau hay bị tràn không; b-roll có đúng câu đang nói không; có còn khoảng lặng không.
 - Khi giao, kèm bảng timeline ngắn (giây, nội dung) và nói rõ những gì chưa làm được, ví dụ chưa có phụ đề tự động hay chưa có nhạc.
 
+## Footage quay ngang / chọn khung từng cảnh
+`cut.py` crop giữa khung, dễ cắt mất mặt khi footage quay ngang. Dùng `scripts/shots.py`: mỗi cảnh tự chọn đoạn, `cx` (tâm crop ngang, theo vị trí khuôn mặt), tốc độ; tự xử lý HDR và video xoay; cache từng cảnh nên sửa 1 cảnh chỉ render lại cảnh đó.
+```bash
+python scripts/shots.py shots.json -o work/base.mp4
+```
+- Sau khi dựng base, cắt ảnh lưới 1 khung/giây để kiểm tra khung crop; cảnh nào mất mặt thì chỉnh `cx` rồi chạy lại.
+- Khi mặt nằm nửa trên khung, đặt chữ ở nửa dưới: `"pos": "low"` cho `keyword` và `hook`.
+- Card có thể dùng thẳng video ngang làm `media` (render.py tự chuyển HDR) — hợp cho cảnh giới thiệu sản phẩm cần thấy đủ khung.
+
+## Lồng tiếng + hiệu ứng âm thanh
+```bash
+python scripts/voiceover.py clean voice.m4a -o work/voice_clean.wav
+python scripts/voiceover.py words voice.m4a -o work/words.json
+python scripts/voiceover.py layout voice_pieces.json -o work/voice_track.wav --words work/words.json
+python scripts/sfx.py sfx_events.json -o work/mix.wav --voice work/voice_track.wav --total 90
+```
+Rồi thêm `"audio": "work/mix.wav"` vào plan.json. Chi tiết và quy tắc đặt hiệu ứng: `references/long-tieng.md`, `references/am-thanh.md`.
+Ví dụ hoàn chỉnh (video skincare du lịch 90s, footage ngang, có lồng tiếng + hiệu ứng): `examples/skincare-voiceover/`.
+
 ## Font
 `scripts/fonts.py` tự tải **Playfair Display Italic** (serif nghiêng) và **Be Vietnam Pro** (sans) vào `fonts/`. Không tải được thì dùng font hệ thống (FreeSerif / Georgia, Inter / Arial). Muốn dùng font thương hiệu riêng, đặt file `.ttf` vào `fonts/` với đúng tên trong `fonts.py`.
 
 ## Video không có lời (outfit, sản phẩm, du lịch)
-Dùng `cut.py --no-silence` để ghép. Bỏ `captions`. Dùng `keyword` cho từng cảnh ("outfit cho" / "ngày ra sân"), `card` cho chi tiết sản phẩm, và `music` (volume ~0.8) làm âm thanh chính.
+Dùng `cut.py --no-silence` (hoặc `shots.py` nếu quay ngang) để ghép. Bỏ `captions`. Dùng `keyword` cho từng cảnh ("outfit cho" / "ngày ra sân"), `card` cho chi tiết sản phẩm. Vẫn thêm hiệu ứng chuyển cảnh bằng `sfx.py` (không có `--voice`). Video gắn link affiliate: không tự ghép nhạc trend, xem `references/am-thanh.md`.

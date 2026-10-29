@@ -9,10 +9,19 @@ Không có thì thoát với mã 2: khi đó viết captions.json bằng tay t�
 import argparse, json, sys
 
 
+def decode16k(path):
+    """Giải mã bằng ffmpeg (PyAV của faster-whisper lỗi với một số file m4a / mov)."""
+    import subprocess
+    import numpy as np
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", path, "-ac", "1", "-ar", "16000", "-f", "s16le", "-"],
+                         capture_output=True, check=True).stdout
+    return np.frombuffer(raw, np.int16).astype(np.float32) / 32768
+
+
 def words_faster(path, model, lang):
     from faster_whisper import WhisperModel
     m = WhisperModel(model, compute_type="int8")
-    segs, _ = m.transcribe(path, language=lang, word_timestamps=True, vad_filter=True)
+    segs, _ = m.transcribe(decode16k(path), language=lang, word_timestamps=True, vad_filter=True)
     return [(w.start, w.end, w.word.strip()) for s in segs for w in s.words]
 
 
