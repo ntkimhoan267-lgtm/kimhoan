@@ -12,6 +12,11 @@ shots.json: danh sách cảnh nối tiếp nhau trên timeline:
   - "cx": tâm crop theo chiều ngang (0 = mép trái, 1 = mép phải). Mặc định 0.5. "cy" tương tự.
   - "speed": < 1 là quay chậm. Bỏ trống thì tự quay chậm khi clip không đủ dài.
   - "zoom": mặc định xen kẽ 1.0 / 1.08 giữa các cảnh để che vết cắt.
+  - "trans": chuyển cảnh VÀO cảnh này (không đổi thời lượng, hiệu ứng nằm ở cuối cảnh trước + đầu cảnh này):
+      "whip"   — nhoè ngang như lia máy nhanh (montage quán / du lịch, khớp phách nhạc)
+      "flash"  — loé trắng (đổi phần, khoảnh khắc "đây rồi")
+      "leak"   — loé vàng cam kiểu light leak (tông ấm, cảnh quán / hoàng hôn)
+      "glitch" — tách màu RGB + đảo màu 1 khung (nhạc điện tử, công nghệ)
 Video HDR (iPhone) tự chuyển về SDR, video xoay tự quay đúng chiều. Cảnh không đổi được dùng lại từ cache.
 Ghi kèm <out>.json: mốc bắt đầu / thời lượng từng cảnh trên timeline.
 """
@@ -36,6 +41,27 @@ def probe(path):
         _probe[path] = dict(w=w, h=h, dur=float(j["format"]["duration"]),
                             hdr=st.get("color_transfer") in ("arib-std-b67", "smpte2084"))
     return _probe[path]
+
+
+TR = 0.12  # nửa thời lượng chuyển cảnh mỗi bên vết cắt
+
+
+def trans_fx(kind, dur, side):
+    """Bộ lọc cho đầu (side='in') hoặc cuối (side='out') một cảnh."""
+    if not kind:
+        return ""
+    on = f"lt(t,{TR})" if side == "in" else f"gt(t,{dur - TR:.3f})"
+    if kind == "whip":
+        return f"avgblur=sizeX=70:sizeY=1:enable='{on}',"
+    if kind in ("flash", "leak"):
+        col = "white" if kind == "flash" else "0xFFC98A"
+        d = TR * (2 if side == "in" else 1) * (1.5 if kind == "leak" else 1)
+        return (f"fade=t=in:st=0:d={d:.2f}:color={col}," if side == "in"
+                else f"fade=t=out:st={dur - d:.3f}:d={d:.2f}:color={col},")
+    if kind == "glitch":
+        neg = "between(t,0.03,0.07)" if side == "in" else f"between(t,{dur - 0.07:.3f},{dur - 0.03:.3f})"
+        return f"rgbashift=rh=-24:bh=24:edge=wrap:enable='{on}',negate=enable='{neg}',"
+    sys.exit(f"trans không hợp lệ: {kind} (whip | flash | leak | glitch)")
 
 
 def main():
@@ -70,6 +96,8 @@ def main():
         y = min(max(s.get("cy", .5) * info["h"] - ch / 2, 0), info["h"] - ch)
         vf = (f"setpts=(PTS-STARTPTS)/{speed:.5f},{TM if info['hdr'] else ''}"
               f"crop={cw:.0f}:{ch:.0f}:{x:.0f}:{y:.0f},scale={W}:{H}:flags=lanczos,"
+              f"{trans_fx(s.get('trans'), dur, 'in')}"
+              f"{trans_fx(shots[k + 1].get('trans') if k + 1 < len(shots) else None, dur, 'out')}"
               f"fps={FPS},setsar=1,format=yuv420p")
         key = hashlib.md5(f"{src}|{si}|{dur:.3f}|{vf}|{a.crf}".encode()).hexdigest()[:12]
         seg = os.path.join(cache, f"{k:03d}_{key}.mp4")
@@ -78,7 +106,8 @@ def main():
                             "-i", src, "-an", "-vf", vf, "-t", f"{dur:.3f}", "-c:v", "libx264",
                             "-crf", str(a.crf), "-preset", "medium", "-pix_fmt", "yuv420p", seg], check=True)
         listing.append(f"file '{os.path.abspath(seg)}'")
-        segs.append(dict(src=s["src"], src_in=si, at=round(t, 3), dur=round(dur, 3), speed=round(speed, 3)))
+        segs.append(dict(src=s["src"], src_in=si, at=round(t, 3), dur=round(dur, 3), speed=round(speed, 3),
+                         **({"trans": s["trans"]} if s.get("trans") else {})))
         t += dur
     lst = os.path.join(cache, "list.txt")
     open(lst, "w").write("\n".join(listing) + "\n")

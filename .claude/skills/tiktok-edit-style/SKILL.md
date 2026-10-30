@@ -1,6 +1,6 @@
 ---
 name: tiktok-edit-style
-description: Lên kịch bản, lồng tiếng, thêm hiệu ứng âm thanh và edit video TikTok/Reels dọc 9:16 theo phong cách "talking-head + chữ keyword serif nghiêng + card nền kem": cắt khoảng lặng và chỗ vấp, phụ đề cụm ngắn, tiêu đề hook mở đầu, chữ keyword theo từng ý, chèn b-roll, card minh hoạ từng bước, CTA cuối. Dùng khi người dùng đưa video gốc (và kịch bản, b-roll, video mẫu) và muốn "edit video", "cắt ghép", "thêm chữ", "viết kịch bản", "lồng tiếng", "âm thanh chuyển cảnh", "video affiliate", "làm video TikTok theo style này".
+description: Lên kịch bản, lồng tiếng, thêm hiệu ứng âm thanh và edit video TikTok/Reels dọc 9:16 theo phong cách "talking-head + chữ keyword serif nghiêng + card nền kem": cắt khoảng lặng và chỗ vấp, phụ đề cụm ngắn, tiêu đề hook mở đầu, chữ keyword theo từng ý, chèn b-roll, card minh hoạ từng bước, CTA cuối; montage không lời cắt theo phách nhạc với chuyển cảnh whip/flash/light leak/glitch. Dùng khi người dùng đưa video gốc (và kịch bản, b-roll, video mẫu) và muốn "edit video", "cắt ghép", "thêm chữ", "viết kịch bản", "lồng tiếng", "âm thanh chuyển cảnh", "video affiliate", "làm video TikTok theo style này", "review quán cà phê", "montage theo nhạc", "chuyển cảnh".
 ---
 
 # TikTok edit style — talking-head + keyword serif + card kem
@@ -105,8 +105,8 @@ Ví dụ hoàn chỉnh (video skincare du lịch 90s, footage ngang, có lồng 
 ## Font
 Font **Playfair Display Italic** (serif nghiêng) và **Be Vietnam Pro** (sans) đã có sẵn trong `fonts/` (giấy phép OFL, file kèm theo). Nếu thiếu, `scripts/fonts.py` tự tải lại từ raw.githubusercontent.com hoặc jsdelivr. Không tải được thì dùng font hệ thống (FreeSerif / Georgia, Inter / Arial). Muốn dùng font thương hiệu riêng, đặt file `.ttf` vào `fonts/` với đúng tên trong `fonts.py`.
 
-## Video không có lời (outfit, sản phẩm, du lịch)
-Dùng `cut.py --no-silence` (hoặc `shots.py` nếu quay ngang) để ghép. Bỏ `captions`. Dùng `keyword` cho từng cảnh ("outfit cho" / "ngày ra sân"), `card` cho chi tiết sản phẩm. Vẫn thêm hiệu ứng chuyển cảnh bằng `sfx.py` (không có `--voice`). Video gắn link affiliate: không tự ghép nhạc trend, xem mục **C**.
+## Video không có lời (outfit, sản phẩm, du lịch, review quán)
+Dùng `cut.py --no-silence` (hoặc `shots.py` nếu quay ngang) để ghép. Montage theo nhạc: xem mục **D2**. Bỏ `captions`. Dùng `keyword` cho từng cảnh ("outfit cho" / "ngày ra sân"), `card` cho chi tiết sản phẩm. Vẫn thêm hiệu ứng chuyển cảnh bằng `sfx.py` (không có `--voice`). Video gắn link affiliate: không tự ghép nhạc trend, xem mục **C**.
 
 ## A. Lên kịch bản (làm TRƯỚC khi dựng, gửi người dùng duyệt)
 
@@ -189,7 +189,13 @@ Tự tổng hợp bằng numpy → không dính bản quyền. Nghe thử: `pyth
 | `ding` | Ngay sau whoosh của card "Bước n", card CTA (+0,12s) |
 | `sparkle` (lấp lánh) | Khoảnh khắc "đây rồi" (card sản phẩm chính), cảnh kết quả |
 | `swish` (vút ngắn) | Mỗi lần đổi cảnh thường |
-| `pop` | Mỗi keyword mới hiện ra; chữ "link" trong CTA; hook ở 0,3s |
+| `pop` | Mỗi keyword mới hiện ra; chữ "link" trong CTA |
+| `click` | Tick checklist, bật công tắc, số đếm hiện ra |
+| `anvil` (đe kim loại, **chói**) | **0–0,3s đầu video** (thay cho whoosh+pop khi mở đầu), câu chốt gây sốc |
+| `hitech` (bíp tăng dần, **chói**) | Tiêu đề / ảnh chụp màn hình quan trọng bật lên |
+| `glitch` (**chói**) | Cảnh có `"trans": "glitch"` |
+
+Âm **chói** (`anvil`, `hitech`, `glitch`): tối đa khoảng 1 lần mỗi 7s. `sfx.py` tự cảnh báo khi đặt dày hơn. Lý do: mục **D1**.
 
 ```bash
 python scripts/sfx.py sfx_events.json -o work/mix.wav --voice work/voice_track.wav --total 90 [--level 0.8]
@@ -203,3 +209,39 @@ python scripts/sfx.py sfx_events.json -o work/mix.wav --voice work/voice_track.w
 - Video có gắn link sản phẩm (affiliate / TikTok Shop) bị tính là **nội dung thương mại** → chỉ dùng nhạc trong **Commercial Music Library** của TikTok hoặc nhạc có license thương mại; sound trend thường có thể bị tắt tiếng / gỡ.
 - Khi người dùng nhờ đề xuất "sound trend": tra WebSearch cho tháng hiện tại, nói rõ nguồn là blog tổng hợp, và hướng dẫn chọn trong app: Thêm âm thanh → mục Commercial → lọc "chill / lofi / acoustic".
 - Mặc định xuất video **không nhạc** để người dùng ghép nhạc trên TikTok; nếu có giọng, dặn để nhạc ~10–15%.
+
+## D. Kiến thức học từ video mẫu
+
+### D1. Hiệu ứng âm thanh (SFX), rút ra từ video dạy SFX dạng talking-head
+- Mở đầu video không có SFX thì nghe "kỳ kỳ, thiếu thiếu". Chỉ cần một SFX nhỏ là video nghe khác hẳn.
+- **Mở đầu dùng âm chói tai, tần số cao** (đe kim loại cao, "check", click phép thuật, âm "biến hình" công nghệ, kiểu tiếng ding/rắc trong phim kinh dị). Não người tò mò với âm tần số cao nên người xem ngoái lại nhìn video. Đây là chỗ SFX hiệu quả rõ nhất.
+- **Xen kẽ tinh tế, đừng spam:** khoảng 7s có một SFX căng thẳng là được. Spam liên tục sẽ làm người xem nhức đầu, mệt.
+- Các SFX còn lại (whoosh, pop, swish…) dùng bình thường ở mỗi lần đổi cảnh hoặc chữ hiện ra.
+- SFX dùng để "lừa tai": chỉ cần **hợp lý, đúng nhịp** hình ảnh, không cần giống âm thanh thật ngoài đời.
+- Cách dựng hình đi kèm trong video mẫu: chữ keyword **sans đậm nghiêng in hoa** đổi màu theo ý (đỏ = cảnh báo "ĐỪNG LẠM", xanh = con số "7 GIÂY", trắng = câu thường), có glow nhẹ. Icon minh hoạ (công tắc bật/tắt) bật lên đúng lúc nói. Thỉnh thoảng có màn tối để giải thích (ảnh waveform kèm tên âm). Có hiệu ứng tia sét hoặc nháy đỏ toàn màn hình cho câu nặng. Jump cut liên tục kèm zoom đổi cỡ khung (cận và trung).
+- Áp dụng vào skill: hook dùng `anvil` ở 0s (+ `pop` khi chữ hook hiện). Card/CTA vẫn dùng `whoosh` + `ding`. Chèn `hitech` cho khoảnh khắc quan trọng, cách các âm chói khác ≥7s. Keyword cảnh báo dùng `"color": "#FF2D55"`, keyword con số dùng màu xanh `"#2F7BFF"`.
+
+### D2. Montage review quán / không gian (không lời, chỉ nhạc)
+Rút ra từ 2 video mẫu: quán cà phê ban đêm quay dọc (~9s) và quán cà phê ban ngày quay ngang 16:9 (~18s).
+- **Cắt đúng phách nhạc.** Video dọc: nhạc 129 BPM, đoạn đầu cắt **mỗi phách (~0,46s)** cho 6–8 cảnh liền, rồi giãn ra 1–2 phách cho món ăn / đồ uống, cảnh logo giữ lâu hơn. Video ngang: cắt **mỗi 4 phách (~1,85s)**, nhịp chậm, kiểu cinematic.
+- **Chuyển cảnh whip:** cuối cảnh trước và đầu cảnh sau nhoè ngang mạnh như lia máy nhanh, vết nhoè rơi đúng phách. Máy quay luôn chuyển động (gimbal đẩy tới, lia, xoay chậm), không có cảnh đứng yên.
+- **Thứ tự cảnh:** mặt tiền / biển hiệu → toàn cảnh bên trong → các góc decor (tường, tranh, gấu bông, cây) → đồ uống, món ăn cận cảnh → logo / tên quán → góc đẹp nhất để kết.
+- **Màu:** tông ấm cam vàng (đèn vàng ban đêm), tối vùng tối, có vignette. Ban ngày giữ màu tươi, tương phản cao.
+- **Điểm nhấn video ngang:** chữ 3D tên quán quấn quanh ly nước và xoay (làm trong CapCut / After Effects, skill chưa tự làm được). Chuyển cảnh light leak cháy sáng vàng cam, glitch đảo màu 1–2 khung. Kết bằng cảnh người trong quán nhìn lên, tạo cảm xúc.
+- **Chữ:** gần như không có, chỉ có logo / watermark của người làm. Nếu cần thì thêm 1 `keyword` tên quán + địa chỉ ở cảnh cuối.
+
+Quy trình dựng:
+```bash
+python scripts/beats.py music.mp3 -o work/beats.json --every 1 --end 15   # mốc phách
+```
+Lấy `cuts` làm `until` cho từng cảnh trong `shots.json`. Đoạn đầu dùng mỗi phách, đoạn sau bỏ bớt mốc (2–4 phách). Thêm `"trans"` cho cảnh:
+```json
+[{"src": "raw/mat_tien.mov", "in": 0, "until": 1.47},
+ {"src": "raw/ben_trong.mov", "in": 2, "until": 1.94, "trans": "whip"},
+ {"src": "raw/ly_nuoc.mov", "in": 0, "until": 3.79, "trans": "leak"},
+ {"src": "raw/logo.mov", "in": 1, "until": 5.63, "trans": "flash"}]
+```
+- Nếu nhạc không bắt đầu ở 0s, cắt nhạc trước để phách khớp timeline, hoặc dùng `--start`. Phách đầu tiên phải trùng vết cắt đầu tiên.
+- `--every 4` có thể lệch 1 phách so với câu nhạc. Nghe thử: vết cắt nên rơi vào phách mạnh (đầu ô nhịp). Nếu lệch, bỏ 1 mốc đầu.
+- Hiệu ứng âm thanh: `swish` ở mỗi whip (đặt sớm 0,05s), `whoosh` ở flash/leak, `glitch` ở glitch. Nhạc to (~0,8), không có giọng.
+- Grade: `"grade": "warm"` cho quán ban đêm, `"film"` cho cinematic ban ngày.
