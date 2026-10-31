@@ -186,6 +186,40 @@ def media_box(o):
     return x + (bw - fw) // 2, y + (bh - fh) // 2, fw, fh
 
 
+# ---------- nháy flash theo phách ----------
+
+def flash_times(f):
+    """{"times": [...]} hoặc {"start", "end", "bpm", "every": 1, "offset": 0} -> danh sách mốc nháy."""
+    if "times" in f:
+        return [float(t) for t in f["times"]]
+    step = 60 / float(f["bpm"]) * f.get("every", 1)
+    t, out = float(f["start"]) + f.get("offset", 0), []
+    while t < float(f["end"]) - 1e-3:
+        out.append(round(t, 3))
+        t += step
+    return out
+
+
+def flash_fx(groups):
+    """Trend nháy flash: mỗi mốc loé trắng + zoom giật (punch) + rung, rồi tắt dần trong `dur` giây."""
+    if not groups:
+        return ""
+    bright, zoom, shake = [], [], []
+    for f in groups:
+        d, pw, pz, sh = f.get("dur", 0.12), f.get("power", 0.55), f.get("punch", 1.08) - 1, f.get("shake", 10)
+        for t in flash_times(f):
+            k = f"between(t,{t:.3f},{t + d:.3f})*(1-(t-{t:.3f})/{d})"  # 1 -> 0 trong d giây
+            bright.append(f"{pw}*{k}")
+            zoom.append(f"{pz}*{k}")
+            if sh:
+                shake.append(f"{sh}*{k}*sin(t*97)")
+    b, z = "+".join(bright), "+".join(zoom)
+    sx = "+".join(shake) or "0"
+    return (f"eq=brightness='{b}':contrast='1+0.6*({b})':eval=frame,"
+            f"scale=w='2*trunc({W}*(1+{z})/2)':h=-2:eval=frame:flags=bicubic,"
+            f"crop={W}:{H}:x='(in_w-{W})/2+({sx})':y='(in_h-{H})/2+0.6*({sx})',")
+
+
 # ---------- dựng ----------
 
 def is_image(p):
@@ -305,8 +339,9 @@ def main():
         on_card = any(float(k["start"]) <= s < float(k["end"]) for k in cards)
         png_layer(make_caption(c["text"], dark=on_card), s, e, fade=False)
 
+    fx = flash_fx(plan.get("flash", []))
     out_size = "540:960" if a.preview else f"{W}:{H}"
-    chains.append(f"[{cur}]scale={out_size}:flags=lanczos,format=yuv420p[vout]")
+    chains.append(f"[{cur}]{fx}scale={out_size}:flags=lanczos,format=yuv420p[vout]")
 
     has_audio = "audio" in subprocess.run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_type",
                                           "-of", "csv=p=0", base], capture_output=True, text=True).stdout

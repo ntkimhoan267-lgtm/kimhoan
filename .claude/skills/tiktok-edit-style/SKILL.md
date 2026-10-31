@@ -194,6 +194,8 @@ Tự tổng hợp bằng numpy → không dính bản quyền. Nghe thử: `pyth
 | `anvil` (đe kim loại, **chói**) | **0–0,3s đầu video** (thay cho whoosh+pop khi mở đầu), câu chốt gây sốc |
 | `hitech` (bíp tăng dần, **chói**) | Tiêu đề / ảnh chụp màn hình quan trọng bật lên |
 | `glitch` (**chói**) | Cảnh có `"trans": "glitch"` |
+| `shutter` ("tách" đèn flash) | Mỗi lần nháy flash (mục **D3**) |
+| `beat` (nền nhịp kick + clap + hi-hat) | Thay nhạc nền khi cần flash khớp phách: `{"sfx": "beat", "t": 0, "end": 30, "bpm": 120}` |
 
 Âm **chói** (`anvil`, `hitech`, `glitch`): tối đa khoảng 1 lần mỗi 7s. `sfx.py` tự cảnh báo khi đặt dày hơn. Lý do: mục **D1**.
 
@@ -245,3 +247,17 @@ Lấy `cuts` làm `until` cho từng cảnh trong `shots.json`. Đoạn đầu d
 - `--every 4` có thể lệch 1 phách so với câu nhạc. Nghe thử: vết cắt nên rơi vào phách mạnh (đầu ô nhịp). Nếu lệch, bỏ 1 mốc đầu.
 - Hiệu ứng âm thanh: `swish` ở mỗi whip (đặt sớm 0,05s), `whoosh` ở flash/leak, `glitch` ở glitch. Nhạc to (~0,8), không có giọng.
 - Grade: `"grade": "warm"` cho quán ban đêm, `"film"` cho cinematic ban ngày.
+
+### D3. Trend nháy flash theo phách (hot cuối 2026)
+Mỗi phách nhạc: hình loé trắng 1 khung + zoom giật (punch) + rung nhẹ, tắt dần trong ~0,12s; kèm âm "tách" đèn flash. Dồn dập ở hook (mỗi phách, kèm cắt cảnh mỗi phách), sau đó chỉ nháy ở mốc đổi bước, một chùm nhẹ ở cảnh kết quả, một cú trước CTA.
+```json
+"flash": [
+  {"start": 0, "end": 3.9, "bpm": 120, "power": 0.5, "punch": 1.1, "shake": 12},
+  {"times": [4.0, 9.5, 13.5], "power": 0.45, "punch": 1.06, "shake": 6}
+]
+```
+- Khoá `flash` nằm ở gốc plan.json, áp lên toàn khung (cả chữ), giống hiệu ứng Flash của CapCut.
+- `power` 0,4–0,6 là đủ; cao hơn thì cháy trắng. Cảnh trong hook **không** đặt thêm `"trans": "flash"` ở shots.py (bị nháy 2 lớp).
+- Dùng cùng `bpm` cho `flash`, cho mốc cắt cảnh (`until` = bội số 60/bpm) và cho `{"sfx": "beat"}` thì hình, cắt, nhạc khớp nhau. Mỗi mốc flash thêm một `shutter`.
+- Muốn dùng sound trend thật: chọn bài trong Commercial Music Library, tìm BPM bằng `beats.py`, đặt cùng BPM cho `flash`, xuất bản không có `beat` để ghép sound trên TikTok.
+- Ví dụ hoàn chỉnh: kem mắt AHC 32s, hook nháy 8 phách, 3 bước lăn, CTA giỏ hàng.

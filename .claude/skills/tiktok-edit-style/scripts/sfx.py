@@ -11,6 +11,9 @@ Thư viện:
   ding    — chuông: nhãn "Bước n", CTA
   sparkle — lấp lánh: khoảnh khắc "đây rồi", kết quả
   click   — tick giao diện: tick vào checklist, bật công tắc, chữ số đếm
+  shutter — "tách" đèn flash máy ảnh: đi cùng mỗi lần nháy flash (render.py "flash")
+  beat    — nền nhịp tự tổng hợp (kick + clap + hi-hat), không bản quyền:
+            {"sfx": "beat", "t": 0, "end": 30, "bpm": 128, "gain": 1}; nháy flash dùng cùng bpm sẽ khớp phách
 Âm "chói" (tần số cao, làm người xem ngoái lại) — chỉ dùng ở mở đầu và ~1 lần / 7s:
   anvil   — đe kim loại cao, ngân dài: 0–0,3s đầu video, câu chốt gây sốc
   hitech  — chuỗi bíp tăng dần kiểu "biến hình": hiện tiêu đề / ảnh chụp màn hình quan trọng
@@ -114,6 +117,53 @@ def glitch():
     return norm(y)
 
 
+def shutter():
+    n = int(0.16 * SR)
+    t = np.arange(n) / SR
+    y = rng.standard_normal(n) * (np.exp(-t * 90) + 0.6 * np.exp(-np.maximum(t - 0.055, 0) * 120) * (t > 0.055))
+    y = bandpass(y, np.full(n, 3500.0), 0.9) + 0.25 * np.sin(2 * np.pi * 1200 * t) * np.exp(-t * 60)
+    return norm(y)
+
+
+def kick():
+    t = np.arange(int(0.35 * SR)) / SR
+    f = 50 + 110 * np.exp(-t * 30)
+    return norm(np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 9) + 0.15 * np.exp(-t * 200))
+
+
+def clap():
+    n = int(0.25 * SR)
+    t = np.arange(n) / SR
+    env = sum(np.exp(-np.maximum(t - d, 0) * 60) * (t >= d) for d in (0, 0.012, 0.024))
+    return norm(bandpass(rng.standard_normal(n), np.full(n, 1500.0), 1.0) * env)
+
+
+def hat():
+    n = int(0.05 * SR)
+    t = np.arange(n) / SR
+    return norm(bandpass(rng.standard_normal(n), np.full(n, 8000.0), 0.8) * np.exp(-t * 90))
+
+
+def beat(bpm, dur):
+    """Nhịp 4/4: kick phách 1-3 (+ nhấn thêm), clap phách 2-4, hi-hat mỗi nửa phách."""
+    y = np.zeros(int(dur * SR) + SR, np.float32)
+    k, c, h, step = kick(), clap(), hat(), 60 / bpm
+
+    def put(s, at, g):
+        i = int(at * SR)
+        y[i:i + len(s)] += (s * g)[:len(y) - i]
+    i = 0
+    while i * step < dur:
+        tb = i * step
+        put(k, tb, 0.9 if i % 2 == 0 else 0.55)
+        if i % 2:
+            put(c, tb, 0.45)
+        put(h, tb + step / 2, 0.18)
+        put(h, tb, 0.12)
+        i += 1
+    return y[:int(dur * SR)]
+
+
 HOT = {"anvil", "hitech", "glitch"}  # âm chói: tối đa ~1 lần / 7s, nếu không nghe nhức đầu
 
 
@@ -121,7 +171,8 @@ def library():
     # (âm, mức trộn mặc định so với giọng đã chuẩn hoá -15 LUFS)
     return dict(whoosh=(whoosh(0.45), 0.22), swish=(whoosh(0.22, 800, 5000), 0.10), pop=(pop(), 0.16),
                 ding=(ding(), 0.13), sparkle=(sparkle(), 0.12), click=(click(), 0.12),
-                anvil=(anvil(), 0.15), hitech=(hitech(), 0.12), glitch=(glitch(), 0.10))
+                anvil=(anvil(), 0.15), hitech=(hitech(), 0.12), glitch=(glitch(), 0.10),
+                shutter=(shutter(), 0.14))
 
 
 def read(path):
@@ -170,6 +221,11 @@ def main():
                 print(f"! {name} ở {t:.2f}s cách âm chói trước {t - last_hot:.1f}s (<7s) — dễ nhức đầu, cân nhắc đổi "
                       f"sang swish/pop", file=sys.stderr)
             last_hot = t
+        if name == "beat":  # nền nhịp, không hạ khi có giọng (đã nhỏ sẵn)
+            seg = beat(float(ev["bpm"]), float(ev["end"]) - t) * 0.22 * gain * a.level
+            at = int(t * SR)
+            mix[at:at + len(seg)] += seg[:len(mix) - at]
+            continue
         s, g = lib[name]
         at = max(int(t * SR), 0)
         duck = 0.6 if speaking[at:at + int(0.3 * SR)].mean() > 0.3 else 1.0
