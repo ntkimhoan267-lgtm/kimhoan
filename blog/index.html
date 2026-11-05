@@ -56,13 +56,13 @@
 
   /* ── DANH SÁCH BÀI ── */
   .list{max-width:900px;margin:0 auto;padding:10px 24px 40px;}
-  .post{display:grid;grid-template-columns:150px 1fr;gap:26px;padding:30px 0;border-bottom:1px solid rgba(13,27,62,0.09);text-decoration:none;transition:all 0.25s;align-items:start;}
+  .post{display:grid;grid-template-columns:240px 1fr;gap:28px;padding:30px 0;border-bottom:1px solid rgba(13,27,62,0.09);text-decoration:none;transition:all 0.25s;align-items:start;}
   .post:hover{background:rgba(249,228,91,0.06);}
   .post:hover .post-title{color:var(--navy-light);}
   @media(max-width:640px){.post{grid-template-columns:1fr;gap:12px;}}
   .post-side{display:flex;flex-direction:column;gap:9px;}
-  .post-thumb{width:150px;height:150px;object-fit:cover;object-position:center 22%;border-radius:12px;background:#FEFEFE;border:1px solid rgba(13,27,62,0.08);margin-bottom:4px;}
-  @media(max-width:640px){.post-thumb{width:100%;height:190px;}}
+  .post-thumb{width:240px;height:auto;aspect-ratio:40/21;object-fit:cover;border-radius:12px;background:#0D1B3E;border:1px solid rgba(13,27,62,0.08);margin-bottom:4px;}
+  @media(max-width:640px){.post-thumb{width:100%;}}
   .post-chip{background:var(--light-beige);border:1px solid rgba(13,27,62,0.1);border-radius:20px;padding:4px 12px;font-size:0.66rem;font-family:'Space Mono',monospace;font-weight:700;color:var(--text-mid);align-self:flex-start;}
   .post-chip.new{background:var(--mint);border-color:var(--mint);color:var(--deep-navy);}
   .post-date{font-family:'Space Mono',monospace;font-size:0.66rem;color:var(--text-mid);letter-spacing:0.06em;}
@@ -137,7 +137,7 @@
 
   <a href="/blog/di-trung-quoc-co-can-visa-khong/" class="post fade-up">
     <div class="post-side">
-      <img class="post-thumb" src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" width="150" height="150">
+      <img class="post-thumb" src="/images/thumb-di-trung-quoc-co-can-visa-khong.jpg" alt="" loading="lazy" width="240" height="126">
       <span class="post-chip new">
         <span class="vi">Visa Trung Quốc</span>
         <span class="en">China Visa</span>
@@ -162,7 +162,7 @@
 
   <a href="/blog/xin-visa-han-quoc-2026-ho-so-c39/" class="post fade-up">
     <div class="post-side">
-      <img class="post-thumb" src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" width="150" height="150">
+      <img class="post-thumb" src="/images/thumb-xin-visa-han-quoc-2026-ho-so-c39.jpg" alt="" loading="lazy" width="240" height="126">
       <span class="post-chip">
         <span class="vi">Hướng dẫn Visa</span>
         <span class="en">Visa Guide</span>
@@ -187,7 +187,7 @@
 
   <a href="/blog/25-tuoi-di-hoc-lai/" class="post fade-up">
     <div class="post-side">
-      <img class="post-thumb" src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" width="150" height="150">
+      <img class="post-thumb" src="/images/thumb-25-tuoi-di-hoc-lai.jpg" alt="" loading="lazy" width="240" height="126">
       <span class="post-chip">
         <span class="vi">Câu chuyện</span>
         <span class="en">Personal Story</span>
@@ -212,7 +212,7 @@
 
   <a href="/blog/mot-ngay-binh-thuong/" class="post fade-up">
     <div class="post-side">
-      <img class="post-thumb" src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" width="150" height="150">
+      <img class="post-thumb" src="/images/thumb-mot-ngay-binh-thuong.jpg" alt="" loading="lazy" width="240" height="126">
       <span class="post-chip">
         <span class="vi">Cuộc sống</span>
         <span class="en">Daily Life</span>
@@ -237,7 +237,7 @@
 
   <a href="/blog/sinh-vien-marketing-dung-ai-moi-ngay/" class="post fade-up">
     <div class="post-side">
-      <img class="post-thumb" src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" width="150" height="150">
+      <img class="post-thumb" src="/images/thumb-sinh-vien-marketing-dung-ai-moi-ngay.jpg" alt="" loading="lazy" width="240" height="126">
       <span class="post-chip">
         <span class="vi">AI &amp; Marketing</span>
         <span class="en">AI &amp; Marketing</span>
