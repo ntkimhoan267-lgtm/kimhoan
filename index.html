@@ -237,6 +237,7 @@
   @media (min-width: 1000px) { .cred-grid { grid-template-columns: repeat(4, 1fr); } }
   .cred { display: flex; flex-direction: column; gap: 10px; padding: 22px; border-radius: var(--radius); background: #fff; border: 1px solid var(--line); text-decoration: none; transition: border-color .2s, transform .2s; }
   a.cred:hover { border-color: var(--navy); transform: translateY(-3px); }
+  .cred-badge { width: 100%; height: auto; aspect-ratio: 640/436; object-fit: cover; border-radius: 10px; margin-bottom: 6px; }
   .cred-ico { font-family: var(--mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-mid); }
   .cred h3 { font-family: var(--serif); font-size: 1.12rem; line-height: 1.25; }
   .cred .verify { margin-top: auto; font-size: .8rem; font-weight: 600; color: var(--navy-light); }
@@ -367,7 +368,7 @@
       <div class="stats">
         <div class="stat"><b>2+</b><span data-en="years in AI marketing" data-vi="năm làm AI marketing">years in AI marketing</span></div>
         <div class="stat"><b>3</b><span data-en="websites built with AI" data-vi="website xây bằng AI">websites built with AI</span></div>
-        <div class="stat"><b>3</b><span data-en="Anthropic Academy certificates" data-vi="chứng chỉ Anthropic Academy">Anthropic Academy certificates</span></div>
+        <div class="stat"><b>3</b><span data-en="Claude Academy certificates" data-vi="chứng chỉ Claude Academy">Claude Academy certificates</span></div>
         <div class="stat"><b>EN/VI</b><span data-en="bilingual content" data-vi="nội dung song ngữ">bilingual content</span></div>
       </div>
     </div>
@@ -604,23 +605,26 @@
     <div class="sec-head reveal">
       <div class="eyebrow" data-en="Credentials" data-vi="Chứng chỉ">Credentials</div>
       <h2 class="h2" data-en="Verified, not just <em>claimed</em>." data-vi="Có xác minh, không chỉ <em>nói suông</em>.">Verified, not just <em>claimed</em>.</h2>
-      <p class="lead" data-en="Each Anthropic Academy certificate links to its official verification page." data-vi="Mỗi chứng chỉ Anthropic Academy đều dẫn tới trang xác minh chính thức.">Each Anthropic Academy certificate links to its official verification page.</p>
+      <p class="lead" data-en="Three AI Fluency courses from Claude Academy, Anthropic's learning platform. Click any badge to see its official verification page." data-vi="Ba khoá AI Fluency của Claude Academy — nền tảng học tập của Anthropic. Bấm vào từng huy hiệu để xem trang xác minh chính thức.">Three AI Fluency courses from Claude Academy, Anthropic's learning platform. Click any badge to see its official verification page.</p>
     </div>
     <div class="cred-grid">
       <a class="cred reveal" href="https://academy.claude.com/verify/a5ea3022faf4fccb3c4bd3c0ad3eff81" target="_blank" rel="noopener">
-        <div class="cred-ico">Anthropic Academy</div>
-        <h3 data-en="Certificate #1" data-vi="Chứng chỉ #1">Certificate #1</h3>
-        <span class="verify" data-en="Verify ↗" data-vi="Xác minh ↗">Verify ↗</span>
-      </a>
-      <a class="cred reveal" href="https://academy.claude.com/verify/f9455780388923e84311909356e0f4b3" target="_blank" rel="noopener">
-        <div class="cred-ico">Anthropic Academy</div>
-        <h3 data-en="Certificate #2" data-vi="Chứng chỉ #2">Certificate #2</h3>
-        <span class="verify" data-en="Verify ↗" data-vi="Xác minh ↗">Verify ↗</span>
+        <img class="cred-badge" src="images/cert-ai-fluency-foundations.jpg" alt="AI Fluency: Framework & Foundations — Claude Academy" loading="lazy" width="640" height="436">
+        <div class="cred-ico" data-en="Claude Academy · Oct 2026" data-vi="Claude Academy · 10/2026">Claude Academy · Oct 2026</div>
+        <h3>AI Fluency: Framework &amp; Foundations</h3>
+        <span class="verify" data-en="Verify certificate ↗" data-vi="Xác minh chứng chỉ ↗">Verify certificate ↗</span>
       </a>
       <a class="cred reveal" href="https://academy.claude.com/verify/943091a6b213ed274d2831ea360406d5" target="_blank" rel="noopener">
-        <div class="cred-ico">Anthropic Academy</div>
-        <h3 data-en="Certificate #3" data-vi="Chứng chỉ #3">Certificate #3</h3>
-        <span class="verify" data-en="Verify ↗" data-vi="Xác minh ↗">Verify ↗</span>
+        <img class="cred-badge" src="images/cert-ai-fluency-small-business.jpg" alt="AI Fluency for Small Businesses — Claude Academy" loading="lazy" width="640" height="436">
+        <div class="cred-ico" data-en="Claude Academy · Oct 2026" data-vi="Claude Academy · 10/2026">Claude Academy · Oct 2026</div>
+        <h3>AI Fluency for Small Businesses</h3>
+        <span class="verify" data-en="Verify certificate ↗" data-vi="Xác minh chứng chỉ ↗">Verify certificate ↗</span>
+      </a>
+      <a class="cred reveal" href="https://academy.claude.com/verify/f9455780388923e84311909356e0f4b3" target="_blank" rel="noopener">
+        <img class="cred-badge" src="images/cert-ai-fluency-students.jpg" alt="AI Fluency for Students — Claude Academy" loading="lazy" width="640" height="436">
+        <div class="cred-ico" data-en="Claude Academy · Oct 2026" data-vi="Claude Academy · 10/2026">Claude Academy · Oct 2026</div>
+        <h3>AI Fluency for Students</h3>
+        <span class="verify" data-en="Verify certificate ↗" data-vi="Xác minh chứng chỉ ↗">Verify certificate ↗</span>
       </a>
       <div class="cred reveal">
         <div class="cred-ico" data-en="Languages" data-vi="Ngoại ngữ">Languages</div>
