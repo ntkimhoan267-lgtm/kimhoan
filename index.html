@@ -260,9 +260,8 @@
   .carousel::-webkit-scrollbar-thumb { background: rgba(249,228,91,.35); border-radius: 3px; }
   .post { flex: 0 0 min(86%, 340px); scroll-snap-align: start; text-decoration: none; color: var(--cream); background: var(--navy-mid); border: 1px solid var(--line-dark); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: border-color .2s, transform .2s; user-select: none; -webkit-user-drag: none; }
   .post:hover { border-color: rgba(249,228,91,.5); transform: translateY(-3px); }
-  .post-thumb { height: 150px; position: relative; overflow: hidden; background: var(--navy-light); }
-  .post-thumb { background: #FEFEFE; }
-  .post-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+  .post-thumb { aspect-ratio: 40/21; position: relative; overflow: hidden; background: var(--navy-light); }
+  .post-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
   .post-tag { position: absolute; left: 12px; top: 12px; background: var(--yellow); color: var(--navy); font-family: var(--mono); font-size: .62rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; z-index: 1; }
   .post-body { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
   .post-meta { font-family: var(--mono); font-size: .64rem; letter-spacing: .08em; color: rgba(249,228,91,.6); margin-bottom: 8px; }
@@ -675,7 +674,7 @@
       <div class="carousel" id="blogCarousel" tabindex="0" aria-label="Danh sách bài viết mới nhất">
 
         <a href="/blog/di-trung-quoc-co-can-visa-khong/" class="post">
-          <div class="post-thumb"><span class="post-tag" data-en="China Visa" data-vi="Visa Trung Quốc">China Visa</span><img src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" draggable="false"></div>
+          <div class="post-thumb"><img src="/images/thumb-di-trung-quoc-co-can-visa-khong.jpg" alt="" loading="lazy" draggable="false"></div>
           <div class="post-body">
             <div class="post-meta" data-en="8 min read · Visa guide" data-vi="8 phút đọc · Hướng dẫn visa">8 min read · Visa guide</div>
             <h3 data-en="Do You Need a Visa for China? The Truth About the 240-Hour Waiver" data-vi="Đi Trung Quốc có cần visa không? Sự thật về miễn visa 240 giờ">Do You Need a Visa for China? The Truth About the 240-Hour Waiver</h3>
@@ -685,7 +684,7 @@
         </a>
 
         <a href="/blog/xin-visa-han-quoc-2026-ho-so-c39/" class="post">
-          <div class="post-thumb"><span class="post-tag" data-en="Korea Visa" data-vi="Visa Hàn Quốc">Korea Visa</span><img src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" draggable="false"></div>
+          <div class="post-thumb"><img src="/images/thumb-xin-visa-han-quoc-2026-ho-so-c39.jpg" alt="" loading="lazy" draggable="false"></div>
           <div class="post-body">
             <div class="post-meta" data-en="12 min read · Visa &amp; travel" data-vi="12 phút đọc · Visa &amp; du lịch">12 min read · Visa &amp; travel</div>
             <h3 data-en="What Do You Need for a Korean Visa in 2026? A Visa Specialist Explains" data-vi="Xin visa Hàn Quốc 2026 cần gì? Chuyên viên visa nói cho bạn nghe">What Do You Need for a Korean Visa in 2026? A Visa Specialist Explains</h3>
@@ -695,7 +694,7 @@
         </a>
 
         <a href="/blog/mot-ngay-binh-thuong/" class="post">
-          <div class="post-thumb"><span class="post-tag" data-en="Daily life" data-vi="Cuộc sống">Daily life</span><img src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" draggable="false"></div>
+          <div class="post-thumb"><img src="/images/thumb-mot-ngay-binh-thuong.jpg" alt="" loading="lazy" draggable="false"></div>
           <div class="post-body">
             <div class="post-meta" data-en="6 min read · Personal" data-vi="6 phút đọc · Cá nhân">6 min read · Personal</div>
             <h3 data-en="A Day in My Life — Student, Content Creator &amp; AI Learner" data-vi="Một ngày bình thường của mình — sinh viên, content creator &amp; người học AI">A Day in My Life — Student, Content Creator &amp; AI Learner</h3>
@@ -706,7 +705,7 @@
 
 
         <a href="/blog/sinh-vien-marketing-dung-ai-moi-ngay/" class="post">
-          <div class="post-thumb"><span class="post-tag" data-en="AI &amp; Marketing" data-vi="AI &amp; Marketing">AI &amp; Marketing</span><img src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" draggable="false"></div>
+          <div class="post-thumb"><img src="/images/thumb-sinh-vien-marketing-dung-ai-moi-ngay.jpg" alt="" loading="lazy" draggable="false"></div>
           <div class="post-body">
             <div class="post-meta" data-en="5 min read · AI" data-vi="5 phút đọc · AI">5 min read · AI</div>
             <h3 data-en="I'm a Marketing Student — Here's How I Use AI Every Day" data-vi="Tôi là sinh viên Marketing và tôi dùng AI như thế nào mỗi ngày">I'm a Marketing Student — Here's How I Use AI Every Day</h3>
