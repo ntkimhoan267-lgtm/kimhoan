@@ -217,7 +217,10 @@
   @media (min-width: 900px) { .about-photo { position: sticky; top: 100px; } }
   .about-photo img { width: 100%; height: 100%; object-fit: cover; }
   .about-text > p { color: var(--text-mid); margin-bottom: 14px; }
-  .about-text p strong { color: var(--navy); }
+  .about-text p strong, .value-list strong { color: var(--navy); }
+  .value-list { list-style: none; display: grid; gap: 10px; margin: 22px 0 6px; }
+  .value-list li { position: relative; padding: 14px 16px 14px 44px; background: #fff; border: 1px solid var(--line); border-radius: 12px; font-size: .92rem; color: var(--text-mid); }
+  .value-list li::before { content: '✓'; position: absolute; left: 14px; top: 13px; width: 20px; height: 20px; border-radius: 50%; background: var(--yellow); color: var(--navy); font-size: .7rem; font-weight: 700; display: grid; place-items: center; }
   .timeline { list-style: none; margin-top: 34px; border-left: 2px solid var(--line); margin-left: 6px; }
   .tl { position: relative; padding: 0 0 28px 26px; }
   .tl:last-child { padding-bottom: 0; }
@@ -258,7 +261,8 @@
   .post { flex: 0 0 min(86%, 340px); scroll-snap-align: start; text-decoration: none; color: var(--cream); background: var(--navy-mid); border: 1px solid var(--line-dark); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: border-color .2s, transform .2s; user-select: none; -webkit-user-drag: none; }
   .post:hover { border-color: rgba(249,228,91,.5); transform: translateY(-3px); }
   .post-thumb { height: 150px; position: relative; overflow: hidden; background: var(--navy-light); }
-  .post-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: .85; }
+  .post-thumb { background: #FEFEFE; }
+  .post-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
   .post-tag { position: absolute; left: 12px; top: 12px; background: var(--yellow); color: var(--navy); font-family: var(--mono); font-size: .62rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; z-index: 1; }
   .post-body { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
   .post-meta { font-family: var(--mono); font-size: .64rem; letter-spacing: .08em; color: rgba(249,228,91,.6); margin-bottom: 8px; }
@@ -552,8 +556,16 @@
       <h2 class="h2" style="margin-bottom:20px" data-en="From the visa desk to <em>AI marketing</em>." data-vi="Từ bàn tư vấn visa đến <em>AI marketing</em>.">From the visa desk to <em>AI marketing</em>.</h2>
       <p data-en="I started in tourism and visa consulting, where I learned what customers actually ask before they buy. Then I wrote English content for international readers. Today I bring both together as an <strong>AI Marketing Specialist</strong>."
          data-vi="Mình bắt đầu từ tư vấn du lịch và visa, nơi mình hiểu khách hàng thật sự hỏi gì trước khi mua. Sau đó mình viết nội dung tiếng Anh cho độc giả quốc tế. Giờ mình kết hợp cả hai trong vai trò <strong>AI Marketing Specialist</strong>.">I started in tourism and visa consulting, where I learned what customers actually ask before they buy. Then I wrote English content for international readers. Today I bring both together as an <strong>AI Marketing Specialist</strong>.</p>
-      <p data-en="I'm also a mother and a Marketing student at Duy Tan University, so I care a lot about working efficiently. That's exactly what AI is for."
-         data-vi="Mình cũng là một người mẹ và sinh viên Marketing tại Đại học Duy Tân, nên mình rất coi trọng việc làm hiệu quả. Đó chính là lý do mình dùng AI.">I'm also a mother and a Marketing student at Duy Tan University, so I care a lot about working efficiently. That's exactly what AI is for.</p>
+      <ul class="value-list">
+        <li data-en="<strong>I know the customer.</strong> Years at the visa desk taught me the real questions people ask before they buy — that's what my content and ads answer."
+            data-vi="<strong>Mình hiểu khách hàng.</strong> Những năm ở bàn tư vấn visa giúp mình biết khách thật sự hỏi gì trước khi mua — nội dung và quảng cáo của mình trả lời đúng những câu đó."><strong>I know the customer.</strong> Years at the visa desk taught me the real questions people ask before they buy — that's what my content and ads answer.</li>
+        <li data-en="<strong>End-to-end, with AI.</strong> I can take a campaign from research and plan to content, ads, landing page and report — without waiting on a large team."
+            data-vi="<strong>Làm trọn gói, cùng AI.</strong> Mình tự đưa một chiến dịch đi từ nghiên cứu, kế hoạch đến nội dung, quảng cáo, landing page và báo cáo — không cần chờ một đội ngũ lớn."><strong>End-to-end, with AI.</strong> I can take a campaign from research and plan to content, ads, landing page and report — without waiting on a large team.</li>
+        <li data-en="<strong>Bilingual, for global audiences.</strong> English and Vietnamese content written for international readers, not just translated."
+            data-vi="<strong>Song ngữ, cho khách quốc tế.</strong> Nội dung tiếng Anh và tiếng Việt viết cho người đọc quốc tế, không phải chỉ dịch lại."><strong>Bilingual, for global audiences.</strong> English and Vietnamese content written for international readers, not just translated.</li>
+        <li data-en="<strong>Proven, not promised.</strong> Started as a contractor and was offered a full-time role based on results."
+            data-vi="<strong>Có kết quả, không chỉ hứa.</strong> Bắt đầu là cộng tác viên và được ký hợp đồng chính thức nhờ kết quả công việc."><strong>Proven, not promised.</strong> Started as a contractor and was offered a full-time role based on results.</li>
+      </ul>
 
       <ol class="timeline">
         <li class="tl now">
@@ -663,7 +675,7 @@
       <div class="carousel" id="blogCarousel" tabindex="0" aria-label="Danh sách bài viết mới nhất">
 
         <a href="/blog/di-trung-quoc-co-can-visa-khong/" class="post">
-          <div class="post-thumb" style="background:linear-gradient(135deg,#0D1B3E,#5C1B1B)"><span class="post-tag" data-en="China Visa" data-vi="Visa Trung Quốc">China Visa</span></div>
+          <div class="post-thumb"><span class="post-tag" data-en="China Visa" data-vi="Visa Trung Quốc">China Visa</span><img src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" draggable="false"></div>
           <div class="post-body">
             <div class="post-meta" data-en="8 min read · Visa guide" data-vi="8 phút đọc · Hướng dẫn visa">8 min read · Visa guide</div>
             <h3 data-en="Do You Need a Visa for China? The Truth About the 240-Hour Waiver" data-vi="Đi Trung Quốc có cần visa không? Sự thật về miễn visa 240 giờ">Do You Need a Visa for China? The Truth About the 240-Hour Waiver</h3>
@@ -673,7 +685,7 @@
         </a>
 
         <a href="/blog/xin-visa-han-quoc-2026-ho-so-c39/" class="post">
-          <div class="post-thumb" style="background:linear-gradient(135deg,#0D1B3E,#3D2A00)"><span class="post-tag" data-en="Korea Visa" data-vi="Visa Hàn Quốc">Korea Visa</span></div>
+          <div class="post-thumb"><span class="post-tag" data-en="Korea Visa" data-vi="Visa Hàn Quốc">Korea Visa</span><img src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" draggable="false"></div>
           <div class="post-body">
             <div class="post-meta" data-en="12 min read · Visa &amp; travel" data-vi="12 phút đọc · Visa &amp; du lịch">12 min read · Visa &amp; travel</div>
             <h3 data-en="What Do You Need for a Korean Visa in 2026? A Visa Specialist Explains" data-vi="Xin visa Hàn Quốc 2026 cần gì? Chuyên viên visa nói cho bạn nghe">What Do You Need for a Korean Visa in 2026? A Visa Specialist Explains</h3>
@@ -683,7 +695,7 @@
         </a>
 
         <a href="/blog/mot-ngay-binh-thuong/" class="post">
-          <div class="post-thumb" style="background:linear-gradient(135deg,#2D1B5C,#1B3D2D)"><span class="post-tag" data-en="Daily life" data-vi="Cuộc sống">Daily life</span></div>
+          <div class="post-thumb"><span class="post-tag" data-en="Daily life" data-vi="Cuộc sống">Daily life</span><img src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" draggable="false"></div>
           <div class="post-body">
             <div class="post-meta" data-en="6 min read · Personal" data-vi="6 phút đọc · Cá nhân">6 min read · Personal</div>
             <h3 data-en="A Day in My Life — Student, Content Creator &amp; AI Learner" data-vi="Một ngày bình thường của mình — sinh viên, content creator &amp; người học AI">A Day in My Life — Student, Content Creator &amp; AI Learner</h3>
@@ -692,18 +704,9 @@
           </div>
         </a>
 
-        <a href="/blog/25-tuoi-di-hoc-lai/" class="post">
-          <div class="post-thumb" style="background:linear-gradient(135deg,#1B3D2D,#3D2A00)"><span class="post-tag" data-en="Personal story" data-vi="Câu chuyện">Personal story</span></div>
-          <div class="post-body">
-            <div class="post-meta" data-en="10 min read · Personal" data-vi="10 phút đọc · Cá nhân">10 min read · Personal</div>
-            <h3 data-en="At 22, Just After Having My First Child, I Was a First-Year University Student" data-vi="22 tuổi, vừa sinh con đầu lòng, tôi là sinh viên năm nhất đại học">At 22, Just After Having My First Child, I Was a First-Year University Student</h3>
-            <p data-en="For everyone who thinks they're already too late. A real story about choosing yourself — over comfort." data-vi="Gửi những ai đang nghĩ rằng mình đã 'trễ'. Câu chuyện thật về việc chọn bản thân — thay vì chọn sự thoải mái.">For everyone who thinks they're already too late. A real story about choosing yourself — over comfort.</p>
-            <div class="post-more" data-en="Read article →" data-vi="Đọc bài viết →">Read article →</div>
-          </div>
-        </a>
 
         <a href="/blog/sinh-vien-marketing-dung-ai-moi-ngay/" class="post">
-          <div class="post-thumb"><span class="post-tag" data-en="AI &amp; Marketing" data-vi="AI &amp; Marketing">AI &amp; Marketing</span><img src="/images/blog-1.jpg" alt="" loading="lazy" draggable="false"></div>
+          <div class="post-thumb"><span class="post-tag" data-en="AI &amp; Marketing" data-vi="AI &amp; Marketing">AI &amp; Marketing</span><img src="/images/blog-thumb.jpg" alt="Nguyễn Thị Kim Hoàn" loading="lazy" draggable="false"></div>
           <div class="post-body">
             <div class="post-meta" data-en="5 min read · AI" data-vi="5 phút đọc · AI">5 min read · AI</div>
             <h3 data-en="I'm a Marketing Student — Here's How I Use AI Every Day" data-vi="Tôi là sinh viên Marketing và tôi dùng AI như thế nào mỗi ngày">I'm a Marketing Student — Here's How I Use AI Every Day</h3>
