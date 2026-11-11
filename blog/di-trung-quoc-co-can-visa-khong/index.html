@@ -87,6 +87,7 @@
   .nav-inner{max-width:760px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
   .nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;font-style:italic;color:var(--deep-navy);text-decoration:none;}
   .nav-logo span{color:var(--pastel-yellow);}
+  .nav-logo img{height:26px;width:auto;display:block;}
   .nav-right{display:flex;align-items:center;gap:14px;}
   .nav-back{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;transition:color 0.2s;}
   .nav-back:hover{color:var(--deep-navy);}
@@ -228,6 +229,11 @@
     html{scroll-behavior:auto;}
   }
 </style>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0B1F45">
 </head>
 <body>
 
@@ -235,7 +241,7 @@
 
 <nav id="navbar">
   <div class="nav-inner">
-    <a href="/" class="nav-logo">Kim Hoàn<span>.</span></a>
+    <a href="/" class="nav-logo" aria-label="Kim Hoàn"><img src="/images/brand/logo-wordmark.png" alt="Kim Hoàn" width="801" height="152"></a>
     <div class="nav-right">
       <a href="/blog/" class="nav-back">
         <span class="vi">← Tất cả bài viết</span>

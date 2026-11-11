@@ -93,8 +93,8 @@
   #navbar { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: background .25s, box-shadow .25s; }
   #navbar.scrolled { background: rgba(253,250,240,.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 1px 0 var(--line); }
   .nav-in { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
-  .logo { font-family: var(--serif); font-weight: 900; font-size: 1.35rem; text-decoration: none; color: var(--navy); white-space: nowrap; }
-  .logo span { color: var(--navy-light); }
+  .logo { display: inline-flex; align-items: center; text-decoration: none; }
+  .logo img { height: 30px; width: auto; display: block; }
   .nav-links { display: none; align-items: center; gap: 26px; list-style: none; }
   .nav-links a { text-decoration: none; font-size: .88rem; font-weight: 500; color: var(--navy); opacity: .78; transition: opacity .2s; }
   .nav-links a:hover { opacity: 1; }
@@ -298,8 +298,7 @@
   /* ─── Chân trang ─── */
   footer { background: var(--navy); color: rgba(253,250,240,.6); padding: 36px 0; font-size: .85rem; }
   .foot { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; }
-  .foot .logo { color: var(--cream); }
-  .foot .logo span { color: var(--yellow); }
+  .foot .logo img { height: 34px; }
   .foot nav { display: flex; flex-wrap: wrap; gap: 18px; }
   .foot a { text-decoration: none; }
   .foot a:hover { color: var(--yellow); }
@@ -315,13 +314,18 @@
     .reveal { opacity: 1; transform: none; transition: none; }
   }
 </style>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0B1F45">
 </head>
 <body>
 
 <!-- ══════════ ĐIỀU HƯỚNG ══════════ -->
 <header id="navbar">
   <div class="wrap nav-in">
-    <a href="#hero" class="logo">Kim Hoàn<span>.</span></a>
+    <a href="#hero" class="logo" aria-label="Kim Hoàn"><img src="/images/brand/logo-wordmark.png" alt="Kim Hoàn" width="801" height="152"></a>
     <ul class="nav-links">
       <li><a href="#services" data-en="Services" data-vi="Dịch vụ">Services</a></li>
       <li><a href="#work" data-en="Work" data-vi="Dự án">Work</a></li>
@@ -778,7 +782,7 @@
 
 <footer>
   <div class="wrap foot">
-    <a href="#hero" class="logo">Kim Hoàn<span>.</span></a>
+    <a href="#hero" class="logo" aria-label="Kim Hoàn"><img src="/images/brand/logo-wordmark-cream.png" alt="Kim Hoàn" width="801" height="152" loading="lazy"></a>
     <nav>
       <a href="#work" data-en="Work" data-vi="Dự án">Work</a>
       <a href="/blog/">Blog</a>
