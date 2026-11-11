@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>CV – Nguyễn Thị Kim Hoàn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B3E;
+    --navy-mid: #1A2E5C;
+    --text: #1f2a44;
+    --muted: #5b6785;
+    --yellow: #F9E45B;
+    --line: #d9dde8;
+    --bg: #f0f2f7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); }
+  body {
+    font-family: 'Be Vietnam Pro', system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+    color: var(--text);
+    font-size: 10pt;
+    line-height: 1.45;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 12mm auto;
+    background: #fff;
+    padding: 12mm 14mm 10mm;
+    box-shadow: 0 6px 30px rgba(13,27,62,0.12);
+  }
+
+  /* ===== Header ===== */
+  .header {
+    display: flex;
+    gap: 9mm;
+    align-items: flex-start;
+    padding-bottom: 5mm;
+    border-bottom: 2px solid var(--navy);
+  }
+  .photo {
+    flex: 0 0 auto;
+    /* Ảnh tỉ lệ 4x6 */
+    width: 42mm;
+    height: 63mm;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: #fafbfe;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #9aa3bd;
+    font-size: 8.5pt;
+    line-height: 1.4;
+    padding: 0;
+  }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo span { display: block; }
+  .photo .big { font-size: 12pt; font-weight: 600; color: #b3bace; margin-bottom: 2mm; }
+  .head-text { flex: 1 1 auto; min-width: 0; }
+  .name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24pt;
+    line-height: 1.15;
+    color: var(--navy);
+    letter-spacing: 0.2px;
+  }
+  .title {
+    margin-top: 2mm;
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 10.5pt;
+    padding: 1mm 3mm;
+    border-radius: 3px;
+  }
+  .contact {
+    margin-top: 4mm;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2mm 6mm;
+    font-size: 9.5pt;
+  }
+  .contact div { display: flex; gap: 2mm; align-items: baseline; }
+  .contact b { color: var(--navy); font-weight: 600; white-space: nowrap; }
+  .contact .fill { color: var(--muted); }
+
+  /* ===== Sections ===== */
+  .section { margin-top: 4.5mm; }
+  .section h2 {
+    font-size: 11pt;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--navy);
+    padding-bottom: 1.5mm;
+    margin-bottom: 2.2mm;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 2.5mm;
+  }
+  .section h2::before {
+    content: "";
+    width: 3mm; height: 3mm;
+    background: var(--yellow);
+    border: 1.5px solid var(--navy);
+    border-radius: 1px;
+  }
+  p { margin-bottom: 1.5mm; }
+
+  .item { margin-bottom: 3mm; }
+  .item:last-child { margin-bottom: 0; }
+  .item-head { display: flex; justify-content: space-between; gap: 6mm; align-items: baseline; }
+  .item-head h3 { font-size: 10.5pt; font-weight: 700; color: var(--navy); }
+  .item-head .time { font-size: 9pt; color: var(--muted); white-space: nowrap; font-weight: 500; }
+  .org { font-size: 9.5pt; color: var(--navy-mid); font-weight: 500; margin-bottom: 1mm; }
+  ul { padding-left: 4.5mm; }
+  li { margin-bottom: 0.5mm; }
+  li::marker { color: var(--navy-mid); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0 8mm; }
+  .skills ul { list-style: none; padding: 0; }
+  .skills li { padding-left: 4mm; position: relative; }
+  .skills li::before { content: "–"; position: absolute; left: 0; color: var(--navy-mid); }
+  .tags { display: flex; flex-wrap: wrap; gap: 1.5mm; }
+  .tag {
+    font-size: 8.5pt; padding: 0.8mm 2.5mm; border-radius: 999px;
+    border: 1px solid var(--line); background: #f7f8fb; color: var(--navy-mid);
+  }
+  .note { font-size: 8.5pt; color: var(--muted); margin-top: 2mm; }
+
+  /* ===== Print ===== */
+  @page { size: A4; margin: 12mm 14mm 12mm; }
+  @media print {
+    html, body { background: #fff; }
+    .page { margin: 0; box-shadow: none; width: auto; min-height: auto; padding: 0; }
+    .print-hint { display: none; }
+    .item, .section h2, .header, .skills, .two-col { break-inside: avoid; page-break-inside: avoid; }
+    .section h2 { break-after: avoid; page-break-after: avoid; }
+  }
+  .print-hint {
+    width: 210mm; margin: 0 auto 10mm; text-align: center;
+    font-size: 9pt; color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="header">
+    <div class="photo">
+      <img src="photo.jpg" alt="Ảnh chân dung Nguyễn Thị Kim Hoàn">
+    </div>
+    <div class="head-text">
+      <h1 class="name">Nguyễn Thị Kim Hoàn</h1>
+      <div class="title">Vị trí ứng tuyển: AI Marketing Specialist</div>
+      <div class="contact">
+        <div><b>Ngày sinh:</b> <span class="fill">…… / …… / ……</span></div>
+        <div><b>Điện thoại:</b> <span class="fill">………………………</span></div>
+        <div><b>Email:</b> <span>ntkimhoan267@gmail.com</span></div>
+        <div><b>Địa chỉ:</b> <span>Đà Nẵng</span></div>
+        <div><b>Website:</b> <span>iamkimhoan.vn</span></div>
+        <div><b>Ngôn ngữ:</b> <span>Tiếng Việt · Tiếng Anh · Tiếng Hàn (cơ bản)</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Mục tiêu nghề nghiệp</h2>
+    <p>Sinh viên năm cuối ngành Marketing (GPA 3.48), có 2 năm kinh nghiệm viết nội dung song ngữ Anh – Việt và tư vấn khách hàng trong ngành du lịch – visa. Thành thạo ứng dụng AI (Claude, Gemini, ChatGPT) vào lập kế hoạch chiến dịch, sản xuất nội dung số lượng lớn, nghiên cứu thị trường và xây dựng website. Mong muốn gia nhập đội ngũ marketing, nơi mình có thể dùng AI để làm việc nhanh hơn và dùng kinh nghiệm thực tế với khách hàng để giữ nội dung chính xác, đúng thương hiệu.</p>
+  </section>
+
+  <section class="section">
+    <h2>Kinh nghiệm làm việc</h2>
+
+    <div class="item">
+      <div class="item-head">
+        <h3>Content Writer (tiếng Anh)</h3>
+        <span class="time">2023 – 2024</span>
+      </div>
+      <div class="org">Vietnam Reviewers</div>
+      <ul>
+        <li>Viết bài tiếng Anh cho độc giả quốc tế về văn hoá, du lịch và đời sống Việt Nam.</li>
+        <li>Nghiên cứu chủ đề, lên dàn ý và biên tập bài theo tiêu chuẩn SEO, bảo đảm thông tin chính xác và giọng văn phù hợp người đọc nước ngoài.</li>
+        <li>Bắt đầu ứng dụng AI vào khâu nghiên cứu và phác thảo để tăng tốc độ sản xuất nội dung.</li>
+      </ul>
+    </div>
+
+    <div class="item">
+      <div class="item-head">
+        <h3>Nhân viên Tư vấn Du lịch &amp; Visa</h3>
+        <span class="time">2022 – 2023</span>
+      </div>
+      <div class="org">TRIP – Visa &amp; Dịch thuật · Đà Nẵng</div>
+      <ul>
+        <li>Tư vấn khách hàng trong và ngoài nước về thủ tục visa Nhật, Hàn, Trung Quốc, châu Âu; hướng dẫn chuẩn bị và kiểm tra hồ sơ.</li>
+        <li>Xây dựng và quản lý sự hiện diện trực tuyến của công ty cho khách quốc tế (website, nội dung giới thiệu dịch vụ).</li>
+        <li>Nắm rõ những câu hỏi thật của khách trước khi mua, làm nền tảng cho nội dung và quảng cáo sau này.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Dự án nổi bật</h2>
+
+    <div class="item">
+      <div class="item-head">
+        <h3>tritravel.vn – Website thương hiệu du lịch Đà Nẵng</h3>
+        <span class="time">Song ngữ · SEO</span>
+      </div>
+      <ul>
+        <li>Lên cấu trúc dịch vụ (Visa · Vận chuyển · Tour · Blog · Đặt chỗ), viết nội dung Việt – Anh và chỉ đạo công cụ AI (Claude Code) dựng site.</li>
+      </ul>
+    </div>
+
+    <div class="item">
+      <div class="item-head">
+        <h3>tripdn.com – Website tạo khách hàng tiềm năng cho dịch vụ visa</h3>
+        <span class="time">Lead gen · Mobile-first</span>
+      </div>
+      <ul>
+        <li>Thiết kế luồng để khách tìm đúng loại visa và liên hệ trong vài thao tác: nút Zalo, Messenger, gọi điện nổi; bảng giá, hướng dẫn và video giới thiệu.</li>
+      </ul>
+    </div>
+
+    <div class="item">
+      <div class="item-head">
+        <h3>iamkimhoan.vn – Portfolio cá nhân &amp; blog song ngữ</h3>
+        <span class="time">Content · Schema · Search Console</span>
+      </div>
+      <ul>
+        <li>Lập kế hoạch bài viết theo từ khoá tìm kiếm, viết với sự hỗ trợ của AI và tự biên tập; cài structured data (Article, FAQ), sitemap và xác minh Google Search Console.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Học vấn</h2>
+    <div class="item">
+      <div class="item-head">
+        <h3>Cử nhân Quản trị Kinh doanh – chuyên ngành Marketing</h3>
+        <span class="time">2023 – 06/2027</span>
+      </div>
+      <div class="org">Trường Đại học Duy Tân, Đà Nẵng</div>
+      <ul>
+        <li>GPA 3.48/4.0 · Giải thưởng Sinh viên Xuất sắc.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="two-col">
+    <section class="section skills">
+      <h2>Kỹ năng</h2>
+      <ul>
+        <li>Lập kế hoạch chiến dịch marketing theo tháng/mùa: mục tiêu, đối tượng, kênh, lịch nội dung, ngân sách.</li>
+        <li>Sản xuất nội dung song ngữ Anh – Việt bằng AI: bài đăng, ad copy, mô tả sản phẩm, blog, hình ảnh.</li>
+        <li>Quảng cáo thương mại điện tử và A/B testing (Meta Ads).</li>
+        <li>Nghiên cứu thị trường, đối thủ, khách hàng và lập báo cáo (SPSS, Google Sheets).</li>
+        <li>Xây dựng thư viện prompt và quy trình tự động hoá cho đội ngũ.</li>
+        <li>Dựng website song ngữ chuẩn SEO bằng công cụ AI; Google Search Console.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Chứng chỉ</h2>
+      <ul>
+        <li><b>AI Fluency: Framework &amp; Foundations</b> – Claude Academy (Anthropic), 10/2026</li>
+        <li><b>AI Fluency for Small Businesses</b> – Claude Academy (Anthropic), 10/2026</li>
+        <li><b>AI Fluency for Students</b> – Claude Academy (Anthropic), 10/2026</li>
+        <li><b>Google Ads: AI-Powered Performance Ads Certification</b> – Google Skillshop, 10/2026</li>
+        <li><b>IELTS 6.0</b></li>
+        <li><b>TOPIK 1</b> (tiếng Hàn)</li>
+      </ul>
+
+      <h2 style="margin-top:5mm">Công cụ sử dụng</h2>
+      <div class="tags">
+        <span class="tag">Claude</span><span class="tag">Claude Code</span><span class="tag">Gemini</span>
+        <span class="tag">ChatGPT</span><span class="tag">Canva</span><span class="tag">Meta Ads Manager</span>
+        <span class="tag">Google Search Console</span><span class="tag">Google Sheets</span>
+        <span class="tag">SPSS</span><span class="tag">GitHub Pages</span>
+      </div>
+    </section>
+  </div>
+
+  <p class="note">Sản phẩm thực tế và chứng chỉ có thể xem tại iamkimhoan.vn. Các chiến dịch quảng cáo làm cho đơn vị khác thuộc diện bảo mật, sẵn sàng trình bày quy trình và kết quả khi phỏng vấn.</p>
+
+</div>
+
+<p class="print-hint">Để in hoặc lưu PDF: Ctrl/Cmd + P → chọn khổ A4, lề “None”, bật “Background graphics”.</p>
+
+</body>
+</html>
