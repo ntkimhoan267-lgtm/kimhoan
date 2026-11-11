@@ -30,7 +30,7 @@
   "address": { "@type": "PostalAddress", "addressLocality": "Đà Nẵng", "addressCountry": "VN" },
   "alumniOf": { "@type": "CollegeOrUniversity", "name": "Duy Tan University" },
   "knowsLanguage": ["vi", "en"],
-  "knowsAbout": ["AI marketing", "Content marketing", "E-commerce advertising", "Marketing automation", "Prompt engineering", "Website building with AI"]
+  "knowsAbout": ["AI marketing", "Google Ads", "Content marketing", "E-commerce advertising", "Marketing automation", "Prompt engineering", "Website building with AI"]
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -236,7 +236,7 @@
   /* ─── Chứng chỉ ─── */
   .cred-grid { display: grid; gap: 14px; }
   @media (min-width: 640px) { .cred-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1000px) { .cred-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 1000px) { .cred-grid { grid-template-columns: repeat(4, 1fr); } .cred-wide { grid-column: 1 / -1; } }
   .cred { display: flex; flex-direction: column; gap: 10px; padding: 22px; border-radius: var(--radius); background: #fff; border: 1px solid var(--line); text-decoration: none; transition: border-color .2s, transform .2s; }
   a.cred:hover { border-color: var(--navy); transform: translateY(-3px); }
   .cred-badge { width: 100%; height: auto; aspect-ratio: 640/436; object-fit: cover; border-radius: 10px; margin-bottom: 6px; }
@@ -375,7 +375,7 @@
       <div class="stats">
         <div class="stat"><b>2+</b><span data-en="years in AI marketing" data-vi="năm làm AI marketing">years in AI marketing</span></div>
         <div class="stat"><b>3</b><span data-en="websites built with AI" data-vi="website xây bằng AI">websites built with AI</span></div>
-        <div class="stat"><b>3</b><span data-en="Claude Academy certificates" data-vi="chứng chỉ Claude Academy">Claude Academy certificates</span></div>
+        <div class="stat"><b>4</b><span data-en="AI &amp; ads certificates" data-vi="chứng chỉ AI &amp; quảng cáo">AI &amp; ads certificates</span></div>
         <div class="stat"><b>EN/VI</b><span data-en="bilingual content" data-vi="nội dung song ngữ">bilingual content</span></div>
       </div>
     </div>
@@ -612,7 +612,7 @@
     <div class="sec-head reveal">
       <div class="eyebrow" data-en="Credentials" data-vi="Chứng chỉ">Credentials</div>
       <h2 class="h2" data-en="Verified, not just <em>claimed</em>." data-vi="Có xác minh, không chỉ <em>nói suông</em>.">Verified, not just <em>claimed</em>.</h2>
-      <p class="lead" data-en="Three AI Fluency courses from Claude Academy, Anthropic's learning platform. Click any badge to see its official verification page." data-vi="Ba khoá AI Fluency của Claude Academy — nền tảng học tập của Anthropic. Bấm vào từng huy hiệu để xem trang xác minh chính thức.">Three AI Fluency courses from Claude Academy, Anthropic's learning platform. Click any badge to see its official verification page.</p>
+      <p class="lead" data-en="Three AI Fluency courses from Claude Academy, Anthropic's learning platform, plus the Google Ads AI-Powered Performance certification from Google Skillshop. Click any badge to see its official verification page." data-vi="Ba khoá AI Fluency của Claude Academy — nền tảng học tập của Anthropic — cùng chứng chỉ Google Ads AI-Powered Performance của Google Skillshop. Bấm vào từng huy hiệu để xem trang xác minh chính thức.">Three AI Fluency courses from Claude Academy, Anthropic's learning platform, plus the Google Ads AI-Powered Performance certification from Google Skillshop. Click any badge to see its official verification page.</p>
     </div>
     <div class="cred-grid">
       <a class="cred reveal" href="https://academy.claude.com/verify/a5ea3022faf4fccb3c4bd3c0ad3eff81" target="_blank" rel="noopener">
@@ -633,7 +633,13 @@
         <h3>AI Fluency for Students</h3>
         <span class="verify" data-en="Verify certificate ↗" data-vi="Xác minh chứng chỉ ↗">Verify certificate ↗</span>
       </a>
-      <div class="cred reveal">
+      <a class="cred reveal" href="https://skillshop.credential.net/02fc5107-48d3-4599-9e7d-e7b9817b30f8" target="_blank" rel="noopener">
+        <img class="cred-badge" src="images/cert-google-ads-ai-performance.jpg" alt="AI-Powered Performance Ads Certification — Google Skillshop" loading="lazy" width="640" height="436">
+        <div class="cred-ico" data-en="Google Skillshop · Oct 2026" data-vi="Google Skillshop · 10/2026">Google Skillshop · Oct 2026</div>
+        <h3>Google Ads: AI-Powered Performance Ads Certification</h3>
+        <span class="verify" data-en="Verify certificate ↗" data-vi="Xác minh chứng chỉ ↗">Verify certificate ↗</span>
+      </a>
+      <div class="cred reveal cred-wide">
         <div class="cred-ico" data-en="Languages" data-vi="Ngoại ngữ">Languages</div>
         <h3>IELTS 6.0 · TOPIK 1</h3>
         <span class="verify" style="color:var(--text-mid);font-weight:400" data-en="Vietnamese (native) · English · Korean (basic)" data-vi="Tiếng Việt (bản ngữ) · Tiếng Anh · Tiếng Hàn (cơ bản)">Vietnamese (native) · English · Korean (basic)</span>
