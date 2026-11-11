@@ -4,6 +4,8 @@ Website tĩnh (GitHub Pages) tại https://iamkimhoan.vn. Trang chủ `index.htm
 
 ## Bộ nhận diện thương hiệu (bắt buộc dùng)
 
+Quy tắc đầy đủ và file logo đóng gói sẵn nằm trong skill `.claude/skills/kimhoan-brand/` (gọi `/kimhoan-brand`). Đọc skill đó trước khi tạo hay sửa bất kỳ ảnh, video nào. Logo Kim Hoàn chỉ dành cho thương hiệu Kim Hoàn, không dùng cho TRIP, TriTravel hay khách hàng khác.
+
 Logo mới nằm trong `images/brand/`. **Luôn dùng các file này, không tự vẽ hay gõ chữ "Kim Hoàn." thay logo.**
 
 | File | Dùng khi |
