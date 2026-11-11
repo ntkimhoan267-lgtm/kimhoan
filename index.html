@@ -125,6 +125,8 @@
       var(--cream); }
   .hero-grid { display: grid; gap: 48px; align-items: center; }
   @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.15fr .85fr; gap: 64px; } }
+  .hero-lockup { display: block; height: auto; width: min(100%, 300px); margin-bottom: 22px; }
+  @media (min-width: 900px) { .hero-lockup { width: 340px; } }
   .status { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .7rem; letter-spacing: .06em; background: #fff; border: 1px solid var(--line); padding: 7px 14px; border-radius: 999px; margin-bottom: 26px; max-width: 100%; }
   .status i { width: 8px; height: 8px; border-radius: 50%; background: #2BB673; box-shadow: 0 0 0 4px rgba(43,182,115,.18); flex: none; }
   .hero-title { position: relative; z-index: 0; font-family: var(--serif); font-weight: 900; font-size: clamp(2.4rem, 6.4vw, 4.3rem); line-height: 1.05; letter-spacing: -.02em; }
@@ -361,7 +363,8 @@
 <section id="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="status"><i></i><span data-en="AI Marketing Specialist · Đà Nẵng, Vietnam" data-vi="AI Marketing Specialist · Đà Nẵng, Việt Nam">AI Marketing Specialist · Đà Nẵng, Vietnam</span></div>
+      <img class="hero-lockup" src="/images/brand/logo-lockup.png" alt="Kim Hoàn — AI Marketing Specialist" width="489" height="137" fetchpriority="high">
+      <div class="status"><i></i><span data-en="Đà Nẵng, Vietnam · Open to work" data-vi="Đà Nẵng, Việt Nam · Sẵn sàng nhận việc">Đà Nẵng, Vietnam · Open to work</span></div>
       <h1 class="hero-title" data-en="Marketing that runs on <em>AI</em>, checked by a human." data-vi="Marketing chạy bằng <em>AI</em>, kiểm duyệt bởi con người.">Marketing that runs on <em>AI</em>, checked by a human.</h1>
       <p class="hero-sub" data-en="I'm <strong>Kim Hoàn</strong>. I plan campaigns, produce bilingual content at scale, run e-commerce ads and build websites — using AI to move faster, and my own judgment to keep everything accurate and on-brand."
          data-vi="Mình là <strong>Kim Hoàn</strong>. Mình lên kế hoạch chiến dịch, sản xuất nội dung song ngữ số lượng lớn, chạy quảng cáo thương mại điện tử và xây website — dùng AI để làm nhanh hơn, và dùng chính sự đánh giá của mình để giữ mọi thứ chính xác, đúng chất thương hiệu.">I'm <strong>Kim Hoàn</strong>. I plan campaigns, produce bilingual content at scale, run e-commerce ads and build websites — using AI to move faster, and my own judgment to keep everything accurate and on-brand.</p>
