@@ -47,12 +47,13 @@
   }
   .photo {
     flex: 0 0 auto;
-    /* Ô dán ảnh 4x6: chừa rộng hơn ảnh thật một chút */
-    width: 44mm;
-    height: 64mm;
-    border: 1.5px dashed #9aa3bd;
+    /* Ảnh tỉ lệ 4x6 */
+    width: 42mm;
+    height: 63mm;
+    border: 1px solid var(--line);
     border-radius: 4px;
     background: #fafbfe;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -61,8 +62,9 @@
     color: #9aa3bd;
     font-size: 8.5pt;
     line-height: 1.4;
-    padding: 4mm;
+    padding: 0;
   }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .photo span { display: block; }
   .photo .big { font-size: 12pt; font-weight: 600; color: #b3bace; margin-bottom: 2mm; }
   .head-text { flex: 1 1 auto; min-width: 0; }
@@ -158,9 +160,8 @@
 <div class="page">
 
   <header class="header">
-    <div class="photo" aria-label="Ô dán ảnh 4x6">
-      <span class="big">ẢNH 4×6</span>
-      <span>Dán ảnh thẻ<br>vào ô này</span>
+    <div class="photo">
+      <img src="photo.jpg" alt="Ảnh chân dung Nguyễn Thị Kim Hoàn">
     </div>
     <div class="head-text">
       <h1 class="name">Nguyễn Thị Kim Hoàn</h1>
