@@ -43,7 +43,7 @@
   nav.scrolled{box-shadow:0 4px 32px rgba(13,27,62,0.10);}
   .nav-inner{max-width:var(--wrap);margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
   .nav-logo{font-family:'Playfair Display',serif;font-size:1.12rem;font-weight:700;font-style:italic;color:var(--deep-navy);text-decoration:none;position:relative;}
-  .nav-logo span{color:var(--yellow-deep);}
+  .nav-logo img{height:26px;width:auto;display:block;}
   .nav-logo::after{content:'';position:absolute;left:0;right:0;bottom:-3px;height:2px;background:var(--pastel-yellow);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
   .nav-logo:hover::after{transform:scaleX(1);}
   .nav-right{display:flex;align-items:center;gap:14px;}
@@ -227,7 +227,9 @@
 
   /* ── FOOTER ── */
   footer{border-top:1px solid rgba(13,27,62,.08);text-align:center;padding:34px 20px 44px;}
-  .footer-mark{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:1.05rem;color:var(--deep-navy);margin-bottom:7px;}
+  .footer-mark{margin-bottom:10px;}
+  .footer-mark a{text-decoration:none;border:0;background:none;display:inline-block;line-height:0;}
+  .footer-mark img{height:28px;width:auto;display:inline-block;}
   .footer-text{font-size:.78rem;color:var(--text-mid);line-height:1.6;}
   footer a{color:var(--deep-navy);font-weight:600;text-decoration:none;border-bottom:1px solid var(--pastel-yellow);}
   footer a:hover{background:var(--pastel-yellow);}
@@ -286,7 +288,7 @@
 
 <nav id="mainNav">
   <div class="nav-inner">
-    <a href="/" class="nav-logo">Kim <span>Hoàn</span></a>
+    <a href="/" class="nav-logo" aria-label="Kim Hoàn"><img src="/images/brand/logo-wordmark.png" alt="Kim Hoàn" width="801" height="152"></a>
     <div class="nav-right">
       <a href="/" class="nav-back" data-en="← Home" data-vi="← Trang chủ">← Trang chủ</a>
       <div class="lang-toggle" onclick="toggleLang()" role="button" tabindex="0" aria-label="Đổi ngôn ngữ / Switch language">
@@ -579,7 +581,7 @@
 </main>
 
 <footer>
-  <div class="footer-mark">Kim Hoàn</div>
+  <div class="footer-mark"><a href="/"><img src="/images/brand/logo-wordmark.png" alt="Kim Hoàn" width="801" height="152" loading="lazy"></a></div>
   <div class="footer-text" data-en="Visa service · Central Vietnam · <a href='/'>iamkimhoan.vn</a>" data-vi="Dịch vụ visa · Khu vực Miền Trung · <a href='/'>iamkimhoan.vn</a>">Dịch vụ visa · Khu vực Miền Trung · <a href="/">iamkimhoan.vn</a></div>
 </footer>
 
