@@ -30,6 +30,10 @@ Mỗi khi tạo ảnh mới cho site (thumbnail blog, ảnh OG, ảnh chia sẻ 
 
 Cách làm nhanh bằng Pillow: mở ảnh, resize logo theo chiều cao mong muốn với `Image.LANCZOS`, `paste(logo, (x, y), logo)` để giữ nền trong suốt.
 
+## Đăng bài blog
+
+Quy trình đầy đủ nằm trong skill `.claude/skills/kimhoan-blog/` (gọi `/kimhoan-blog`). Đọc skill đó trước khi thêm hay sửa lớn một bài blog: một bài mới phải sửa 6 chỗ (trang bài, thumbnail, `blog/index.html`, dải blog trang chủ, liên kết chéo, `sitemap.xml`).
+
 ## Quy tắc chung
 
 - Nội dung song ngữ EN/VI qua `data-en` / `data-vi` trên trang chủ. Thêm văn bản mới thì thêm cả hai.
