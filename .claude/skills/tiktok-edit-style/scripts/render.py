@@ -27,9 +27,17 @@ _font_cache = {}
 
 
 def font(name, size):
+    """name có thể kèm độ đậm cho font biến thiên, vd "mont:800"."""
     key = (name, size)
     if key not in _font_cache:
-        _font_cache[key] = ImageFont.truetype(fonts.get(name), size)
+        base, _, wght = name.partition(":")
+        f = ImageFont.truetype(fonts.get(base), size)
+        if wght:
+            try:
+                f.set_variation_by_axes([int(wght)])
+            except OSError:  # font dự phòng không phải font biến thiên
+                pass
+        _font_cache[key] = f
     return _font_cache[key]
 
 
@@ -84,6 +92,81 @@ def make_caption(text, dark=False):
         text_block(im, int(H * .715), text, font("sans_semibold", 44), STYLE["ink"], shadow=False, max_w=900)
     else:
         text_block(im, int(H * .715), text, font("sans_semibold", 46), "white", shadow=True, max_w=900)
+    return im
+
+
+def make_caption_pill(text):
+    """Phụ đề kiểu ô nền tối bo góc, chữ trắng nhỏ (video tham khảo TRIP)."""
+    im = layer()
+    f = font("mont:700", 40)
+    lines = wrap(text, f, 860)
+    lh = 54
+    y = int(H * .70) - lh * len(lines) // 2
+    d = ImageDraw.Draw(im)
+    for i, ln in enumerate(lines):
+        w = f.getlength(ln)
+        x0, y0 = W / 2 - w / 2 - 22, y + i * lh - 6
+        d.rounded_rectangle((x0, y0, W / 2 + w / 2 + 22, y0 + lh - 4), 14, fill=(22, 22, 26, 200))
+        d.text((W / 2, y + i * lh + 2), ln, font=f, fill="white", anchor="ma")
+    return im
+
+
+STACK = dict(  # kiểu từng dòng trong khối "stack"
+    small=dict(font="mont:600", size=50, color="white", stroke=0, track=0, upper=False),
+    caps=dict(font="mont:800", size=80, color="#FFB347", stroke=3, track=3, upper=True),
+    serif=dict(font="serif_cond:600", size=132, color="#BFE6F7", stroke=0, track=0, upper=False),
+)
+
+
+def draw_tracked(img, cx, top, text, f, fill, track, stroke, stroke_fill):
+    """Vẽ một dòng căn giữa, giãn chữ `track` px (Pillow không có letter-spacing)."""
+    widths = [f.getlength(c) for c in text]
+    total = sum(widths) + track * (len(text) - 1)
+    x = cx - total / 2
+    d = ImageDraw.Draw(img)
+    for c, w in zip(text, widths):
+        d.text((x, top), c, font=f, fill=fill, stroke_width=stroke, stroke_fill=stroke_fill)
+        x += w + track
+    return total
+
+
+def make_stack(o):
+    """Khối chữ xếp chồng giữa màn hình: dòng nhỏ / CHỮ IN HOA màu / serif nghiêng to.
+    {"type":"stack","y":0.22,"lines":[{"text":"…","style":"small|caps|serif","color":"#hex","size":80}]}"""
+    im = layer()
+    items = []
+    for ln in o["lines"]:
+        st = dict(STACK[ln.get("style", "small")], **{k: v for k, v in ln.items() if k in ("color", "size")})
+        f = font(st["font"], st["size"])
+        txt = ln["text"].upper() if st["upper"] else ln["text"]
+        asc, desc = f.getmetrics()
+        h = (asc + desc) * (0.82 if ln.get("style") == "serif" else 1.0)
+        items.append((txt, f, st, asc, h))
+    total = sum(h for *_, h in items)
+    y = H * o.get("y", .22) - total / 2
+    sh = layer()
+    for txt, f, st, asc, h in items:  # bóng mềm phía sau để chữ nổi trên nền sáng
+        draw_tracked(sh, W / 2, y + 4, txt, f, (0, 0, 0, 170), st["track"], st["stroke"], (0, 0, 0, 170))
+        y += h
+    im.alpha_composite(sh.filter(ImageFilter.GaussianBlur(8)))
+    y = H * o.get("y", .22) - total / 2
+    for txt, f, st, asc, h in items:
+        draw_tracked(im, W / 2, y, txt, f, st["color"], st["track"], st["stroke"], "#1B1B1F")
+        y += h
+    return im
+
+
+def make_label(o):
+    """Nhãn chữ đậm trên nền bút dạ quang pastel: {"type":"label","text","color":"blue|yellow|pink|green","y"}."""
+    im = layer()
+    bg, fg = STYLE["pills"].get(o.get("color", "blue"), STYLE["pills"]["blue"])
+    f = font("mont:700", o.get("size", 54))
+    w = f.getlength(o["text"])
+    asc, desc = f.getmetrics()
+    y = int(H * o.get("y", .12))
+    d = ImageDraw.Draw(im)
+    d.rectangle((W / 2 - w / 2 - 18, y + asc * .25, W / 2 + w / 2 + 18, y + asc + desc * .6), fill=bg)
+    d.text((W / 2, y), o["text"], font=f, fill=o.get("ink", STYLE["ink"]), anchor="ma")
     return im
 
 
@@ -326,6 +409,10 @@ def main():
             png_layer(make_keyword(o), s, e, slide=True)
         elif o["type"] == "hook":
             png_layer(make_hook(o), s, e, slide=True)
+        elif o["type"] == "stack":
+            png_layer(make_stack(o), s, e, slide=o.get("slide", True))
+        elif o["type"] == "label":
+            png_layer(make_label(o), s, e)
         elif o["type"] == "cta":
             png_layer(make_cta(o), s, e, slide=True)
         elif o["type"] == "text":  # chữ tự do: {"text", "y": 0.5, "size": 60, "color": "white", "font": "sans_bold"}
@@ -337,7 +424,9 @@ def main():
     for c in caps:
         s, e = float(c["start"]), float(c["end"])
         on_card = any(float(k["start"]) <= s < float(k["end"]) for k in cards)
-        png_layer(make_caption(c["text"], dark=on_card), s, e, fade=False)
+        cap = make_caption_pill(c["text"]) if plan.get("caption_style") == "pill" and not on_card \
+            else make_caption(c["text"], dark=on_card)
+        png_layer(cap, s, e, fade=False)
 
     fx = flash_fx(plan.get("flash", []))
     out_size = "540:960" if a.preview else f"{W}:{H}"

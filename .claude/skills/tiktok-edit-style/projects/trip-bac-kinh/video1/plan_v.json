@@ -1,0 +1,393 @@
+{
+ "base": "work/base_v.mp4",
+ "output": "trip_video1.mp4",
+ "grade": "warm",
+ "audio": "work/mix_v.wav",
+ "captions": "captions_v.json",
+ "caption_style": "pill",
+ "flash": [
+  {
+   "times": [
+    5.1,
+    9.0,
+    20.0,
+    28.0,
+    42.85
+   ],
+   "power": 0.35,
+   "punch": 1.05,
+   "shake": 0
+  }
+ ],
+ "overlays": [
+  {
+   "type": "stack",
+   "start": 0.2,
+   "end": 1.45,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Bay 3 tiếng rưỡi là tới",
+     "style": "small"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 1.45,
+   "end": 3.7,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Bay 3 tiếng rưỡi là tới",
+     "style": "small"
+    },
+    {
+     "text": "Bắc Kinh 5 ngày",
+     "style": "caps"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 3.7,
+   "end": 5.05,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Bay 3 tiếng rưỡi là tới",
+     "style": "small"
+    },
+    {
+     "text": "Bắc Kinh 5 ngày",
+     "style": "caps"
+    },
+    {
+     "text": "hết bao nhiêu tiền?",
+     "style": "serif"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 5.35,
+   "end": 6.85,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "mình tính thử",
+     "style": "small"
+    },
+    {
+     "text": "đi tự túc",
+     "style": "serif",
+     "color": "#F7C6D9"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 7.0,
+   "end": 8.95,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Vé máy bay khứ hồi",
+     "style": "small"
+    },
+    {
+     "text": "~9 triệu",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 118
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 9.17,
+   "end": 12.45,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Khách sạn 4 đêm · phòng đôi",
+     "style": "small"
+    },
+    {
+     "text": "~3,5 triệu",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 118
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 12.76,
+   "end": 14.75,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Ăn uống 5 ngày",
+     "style": "small"
+    },
+    {
+     "text": "~3 triệu",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 118
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 14.94,
+   "end": 17.2,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Vé tham quan + đi lại",
+     "style": "small"
+    },
+    {
+     "text": "~2,5 triệu",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 118
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 17.35,
+   "end": 19.8,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Visa du lịch",
+     "style": "small"
+    },
+    {
+     "text": "~2 triệu",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 118
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 20.0,
+   "end": 22.5,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Cộng lại tự túc",
+     "style": "small"
+    },
+    {
+     "text": "≈ 20 triệu",
+     "style": "caps",
+     "color": "#FFB347",
+     "size": 130
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 22.5,
+   "end": 23.2,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Cộng lại tự túc",
+     "style": "small"
+    },
+    {
+     "text": "≈ 20 triệu",
+     "style": "caps",
+     "color": "#FFB347",
+     "size": 130
+    },
+    {
+     "text": "một người",
+     "style": "serif",
+     "color": "#BFE6F7"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 23.24,
+   "end": 27.95,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "chưa tính công",
+     "style": "small"
+    },
+    {
+     "text": "tự đặt · tự tìm · tự lo",
+     "style": "serif",
+     "color": "#F7C6D9",
+     "size": 112
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "start": 28.0,
+   "end": 34.7
+  },
+  {
+   "type": "label",
+   "start": 28.2,
+   "end": 34.7,
+   "text": "Tour TRIP trọn gói",
+   "color": "yellow",
+   "y": 0.16
+  },
+  {
+   "type": "stack",
+   "start": 29.57,
+   "end": 32.59,
+   "y": 0.3,
+   "slide": false,
+   "lines": [
+    {
+     "text": "13.990.000đ",
+     "style": "caps",
+     "color": "#1F2A44",
+     "size": 128
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 32.59,
+   "end": 34.7,
+   "y": 0.33,
+   "slide": false,
+   "lines": [
+    {
+     "text": "13.990.000đ",
+     "style": "caps",
+     "color": "#1F2A44",
+     "size": 128
+    },
+    {
+     "text": "Rẻ hơn tự túc ~6 triệu",
+     "style": "caps",
+     "color": "#E0457B",
+     "size": 66
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 34.75,
+   "end": 40.5,
+   "text": "Đã gồm",
+   "color": "pink",
+   "y": 0.12
+  },
+  {
+   "type": "label",
+   "start": 35.0,
+   "end": 40.5,
+   "text": "Vé máy bay khứ hồi",
+   "color": "blue",
+   "y": 0.2,
+   "size": 50
+  },
+  {
+   "type": "label",
+   "start": 35.85,
+   "end": 40.5,
+   "text": "Khách sạn",
+   "color": "yellow",
+   "y": 0.265,
+   "size": 50
+  },
+  {
+   "type": "label",
+   "start": 36.69,
+   "end": 40.5,
+   "text": "Ăn uống",
+   "color": "green",
+   "y": 0.33,
+   "size": 50
+  },
+  {
+   "type": "label",
+   "start": 37.55,
+   "end": 40.5,
+   "text": "Vé tham quan",
+   "color": "blue",
+   "y": 0.395,
+   "size": 50
+  },
+  {
+   "type": "label",
+   "start": 38.55,
+   "end": 40.5,
+   "text": "Hướng dẫn viên + hỗ trợ visa",
+   "color": "yellow",
+   "y": 0.46,
+   "size": 50
+  },
+  {
+   "type": "stack",
+   "start": 40.59,
+   "end": 42.8,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "bạn chỉ việc",
+     "style": "small"
+    },
+    {
+     "text": "xách vali lên đường",
+     "style": "serif",
+     "color": "#F7C6D9"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 43.35,
+   "end": 45.85,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "bảng chi phí từng ngày",
+     "style": "small"
+    },
+    {
+     "text": "Nhắn Zalo TRIP",
+     "style": "caps",
+     "color": "#BFE6F7",
+     "size": 96
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 45.91,
+   "end": 49.05,
+   "y": 0.24,
+   "lines": [
+    {
+     "text": "Bắc Kinh",
+     "style": "small"
+    },
+    {
+     "text": "không xa đâu",
+     "style": "serif",
+     "color": "white",
+     "size": 150
+    }
+   ]
+  }
+ ]
+}
