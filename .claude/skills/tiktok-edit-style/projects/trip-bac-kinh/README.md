@@ -53,3 +53,13 @@ Thư mục Drive riêng "Nhạc tour Trung Quốc (TRIP)" `1Eka2AIaynyG2v2RcHfGJ
 - Chữ logo màu navy → luôn đặt trên nhãn trắng bo góc (alpha 236). Trong video: `brand/logo_overlay.png` (nhãn cao 84px, tại x40 y150), overlay `"type": "png"` đầu danh sách, suốt video.
 - Thumbnail: `thumb_trip.py` (khung hook + khối stack + nhãn dạ quang + logo cao 110px ở y 80%, mọi chữ trong vùng 3:4).
 - Logo Kim Hoàn KHÔNG dùng cho TRIP (CLAUDE.md).
+
+## Tour thật trên tripdn.com (tra 18/11/2026) — NGUỒN SỰ THẬT
+- Chỉ có **Tour Bắc Kinh 7N6Đ** (https://tripdn.com/tour/tour-bac-kinh-7n6d): khởi hành Đà Nẵng, Vietnam Airlines nối chuyến TP.HCM; niêm yết 25.490.000đ, **ưu đãi 24.990.000đ** (khi để lại SĐT/Gmail). Người dùng xác nhận đây là giá đúng.
+- Ngày 2 Di Hòa Viên · Ngày 3 Vạn Lý Trường Thành (Cư Dung Quan), trưa vịt quay, Thập Tam Lăng, Tổ Chim · Ngày 4 Thiên An Môn, Tử Cấm Thành (hết suất → Cung Vương Phủ), tối phố Vương Phủ Tỉnh · Ngày 5 tàu cao tốc → Hàng Châu (Tây Hồ) · Ngày 6 Ô Trấn → Thượng Hải · Ngày 7 về.
+- Gồm: vé máy bay, KS 4*, ăn theo chương trình, **visa đoàn**, xe, HDV tiếng Việt địa phương, tàu cao tốc, vé tham quan, bảo hiểm. Không gồm: hộ chiếu, phòng đơn 150 USD, tip 42 USD, điểm mua sắm (bỏ 15 USD/điểm).
+- ⚠️ Video 1 (13.990.000đ, "5 ngày") và Video 3 (khách tự làm visa lẻ) lệch với tour này → báo người dùng, chờ quyết định sửa (video 1 phải thu âm lại câu giá).
+
+## Video 4 – "POV: 1 ngày ở Bắc Kinh cùng TRIP" (đã dựng, 27,9s, không lời)
+- Bám Ngày 4 trên web: 06:30 sáng → 07:30 lên xe → 08:30 Ngọ Môn → 09:30 trong Tử Cấm Thành → 12:00 bữa trưa → 18:30 phố Vương Phủ Tỉnh → 21:00 về KS; kết: "Tour Bắc Kinh 7N6Đ · 24.990.000đ giá ưu đãi" + nhãn "Bắc Kinh · Hàng Châu · Ô Trấn · Thượng Hải".
+- Nhạc bài 03 "Moment" từ giây 7,75 (drop gốc 15,2s rơi đúng lúc vào Tử Cấm Thành), volume 0,9; cắt mỗi 2 phách (0,929s). Nhãn "Hình ảnh minh họa" (footage stock, không phải đoàn TRIP; phố đêm/toà nhà chưa chắc là Vương Phủ Tỉnh). Serif tự co cỡ để không tràn (≤ 960px).

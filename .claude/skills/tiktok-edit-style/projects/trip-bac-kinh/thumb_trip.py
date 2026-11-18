@@ -43,3 +43,6 @@ cover(B + 'bg3.png', .33, 'brand/thumb_v3.jpg',
       [L('Visa Trung Quốc'), L('5 thứ cần chuẩn bị', 'caps', color='#FFE45C', size=80),
        L('để không bị trả hồ sơ', 'serif', color='#BFE6F7')],
       [], y=.28)
+cover(B + 'bg4.png', .32, 'brand/thumb_v4.jpg',
+      [L('POV:'), L('1 ngày ở Bắc Kinh', 'caps', color='#FFB347', size=86), L('cùng TRIP', 'serif', color='#F7C6D9', size=130)],
+      [('08:30 · Tử Cấm Thành', 'yellow'), ('12:00 · Bữa trưa', 'blue'), ('18:30 · Phố Vương Phủ Tỉnh', 'pink')], y=.24)

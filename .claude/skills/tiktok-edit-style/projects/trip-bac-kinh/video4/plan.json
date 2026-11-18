@@ -1,0 +1,350 @@
+{
+ "base": "work/base.mp4",
+ "output": "trip_video4.mp4",
+ "grade": "warm",
+ "audio": "work/sfx.wav",
+ "music": {
+  "src": "work/music_cut.wav",
+  "volume": 0.9
+ },
+ "flash": [
+  {
+   "times": [
+    3.716,
+    7.432,
+    10.219,
+    13.006,
+    15.793,
+    21.367,
+    22.296
+   ],
+   "power": 0.5,
+   "punch": 1.08,
+   "shake": 8
+  },
+  {
+   "times": [
+    8.361,
+    9.29,
+    11.148,
+    12.077,
+    13.935,
+    14.864,
+    16.722,
+    17.651,
+    18.58,
+    19.509,
+    20.438
+   ],
+   "power": 0.22,
+   "punch": 1.04,
+   "shake": 0
+  }
+ ],
+ "overlays": [
+  {
+   "type": "png",
+   "start": 0,
+   "end": 27.87,
+   "src": "../brand/logo_overlay.png"
+  },
+  {
+   "type": "text",
+   "start": 0,
+   "end": 22.296,
+   "text": "Hình ảnh minh họa",
+   "y": 0.125,
+   "size": 26,
+   "color": "white",
+   "font": "sans_semibold"
+  },
+  {
+   "type": "stack",
+   "start": 0.15,
+   "end": 0.929,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "06:30 · POV:",
+     "style": "small"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 0.929,
+   "end": 2.323,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "06:30 · POV:",
+     "style": "small"
+    },
+    {
+     "text": "1 ngày ở Bắc Kinh",
+     "style": "caps",
+     "color": "#FFB347",
+     "size": 86
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 2.323,
+   "end": 3.716,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "06:30 · POV:",
+     "style": "small"
+    },
+    {
+     "text": "1 ngày ở Bắc Kinh",
+     "style": "caps",
+     "color": "#FFB347",
+     "size": 86
+    },
+    {
+     "text": "cùng TRIP",
+     "style": "serif",
+     "color": "#F7C6D9",
+     "size": 130
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 3.766,
+   "end": 5.574,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "07:30",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 110
+    },
+    {
+     "text": "Lên xe vào trung tâm",
+     "style": "serif",
+     "color": "white",
+     "size": 100
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 5.574,
+   "end": 7.432,
+   "text": "07:30 · Lên xe vào trung tâm",
+   "color": "yellow",
+   "y": 0.16,
+   "size": 40
+  },
+  {
+   "type": "stack",
+   "start": 7.482,
+   "end": 9.29,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "08:30",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 110
+    },
+    {
+     "text": "Ngọ Môn · cổng Tử Cấm Thành",
+     "style": "serif",
+     "color": "white",
+     "size": 84
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 9.29,
+   "end": 10.219,
+   "text": "08:30 · Ngọ Môn · cổng Tử Cấm Thành",
+   "color": "yellow",
+   "y": 0.16,
+   "size": 40
+  },
+  {
+   "type": "stack",
+   "start": 10.269,
+   "end": 12.077,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "09:30",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 110
+    },
+    {
+     "text": "Bên trong Tử Cấm Thành",
+     "style": "serif",
+     "color": "white",
+     "size": 100
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 12.077,
+   "end": 13.006,
+   "text": "09:30 · Bên trong Tử Cấm Thành",
+   "color": "yellow",
+   "y": 0.16,
+   "size": 40
+  },
+  {
+   "type": "stack",
+   "start": 13.056000000000001,
+   "end": 14.864,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "12:00",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 110
+    },
+    {
+     "text": "Bữa trưa",
+     "style": "serif",
+     "color": "white",
+     "size": 100
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 14.864,
+   "end": 15.793,
+   "text": "12:00 · Bữa trưa",
+   "color": "yellow",
+   "y": 0.16,
+   "size": 40
+  },
+  {
+   "type": "stack",
+   "start": 15.843,
+   "end": 17.651,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "18:30",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 110
+    },
+    {
+     "text": "Dạo phố Vương Phủ Tỉnh",
+     "style": "serif",
+     "color": "white",
+     "size": 100
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 17.651,
+   "end": 21.367,
+   "text": "18:30 · Dạo phố Vương Phủ Tỉnh",
+   "color": "yellow",
+   "y": 0.16,
+   "size": 40
+  },
+  {
+   "type": "stack",
+   "start": 21.417,
+   "end": 22.296,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "21:00",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 110
+    },
+    {
+     "text": "Về khách sạn",
+     "style": "serif",
+     "color": "white",
+     "size": 100
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 22.346,
+   "end": 24.154,
+   "y": 0.24,
+   "lines": [
+    {
+     "text": "Tour Bắc Kinh 7N6Đ",
+     "style": "small"
+    },
+    {
+     "text": "24.990.000đ",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 120
+    },
+    {
+     "text": "giá ưu đãi",
+     "style": "serif",
+     "color": "white",
+     "size": 90
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 22.761,
+   "end": 24.154,
+   "text": "Bắc Kinh · Hàng Châu · Ô Trấn · Thượng Hải",
+   "color": "blue",
+   "y": 0.36,
+   "size": 40
+  },
+  {
+   "type": "stack",
+   "start": 24.154,
+   "end": 26.012,
+   "y": 0.24,
+   "lines": [
+    {
+     "text": "Lịch trình chi tiết",
+     "style": "small"
+    },
+    {
+     "text": "nhắn Zalo TRIP",
+     "style": "caps",
+     "color": "#BFE6F7",
+     "size": 96
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 26.012,
+   "end": 27.87,
+   "y": 0.24,
+   "lines": [
+    {
+     "text": "Bắc Kinh",
+     "style": "small"
+    },
+    {
+     "text": "không xa đâu",
+     "style": "serif",
+     "color": "white",
+     "size": 150
+    }
+   ]
+  }
+ ]
+}
