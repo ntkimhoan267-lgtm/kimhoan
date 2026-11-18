@@ -57,7 +57,12 @@ python3 $S/render.py plan.json             # bản cuối
 - Tách **từng khung lẻ** đúng mốc mỗi `fx` (`ffmpeg -ss t -frames:v 1`) rồi ghép hstack để xem — ảnh lưới theo fps dễ bỏ sót khung nháy.
 - Kiểm: mask không lem ra nền/sàn (đốm trắng), chủ thể nháy rõ, frameflick thấy cảnh sau trong khung, maskframe hiện đủ ô, chữ không đè mặt/sản phẩm, hiệu ứng rơi đúng phách.
 
+## Ảnh bìa (MẶC ĐỊNH — người dùng yêu cầu 18/11/2026)
+Không lấy khung hình trong video làm ảnh bìa (người dùng thấy mặt mình trong video xấu). **Luôn dùng ảnh chân dung mặc định**: Drive thư mục "Ảnh bìa mặc định (chân dung Kim Hoàn)" `1M5PlhjmyH3bF-dQ2zQjjMP-jrYGun_Qh` → `portrait-cut-nen-trong.png` `1RbRIaiAHN8-p9jX4JMB3XSONb-OQajTF` (đã tách nền, 1,6MB, tải bằng `download_file_content`), ảnh gốc `portrait-goc.png` `1KfLbnyM7qJQfEPoXL5g03WubN7P-l2iI`. Không commit ảnh này vào repo (repo công khai).
+- Dựng bằng `tiktok-edit-style/projects/skincare/thumb/thumb_portrait.py cfg.json` (mẫu: `projects/skincare/may-xanh-flicker/thumb.json`): nền gradient theo màu sản phẩm (`bg`), quầng sáng sau đầu, chữ hook 3 dòng (small / CAPS cam viền trắng / serif nghiêng), bong bóng tròn cắt cảnh sản phẩm từ footage + nhãn tên sản phẩm. Chữ trong vùng y 240–1680.
+- Đổi màu nền theo sản phẩm (xanh pastel cho máy xanh, hồng cho máy LED hồng, vàng kem cho mặt nạ vàng…). Không cần logo Kim Hoàn trừ khi người dùng yêu cầu.
+
 ## 5. Giao + lưu
-- SendUserFile video 1080x1920 + 1 thumbnail (khung hook đẹp nhất + chữ hook). Kèm timeline ngắn và caption đăng bài (dòng đầu chứa từ khoá tìm kiếm, 1 câu hỏi, "link ở giỏ hàng", 4–5 hashtag).
+- SendUserFile video 1080x1920 + 1 ảnh bìa theo mục "Ảnh bìa" ở trên (ảnh chân dung mặc định, KHÔNG lấy khung video). Kèm timeline ngắn và caption đăng bài (dòng đầu chứa từ khoá tìm kiếm, 1 câu hỏi, "link ở giỏ hàng", 4–5 hashtag).
 - Thương hiệu: kênh skincare là kênh affiliate cá nhân — chỉ chèn logo Kim Hoàn nếu người dùng yêu cầu (khi đó theo skill `kimhoan-brand`).
 - Commit `shots.json`, `plan.json`, `sfx.json`, kịch bản vào `../tiktok-edit-style/projects/skincare/<sản-phẩm>-flicker/` (không commit video, nhạc, footage); cập nhật bảng "Đã làm" và mốc cảnh mới trong `projects/skincare/README.md`. Tạo nhánh `claude/...`, commit + push; không tạo PR trừ khi người dùng yêu cầu.
