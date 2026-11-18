@@ -23,3 +23,9 @@ Bay thẳng HN–Bắc Kinh ~3 giờ 30 phút (Kayak, VietnamBooking). Số li�
 - Tiếng "kaching" do người dùng chọn: Pixabay "dragon-studio cash register kaching 376867" (file gốc trong chat, chưa lưu repo — giấy phép Pixabay không cho phát tán file rời; xin người dùng gửi lại hoặc để trong thư mục Drive SFX). Đặt **ngay sau khi nói xong con số** (mốc cuối chữ "triệu"/"rưỡi"/"nghìn" trong `.words.json`, trừ 0,06s), không đặt lúc chữ hiện.
 - Web Pixabay chặn truy cập tự động và Pixabay không có API âm thanh → người dùng tự tải sound, gửi qua chat hoặc Drive.
 - Trang duyệt (artifact, chỉ người dùng xem): https://claude.ai/artifact/DEEG41UzejEDSVBeF7RjRz — sửa chữ, bật/tắt, chỉnh âm lượng, dời mốc từng âm; lưu ở db `edits/video1` (`texts{id:text}`, `sounds{id:{on,gain,t}}`, `note`). Id lấy từ `items.json` (o<overlay>l<dòng>, c<phụ đề>, s<chỉ số sự kiện trong sfx_v.json>). Chỉ đổi âm → `render.py --audio-only` (vài giây).
+
+## Video 2 – "3 sai lầm khi đi Trung Quốc lần đầu" (đã dựng, 44,5s)
+- Kịch bản: `video2-kich-ban.md` (hook A). File dựng: `video2/` (shots → plan → sfx; `pieces.json` dùng `combined.wav` = giọng video 2 + 0,3s lặng + câu "Bắc Kinh không xa đâu" cắt từ giọng video 1, gốc 59,27–61,15s).
+- Giọng: bỏ lần đọc vấp "Ba, tới Tử Cấm…" (gốc 32,3–35,9s); người dùng đọc nhầm câu cuối thành "Booking không xa đâu" → thay bằng câu của video 1. Người dùng bỏ "Đi cùng TRIP thì" khi đọc → chữ trên màn hình vẫn ghi "Đi cùng TRIP".
+- Lỗi 1 và lỗi 2 tạm dùng thẻ đồ hoạ `video2/gfx/phone.png`, `qr.png` (tự vẽ). Có footage điện thoại mất mạng / quét QR thì thay.
+- Trang duyệt có cả video 2 (`#video2`, db `edits/video2`).
