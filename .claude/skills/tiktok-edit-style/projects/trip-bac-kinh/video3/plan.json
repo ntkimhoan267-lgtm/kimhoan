@@ -1,0 +1,292 @@
+{
+ "base": "work/base.mp4",
+ "output": "trip_video3.mp4",
+ "grade": "warm",
+ "audio": "work/mix.wav",
+ "captions": "captions.json",
+ "caption_style": "pill",
+ "music": {
+  "src": "music02.mp3",
+  "volume": 0.13
+ },
+ "flash": [
+  {
+   "times": [
+    5.05,
+    27.28
+   ],
+   "power": 0.35,
+   "punch": 1.05,
+   "shake": 0
+  }
+ ],
+ "overlays": [
+  {
+   "type": "stack",
+   "start": 0.3,
+   "end": 1.95,
+   "y": 0.2,
+   "lines": [
+    {
+     "text": "Làm visa Trung Quốc",
+     "style": "small"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 1.95,
+   "end": 3.6,
+   "y": 0.2,
+   "lines": [
+    {
+     "text": "Làm visa Trung Quốc",
+     "style": "small"
+    },
+    {
+     "text": "một thông tin không khớp",
+     "style": "caps",
+     "color": "#FFB347",
+     "size": 54
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 3.6,
+   "end": 5.05,
+   "y": 0.2,
+   "lines": [
+    {
+     "text": "Làm visa Trung Quốc",
+     "style": "small"
+    },
+    {
+     "text": "một thông tin không khớp",
+     "style": "caps",
+     "color": "#FFB347",
+     "size": 54
+    },
+    {
+     "text": "là dễ bị trả hồ sơ",
+     "style": "serif",
+     "color": "#F7C6D9"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "start": 5.05,
+   "end": 7.2
+  },
+  {
+   "type": "stack",
+   "start": 5.06,
+   "end": 7.2,
+   "y": 0.27,
+   "slide": false,
+   "lines": [
+    {
+     "text": "Lưu lại",
+     "style": "small",
+     "color": "#667085"
+    },
+    {
+     "text": "5 thứ cần chuẩn bị",
+     "style": "caps",
+     "color": "#1F2A44",
+     "size": 70
+    }
+   ]
+  },
+  {
+   "type": "png",
+   "start": 5.06,
+   "end": 7.2,
+   "src": "gfx/ck_0.png"
+  },
+  {
+   "type": "card",
+   "start": 7.2,
+   "end": 11.0,
+   "media": "../trip/raw/gemini_092014BC.mp4",
+   "media_box": [
+    140,
+    144,
+    800,
+    691
+   ],
+   "src_in": 0.3
+  },
+  {
+   "type": "png",
+   "start": 7.2,
+   "end": 11.0,
+   "src": "gfx/ck_1.png"
+  },
+  {
+   "type": "card",
+   "start": 11.0,
+   "end": 14.8,
+   "media": "gfx/photo.png",
+   "media_box": [
+    140,
+    144,
+    800,
+    691
+   ]
+  },
+  {
+   "type": "png",
+   "start": 11.0,
+   "end": 14.8,
+   "src": "gfx/ck_2.png"
+  },
+  {
+   "type": "card",
+   "start": 14.8,
+   "end": 18.8,
+   "media": "gfx/form.png",
+   "media_box": [
+    140,
+    144,
+    800,
+    691
+   ]
+  },
+  {
+   "type": "png",
+   "start": 14.8,
+   "end": 18.8,
+   "src": "gfx/ck_3.png"
+  },
+  {
+   "type": "card",
+   "start": 18.8,
+   "end": 20.3,
+   "media": "../trip/raw/20685204-hd_1080_1920_30fps.mp4",
+   "media_box": [
+    140,
+    144,
+    800,
+    691
+   ],
+   "src_in": 2
+  },
+  {
+   "type": "card",
+   "start": 20.3,
+   "end": 21.7,
+   "media": "../trip/raw/hotel2.mp4",
+   "media_box": [
+    140,
+    144,
+    800,
+    691
+   ],
+   "src_in": 3
+  },
+  {
+   "type": "card",
+   "start": 21.7,
+   "end": 23.6,
+   "media": "gfx/calendar.png",
+   "media_box": [
+    140,
+    144,
+    800,
+    691
+   ]
+  },
+  {
+   "type": "png",
+   "start": 18.8,
+   "end": 23.6,
+   "src": "gfx/ck_4.png"
+  },
+  {
+   "type": "card",
+   "start": 23.6,
+   "end": 27.25,
+   "media": "gfx/docs.png",
+   "media_box": [
+    140,
+    144,
+    800,
+    691
+   ]
+  },
+  {
+   "type": "png",
+   "start": 23.6,
+   "end": 25.97,
+   "src": "gfx/ck_5.png"
+  },
+  {
+   "type": "png",
+   "start": 25.97,
+   "end": 27.25,
+   "src": "gfx/ck_all.png"
+  },
+  {
+   "type": "stack",
+   "start": 27.33,
+   "end": 29.5,
+   "y": 0.2,
+   "lines": [
+    {
+     "text": "Ngại sai?",
+     "style": "small"
+    },
+    {
+     "text": "Gửi Zalo TRIP",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 100
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 29.5,
+   "end": 31.4,
+   "y": 0.2,
+   "lines": [
+    {
+     "text": "Ngại sai?",
+     "style": "small"
+    },
+    {
+     "text": "Gửi Zalo TRIP",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 100
+    },
+    {
+     "text": "kiểm tra trước khi nộp",
+     "style": "serif",
+     "color": "#BFE6F7",
+     "size": 110
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 31.48,
+   "end": 33.52,
+   "y": 0.24,
+   "lines": [
+    {
+     "text": "Bắc Kinh",
+     "style": "small"
+    },
+    {
+     "text": "không xa đâu",
+     "style": "serif",
+     "color": "white",
+     "size": 150
+    }
+   ]
+  }
+ ]
+}

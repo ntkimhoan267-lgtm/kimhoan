@@ -1,0 +1,22 @@
+[
+{
+"src": "../trip/raw/gemini_092014BC.mp4",
+"in": 0,
+"until": 5.05,
+"cx": 0.33
+},
+{
+"src": "../trip/raw/gemini_092014BC.mp4",
+"in": 0.5,
+"until": 27.25,
+"cx": 0.33,
+"speed": 0.25
+},
+{
+"src": "../trip/raw/greatwall2.mp4",
+"in": 0,
+"until": 33.52,
+"cx": 0.55,
+"trans": "flash"
+}
+]

@@ -39,3 +39,10 @@ Thư mục Drive riêng "Nhạc tour Trung Quốc (TRIP)" `1Eka2AIaynyG2v2RcHfGJ
 | 03-Moment-thuan-nhac-129bpm-50s.mp3 | `1N1afXk8GUtbMfSdByX9JVzLUuQ6ck6lq` | 129 BPM, 50s, sôi động | Vlog/montage cắt theo phách (video 4 "Một ngày ở Bắc Kinh") |
 - Nguồn: trích từ video TikTok người dùng gửi; bài 02, 03 là nhạc thương mại có bản quyền (03 = "Moment 纯享版"). Đã báo người dùng rủi ro bị tắt tiếng khi đăng tài khoản doanh nghiệp / chạy quảng cáo; người dùng vẫn chọn dùng. Không commit file nhạc vào repo (repo công khai).
 - Cách dùng: `"music": {"src": "music/02.mp3", "volume": 0.12}` trong plan (render.py giữ mức cố định, không tự hạ khi có giọng → để 0,10–0,15), bỏ sự kiện `beat` trong sfx; flash/cắt cảnh theo `beats.py` của chính bài nhạc.
+
+## Video 3 – Visa Trung Quốc (đã dựng, 33,5s)
+- Kịch bản `video3-kich-ban.md` (hook A; TRIP xác nhận có kiểm tra hồ sơ visa qua Zalo). File dựng `video3/`; nhạc bài 02 (volume 0,13), không dùng nền nhịp.
+- Giọng: bỏ chữ "Bảy" đọc thừa (gốc 30,80–31,78) và lần vấp "TRIP để kiểm tra" (gốc 33,85–35,82).
+- Thân video là checklist 5 mục tick dần (`video3/gfx/ck_*.png`, overlay `"type": "png"` mới của render.py) trên card kem, minh hoạ phía trên: clip Gemini hộ chiếu, ảnh thẻ, tờ khai, cửa sổ máy bay + phòng khách sạn + lịch 12/2026 (1/12 là thứ Ba), giấy tờ.
+- Clip `gemini_092014BC` do AI tạo (Drive `1U2WoEMxmnT8s2UXPi_hEU3N-HG2H3Q3S`): chỉ dùng 5s đầu (sau đó hộ chiếu tự nhân đôi). **Đăng phải bật nhãn nội dung AI.**
+- Footage mới khác: `5794444` máy quẹt thẻ (thay cho thẻ QR lỗi 2 video 2), `11797448` đồ nướng (đoạn ăn uống video 1), `3_sai_lam_trung_quoc.mp4` là bản dựng của nhóm (chưa xem).

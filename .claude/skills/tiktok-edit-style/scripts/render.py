@@ -426,6 +426,8 @@ def main():
             png_layer(make_stack(o), s, e, slide=o.get("slide", True))
         elif o["type"] == "label":
             png_layer(make_label(o), s, e)
+        elif o["type"] == "png":  # ảnh RGBA toàn khung tự vẽ sẵn (checklist, sơ đồ…): {"src", "fade": false}
+            png_layer(Image.open(o["src"]).convert("RGBA").resize((W, H)), s, e, fade=o.get("fade", False))
         elif o["type"] == "cta":
             png_layer(make_cta(o), s, e, slide=True)
         elif o["type"] == "text":  # chữ tự do: {"text", "y": 0.5, "size": 60, "color": "white", "font": "sans_bold"}
