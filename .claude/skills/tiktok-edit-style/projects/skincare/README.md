@@ -42,3 +42,6 @@ Tên chính xác trên bao bì: cắt ảnh to (960px) ở khung cầm sản ph�
 - Tất cả nói trước camera 60–100s, đọc thành phần (4 collagen, 4 peptide, retinol thực vật). Ý "dùng cho cả mặt" chỉ nhắc ở giây 12–58 → mình đưa lên hook.
 - Kiểu nỗi đau + câu hỏi (rinabeauty) tương tác tốt nhất; tránh hứa "hết thâm / nâng cơ 7 ngày" (hãng ghi 4 tuần).
 - Lấy số liệu + phụ đề một video TikTok: `curl` trang video, đọc JSON `__UNIVERSAL_DATA_FOR_REHYDRATION__` → `itemStruct.stats`, `desc`, `video.subtitleInfos[].Url` (WebVTT, Source ASR). Không tải được video (chặn bot) — đừng cố vượt.
+
+## Kiểu "flicker" (nhắn `flicker` để làm)
+Skill `.claude/skills/flicker/`: video skincare nháy theo vùng kiểu CapCut (Flicker / Frame Flick / Mask Frame), nhạc flicker 145 BPM trong Drive "Nhạc trend Flicker (edit video)" `1GEybjb1Ffnr7ol8R1pVl92yQUTcldg3U`. Video đã làm theo kiểu này: (chưa có).
