@@ -1,0 +1,17 @@
+{
+  "base": "work/cut.mp4",
+  "output": "final.mp4",
+  "grade": "clean",
+  "captions": "work/captions.json",
+  "overlays": [
+    {"type": "hook", "start": 0, "end": 2.6, "lines": ["Cách edit video", "bằng Claude Code"], "accent": "chỉ trong 30'"},
+    {"type": "keyword", "start": 3.0, "end": 5.5, "small": "dành cho", "big": "newbie"},
+    {"type": "broll", "start": 5.5, "end": 7.5, "src": "broll/team.mov", "src_in": 1.0},
+    {"type": "keyword", "start": 5.6, "end": 7.5, "small": "hoặc các bạn", "big": "content creator", "color": "white"},
+    {"type": "card", "start": 8.0, "end": 10.5, "label": "Trước đây", "color": "pink", "media": "assets/clock.png", "big": "3–4 tiếng"},
+    {"type": "card", "start": 10.5, "end": 14.0, "label": "Bước 1 · Mở Claude Code", "color": "blue", "media": "assets/screen-rec.mp4", "src_in": 0},
+    {"type": "broll", "start": 14.0, "end": 16.0, "src": "assets/laptop.jpg", "zoom": 1.1},
+    {"type": "card", "start": 24.0, "end": 28.0},
+    {"type": "cta", "start": 24.0, "end": 28.0, "top": "AGENT EDIT VIDEO", "big": "update miễn phí", "sub": "link ở bio"}
+  ]
+}
