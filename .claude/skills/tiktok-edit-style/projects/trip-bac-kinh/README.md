@@ -29,3 +29,13 @@ Bay thẳng HN–Bắc Kinh ~3 giờ 30 phút (Kayak, VietnamBooking). Số li�
 - Giọng: bỏ lần đọc vấp "Ba, tới Tử Cấm…" (gốc 32,3–35,9s); người dùng đọc nhầm câu cuối thành "Booking không xa đâu" → thay bằng câu của video 1. Người dùng bỏ "Đi cùng TRIP thì" khi đọc → chữ trên màn hình vẫn ghi "Đi cùng TRIP".
 - Lỗi 1 và lỗi 2 tạm dùng thẻ đồ hoạ `video2/gfx/phone.png`, `qr.png` (tự vẽ). Có footage điện thoại mất mạng / quét QR thì thay.
 - Trang duyệt có cả video 2 (`#video2`, db `edits/video2`).
+
+## Nhạc nền cho video tour Trung Quốc (người dùng chọn, 18/11/2026)
+Thư mục Drive riêng "Nhạc tour Trung Quốc (TRIP)" `1Eka2AIaynyG2v2RcHfGJQh9SqmMjw3UQ` (không chia sẻ). File < 10MB → tải bằng `download_file_content` của Drive, không cần bật chia sẻ. **Mọi video tour Trung Quốc lấy nhạc từ đây**, không dùng nền nhịp tự tạo nữa.
+| File | ID Drive | Nhịp | Hợp với |
+|---|---|---|---|
+| 01-rung-xanh-khong-loi-94bpm-15s.mp3 | `1ZuukOrvg8dhP6lYM4EU28-8lYBgg4k1i` | 94 BPM, 15s, nhẹ, không lời | Cảnh thiên nhiên, đoạn ngắn; phải lặp nếu video dài |
+| 02-nhac-trung-khong-loi-105bpm-64s.mp3 | `1TvZqn6LAxIjysonGxYqTLK8MaYSyA70U` | 105 BPM, 64s, nhạc Trung êm | Video nhiều lời đọc, thông tin (visa, hỏi đáp, chi phí) |
+| 03-Moment-thuan-nhac-129bpm-50s.mp3 | `1N1afXk8GUtbMfSdByX9JVzLUuQ6ck6lq` | 129 BPM, 50s, sôi động | Vlog/montage cắt theo phách (video 4 "Một ngày ở Bắc Kinh") |
+- Nguồn: trích từ video TikTok người dùng gửi; bài 02, 03 là nhạc thương mại có bản quyền (03 = "Moment 纯享版"). Đã báo người dùng rủi ro bị tắt tiếng khi đăng tài khoản doanh nghiệp / chạy quảng cáo; người dùng vẫn chọn dùng. Không commit file nhạc vào repo (repo công khai).
+- Cách dùng: `"music": {"src": "music/02.mp3", "volume": 0.12}` trong plan (render tự giảm khi có giọng? — không: dùng mức cố định 0,10–0,15 dưới giọng), bỏ sự kiện `beat` trong sfx; flash/cắt cảnh theo `beats.py` của chính bài nhạc.
