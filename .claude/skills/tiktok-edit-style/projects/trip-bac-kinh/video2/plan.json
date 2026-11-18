@@ -1,0 +1,391 @@
+{
+ "base": "work/base.mp4",
+ "output": "trip_video2.mp4",
+ "grade": "warm",
+ "audio": "work/mix.wav",
+ "captions": "captions.json",
+ "caption_style": "pill",
+ "flash": [
+  {
+   "times": [
+    4.4,
+    14.4,
+    25.05,
+    35.0,
+    42.0
+   ],
+   "power": 0.35,
+   "punch": 1.05,
+   "shake": 0
+  }
+ ],
+ "overlays": [
+  {
+   "type": "png",
+   "start": 0,
+   "end": 44.5,
+   "src": "../brand/logo_overlay.png"
+  },
+  {
+   "type": "stack",
+   "start": 0.3,
+   "end": 1.7,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Đi Trung Quốc lần đầu",
+     "style": "small"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 1.7,
+   "end": 2.9,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Đi Trung Quốc lần đầu",
+     "style": "small"
+    },
+    {
+     "text": "mắc 3 lỗi này",
+     "style": "caps",
+     "color": "#FFB347"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 2.9,
+   "end": 4.35,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Đi Trung Quốc lần đầu",
+     "style": "small"
+    },
+    {
+     "text": "mắc 3 lỗi này",
+     "style": "caps",
+     "color": "#FFB347"
+    },
+    {
+     "text": "mất toi cả ngày",
+     "style": "serif",
+     "color": "#F7C6D9"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "start": 4.4,
+   "end": 9.85,
+   "media": "gfx/phone.png",
+   "media_box": [
+    310,
+    480,
+    460,
+    768
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 4.4,
+   "end": 5.1,
+   "y": 0.13,
+   "lines": [
+    {
+     "text": "Lỗi 1",
+     "style": "caps",
+     "color": "#FF7A6B",
+     "size": 70
+    }
+   ],
+   "slide": false
+  },
+  {
+   "type": "stack",
+   "start": 5.1,
+   "end": 9.85,
+   "y": 0.15,
+   "lines": [
+    {
+     "text": "Lỗi 1",
+     "style": "caps",
+     "color": "#FF7A6B",
+     "size": 70
+    },
+    {
+     "text": "Google, Facebook bị chặn",
+     "style": "serif",
+     "color": "#1F2A44",
+     "size": 96
+    }
+   ],
+   "slide": false
+  },
+  {
+   "type": "stack",
+   "start": 9.89,
+   "end": 14.35,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Cách tránh",
+     "style": "small"
+    },
+    {
+     "text": "Mua eSIM trước",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 96
+    },
+    {
+     "text": "ghi rõ dùng được Google",
+     "style": "serif",
+     "color": "white",
+     "size": 96
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 14.53,
+   "end": 15.2,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Lỗi 2",
+     "style": "caps",
+     "color": "#FF7A6B",
+     "size": 70
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 15.2,
+   "end": 16.5,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Lỗi 2",
+     "style": "caps",
+     "color": "#FF7A6B",
+     "size": 70
+    },
+    {
+     "text": "chỉ mang tiền mặt",
+     "style": "caps",
+     "color": "#BFE6F7"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 16.54,
+   "end": 19.5,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Bắc Kinh gần như chỗ nào cũng",
+     "style": "small"
+    },
+    {
+     "text": "quét mã",
+     "style": "serif",
+     "color": "#F7C6D9",
+     "size": 150
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "start": 19.55,
+   "end": 25.05,
+   "media": "gfx/qr.png",
+   "media_box": [
+    250,
+    518,
+    580,
+    729
+   ]
+  },
+  {
+   "type": "label",
+   "start": 19.65,
+   "end": 25.05,
+   "text": "Cài Alipay · liên kết thẻ Visa",
+   "color": "blue",
+   "y": 0.15,
+   "size": 52
+  },
+  {
+   "type": "label",
+   "start": 22.9,
+   "end": 25.05,
+   "text": "+ ít tiền mặt dự phòng",
+   "color": "yellow",
+   "y": 0.215,
+   "size": 48
+  },
+  {
+   "type": "stack",
+   "start": 25.14,
+   "end": 26.4,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Lỗi 3",
+     "style": "caps",
+     "color": "#FF7A6B",
+     "size": 70
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 26.4,
+   "end": 28.05,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Lỗi 3",
+     "style": "caps",
+     "color": "#FF7A6B",
+     "size": 70
+    },
+    {
+     "text": "tới nơi mới mua vé",
+     "style": "caps",
+     "color": "#BFE6F7"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 28.1,
+   "end": 32.25,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Tử Cấm Thành",
+     "style": "small"
+    },
+    {
+     "text": "không bán vé tại cổng",
+     "style": "serif",
+     "color": "#F7C6D9",
+     "size": 110
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 29.9,
+   "end": 32.25,
+   "text": "Đặt online trước · bằng hộ chiếu",
+   "color": "yellow",
+   "y": 0.3,
+   "size": 48
+  },
+  {
+   "type": "stack",
+   "start": 32.28,
+   "end": 35.0,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "thứ hai",
+     "style": "caps",
+     "color": "#FF7A6B",
+     "size": 120
+    },
+    {
+     "text": "đóng cửa",
+     "style": "serif",
+     "color": "white",
+     "size": 140
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 35.68,
+   "end": 38.3,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Đi cùng TRIP",
+     "style": "small"
+    },
+    {
+     "text": "có người lo trước",
+     "style": "serif",
+     "color": "#BFE6F7",
+     "size": 120
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 38.34,
+   "end": 40.55,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Lưu video lại",
+     "style": "small"
+    },
+    {
+     "text": "nhắn Zalo TRIP",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 96
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 40.58,
+   "end": 41.95,
+   "y": 0.21,
+   "lines": [
+    {
+     "text": "Lưu video lại",
+     "style": "small"
+    },
+    {
+     "text": "nhắn Zalo TRIP",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 96
+    },
+    {
+     "text": "nhận checklist",
+     "style": "serif",
+     "color": "#F7C6D9"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 42.05,
+   "end": 44.5,
+   "y": 0.24,
+   "lines": [
+    {
+     "text": "Bắc Kinh",
+     "style": "small"
+    },
+    {
+     "text": "không xa đâu",
+     "style": "serif",
+     "color": "white",
+     "size": 150
+    }
+   ]
+  }
+ ]
+}

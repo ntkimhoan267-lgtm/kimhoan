@@ -1,0 +1,483 @@
+{
+ "base": "work/base_ref.mp4",
+ "output": "trip_video4.mp4",
+ "grade": "warm",
+ "audio": "work/sfx_ref.wav",
+ "music": {
+  "src": "work/music_ref.wav",
+  "volume": 0.9
+ },
+ "overlays": [
+  {
+   "type": "png",
+   "start": 0.0,
+   "end": 24.72,
+   "src": "../brand/logo_overlay.png"
+  },
+  {
+   "type": "text",
+   "start": 0.0,
+   "end": 19.776,
+   "text": "Hình ảnh minh họa",
+   "y": 0.125,
+   "size": 26,
+   "color": "white",
+   "font": "sans_semibold"
+  },
+  {
+   "type": "stack",
+   "start": 0.133,
+   "end": 0.824,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "06:30 · POV:",
+     "style": "small"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 0.824,
+   "end": 2.06,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "06:30 · POV:",
+     "style": "small"
+    },
+    {
+     "text": "1 ngày ở Bắc Kinh",
+     "style": "caps",
+     "color": "#FFB347",
+     "size": 86
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 2.06,
+   "end": 3.296,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "06:30 · POV:",
+     "style": "small"
+    },
+    {
+     "text": "1 ngày ở Bắc Kinh",
+     "style": "caps",
+     "color": "#FFB347",
+     "size": 86
+    },
+    {
+     "text": "cùng TRIP",
+     "style": "serif",
+     "color": "#F7C6D9",
+     "size": 130
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 3.34,
+   "end": 4.944,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "07:30",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 110
+    },
+    {
+     "text": "Lên xe vào trung tâm",
+     "style": "serif",
+     "color": "white",
+     "size": 100
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 4.944,
+   "end": 6.592,
+   "text": "07:30 · Lên xe vào trung tâm",
+   "color": "yellow",
+   "y": 0.16,
+   "size": 40
+  },
+  {
+   "type": "stack",
+   "start": 6.636,
+   "end": 8.24,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "08:30",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 110
+    },
+    {
+     "text": "Ngọ Môn · cổng Tử Cấm Thành",
+     "style": "serif",
+     "color": "white",
+     "size": 84
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 8.24,
+   "end": 9.064,
+   "text": "08:30 · Ngọ Môn · cổng Tử Cấm Thành",
+   "color": "yellow",
+   "y": 0.16,
+   "size": 40
+  },
+  {
+   "type": "stack",
+   "start": 9.108,
+   "end": 10.712,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "09:30",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 110
+    },
+    {
+     "text": "Bên trong Tử Cấm Thành",
+     "style": "serif",
+     "color": "white",
+     "size": 100
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 10.712,
+   "end": 11.536,
+   "text": "09:30 · Bên trong Tử Cấm Thành",
+   "color": "yellow",
+   "y": 0.16,
+   "size": 40
+  },
+  {
+   "type": "stack",
+   "start": 11.58,
+   "end": 13.184,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "12:00",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 110
+    },
+    {
+     "text": "Bữa trưa",
+     "style": "serif",
+     "color": "white",
+     "size": 100
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 13.184,
+   "end": 14.008,
+   "text": "12:00 · Bữa trưa",
+   "color": "yellow",
+   "y": 0.16,
+   "size": 40
+  },
+  {
+   "type": "stack",
+   "start": 14.052,
+   "end": 15.656,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "18:30",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 110
+    },
+    {
+     "text": "Dạo phố Vương Phủ Tỉnh",
+     "style": "serif",
+     "color": "white",
+     "size": 100
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 15.656,
+   "end": 18.952,
+   "text": "18:30 · Dạo phố Vương Phủ Tỉnh",
+   "color": "yellow",
+   "y": 0.16,
+   "size": 40
+  },
+  {
+   "type": "stack",
+   "start": 18.996,
+   "end": 19.776,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "21:00",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 110
+    },
+    {
+     "text": "Về khách sạn",
+     "style": "serif",
+     "color": "white",
+     "size": 100
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 19.82,
+   "end": 21.424,
+   "y": 0.24,
+   "lines": [
+    {
+     "text": "Tour Bắc Kinh 7N6Đ",
+     "style": "small"
+    },
+    {
+     "text": "24.990.000đ",
+     "style": "caps",
+     "color": "#FFE45C",
+     "size": 120
+    },
+    {
+     "text": "giá ưu đãi",
+     "style": "serif",
+     "color": "white",
+     "size": 90
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 20.188,
+   "end": 21.424,
+   "text": "Bắc Kinh · Hàng Châu · Ô Trấn · Thượng Hải",
+   "color": "blue",
+   "y": 0.36,
+   "size": 40
+  },
+  {
+   "type": "stack",
+   "start": 21.424,
+   "end": 23.072,
+   "y": 0.24,
+   "lines": [
+    {
+     "text": "Lịch trình chi tiết",
+     "style": "small"
+    },
+    {
+     "text": "nhắn Zalo TRIP",
+     "style": "caps",
+     "color": "#BFE6F7",
+     "size": 96
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 23.072,
+   "end": 24.72,
+   "y": 0.24,
+   "lines": [
+    {
+     "text": "Bắc Kinh",
+     "style": "small"
+    },
+    {
+     "text": "không xa đâu",
+     "style": "serif",
+     "color": "white",
+     "size": 150
+    }
+   ]
+  }
+ ],
+ "fx": [
+  {
+   "type": "flicker",
+   "t": 0.824,
+   "frames": 12,
+   "mode": "white",
+   "mask": {
+    "auto": "dark",
+    "thr": 55,
+    "box": [
+     300,
+     450,
+     480,
+     910
+    ],
+    "feather": 8
+   }
+  },
+  {
+   "type": "flicker",
+   "t": 2.06,
+   "frames": 12,
+   "mode": "invert",
+   "blink": true,
+   "mask": {
+    "auto": "dark",
+    "thr": 55,
+    "box": [
+     300,
+     450,
+     480,
+     910
+    ],
+    "feather": 3
+   }
+  },
+  {
+   "type": "frameflick",
+   "t": 3.296,
+   "frames": 10,
+   "box": [
+    135,
+    520,
+    810,
+    880
+   ]
+  },
+  {
+   "type": "maskframe",
+   "t": 6.592,
+   "frames": 12,
+   "grid": [
+    3,
+    2
+   ],
+   "order": [
+    0,
+    4,
+    2,
+    3,
+    1,
+    5
+   ]
+  },
+  {
+   "type": "flicker",
+   "t": 7.004,
+   "frames": 12,
+   "mode": "invert",
+   "blink": true,
+   "mask": {
+    "auto": "nonsky",
+    "box": [
+     0,
+     300,
+     1080,
+     1400
+    ]
+   }
+  },
+  {
+   "type": "frameflick",
+   "t": 9.064,
+   "frames": 10,
+   "box": [
+    90,
+    600,
+    900,
+    800
+   ]
+  },
+  {
+   "type": "maskframe",
+   "t": 11.536,
+   "frames": 12,
+   "grid": [
+    2,
+    3
+   ],
+   "order": [
+    0,
+    3,
+    4,
+    1,
+    2,
+    5
+   ]
+  },
+  {
+   "type": "flicker",
+   "t": 12.36,
+   "frames": 12,
+   "mode": "glow",
+   "mask": {
+    "auto": "sat",
+    "thr": 80,
+    "box": [
+     100,
+     500,
+     880,
+     1000
+    ]
+   }
+  },
+  {
+   "type": "frameflick",
+   "t": 14.008,
+   "frames": 10,
+   "box": [
+    135,
+    480,
+    810,
+    960
+   ]
+  },
+  {
+   "type": "frameflick",
+   "t": 18.128,
+   "frames": 10,
+   "box": [
+    180,
+    560,
+    720,
+    820
+   ]
+  },
+  {
+   "type": "maskframe",
+   "t": 19.776,
+   "frames": 12,
+   "grid": [
+    3,
+    3
+   ],
+   "order": [
+    4,
+    0,
+    8,
+    2,
+    6,
+    1,
+    7,
+    3,
+    5
+   ]
+  }
+ ]
+}

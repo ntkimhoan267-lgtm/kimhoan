@@ -264,3 +264,36 @@ Mỗi phách nhạc: hình loé trắng 1 khung + zoom giật (punch) + rung nh�
 - Dùng cùng `bpm` cho `flash`, cho mốc cắt cảnh (`until` = bội số 60/bpm) và cho `{"sfx": "beat"}` thì hình, cắt, nhạc khớp nhau. Mỗi mốc flash thêm một `shutter`.
 - Muốn dùng sound trend thật: chọn bài trong Commercial Music Library, tìm BPM bằng `beats.py`, đặt cùng BPM cho `flash`, xuất bản không có `beat` để ghép sound trên TikTok.
 - Ví dụ hoàn chỉnh: kem mắt AHC 32s, hook nháy 8 phách, 3 bước lăn, CTA giỏ hàng.
+
+### D3b. Nháy đúng kiểu CapCut: Flicker / Frame Flick / Mask Frame (đúng trend, ưu tiên hơn D3)
+Người dùng xác nhận (11/2026): nháy **cả khung trắng** là SAI. Trend thật nháy **một vùng** (người, món ăn, khung chữ nhật) theo phách. Khoá `fx` ở gốc plan.json:
+```json
+"fx": [
+  {"type": "flicker", "t": 0.82, "frames": 12, "mode": "white",
+   "mask": {"auto": "dark", "thr": 55, "box": [300,450,480,910], "feather": 8}},
+  {"type": "flicker", "t": 2.06, "frames": 12, "mode": "invert", "blink": true, "mask": {"auto": "nonsky"}},
+  {"type": "flicker", "t": 12.4, "frames": 10, "mode": "glow", "mask": {"auto": "sat", "box": [100,500,880,1000]}},
+  {"type": "frameflick", "t": 3.3, "dur": 0.4, "box": [135,520,810,880]},
+  {"type": "maskframe", "t": 6.6, "dur": 0.5, "grid": [3,2], "order": [0,4,2,3,1,5]}
+]
+```
+- **flicker** (Flicker): tách chủ thể bằng mask tự động (`dark` = bóng người ngược sáng, `nonsky` = mọi thứ trừ trời xanh, `sat` = vùng màu đậm như món ăn), chủ thể loé `white` / `invert` / `glow`; `blink` = bật tắt mỗi 2 khung. `box` giới hạn vùng mask — luôn chừa sàn/nền tối để không bị lốm đốm trắng; kiểm tra bằng frame tách lẻ.
+- **frameflick** (Frame Flick transition): trước điểm cắt, cảnh SAU hiện trong một khung chữ nhật giữa màn, nhấp nháy âm bản, rồi cắt hẳn. Đặt `t` = mốc cắt.
+- **maskframe** (Mask Frame): cảnh SAU hiện dần từng ô lưới (cách 8px) theo `order` trong `dur` trước mốc cắt.
+- Âm: `glitch` ngay trước frameflick, `whoosh`+`click` trước maskframe. Mỗi 2–4 phách một hiệu ứng, không chồng 2 hiệu ứng cùng phách. Không dùng chung với `flash` toàn khung.
+- Ví dụ: `projects/trip-bac-kinh/video4/ref-fx/` (POV 1 ngày Bắc Kinh, 24,8s).
+
+### D4. Kiểu chữ "stack" (học từ video tham khảo talking-head dạy edit, 11/2026)
+Khối 2–3 dòng xếp chồng giữa khung: dòng nhỏ chữ thường trắng → CHỮ IN HOA đậm, giãn chữ, màu (cam/vàng/xanh nhạt/hồng) → serif nghiêng to (xanh nhạt/hồng). Phụ đề chữ trắng nhỏ trong ô nền tối bo góc. Nhãn chữ đậm trên nền dạ quang pastel.
+```json
+"caption_style": "pill",
+{"type": "stack", "start": 1.4, "end": 5, "y": 0.21, "lines": [
+  {"text": "Bay 3 tiếng rưỡi là tới", "style": "small"},
+  {"text": "Bắc Kinh 5 ngày", "style": "caps"},
+  {"text": "hết bao nhiêu tiền?", "style": "serif", "color": "#F7C6D9"}]},
+{"type": "label", "start": 35, "end": 40, "text": "Khách sạn", "color": "yellow", "y": 0.26}
+```
+- Font: Montserrat (biến thiên, `"mont:800"`) + Cormorant Garamond Italic (`"serif_cond:600"`), đều OFL và đủ dấu tiếng Việt. Instrument Serif giống mẫu hơn nhưng **thiếu dấu tiếng Việt** — đừng dùng.
+- Hiện dần từng dòng theo lời đọc: nhiều `stack` nối tiếp, mỗi cái thêm một dòng, mốc lấy từ `.words.json`.
+- Mỗi dòng đổi được `color`, `size`. Số tiền: `caps` cỡ 110–130; serif của Cormorant dùng số kiểu cũ (có đuôi) nên giá tiền để `caps`.
+- Ví dụ hoàn chỉnh: `projects/trip-bac-kinh/video1/plan_v.json`.

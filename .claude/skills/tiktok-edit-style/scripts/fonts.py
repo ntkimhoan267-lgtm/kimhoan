@@ -27,6 +27,15 @@ FONTS = {
         "/System/Library/Fonts/Supplemental/Arial Black.ttf",
         "C:/Windows/Fonts/ariblk.ttf",
     ]),
+    # kiểu "stack" (học từ video tham khảo): sans hình học rộng + serif nghiêng thanh đậm; đều có đủ dấu tiếng Việt
+    "mont": ("Montserrat-VF.ttf", "montserrat/Montserrat%5Bwght%5D.ttf", [
+        "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+        "C:/Windows/Fonts/arialbd.ttf",
+    ]),
+    "serif_cond": ("CormorantGaramond-Italic-VF.ttf", "cormorantgaramond/CormorantGaramond-Italic%5Bwght%5D.ttf", [
+        "/usr/share/fonts/truetype/freefont/FreeSerifItalic.ttf",
+        "C:/Windows/Fonts/georgiai.ttf",
+    ]),
     "sans_semibold": ("BeVietnamPro-SemiBold.ttf", "bevietnampro/BeVietnamPro-SemiBold.ttf", [
         "/usr/share/fonts/opentype/inter/Inter-SemiBold.otf",
         "/System/Library/Fonts/Supplemental/Arial Bold.ttf",

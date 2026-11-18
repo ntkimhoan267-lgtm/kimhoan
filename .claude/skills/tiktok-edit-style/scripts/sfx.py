@@ -4,6 +4,7 @@
   python sfx.py --export work/sfx/        # xuất từng âm ra .wav để nghe thử
 
 events.json: [["whoosh", 0.0], ["pop", 0.3], {"sfx": "ding", "t": 13.3, "gain": 1.2}, ...]
+  Âm ngoài (vd tải từ Pixabay): {"file": "sfx/kaching.mp3", "t": 9.1, "gain": 0.6} — đường dẫn tính từ events.json.
 Thư viện:
   whoosh  — vút dài 0,45s: card mới, đổi phần lớn (đặt sớm ~0,12s trước mốc)
   swish   — vút ngắn 0,22s: đổi cảnh thường
@@ -11,6 +12,7 @@ Thư viện:
   ding    — chuông: nhãn "Bước n", CTA
   sparkle — lấp lánh: khoảnh khắc "đây rồi", kết quả
   click   — tick giao diện: tick vào checklist, bật công tắc, chữ số đếm
+  cash    — "cha-ching" máy tính tiền: mỗi lần hiện số tiền / giá
   shutter — "tách" đèn flash máy ảnh: đi cùng mỗi lần nháy flash (render.py "flash")
   beat    — nền nhịp tự tổng hợp (kick + clap + hi-hat), không bản quyền:
             {"sfx": "beat", "t": 0, "end": 30, "bpm": 128, "gain": 1}; nháy flash dùng cùng bpm sẽ khớp phách
@@ -125,6 +127,23 @@ def shutter():
     return norm(y)
 
 
+def cash():
+    """Cha-ching: tiếng ngăn kéo "cạch" + hai tiếng chuông cao + tiền xu leng keng."""
+    n = int(1.0 * SR)
+    y = np.zeros(n)
+    t = np.arange(n) / SR
+    k = int(0.035 * SR)  # cạch
+    y[:k] += bandpass(rng.standard_normal(k), np.full(k, 2200.0), 1.5) * np.linspace(1, 0, k) * 1.6
+    for at, base, g in [(0.06, 2093, 0.8), (0.17, 2637, 1.0)]:  # cha … ching
+        st = int(at * SR); tt = t[:n - st]
+        y[st:] += g * sum(a * np.sin(2 * np.pi * base * m * tt) * np.exp(-tt * d)
+                          for m, a, d in [(1, 1, 5), (2.76, .45, 9), (5.4, .2, 14)])
+    for _ in range(9):  # xu
+        st = int(rng.uniform(0.2, 0.6) * SR); L = int(0.03 * SR); tt = t[:L]
+        y[st:st + L] += 0.25 * np.sin(2 * np.pi * rng.uniform(4500, 7500) * tt) * np.exp(-tt * 120)
+    return norm(y)
+
+
 def kick():
     t = np.arange(int(0.35 * SR)) / SR
     f = 50 + 110 * np.exp(-t * 30)
@@ -172,7 +191,7 @@ def library():
     return dict(whoosh=(whoosh(0.45), 0.22), swish=(whoosh(0.22, 800, 5000), 0.10), pop=(pop(), 0.16),
                 ding=(ding(), 0.13), sparkle=(sparkle(), 0.12), click=(click(), 0.12),
                 anvil=(anvil(), 0.15), hitech=(hitech(), 0.12), glitch=(glitch(), 0.10),
-                shutter=(shutter(), 0.14))
+                shutter=(shutter(), 0.14), cash=(cash(), 0.16))
 
 
 def read(path):
@@ -213,14 +232,24 @@ def main():
     mix = np.zeros(int(total * SR) + 2 * SR, np.float32)
     mix[:min(len(voice), len(mix))] += voice[:len(mix)]
     speaking = np.abs(mix) > 1e-3
-    last_hot = None
+    last_hot, ext = None, {}
     for ev in sorted(json.load(open(a.events)), key=lambda e: e["t"] if isinstance(e, dict) else e[1]):
-        name, t, gain = (ev["sfx"], ev["t"], ev.get("gain", 1.0)) if isinstance(ev, dict) else (ev[0], ev[1], 1.0)
+        name, t, gain = (ev.get("sfx", "file"), ev["t"], ev.get("gain", 1.0)) if isinstance(ev, dict) \
+            else (ev[0], ev[1], 1.0)
         if name in HOT:
             if last_hot is not None and t - last_hot < 7:
                 print(f"! {name} ở {t:.2f}s cách âm chói trước {t - last_hot:.1f}s (<7s) — dễ nhức đầu, cân nhắc đổi "
                       f"sang swish/pop", file=sys.stderr)
             last_hot = t
+        if isinstance(ev, dict) and ev.get("file"):  # âm ngoài, mức mặc định 0.5 so với giọng
+            f = ev["file"] if os.path.isabs(ev["file"]) else os.path.join(os.path.dirname(os.path.abspath(a.events)), ev["file"])
+            if f not in ext:
+                ext[f] = read(f)
+            at = max(int(t * SR), 0)
+            duck = 0.6 if speaking[at:at + int(0.3 * SR)].mean() > 0.3 else 1.0
+            seg = ext[f] * 0.5 * gain * duck * a.level
+            mix[at:at + len(seg)] += seg[:len(mix) - at]
+            continue
         if name == "beat":  # nền nhịp, không hạ khi có giọng (đã nhỏ sẵn)
             seg = beat(float(ev["bpm"]), float(ev["end"]) - t) * 0.22 * gain * a.level
             at = int(t * SR)

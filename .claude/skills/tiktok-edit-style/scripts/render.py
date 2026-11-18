@@ -27,9 +27,17 @@ _font_cache = {}
 
 
 def font(name, size):
+    """name có thể kèm độ đậm cho font biến thiên, vd "mont:800"."""
     key = (name, size)
     if key not in _font_cache:
-        _font_cache[key] = ImageFont.truetype(fonts.get(name), size)
+        base, _, wght = name.partition(":")
+        f = ImageFont.truetype(fonts.get(base), size)
+        if wght:
+            try:
+                f.set_variation_by_axes([int(wght)])
+            except OSError:  # font dự phòng không phải font biến thiên
+                pass
+        _font_cache[key] = f
     return _font_cache[key]
 
 
@@ -84,6 +92,81 @@ def make_caption(text, dark=False):
         text_block(im, int(H * .715), text, font("sans_semibold", 44), STYLE["ink"], shadow=False, max_w=900)
     else:
         text_block(im, int(H * .715), text, font("sans_semibold", 46), "white", shadow=True, max_w=900)
+    return im
+
+
+def make_caption_pill(text):
+    """Phụ đề kiểu ô nền tối bo góc, chữ trắng nhỏ (video tham khảo TRIP)."""
+    im = layer()
+    f = font("mont:700", 40)
+    lines = wrap(text, f, 860)
+    lh = 54
+    y = int(H * .70) - lh * len(lines) // 2
+    d = ImageDraw.Draw(im)
+    for i, ln in enumerate(lines):
+        w = f.getlength(ln)
+        x0, y0 = W / 2 - w / 2 - 22, y + i * lh - 6
+        d.rounded_rectangle((x0, y0, W / 2 + w / 2 + 22, y0 + lh - 4), 14, fill=(22, 22, 26, 200))
+        d.text((W / 2, y + i * lh + 2), ln, font=f, fill="white", anchor="ma")
+    return im
+
+
+STACK = dict(  # kiểu từng dòng trong khối "stack"
+    small=dict(font="mont:600", size=50, color="white", stroke=0, track=0, upper=False),
+    caps=dict(font="mont:800", size=80, color="#FFB347", stroke=3, track=3, upper=True),
+    serif=dict(font="serif_cond:600", size=132, color="#BFE6F7", stroke=0, track=0, upper=False),
+)
+
+
+def draw_tracked(img, cx, top, text, f, fill, track, stroke, stroke_fill):
+    """Vẽ một dòng căn giữa, giãn chữ `track` px (Pillow không có letter-spacing)."""
+    widths = [f.getlength(c) for c in text]
+    total = sum(widths) + track * (len(text) - 1)
+    x = cx - total / 2
+    d = ImageDraw.Draw(img)
+    for c, w in zip(text, widths):
+        d.text((x, top), c, font=f, fill=fill, stroke_width=stroke, stroke_fill=stroke_fill)
+        x += w + track
+    return total
+
+
+def make_stack(o):
+    """Khối chữ xếp chồng giữa màn hình: dòng nhỏ / CHỮ IN HOA màu / serif nghiêng to.
+    {"type":"stack","y":0.22,"lines":[{"text":"…","style":"small|caps|serif","color":"#hex","size":80}]}"""
+    im = layer()
+    items = []
+    for ln in o["lines"]:
+        st = dict(STACK[ln.get("style", "small")], **{k: v for k, v in ln.items() if k in ("color", "size")})
+        f = font(st["font"], st["size"])
+        txt = ln["text"].upper() if st["upper"] else ln["text"]
+        asc, desc = f.getmetrics()
+        h = (asc + desc) * (0.82 if ln.get("style") == "serif" else 1.0)
+        items.append((txt, f, st, asc, h))
+    total = sum(h for *_, h in items)
+    y = H * o.get("y", .22) - total / 2
+    sh = layer()
+    for txt, f, st, asc, h in items:  # bóng mềm phía sau để chữ nổi trên nền sáng
+        draw_tracked(sh, W / 2, y + 4, txt, f, (0, 0, 0, 170), st["track"], st["stroke"], (0, 0, 0, 170))
+        y += h
+    im.alpha_composite(sh.filter(ImageFilter.GaussianBlur(8)))
+    y = H * o.get("y", .22) - total / 2
+    for txt, f, st, asc, h in items:
+        draw_tracked(im, W / 2, y, txt, f, st["color"], st["track"], st["stroke"], "#1B1B1F")
+        y += h
+    return im
+
+
+def make_label(o):
+    """Nhãn chữ đậm trên nền bút dạ quang pastel: {"type":"label","text","color":"blue|yellow|pink|green","y"}."""
+    im = layer()
+    bg, fg = STYLE["pills"].get(o.get("color", "blue"), STYLE["pills"]["blue"])
+    f = font("mont:700", o.get("size", 54))
+    w = f.getlength(o["text"])
+    asc, desc = f.getmetrics()
+    y = int(H * o.get("y", .12))
+    d = ImageDraw.Draw(im)
+    d.rectangle((W / 2 - w / 2 - 18, y + asc * .25, W / 2 + w / 2 + 18, y + asc + desc * .6), fill=bg)
+    d.text((W / 2, y), o["text"], font=f, fill=o.get("ink", STYLE["ink"]), anchor="ma")
     return im
 
 
@@ -220,6 +303,114 @@ def flash_fx(groups):
             f"crop={W}:{H}:x='(in_w-{W})/2+({sx})':y='(in_h-{H})/2+0.6*({sx})',")
 
 
+# ---------- hiệu ứng nháy theo vùng (CapCut flicker / frame flick / mask frame) ----------
+
+def auto_mask(base, t, spec, out):
+    """Mặt nạ vật thể từ khung hình của base tại t: "dark" (bóng người ngược sáng), "nonsky" (công trình
+    trước nền trời), "sat" (vật thể nhiều màu, vd món ăn), "bright" (vùng sáng trên nền tối), "skin" (da mặt/tay), "pastel_blue" (máy/chai màu xanh pastel). Giữ vùng liền lớn nhất trong "box" nếu có."""
+    import numpy as np
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{t:.3f}", "-i", base, "-frames:v", "1", "-vf",
+                          f"scale={W}:{H}", "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], capture_output=True,
+                         check=True).stdout
+    a = np.frombuffer(raw, np.uint8).reshape(H, W, 3).astype(int)
+    r_, g_, b_ = a[..., 0], a[..., 1], a[..., 2]
+    lum = .3 * r_ + .59 * g_ + .11 * b_
+    kind = spec.get("auto", "dark")
+    if kind == "dark":
+        m = lum < spec.get("thr", 60)
+    elif kind == "bright":
+        m = lum > spec.get("thr", 120)
+    elif kind == "skin":  # da mặt/tay (loại đỏ rực của áo, nền tối)
+        m = (r_ > 95) & (g_ > 40) & (b_ > 20) & (r_ > g_ + 10) & (r_ > b_) & (r_ - g_ < spec.get("thr", 80))
+    elif kind == "pastel_blue":  # vật màu xanh pastel (máy, chai lọ) — không ăn vào da, áo xanh đậm
+        m = (b_ > r_ + 12) & (g_ > r_) & (lum > spec.get("thr", 110)) & (b_ - r_ < 90)
+    elif kind == "nonsky":
+        m = ~((b_ > r_ + 25) & (b_ > g_ - 5) & (lum > 70))
+    else:  # sat
+        mx, mn = a.max(-1), a.min(-1)
+        m = (mx - mn) > spec.get("thr", 70)
+    if spec.get("box"):
+        x, y, w, h = spec["box"]
+        keep = np.zeros_like(m); keep[y:y + h, x:x + w] = True; m &= keep
+    if spec.get("track"):  # mask chạy theo từng khung: trả về màu khoá (trung bình vùng mask) + ảnh khung box
+        sel = a[m] if m.any() else a.reshape(-1, 3)
+        key = "0x%02X%02X%02X" % tuple(int(v) for v in np.median(sel, 0))
+        bx = np.zeros((H, W), np.uint8)
+        if spec.get("box"):
+            x, y, w, h = spec["box"]; bx[y:y + h, x:x + w] = 255
+        else:
+            bx[:] = 255
+        Image.fromarray(bx, "L").save(out)
+        return key
+    im = Image.fromarray((m * 255).astype("uint8"), "L").filter(ImageFilter.MedianFilter(9))
+    im.filter(ImageFilter.GaussianBlur(spec.get("feather", 2))).save(out)
+    return out
+
+
+def region_fx(plan, base, tmp, add_input, chains, cur, grade):
+    """plan["fx"]: hiệu ứng dài 10–12 khung, đặt đúng phách.
+      {"type":"flicker","t":3.3,"frames":12,"mode":"white"|"glow"|"invert","blink":true,
+       "mask":{"auto":"dark","box":[...],"feather":8}}
+        → chỉ vật thể (mặt nạ) thành bóng trắng phát sáng (white, feather lớn = quầng sáng) / sáng rực (glow,
+          hợp món ăn) / âm bản (invert); nền giữ nguyên.
+      {"type":"frameflick","t":cut,"frames":10,"box":[x,y,w,h]}
+        → 10 khung đầu của cảnh SAU hiện trong ô chữ nhật trên cảnh TRƯỚC, nháy âm bản xen kẽ, rồi mới cắt.
+      {"type":"maskframe","t":cut,"frames":12,"grid":[3,2],"gap":8}
+        → cảnh SAU hiện dần từng ô lưới đều nhau trên cảnh TRƯỚC, đủ ô thì cắt."""
+    for k, fx in enumerate(plan.get("fx", [])):
+        t, d = float(fx["t"]), fx.get("frames", 12) / FPS
+        if fx["type"] == "flicker":
+            ms = fx.get("mask", {})
+            mp = os.path.join(tmp, f"fxm{k}.png")
+            key = auto_mask(base, t + d / 2, ms, mp)
+            m = mp
+            j = add_input(["-loop", "1", "-framerate", str(FPS), "-t", f"{d:.3f}", "-i", m])
+            mode = fx.get("mode", "glow")
+            eff = "negate" if mode == "invert" else "lutrgb=r=255:g=255:b=255" if mode == "white" else \
+                (f"curves=all='0/0 0.35/0.95 1/1',split[g1{k}][g2{k}];[g2{k}]gblur=sigma=10[g3{k}];"
+                 f"[g1{k}][g3{k}]blend=all_mode=screen")
+            chains.append(f"[{cur}]split[fa{k}][fb{k}]")
+            if ms.get("track"):  # mask từng khung theo màu khoá (chromakey) ∩ box
+                chains.append(f"[fb{k}]trim=start={t:.3f}:duration={d:.3f},setpts=PTS-STARTPTS,split[fs{k}][fk{k}]")
+                chains.append(f"[fs{k}]{eff},format=rgba[fe{k}]")
+                chains.append(f"[fk{k}]format=rgba,colorkey=color={key}:similarity={ms.get('similarity', 0.12)}:"
+                              f"blend=0.03,alphaextract,format=gray,negate,median=radius=4,"
+                              f"gblur=sigma={ms.get('feather', 3)}[fk2{k}]")
+                chains.append(f"[{j}:v]format=gray,scale={W}:{H}[fbx{k}]")
+                chains.append(f"[fk2{k}][fbx{k}]blend=all_mode=multiply,format=gray[fm{k}]")
+            else:
+                chains.append(f"[fb{k}]trim=start={t:.3f}:duration={d:.3f},setpts=PTS-STARTPTS,{eff},format=rgba[fe{k}]")
+                chains.append(f"[{j}:v]format=gray,scale={W}:{H}[fm{k}]")
+            chains.append(f"[fe{k}][fm{k}]alphamerge,setpts=PTS+{t:.3f}/TB[fx{k}]")
+            chains.append(f"[fa{k}][fx{k}]overlay=eof_action=pass:"
+                          f"enable='between(t,{t:.3f},{t + d:.3f}){'*lt(mod(n,4),2)' if fx.get('blink') else ''}'[fo{k}]")
+            cur = f"fo{k}"
+        else:  # frameflick / maskframe: lấy trước d giây đầu của cảnh sau từ chính base
+            j = add_input(["-i", base])
+            nxt = f"[{j}:v]trim=start={t:.3f}:duration={d:.3f},setpts=PTS-STARTPTS,{grade}"
+            if fx["type"] == "frameflick":
+                x, y, w, h = fx.get("box", [135, 480, 810, 960])
+                chains.append(f"{nxt},crop={w}:{h}:{x}:{y},negate=enable='lt(mod(n,4),2)',"
+                              f"setpts=PTS+{t - d:.3f}/TB[ff{k}]")
+                chains.append(f"[{cur}][ff{k}]overlay=x={x}:y={y}:eof_action=pass:"
+                              f"enable='between(t,{t - d:.3f},{t:.3f})'[fo{k}]")
+                cur = f"fo{k}"
+            else:
+                cols, rows = fx.get("grid", [3, 2]); gap = fx.get("gap", 8)
+                cw, ch = (W - gap * (cols + 1)) // cols, (H - gap * (rows + 1)) // rows
+                n = cols * rows; step = d / n
+                chains.append(f"{nxt},setpts=PTS+{t - d:.3f}/TB,split={n}" + "".join(f"[mf{k}_{i}]" for i in range(n)))
+                order = fx.get("order", list(range(n)))
+                for i, cell in enumerate(order):
+                    cx_, cy_ = cell % cols, cell // cols
+                    x, y = gap + cx_ * (cw + gap), gap + cy_ * (ch + gap)
+                    chains.append(f"[mf{k}_{i}]crop={cw}:{ch}:{x}:{y}[mc{k}_{i}]")
+                    chains.append(f"[{cur}][mc{k}_{i}]overlay=x={x}:y={y}:eof_action=pass:"
+                                  f"enable='between(t,{t - d + i * step:.3f},{t:.3f})'[fo{k}_{i}]")
+                    cur = f"fo{k}_{i}"
+    return cur
+
+
 # ---------- dựng ----------
 
 def is_image(p):
@@ -236,9 +427,22 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("plan")
     ap.add_argument("--preview", action="store_true")
+    ap.add_argument("--audio-only", action="store_true",
+                    help="chỉ thay tiếng (plan['audio']) vào video đã xuất, không dựng lại hình — vài giây")
     a = ap.parse_args()
     plan = json.load(open(a.plan))
     os.chdir(os.path.dirname(os.path.abspath(a.plan)))
+    if a.audio_only:
+        out = plan.get("output", "final.mp4")
+        if a.preview:
+            out = os.path.splitext(out)[0] + "_preview.mp4"
+        tmp = out + ".tmp.mp4"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", out, "-i", plan["audio"], "-map", "0:v", "-map", "1:a",
+                        "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", tmp],
+                       check=True)
+        os.replace(tmp, out)
+        print(f"-> {out} (chỉ thay tiếng)", file=sys.stderr)
+        return
     tmp = tempfile.mkdtemp(prefix="tes_")
     base = plan["base"]
     dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0",
@@ -262,6 +466,8 @@ def main():
     def add_input(args):
         inputs.append(args)
         return len(inputs) - 1
+
+    cur = region_fx(plan, base, tmp, add_input, chains, cur, grade)
 
     def push(src_label, start, end, x="0", y="0"):
         nonlocal cur, n
@@ -326,6 +532,12 @@ def main():
             png_layer(make_keyword(o), s, e, slide=True)
         elif o["type"] == "hook":
             png_layer(make_hook(o), s, e, slide=True)
+        elif o["type"] == "stack":
+            png_layer(make_stack(o), s, e, slide=o.get("slide", True))
+        elif o["type"] == "label":
+            png_layer(make_label(o), s, e)
+        elif o["type"] == "png":  # ảnh RGBA toàn khung tự vẽ sẵn (checklist, sơ đồ…): {"src", "fade": false}
+            png_layer(Image.open(o["src"]).convert("RGBA").resize((W, H)), s, e, fade=o.get("fade", False))
         elif o["type"] == "cta":
             png_layer(make_cta(o), s, e, slide=True)
         elif o["type"] == "text":  # chữ tự do: {"text", "y": 0.5, "size": 60, "color": "white", "font": "sans_bold"}
@@ -337,7 +549,9 @@ def main():
     for c in caps:
         s, e = float(c["start"]), float(c["end"])
         on_card = any(float(k["start"]) <= s < float(k["end"]) for k in cards)
-        png_layer(make_caption(c["text"], dark=on_card), s, e, fade=False)
+        cap = make_caption_pill(c["text"]) if plan.get("caption_style") == "pill" and not on_card \
+            else make_caption(c["text"], dark=on_card)
+        png_layer(cap, s, e, fade=False)
 
     fx = flash_fx(plan.get("flash", []))
     out_size = "540:960" if a.preview else f"{W}:{H}"

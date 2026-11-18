@@ -1,0 +1,157 @@
+{
+ "base": "work/base.mp4",
+ "output": "trip_video1_nhap.mp4",
+ "grade": "warm",
+ "audio": "work/mix.wav",
+ "captions": "captions.json",
+ "flash": [
+  {
+   "times": [
+    4.0,
+    18.5,
+    23.0,
+    32.0
+   ],
+   "power": 0.4,
+   "punch": 1.05,
+   "shake": 0
+  }
+ ],
+ "overlays": [
+  {
+   "type": "hook",
+   "start": 0.1,
+   "end": 3.95,
+   "lines": [
+    "BẮC KINH 5 NGÀY",
+    "HẾT BAO NHIÊU?"
+   ],
+   "accent": "Bắc Kinh không xa"
+  },
+  {
+   "type": "keyword",
+   "start": 4.6,
+   "end": 6.95,
+   "small": "Vé máy bay khứ hồi",
+   "big": "~9 triệu",
+   "color": "white"
+  },
+  {
+   "type": "keyword",
+   "start": 7.2,
+   "end": 9.95,
+   "small": "Khách sạn 4 đêm · phòng đôi",
+   "big": "~3,5 triệu",
+   "color": "white"
+  },
+  {
+   "type": "keyword",
+   "start": 10.2,
+   "end": 12.95,
+   "small": "Ăn uống 5 ngày",
+   "big": "~3 triệu",
+   "color": "white"
+  },
+  {
+   "type": "keyword",
+   "start": 13.2,
+   "end": 16.45,
+   "small": "Vé tham quan + đi lại",
+   "big": "~2,5 triệu",
+   "color": "white"
+  },
+  {
+   "type": "keyword",
+   "start": 16.6,
+   "end": 18.45,
+   "small": "Visa du lịch",
+   "big": "~2 triệu",
+   "color": "white"
+  },
+  {
+   "type": "hook",
+   "start": 18.7,
+   "end": 22.95,
+   "lines": [
+    "TỰ TÚC",
+    "≈ 20 TRIỆU"
+   ],
+   "accent": "1 người · 5 ngày 4 đêm"
+  },
+  {
+   "type": "card",
+   "start": 23.0,
+   "end": 32.0,
+   "label": "Tour TRIP trọn gói",
+   "color": "yellow",
+   "big": "[giá]",
+   "big_y": 0.3
+  },
+  {
+   "type": "text",
+   "start": 23.6,
+   "end": 32.0,
+   "text": "•  Vé máy bay khứ hồi",
+   "y": 0.42,
+   "size": 50,
+   "color": "#2B2B2B"
+  },
+  {
+   "type": "text",
+   "start": 24.4,
+   "end": 32.0,
+   "text": "•  Khách sạn",
+   "y": 0.47,
+   "size": 50,
+   "color": "#2B2B2B"
+  },
+  {
+   "type": "text",
+   "start": 25.2,
+   "end": 32.0,
+   "text": "•  Ăn uống theo chương trình",
+   "y": 0.52,
+   "size": 50,
+   "color": "#2B2B2B"
+  },
+  {
+   "type": "text",
+   "start": 26.0,
+   "end": 32.0,
+   "text": "•  Vé tham quan",
+   "y": 0.57,
+   "size": 50,
+   "color": "#2B2B2B"
+  },
+  {
+   "type": "text",
+   "start": 26.8,
+   "end": 32.0,
+   "text": "•  HDV [tiếng Việt] + hỗ trợ visa",
+   "y": 0.62,
+   "size": 50,
+   "color": "#2B2B2B"
+  },
+  {
+   "type": "keyword",
+   "start": 32.3,
+   "end": 35.4,
+   "small": "Bắc Kinh",
+   "big": "không xa đâu",
+   "color": "white"
+  },
+  {
+   "type": "card",
+   "start": 35.5,
+   "end": 40.0
+  },
+  {
+   "type": "cta",
+   "start": 35.5,
+   "end": 40.0,
+   "top": "NHẮN ZALO TRIP",
+   "big": "[số Zalo]",
+   "sub": "nhận bảng chi phí chi tiết từng ngày"
+  }
+ ]
+}

@@ -1,0 +1,131 @@
+[
+{
+"src": "../trip/raw/hotel6.mp4",
+"in": 0.8,
+"until": 3.716
+},
+{
+"src": "../trip/raw/17138424-hd_1080_1920_30fps.mp4",
+"in": 3,
+"until": 5.574,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/17138424-hd_1080_1920_30fps.mp4",
+"in": 13,
+"until": 7.432,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/15060792_3840_2160_30fps.mp4",
+"in": 0,
+"until": 8.361,
+"cx": 0.3,
+"trans": "flash"
+},
+{
+"src": "../trip/raw/15060792_3840_2160_30fps.mp4",
+"in": 12,
+"until": 9.29,
+"cx": 0.6,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/15060792_3840_2160_30fps.mp4",
+"in": 25,
+"until": 10.219,
+"cx": 0.45,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/17151270_3840_2160_25fps.mp4",
+"in": 3,
+"until": 11.148,
+"cx": 0.5,
+"trans": "flash"
+},
+{
+"src": "../trip/raw/17151270_3840_2160_25fps.mp4",
+"in": 14,
+"until": 12.077,
+"cx": 0.3,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/17151270_3840_2160_25fps.mp4",
+"in": 20,
+"until": 13.006,
+"cx": 0.7,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/11797448-hd_1080_1920_24fps.mp4",
+"in": 1,
+"until": 13.935,
+"trans": "flash"
+},
+{
+"src": "../trip/raw/11797448-hd_1080_1920_24fps.mp4",
+"in": 5,
+"until": 14.864,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/11797448-hd_1080_1920_24fps.mp4",
+"in": 8,
+"until": 15.793,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/15961928-hd_1080_1920_50fps.mp4",
+"in": 3,
+"until": 16.722,
+"trans": "flash"
+},
+{
+"src": "../trip/raw/14101338_3840_2160_60fps.mp4",
+"in": 1,
+"until": 17.651,
+"cx": 0.4,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/15961928-hd_1080_1920_50fps.mp4",
+"in": 9,
+"until": 18.58,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/14101338_3840_2160_60fps.mp4",
+"in": 4,
+"until": 19.509,
+"cx": 0.7,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/15390174_3840_2160_25fps.mp4",
+"in": 4,
+"until": 20.438,
+"cx": 0.6,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/13510367_1080_1920_30fps.mp4",
+"in": 3,
+"until": 21.367,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/14349768_1440_2560_60fps.mp4",
+"in": 3,
+"until": 22.296,
+"trans": "whip"
+},
+{
+"src": "../trip/raw/greatwall2.mp4",
+"in": 0,
+"until": 27.87,
+"cx": 0.55,
+"trans": "leak"
+}
+]
