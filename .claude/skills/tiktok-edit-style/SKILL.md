@@ -8,6 +8,9 @@ description: Lên kịch bản, lồng tiếng, thêm hiệu ứng âm thanh và
 Skill dựng video hoàn chỉnh bằng ffmpeg + Pillow qua 3 script trong `scripts/`.
 Mọi đường dẫn script dưới đây tính từ thư mục skill này.
 
+## Đọc trước: sổ tay dự án
+Mỗi dự án có `projects/<tên>/README.md` (source, ID Drive, mốc cảnh đẹp, đối thủ đã phân tích, video đã làm). Người dùng nhắc tới dự án nào (vd "Skincare", "Drive mục Skincare") thì đọc file đó và `catalog.md` của nó **trước**, chỉ tải đúng file cần (`scripts/drive_fetch.sh`), không tải/xem lại cả thư mục. Làm xong video thì cập nhật README đó (video đã làm, mốc cảnh mới, kết quả A/B nếu người dùng báo).
+
 ## Phong cách (bám sát khi lên plan)
 
 | Thành phần | Trông như thế nào | Dùng khi |

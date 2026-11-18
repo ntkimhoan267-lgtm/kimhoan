@@ -1,0 +1,140 @@
+{
+ "base": "work/base.mp4",
+ "output": "ahc_kem_mat_B.mp4",
+ "grade": "warm",
+ "audio": "work/mix.wav",
+ "flash": [
+  {
+   "start": 0,
+   "end": 3.9,
+   "bpm": 120,
+   "power": 0.5,
+   "punch": 1.1,
+   "shake": 12
+  },
+  {
+   "times": [
+    4.0,
+    9.5,
+    13.5,
+    17.5,
+    21.5
+   ],
+   "power": 0.45,
+   "punch": 1.06,
+   "shake": 6
+  },
+  {
+   "start": 24.5,
+   "end": 26.4,
+   "bpm": 120,
+   "power": 0.35,
+   "punch": 1.04,
+   "shake": 0
+  },
+  {
+   "times": [
+    28.0
+   ],
+   "power": 0.6,
+   "punch": 1.08
+  }
+ ],
+ "overlays": [
+  {
+   "type": "hook",
+   "start": 0.15,
+   "end": 3.95,
+   "lines": [
+    "Cú đêm mà mắt",
+    "vẫn trông tươi?"
+   ],
+   "accent": "3 đường lăn mỗi tối của mình",
+   "pos": "low"
+  },
+  {
+   "type": "keyword",
+   "start": 4.1,
+   "end": 6.95,
+   "small": "kem mắt",
+   "big": "dành cho mặt",
+   "pos": "low"
+  },
+  {
+   "type": "text",
+   "start": 4.1,
+   "end": 6.95,
+   "text": "Colla-Juvenation Lift 4 · đầu massage chữ T",
+   "y": 0.93,
+   "size": 34,
+   "color": "white",
+   "stroke": 3
+  },
+  {
+   "type": "keyword",
+   "start": 7.1,
+   "end": 9.45,
+   "small": "lấy kem",
+   "big": "chấm từng điểm",
+   "pos": "low",
+   "color": "white"
+  },
+  {
+   "type": "keyword",
+   "start": 9.6,
+   "end": 13.45,
+   "small": "Bước 1 · vùng mắt",
+   "big": "lăn trong ra ngoài",
+   "pos": "low"
+  },
+  {
+   "type": "keyword",
+   "start": 13.6,
+   "end": 17.45,
+   "small": "Bước 2",
+   "big": "rãnh cười",
+   "pos": "low"
+  },
+  {
+   "type": "keyword",
+   "start": 17.6,
+   "end": 21.45,
+   "small": "Bước 3",
+   "big": "viền hàm",
+   "pos": "low"
+  },
+  {
+   "type": "keyword",
+   "start": 21.6,
+   "end": 24.45,
+   "small": "mẹo nhỏ",
+   "big": "ấn nhẹ đuôi mắt",
+   "pos": "low",
+   "color": "#FFD25A"
+  },
+  {
+   "type": "keyword",
+   "start": 24.6,
+   "end": 27.95,
+   "small": "sáng ra",
+   "big": "da ẩm mướt",
+   "pos": "low",
+   "color": "white"
+  },
+  {
+   "type": "card",
+   "start": 28.0,
+   "end": 32.0,
+   "label": "AHC Pro Shot · Lift 4",
+   "color": "pink"
+  },
+  {
+   "type": "cta",
+   "start": 28.0,
+   "end": 32.0,
+   "top": "KEM MẮT AHC ĐỎ",
+   "big": "link ở giỏ hàng",
+   "sub": "lưu lại tối nay lăn theo nha"
+  }
+ ]
+}
