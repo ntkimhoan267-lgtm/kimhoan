@@ -46,3 +46,4 @@ Thư mục Drive riêng "Nhạc tour Trung Quốc (TRIP)" `1Eka2AIaynyG2v2RcHfGJ
 - Thân video là checklist 5 mục tick dần (`video3/gfx/ck_*.png`, overlay `"type": "png"` mới của render.py) trên card kem, minh hoạ phía trên: clip Gemini hộ chiếu, ảnh thẻ, tờ khai, cửa sổ máy bay + phòng khách sạn + lịch 12/2026 (1/12 là thứ Ba), giấy tờ.
 - Clip `gemini_092014BC` do AI tạo (Drive `1U2WoEMxmnT8s2UXPi_hEU3N-HG2H3Q3S`): chỉ dùng 5s đầu (sau đó hộ chiếu tự nhân đôi). **Đăng phải bật nhãn nội dung AI.**
 - Footage mới khác: `5794444` máy quẹt thẻ (thay cho thẻ QR lỗi 2 video 2), `11797448` đồ nướng (đoạn ăn uống video 1), `3_sai_lam_trung_quoc.mp4` là bản dựng của nhóm (chưa xem).
+- Video 1 làm lại (18/11): nhạc bài 02 volume **0,07** (người dùng muốn nhạc nhỏ — dùng mức này cho cả series), bỏ nền nhịp, cảnh ăn uống = `11797448` (bếp đồ nướng). Nhạc tải từ Drive vào `music/` cạnh plan.

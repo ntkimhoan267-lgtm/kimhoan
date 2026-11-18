@@ -389,5 +389,9 @@
     }
    ]
   }
- ]
+ ],
+ "music": {
+  "src": "music/02-nhac-trung-khong-loi-105bpm-64s.mp3",
+  "volume": 0.07
+ }
 }
