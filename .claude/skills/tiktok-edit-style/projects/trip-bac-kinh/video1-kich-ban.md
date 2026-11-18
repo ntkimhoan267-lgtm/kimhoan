@@ -20,7 +20,7 @@ Chỗ [ngoặc vuông] phải thay bằng thông tin thật của tour TRIP trư
 | 13–16 | Cổng Tử Cấm Thành / tàu điện ngầm | Vé tham quan với đi lại: hai triệu rưỡi. | 🏯 Tham quan, đi lại ~2,5tr |
 | 16–18 | Hộ chiếu, giấy tờ trên bàn | Visa: gần hai triệu. | 🛂 Visa ~2tr |
 | 18–23 | Đồ họa cộng dồn | Cộng lại khoảng hai mươi triệu một người. Đó là chưa tính công tự đặt từng thứ, tự tìm đường, tự lo giấy tờ. | TỰ TÚC ≈ 20 TRIỆU |
-| 23–32 | Chia đôi: tự túc vs TRIP, hiện dấu ✓ | Còn đi tour TRIP: [giá] trọn gói. Đã gồm vé máy bay, khách sạn, ăn uống, vé tham quan, hướng dẫn viên [tiếng Việt] và hỗ trợ visa. Bạn chỉ việc xách vali lên đường. | Tự túc ≈20tr · TRIP [giá] ✓✓✓ |
+| 23–32 | Chia đôi: tự túc vs TRIP, hiện dấu ✓ | Còn đi tour TRIP: mười ba triệu chín trăm chín mươi nghìn, trọn gói. Rẻ hơn tự túc gần sáu triệu. Đã gồm vé máy bay, khách sạn, ăn uống, vé tham quan, hướng dẫn viên và hỗ trợ visa. Bạn chỉ việc xách vali lên đường. | Tự túc ≈20tr · TRIP 13.990.000đ · rẻ hơn ~6tr |
 | 32–40 | Tử Cấm Thành / Trường Thành hoàng hôn + card CTA | Muốn bảng chi phí chi tiết từng ngày, nhắn Zalo TRIP nhé. Bắc Kinh không xa đâu. | Nhắn Zalo [số] nhận bảng giá |
 
 Nếu giá TRIP **cao hơn** ~20 triệu, đổi câu 23–32 thành: "Đi tour TRIP [giá], chỉ hơn tự túc [chênh lệch], mà có người lo hết từ visa tới bữa ăn. Bạn chỉ việc xách vali lên đường." (Đừng nói "rẻ hơn" khi không rẻ hơn.)
