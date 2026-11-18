@@ -5,7 +5,7 @@ Series "Bắc Kinh không xa" · TikTok/Reels · ~45 giây · ~130 chữ. Mục 
 ## Hook (chọn 1)
 | | Lời đọc 0–4s | Chữ trên màn hình | Nguyên lý MKT |
 |---|---|---|---|
-| **A (khuyên dùng)** | "Đi Trung Quốc lần đầu, mắc 3 lỗi này là mất toi cả ngày ở Bắc Kinh." | 3 LỖI / mất toi cả ngày | Sợ mất (loss aversion) mạnh hơn mong được; "mất cả ngày" là cái giá cụ thể người lên kế hoạch hình dung được. Con số 3 hứa hẹn ngắn, dễ xem hết. |
+| **A (đã chọn)** | "Đi Trung Quốc lần đầu, mắc 3 lỗi này là mất toi cả ngày ở Bắc Kinh." | 3 LỖI / mất toi cả ngày | Sợ mất (loss aversion) mạnh hơn mong được; "mất cả ngày" là cái giá cụ thể người lên kế hoạch hình dung được. Con số 3 hứa hẹn ngắn, dễ xem hết. |
 | B | "Tới Bắc Kinh mà điện thoại thành cục gạch? Đó mới là lỗi số một." | ĐIỆN THOẠI THÀNH CỤC GẠCH? | Tình huống bất ngờ (pattern interrupt) + vòng mở "lỗi số một" kéo người xem chờ lỗi 2, 3. |
 | C | "Đi Trung Quốc lần đầu, đừng mắc 3 lỗi này." | 3 SAI LẦM KHI ĐI LẦN ĐẦU | Hook gốc trong kế hoạch, rõ ràng, an toàn. |
 
@@ -22,7 +22,7 @@ Series "Bắc Kinh không xa" · TikTok/Reels · ~45 giây · ~130 chữ. Mục 
 - Google, Facebook, YouTube, WhatsApp bị chặn ở Trung Quốc đại lục; SIM Trung Quốc không vào được. eSIM du lịch/roaming quốc tế thường vào được — nguồn là trang bán eSIM, nên kịch bản chỉ khuyên "mua eSIM ghi rõ dùng được Google" và tránh nói về VPN. Zalo chưa rõ ổn định → không nhắc.
 - Alipay, WeChat Pay nhận thẻ Visa/Mastercard quốc tế; Visa Việt Nam có thông cáo cho chủ thẻ Việt Nam. Nên cài trước khi bay, giữ ít tiền mặt.
 - Tử Cấm Thành: đặt online trước, không bán vé trong ngày tại chỗ, khai số hộ chiếu, mang hộ chiếu gốc khi vào; đóng cửa thứ Hai (trừ ngày lễ). Giới hạn khách/ngày và giờ mở bán các nguồn không thống nhất → không nhắc.
-- "Đi cùng TRIP thì có người lo trước": cần người dùng xác nhận tour TRIP đặt vé tham quan trước và có hướng dẫn cài ví / sim.
+- "Đi cùng TRIP thì có người lo trước": người dùng xác nhận 18/11/2026 — TRIP đặt vé tham quan trước và hướng dẫn khách cài app (ví, sim).
 
 ## Footage
 Có: 17151270 (quảng trường Tử Cấm Thành), 15060792 (Ngọ Môn), 16326128 (cổng đỏ đông khách — chưa chắc địa điểm), greatwall2, 15961928 (phố đêm).
