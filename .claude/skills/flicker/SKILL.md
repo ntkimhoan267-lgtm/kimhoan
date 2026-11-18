@@ -14,6 +14,13 @@ Công cụ dựng nằm ở skill `tiktok-edit-style` (đường dẫn `../tikto
 2. Mẫu dựng hoàn chỉnh của hiệu ứng: `../tiktok-edit-style/projects/trip-bac-kinh/video4/ref-fx/` (`shots_ref.json`, `plan_ref.json`, `sfx_ref.json`). Bắt chước cấu trúc `fx`, mật độ và âm thanh.
 3. Mẫu dựng skincare cũ (chữ, CTA, nhịp): `../tiktok-edit-style/projects/skincare/ahc-kem-mat/`.
 
+## Phiên tự động (lịch hằng ngày, KHÔNG có công cụ Google Drive)
+Phiên chạy theo lịch không có `mcp__Google_Drive__*`. Mọi thứ tải bằng `bash ../tiktok-edit-style/scripts/drive_fetch.sh <thư mục> <ID>:<tên>` qua link chia sẻ của thư mục Skincare (người dùng đồng ý giữ chia sẻ, 18/11/2026):
+- Ảnh chân dung đã tách nền: `1YCqqtebsSxFj_nIr_6Js0HVx2rJ9i_4g:portrait.png`
+- Nhạc flicker: `1u70NBIEgnmy1CGWkNWM1H1zEMUlydHuP:flicker.mp3`
+- Footage: ID trong `projects/skincare/catalog.md`.
+Giao video + ảnh bìa bằng SendUserFile (status proactive); không upload Drive được thì bỏ qua bước đó.
+
 ## 1. Chọn sản phẩm
 - Người dùng nêu sản phẩm → dùng sản phẩm đó. Không nêu → chọn sản phẩm **chưa làm** có nhiều ⭐ source nhất trong README (bảng "Sản phẩm có trong source"), nói 1 câu đã chọn gì rồi làm luôn.
 - Tên sản phẩm đọc từ bao bì (cắt khung 960px lúc cầm sản phẩm). Không đọc được thì hỏi, không đoán.
