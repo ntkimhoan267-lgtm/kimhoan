@@ -1,0 +1,450 @@
+{
+ "base": "work/base.mp4",
+ "output": "halio_flicker.mp4",
+ "grade": "warm",
+ "audio": "work/mix.wav",
+ "captions": "captions.json",
+ "caption_style": "pill",
+ "music": {
+  "src": "music/flicker.mp3",
+  "volume": 0.08
+ },
+ "fx": [
+  {
+   "type": "flicker",
+   "t": 1.85,
+   "frames": 10,
+   "mode": "white",
+   "mask": {
+    "auto": "pastel_blue",
+    "box": [
+     100,
+     250,
+     880,
+     1500
+    ],
+    "feather": 5,
+    "track": true,
+    "similarity": 0.075
+   }
+  },
+  {
+   "type": "flicker",
+   "t": 2.68,
+   "frames": 12,
+   "mode": "invert",
+   "blink": true,
+   "mask": {
+    "auto": "pastel_blue",
+    "box": [
+     100,
+     250,
+     880,
+     1500
+    ],
+    "feather": 5,
+    "track": true,
+    "similarity": 0.075
+   }
+  },
+  {
+   "type": "frameflick",
+   "t": 3.296,
+   "frames": 10,
+   "box": [
+    135,
+    520,
+    810,
+    880
+   ]
+  },
+  {
+   "type": "maskframe",
+   "t": 5.768,
+   "frames": 12,
+   "grid": [
+    3,
+    2
+   ],
+   "order": [
+    0,
+    4,
+    2,
+    3,
+    1,
+    5
+   ]
+  },
+  {
+   "type": "flicker",
+   "t": 6.6,
+   "frames": 12,
+   "mode": "white",
+   "blink": true,
+   "mask": {
+    "auto": "pastel_blue",
+    "box": [
+     100,
+     250,
+     880,
+     1500
+    ],
+    "feather": 5,
+    "track": true,
+    "similarity": 0.075
+   }
+  },
+  {
+   "type": "frameflick",
+   "t": 8.24,
+   "frames": 10,
+   "box": [
+    90,
+    600,
+    900,
+    800
+   ]
+  },
+  {
+   "type": "maskframe",
+   "t": 10.3,
+   "frames": 12,
+   "grid": [
+    2,
+    3
+   ],
+   "order": [
+    0,
+    3,
+    4,
+    1,
+    2,
+    5
+   ]
+  },
+  {
+   "type": "frameflick",
+   "t": 14.832,
+   "frames": 10,
+   "box": [
+    135,
+    480,
+    810,
+    960
+   ]
+  },
+  {
+   "type": "flicker",
+   "t": 16.9,
+   "frames": 12,
+   "mode": "glow",
+   "mask": {
+    "auto": "sat",
+    "thr": 90,
+    "box": [
+     120,
+     150,
+     840,
+     950
+    ],
+    "feather": 4
+   }
+  },
+  {
+   "type": "maskframe",
+   "t": 19.776,
+   "frames": 12,
+   "grid": [
+    3,
+    3
+   ],
+   "order": [
+    4,
+    0,
+    8,
+    2,
+    6,
+    1,
+    7,
+    3,
+    5
+   ]
+  },
+  {
+   "type": "flicker",
+   "t": 20.6,
+   "frames": 12,
+   "mode": "glow",
+   "mask": {
+    "auto": "sat",
+    "thr": 90,
+    "box": [
+     120,
+     150,
+     840,
+     950
+    ],
+    "feather": 4
+   }
+  },
+  {
+   "type": "frameflick",
+   "t": 23.484,
+   "frames": 10,
+   "box": [
+    180,
+    560,
+    720,
+    820
+   ]
+  },
+  {
+   "type": "maskframe",
+   "t": 27.192,
+   "frames": 12,
+   "grid": [
+    3,
+    3
+   ],
+   "order": [
+    0,
+    8,
+    2,
+    6,
+    4,
+    1,
+    7,
+    3,
+    5
+   ]
+  },
+  {
+   "type": "flicker",
+   "t": 28.0,
+   "frames": 10,
+   "mode": "white",
+   "mask": {
+    "auto": "pastel_blue",
+    "box": [
+     100,
+     250,
+     880,
+     1500
+    ],
+    "feather": 5,
+    "track": true,
+    "similarity": 0.075
+   }
+  },
+  {
+   "type": "frameflick",
+   "t": 29.252,
+   "frames": 10,
+   "box": [
+    135,
+    520,
+    810,
+    880
+   ]
+  },
+  {
+   "type": "flicker",
+   "t": 30.2,
+   "frames": 12,
+   "mode": "invert",
+   "blink": true,
+   "mask": {
+    "auto": "pastel_blue",
+    "box": [
+     100,
+     250,
+     880,
+     1500
+    ],
+    "feather": 5,
+    "track": true,
+    "similarity": 0.075
+   }
+  }
+ ],
+ "overlays": [
+  {
+   "type": "stack",
+   "start": 0.3,
+   "end": 1.65,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "Skincare cả chục bước",
+     "style": "small"
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 1.65,
+   "end": 3.3,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "Skincare cả chục bước",
+     "style": "small"
+    },
+    {
+     "text": "mà da vẫn xỉn?",
+     "style": "caps",
+     "color": "#FFB347",
+     "size": 86
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 3.37,
+   "end": 5.77,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "có khi lỗi nằm ở",
+     "style": "small"
+    },
+    {
+     "text": "bước rửa mặt",
+     "style": "serif",
+     "color": "#F7C6D9",
+     "size": 124
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 5.85,
+   "end": 8.24,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "tối nào mình cũng dùng",
+     "style": "small"
+    },
+    {
+     "text": "Halio 5 in 1",
+     "style": "caps",
+     "color": "#BFE6F7",
+     "size": 90
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 8.55,
+   "end": 12.36,
+   "text": "Bước 1 · Rửa mặt",
+   "color": "yellow",
+   "y": 0.16,
+   "size": 44
+  },
+  {
+   "type": "stack",
+   "start": 12.43,
+   "end": 14.75,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "sạch kỹ",
+     "style": "small"
+    },
+    {
+     "text": "mà vẫn êm da",
+     "style": "serif",
+     "color": "#F7C6D9",
+     "size": 124
+    }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 14.75,
+   "end": 16.1,
+   "text": "Bước 2 · Thoa serum",
+   "color": "pink",
+   "y": 0.16,
+   "size": 44
+  },
+  {
+   "type": "label",
+   "start": 16.15,
+   "end": 19.78,
+   "text": "Ấm 42° · đèn đỏ · massage",
+   "color": "pink",
+   "y": 0.16,
+   "size": 44
+  },
+  {
+   "type": "label",
+   "start": 19.94,
+   "end": 23.4,
+   "text": "Bước 3 · Mát 16° · đèn xanh",
+   "color": "blue",
+   "y": 0.16,
+   "size": 44
+  },
+  {
+   "type": "stack",
+   "start": 23.47,
+   "end": 27.19,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "da mềm",
+     "style": "small"
+    },
+    {
+     "text": "ẩm mướt",
+     "style": "serif",
+     "color": "#F7C6D9",
+     "size": 132
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 27.32,
+   "end": 29.3,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "máy Halio",
+     "style": "small"
+    },
+    {
+     "text": "link ở giỏ hàng",
+     "style": "caps",
+     "color": "#FFB347",
+     "size": 86
+    }
+   ]
+  },
+  {
+   "type": "stack",
+   "start": 29.37,
+   "end": 33.37,
+   "y": 0.22,
+   "lines": [
+    {
+     "text": "bạn rửa mặt bằng",
+     "style": "small"
+    },
+    {
+     "text": "tay hay máy?",
+     "style": "serif",
+     "color": "#BFE6F7",
+     "size": 132
+    },
+    {
+     "text": "comment cho mình biết nha",
+     "style": "small"
+    }
+   ]
+  }
+ ]
+}

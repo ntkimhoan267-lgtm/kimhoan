@@ -307,7 +307,7 @@ def flash_fx(groups):
 
 def auto_mask(base, t, spec, out):
     """Mặt nạ vật thể từ khung hình của base tại t: "dark" (bóng người ngược sáng), "nonsky" (công trình
-    trước nền trời), "sat" (vật thể nhiều màu, vd món ăn). Giữ vùng liền lớn nhất trong "box" nếu có."""
+    trước nền trời), "sat" (vật thể nhiều màu, vd món ăn), "bright" (vùng sáng trên nền tối), "skin" (da mặt/tay), "pastel_blue" (máy/chai màu xanh pastel). Giữ vùng liền lớn nhất trong "box" nếu có."""
     import numpy as np
     raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{t:.3f}", "-i", base, "-frames:v", "1", "-vf",
                           f"scale={W}:{H}", "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], capture_output=True,
@@ -318,6 +318,12 @@ def auto_mask(base, t, spec, out):
     kind = spec.get("auto", "dark")
     if kind == "dark":
         m = lum < spec.get("thr", 60)
+    elif kind == "bright":
+        m = lum > spec.get("thr", 120)
+    elif kind == "skin":  # da mặt/tay (loại đỏ rực của áo, nền tối)
+        m = (r_ > 95) & (g_ > 40) & (b_ > 20) & (r_ > g_ + 10) & (r_ > b_) & (r_ - g_ < spec.get("thr", 80))
+    elif kind == "pastel_blue":  # vật màu xanh pastel (máy, chai lọ) — không ăn vào da, áo xanh đậm
+        m = (b_ > r_ + 12) & (g_ > r_) & (lum > spec.get("thr", 110)) & (b_ - r_ < 90)
     elif kind == "nonsky":
         m = ~((b_ > r_ + 25) & (b_ > g_ - 5) & (lum > 70))
     else:  # sat
@@ -326,6 +332,16 @@ def auto_mask(base, t, spec, out):
     if spec.get("box"):
         x, y, w, h = spec["box"]
         keep = np.zeros_like(m); keep[y:y + h, x:x + w] = True; m &= keep
+    if spec.get("track"):  # mask chạy theo từng khung: trả về màu khoá (trung bình vùng mask) + ảnh khung box
+        sel = a[m] if m.any() else a.reshape(-1, 3)
+        key = "0x%02X%02X%02X" % tuple(int(v) for v in np.median(sel, 0))
+        bx = np.zeros((H, W), np.uint8)
+        if spec.get("box"):
+            x, y, w, h = spec["box"]; bx[y:y + h, x:x + w] = 255
+        else:
+            bx[:] = 255
+        Image.fromarray(bx, "L").save(out)
+        return key
     im = Image.fromarray((m * 255).astype("uint8"), "L").filter(ImageFilter.MedianFilter(9))
     im.filter(ImageFilter.GaussianBlur(spec.get("feather", 2))).save(out)
     return out
@@ -344,15 +360,27 @@ def region_fx(plan, base, tmp, add_input, chains, cur, grade):
     for k, fx in enumerate(plan.get("fx", [])):
         t, d = float(fx["t"]), fx.get("frames", 12) / FPS
         if fx["type"] == "flicker":
-            m = auto_mask(base, t + d / 2, fx.get("mask", {}), os.path.join(tmp, f"fxm{k}.png"))
+            ms = fx.get("mask", {})
+            mp = os.path.join(tmp, f"fxm{k}.png")
+            key = auto_mask(base, t + d / 2, ms, mp)
+            m = mp
             j = add_input(["-loop", "1", "-framerate", str(FPS), "-t", f"{d:.3f}", "-i", m])
             mode = fx.get("mode", "glow")
             eff = "negate" if mode == "invert" else "lutrgb=r=255:g=255:b=255" if mode == "white" else \
                 (f"curves=all='0/0 0.35/0.95 1/1',split[g1{k}][g2{k}];[g2{k}]gblur=sigma=10[g3{k}];"
                  f"[g1{k}][g3{k}]blend=all_mode=screen")
             chains.append(f"[{cur}]split[fa{k}][fb{k}]")
-            chains.append(f"[fb{k}]trim=start={t:.3f}:duration={d:.3f},setpts=PTS-STARTPTS,{eff},format=rgba[fe{k}]")
-            chains.append(f"[{j}:v]format=gray,scale={W}:{H}[fm{k}]")
+            if ms.get("track"):  # mask từng khung theo màu khoá (chromakey) ∩ box
+                chains.append(f"[fb{k}]trim=start={t:.3f}:duration={d:.3f},setpts=PTS-STARTPTS,split[fs{k}][fk{k}]")
+                chains.append(f"[fs{k}]{eff},format=rgba[fe{k}]")
+                chains.append(f"[fk{k}]format=rgba,colorkey=color={key}:similarity={ms.get('similarity', 0.12)}:"
+                              f"blend=0.03,alphaextract,format=gray,negate,median=radius=4,"
+                              f"gblur=sigma={ms.get('feather', 3)}[fk2{k}]")
+                chains.append(f"[{j}:v]format=gray,scale={W}:{H}[fbx{k}]")
+                chains.append(f"[fk2{k}][fbx{k}]blend=all_mode=multiply,format=gray[fm{k}]")
+            else:
+                chains.append(f"[fb{k}]trim=start={t:.3f}:duration={d:.3f},setpts=PTS-STARTPTS,{eff},format=rgba[fe{k}]")
+                chains.append(f"[{j}:v]format=gray,scale={W}:{H}[fm{k}]")
             chains.append(f"[fe{k}][fm{k}]alphamerge,setpts=PTS+{t:.3f}/TB[fx{k}]")
             chains.append(f"[fa{k}][fx{k}]overlay=eof_action=pass:"
                           f"enable='between(t,{t:.3f},{t + d:.3f}){'*lt(mod(n,4),2)' if fx.get('blink') else ''}'[fo{k}]")

@@ -40,6 +40,7 @@ Nhịp chuẩn (B = 0,412s, mọi mốc cắt là bội số B):
 | Kết quả | 48B – 56B | Mặt căng bóng, nháy mắt | 1 `flicker` `glow` |
 | CTA | 4–6B cuối | Cầm sản phẩm | chữ CTA "link ở giỏ hàng", 1 `frameflick` trước CTA |
 - Mỗi 2–4 phách một hiệu ứng, không chồng 2 hiệu ứng cùng phách; hiệu ứng nhiều nhất ở hook.
+- **Không flicker lên mặt người** (mặt trắng xoá/âm bản trông đáng sợ). Flicker lên **sản phẩm**: vật di chuyển theo tay thì thêm `"track": true` (mask theo màu từng khung bằng colorkey, `similarity` 0,07–0,1; lớn hơn sẽ ăn vào vùng da bóng). Máy/chai xanh pastel: `"auto": "pastel_blue"`; da: `"skin"`; vùng sáng: `"bright"`. Mẫu: `projects/skincare/may-xanh-flicker/`.
 - Mask: `dark` cho bóng người ngược sáng; footage skincare sáng → thường dùng `sat` (sản phẩm màu đậm, kem, mặt nạ màu) hoặc `box` sát vùng mặt/tay. Luôn đặt `box` chừa nền/sàn, `feather` 3–8.
 - Chữ: `hook` hoặc `stack` (small / caps / serif) ở 0–3,3s, `keyword` mỗi bước, `cta` cuối; `caption_style` không cần (không lời). Giữ chữ trong vùng an toàn y 240–1680. Grade `warm`.
 - Âm (`sfx.py`, file `sfx.json`): `glitch` sớm 0,05s trước mỗi frameflick, `whoosh`+`click` trước mỗi maskframe, `shutter` ở flicker white, `sparkle` ở cảnh kết quả, `pop` khi keyword hiện. Nhạc `"music": {"src": "music/flicker.mp3", "volume": 0.9}` (không có giọng nên để to; nếu người dùng lồng tiếng thì hạ 0,07–0,12).

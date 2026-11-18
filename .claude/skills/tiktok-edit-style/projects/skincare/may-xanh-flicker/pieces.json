@@ -1,0 +1,12 @@
+{"src": "voice/clean.wav", "lead": 0.3, "total": 33.37,
+ "pieces": [
+  {"name":"P1","in":19.70,"out":22.62,"gap":0.15,"txt":"Skincare cả chục bước mà da vẫn xỉn?"},
+  {"name":"P2","in":22.62,"out":24.85,"gap":0.25,"txt":"Có khi lỗi nằm ở bước rửa mặt."},
+  {"name":"P3","in":24.95,"out":27.50,"gap":0.15,"txt":"Tối nào mình cũng dùng em Halio này."},
+  {"name":"P4","in":27.55,"out":29.25,"gap":0.1,"txt":"Bước một, rửa mặt:"},
+  {"name":"P5","in":29.65,"out":33.85,"gap":0.2,"txt":"đánh nhẹ cùng sữa rửa mặt, sạch kỹ mà vẫn êm da."},
+  {"name":"P6","in":34.71,"out":39.75,"gap":0.15,"txt":"Thoa serum xong, bật chế độ ấm đèn đỏ, massage từ trong ra ngoài."},
+  {"name":"P7","in":40.02,"out":43.40,"gap":0.15,"txt":"Vùng chữ T thì mình chuyển chế độ mát, đèn xanh."},
+  {"name":"P8","in":43.85,"out":47.55,"gap":0.15,"txt":"Xong là da mềm, ẩm mướt, nhìn tươi hẳn."},
+  {"name":"P9","in":48.10,"out":50.05,"gap":0.1,"txt":"Máy Halio để trong giỏ hàng nha."},
+  {"name":"P10","in":50.15,"out":53.50,"gap":0.2,"txt":"Bạn rửa mặt bằng tay hay bằng máy? Comment cho mình biết với nhé."}]}
