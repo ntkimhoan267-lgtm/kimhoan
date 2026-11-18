@@ -38,4 +38,4 @@ Thư mục Drive riêng "Nhạc tour Trung Quốc (TRIP)" `1Eka2AIaynyG2v2RcHfGJ
 | 02-nhac-trung-khong-loi-105bpm-64s.mp3 | `1TvZqn6LAxIjysonGxYqTLK8MaYSyA70U` | 105 BPM, 64s, nhạc Trung êm | Video nhiều lời đọc, thông tin (visa, hỏi đáp, chi phí) |
 | 03-Moment-thuan-nhac-129bpm-50s.mp3 | `1N1afXk8GUtbMfSdByX9JVzLUuQ6ck6lq` | 129 BPM, 50s, sôi động | Vlog/montage cắt theo phách (video 4 "Một ngày ở Bắc Kinh") |
 - Nguồn: trích từ video TikTok người dùng gửi; bài 02, 03 là nhạc thương mại có bản quyền (03 = "Moment 纯享版"). Đã báo người dùng rủi ro bị tắt tiếng khi đăng tài khoản doanh nghiệp / chạy quảng cáo; người dùng vẫn chọn dùng. Không commit file nhạc vào repo (repo công khai).
-- Cách dùng: `"music": {"src": "music/02.mp3", "volume": 0.12}` trong plan (render tự giảm khi có giọng? — không: dùng mức cố định 0,10–0,15 dưới giọng), bỏ sự kiện `beat` trong sfx; flash/cắt cảnh theo `beats.py` của chính bài nhạc.
+- Cách dùng: `"music": {"src": "music/02.mp3", "volume": 0.12}` trong plan (render.py giữ mức cố định, không tự hạ khi có giọng → để 0,10–0,15), bỏ sự kiện `beat` trong sfx; flash/cắt cảnh theo `beats.py` của chính bài nhạc.
