@@ -47,3 +47,9 @@ Thư mục Drive riêng "Nhạc tour Trung Quốc (TRIP)" `1Eka2AIaynyG2v2RcHfGJ
 - Clip `gemini_092014BC` do AI tạo (Drive `1U2WoEMxmnT8s2UXPi_hEU3N-HG2H3Q3S`): chỉ dùng 5s đầu (sau đó hộ chiếu tự nhân đôi). **Đăng phải bật nhãn nội dung AI.**
 - Footage mới khác: `5794444` máy quẹt thẻ (thay cho thẻ QR lỗi 2 video 2), `11797448` đồ nướng (đoạn ăn uống video 1), `3_sai_lam_trung_quoc.mp4` là bản dựng của nhóm (chưa xem).
 - Video 1 làm lại (18/11): nhạc bài 02 volume **0,07** (người dùng muốn nhạc nhỏ — dùng mức này cho cả series), bỏ nền nhịp, cảnh ăn uống = `11797448` (bếp đồ nướng). Nhạc tải từ Drive vào `music/` cạnh plan.
+
+## Logo TRIP & thumbnail
+- Logo trong thư mục Drive của TRIP: `LOGO TRIP NGANG KHONG NEN (1).png` `1flmkCIWvmgKom7vT2jNjIM24Qb7ZmMIZ` (ngang, dùng cho video/thumbnail), `LOGO TRIP KHONG NEN.png` `1o-XBb48muXa_H5rLXtfR6UZFzZmh7h72` (đứng), `LOGO TRẮNG ĐEN.png` `1etYUlsQQdMz8jAcIu6b8JVSwt1jSrztA`. Không commit logo vào repo (tài sản của khách hàng, repo công khai) — tải về `brand/` rồi cắt sát nền (`getbbox` kênh alpha) thành `trip_ngang_crop.png`.
+- Chữ logo màu navy → luôn đặt trên nhãn trắng bo góc (alpha 236). Trong video: `brand/logo_overlay.png` (nhãn cao 84px, tại x40 y150), overlay `"type": "png"` đầu danh sách, suốt video.
+- Thumbnail: `thumb_trip.py` (khung hook + khối stack + nhãn dạ quang + logo cao 110px ở y 80%, mọi chữ trong vùng 3:4).
+- Logo Kim Hoàn KHÔNG dùng cho TRIP (CLAUDE.md).

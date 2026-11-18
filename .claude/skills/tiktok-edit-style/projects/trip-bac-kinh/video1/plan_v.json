@@ -21,6 +21,12 @@
  ],
  "overlays": [
   {
+   "type": "png",
+   "start": 0,
+   "end": 49.05,
+   "src": "../brand/logo_overlay.png"
+  },
+  {
    "type": "stack",
    "start": 0.2,
    "end": 1.45,
