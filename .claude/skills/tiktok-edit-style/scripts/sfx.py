@@ -4,6 +4,7 @@
   python sfx.py --export work/sfx/        # xuất từng âm ra .wav để nghe thử
 
 events.json: [["whoosh", 0.0], ["pop", 0.3], {"sfx": "ding", "t": 13.3, "gain": 1.2}, ...]
+  Âm ngoài (vd tải từ Pixabay): {"file": "sfx/kaching.mp3", "t": 9.1, "gain": 0.6} — đường dẫn tính từ events.json.
 Thư viện:
   whoosh  — vút dài 0,45s: card mới, đổi phần lớn (đặt sớm ~0,12s trước mốc)
   swish   — vút ngắn 0,22s: đổi cảnh thường
@@ -231,14 +232,24 @@ def main():
     mix = np.zeros(int(total * SR) + 2 * SR, np.float32)
     mix[:min(len(voice), len(mix))] += voice[:len(mix)]
     speaking = np.abs(mix) > 1e-3
-    last_hot = None
+    last_hot, ext = None, {}
     for ev in sorted(json.load(open(a.events)), key=lambda e: e["t"] if isinstance(e, dict) else e[1]):
-        name, t, gain = (ev["sfx"], ev["t"], ev.get("gain", 1.0)) if isinstance(ev, dict) else (ev[0], ev[1], 1.0)
+        name, t, gain = (ev.get("sfx", "file"), ev["t"], ev.get("gain", 1.0)) if isinstance(ev, dict) \
+            else (ev[0], ev[1], 1.0)
         if name in HOT:
             if last_hot is not None and t - last_hot < 7:
                 print(f"! {name} ở {t:.2f}s cách âm chói trước {t - last_hot:.1f}s (<7s) — dễ nhức đầu, cân nhắc đổi "
                       f"sang swish/pop", file=sys.stderr)
             last_hot = t
+        if isinstance(ev, dict) and ev.get("file"):  # âm ngoài, mức mặc định 0.5 so với giọng
+            f = ev["file"] if os.path.isabs(ev["file"]) else os.path.join(os.path.dirname(os.path.abspath(a.events)), ev["file"])
+            if f not in ext:
+                ext[f] = read(f)
+            at = max(int(t * SR), 0)
+            duck = 0.6 if speaking[at:at + int(0.3 * SR)].mean() > 0.3 else 1.0
+            seg = ext[f] * 0.5 * gain * duck * a.level
+            mix[at:at + len(seg)] += seg[:len(mix) - at]
+            continue
         if name == "beat":  # nền nhịp, không hạ khi có giọng (đã nhỏ sẵn)
             seg = beat(float(ev["bpm"]), float(ev["end"]) - t) * 0.22 * gain * a.level
             at = int(t * SR)

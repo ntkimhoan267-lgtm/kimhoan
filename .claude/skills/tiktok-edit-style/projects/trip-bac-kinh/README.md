@@ -18,3 +18,8 @@ Chi phí tự túc dùng trong kịch bản (1 người, 5 ngày 4 đêm, mức 
 | Visa L 1 lần | ~2 triệu | 45 USD + phí trung tâm ~690k (người Việt chưa được miễn visa du lịch) |
 | **Tổng** | **~20 triệu** | khớp ước tính 18,8tr của Klook |
 Bay thẳng HN–Bắc Kinh ~3 giờ 30 phút (Kayak, VietnamBooking). Số liệu là ước tính từ trang bán vé/blog — kiểm lại ngay trước khi đăng.
+
+## Âm thanh & duyệt
+- Tiếng "kaching" do người dùng chọn: Pixabay "dragon-studio cash register kaching 376867" (file gốc trong chat, chưa lưu repo — giấy phép Pixabay không cho phát tán file rời; xin người dùng gửi lại hoặc để trong thư mục Drive SFX). Đặt **ngay sau khi nói xong con số** (mốc cuối chữ "triệu"/"rưỡi"/"nghìn" trong `.words.json`, trừ 0,06s), không đặt lúc chữ hiện.
+- Web Pixabay chặn truy cập tự động và Pixabay không có API âm thanh → người dùng tự tải sound, gửi qua chat hoặc Drive.
+- Trang duyệt (artifact, chỉ người dùng xem): https://claude.ai/artifact/DEEG41UzejEDSVBeF7RjRz — sửa chữ, bật/tắt, chỉnh âm lượng, dời mốc từng âm; lưu ở db `edits/video1` (`texts{id:text}`, `sounds{id:{on,gain,t}}`, `note`). Id lấy từ `items.json` (o<overlay>l<dòng>, c<phụ đề>, s<chỉ số sự kiện trong sfx_v.json>). Chỉ đổi âm → `render.py --audio-only` (vài giây).

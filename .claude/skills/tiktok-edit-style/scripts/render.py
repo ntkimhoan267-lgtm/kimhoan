@@ -319,9 +319,22 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("plan")
     ap.add_argument("--preview", action="store_true")
+    ap.add_argument("--audio-only", action="store_true",
+                    help="chỉ thay tiếng (plan['audio']) vào video đã xuất, không dựng lại hình — vài giây")
     a = ap.parse_args()
     plan = json.load(open(a.plan))
     os.chdir(os.path.dirname(os.path.abspath(a.plan)))
+    if a.audio_only:
+        out = plan.get("output", "final.mp4")
+        if a.preview:
+            out = os.path.splitext(out)[0] + "_preview.mp4"
+        tmp = out + ".tmp.mp4"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", out, "-i", plan["audio"], "-map", "0:v", "-map", "1:a",
+                        "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", tmp],
+                       check=True)
+        os.replace(tmp, out)
+        print(f"-> {out} (chỉ thay tiếng)", file=sys.stderr)
+        return
     tmp = tempfile.mkdtemp(prefix="tes_")
     base = plan["base"]
     dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0",
