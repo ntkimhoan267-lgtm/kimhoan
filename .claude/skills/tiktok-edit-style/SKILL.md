@@ -265,6 +265,24 @@ Mỗi phách nhạc: hình loé trắng 1 khung + zoom giật (punch) + rung nh�
 - Muốn dùng sound trend thật: chọn bài trong Commercial Music Library, tìm BPM bằng `beats.py`, đặt cùng BPM cho `flash`, xuất bản không có `beat` để ghép sound trên TikTok.
 - Ví dụ hoàn chỉnh: kem mắt AHC 32s, hook nháy 8 phách, 3 bước lăn, CTA giỏ hàng.
 
+### D3b. Nháy đúng kiểu CapCut: Flicker / Frame Flick / Mask Frame (đúng trend, ưu tiên hơn D3)
+Người dùng xác nhận (11/2026): nháy **cả khung trắng** là SAI. Trend thật nháy **một vùng** (người, món ăn, khung chữ nhật) theo phách. Khoá `fx` ở gốc plan.json:
+```json
+"fx": [
+  {"type": "flicker", "t": 0.82, "frames": 12, "mode": "white",
+   "mask": {"auto": "dark", "thr": 55, "box": [300,450,480,910], "feather": 8}},
+  {"type": "flicker", "t": 2.06, "frames": 12, "mode": "invert", "blink": true, "mask": {"auto": "nonsky"}},
+  {"type": "flicker", "t": 12.4, "frames": 10, "mode": "glow", "mask": {"auto": "sat", "box": [100,500,880,1000]}},
+  {"type": "frameflick", "t": 3.3, "dur": 0.4, "box": [135,520,810,880]},
+  {"type": "maskframe", "t": 6.6, "dur": 0.5, "grid": [3,2], "order": [0,4,2,3,1,5]}
+]
+```
+- **flicker** (Flicker): tách chủ thể bằng mask tự động (`dark` = bóng người ngược sáng, `nonsky` = mọi thứ trừ trời xanh, `sat` = vùng màu đậm như món ăn), chủ thể loé `white` / `invert` / `glow`; `blink` = bật tắt mỗi 2 khung. `box` giới hạn vùng mask — luôn chừa sàn/nền tối để không bị lốm đốm trắng; kiểm tra bằng frame tách lẻ.
+- **frameflick** (Frame Flick transition): trước điểm cắt, cảnh SAU hiện trong một khung chữ nhật giữa màn, nhấp nháy âm bản, rồi cắt hẳn. Đặt `t` = mốc cắt.
+- **maskframe** (Mask Frame): cảnh SAU hiện dần từng ô lưới (cách 8px) theo `order` trong `dur` trước mốc cắt.
+- Âm: `glitch` ngay trước frameflick, `whoosh`+`click` trước maskframe. Mỗi 2–4 phách một hiệu ứng, không chồng 2 hiệu ứng cùng phách. Không dùng chung với `flash` toàn khung.
+- Ví dụ: `projects/trip-bac-kinh/video4/ref-fx/` (POV 1 ngày Bắc Kinh, 24,8s).
+
 ### D4. Kiểu chữ "stack" (học từ video tham khảo talking-head dạy edit, 11/2026)
 Khối 2–3 dòng xếp chồng giữa khung: dòng nhỏ chữ thường trắng → CHỮ IN HOA đậm, giãn chữ, màu (cam/vàng/xanh nhạt/hồng) → serif nghiêng to (xanh nhạt/hồng). Phụ đề chữ trắng nhỏ trong ô nền tối bo góc. Nhãn chữ đậm trên nền dạ quang pastel.
 ```json

@@ -303,6 +303,86 @@ def flash_fx(groups):
             f"crop={W}:{H}:x='(in_w-{W})/2+({sx})':y='(in_h-{H})/2+0.6*({sx})',")
 
 
+# ---------- hiệu ứng nháy theo vùng (CapCut flicker / frame flick / mask frame) ----------
+
+def auto_mask(base, t, spec, out):
+    """Mặt nạ vật thể từ khung hình của base tại t: "dark" (bóng người ngược sáng), "nonsky" (công trình
+    trước nền trời), "sat" (vật thể nhiều màu, vd món ăn). Giữ vùng liền lớn nhất trong "box" nếu có."""
+    import numpy as np
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{t:.3f}", "-i", base, "-frames:v", "1", "-vf",
+                          f"scale={W}:{H}", "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], capture_output=True,
+                         check=True).stdout
+    a = np.frombuffer(raw, np.uint8).reshape(H, W, 3).astype(int)
+    r_, g_, b_ = a[..., 0], a[..., 1], a[..., 2]
+    lum = .3 * r_ + .59 * g_ + .11 * b_
+    kind = spec.get("auto", "dark")
+    if kind == "dark":
+        m = lum < spec.get("thr", 60)
+    elif kind == "nonsky":
+        m = ~((b_ > r_ + 25) & (b_ > g_ - 5) & (lum > 70))
+    else:  # sat
+        mx, mn = a.max(-1), a.min(-1)
+        m = (mx - mn) > spec.get("thr", 70)
+    if spec.get("box"):
+        x, y, w, h = spec["box"]
+        keep = np.zeros_like(m); keep[y:y + h, x:x + w] = True; m &= keep
+    im = Image.fromarray((m * 255).astype("uint8"), "L").filter(ImageFilter.MedianFilter(9))
+    im.filter(ImageFilter.GaussianBlur(spec.get("feather", 2))).save(out)
+    return out
+
+
+def region_fx(plan, base, tmp, add_input, chains, cur, grade):
+    """plan["fx"]: hiệu ứng dài 10–12 khung, đặt đúng phách.
+      {"type":"flicker","t":3.3,"frames":12,"mode":"white"|"glow"|"invert","blink":true,
+       "mask":{"auto":"dark","box":[...],"feather":8}}
+        → chỉ vật thể (mặt nạ) thành bóng trắng phát sáng (white, feather lớn = quầng sáng) / sáng rực (glow,
+          hợp món ăn) / âm bản (invert); nền giữ nguyên.
+      {"type":"frameflick","t":cut,"frames":10,"box":[x,y,w,h]}
+        → 10 khung đầu của cảnh SAU hiện trong ô chữ nhật trên cảnh TRƯỚC, nháy âm bản xen kẽ, rồi mới cắt.
+      {"type":"maskframe","t":cut,"frames":12,"grid":[3,2],"gap":8}
+        → cảnh SAU hiện dần từng ô lưới đều nhau trên cảnh TRƯỚC, đủ ô thì cắt."""
+    for k, fx in enumerate(plan.get("fx", [])):
+        t, d = float(fx["t"]), fx.get("frames", 12) / FPS
+        if fx["type"] == "flicker":
+            m = auto_mask(base, t + d / 2, fx.get("mask", {}), os.path.join(tmp, f"fxm{k}.png"))
+            j = add_input(["-loop", "1", "-framerate", str(FPS), "-t", f"{d:.3f}", "-i", m])
+            mode = fx.get("mode", "glow")
+            eff = "negate" if mode == "invert" else "lutrgb=r=255:g=255:b=255" if mode == "white" else \
+                (f"curves=all='0/0 0.35/0.95 1/1',split[g1{k}][g2{k}];[g2{k}]gblur=sigma=10[g3{k}];"
+                 f"[g1{k}][g3{k}]blend=all_mode=screen")
+            chains.append(f"[{cur}]split[fa{k}][fb{k}]")
+            chains.append(f"[fb{k}]trim=start={t:.3f}:duration={d:.3f},setpts=PTS-STARTPTS,{eff},format=rgba[fe{k}]")
+            chains.append(f"[{j}:v]format=gray,scale={W}:{H}[fm{k}]")
+            chains.append(f"[fe{k}][fm{k}]alphamerge,setpts=PTS+{t:.3f}/TB[fx{k}]")
+            chains.append(f"[fa{k}][fx{k}]overlay=eof_action=pass:"
+                          f"enable='between(t,{t:.3f},{t + d:.3f}){'*lt(mod(n,4),2)' if fx.get('blink') else ''}'[fo{k}]")
+            cur = f"fo{k}"
+        else:  # frameflick / maskframe: lấy trước d giây đầu của cảnh sau từ chính base
+            j = add_input(["-i", base])
+            nxt = f"[{j}:v]trim=start={t:.3f}:duration={d:.3f},setpts=PTS-STARTPTS,{grade}"
+            if fx["type"] == "frameflick":
+                x, y, w, h = fx.get("box", [135, 480, 810, 960])
+                chains.append(f"{nxt},crop={w}:{h}:{x}:{y},negate=enable='lt(mod(n,4),2)',"
+                              f"setpts=PTS+{t - d:.3f}/TB[ff{k}]")
+                chains.append(f"[{cur}][ff{k}]overlay=x={x}:y={y}:eof_action=pass:"
+                              f"enable='between(t,{t - d:.3f},{t:.3f})'[fo{k}]")
+                cur = f"fo{k}"
+            else:
+                cols, rows = fx.get("grid", [3, 2]); gap = fx.get("gap", 8)
+                cw, ch = (W - gap * (cols + 1)) // cols, (H - gap * (rows + 1)) // rows
+                n = cols * rows; step = d / n
+                chains.append(f"{nxt},setpts=PTS+{t - d:.3f}/TB,split={n}" + "".join(f"[mf{k}_{i}]" for i in range(n)))
+                order = fx.get("order", list(range(n)))
+                for i, cell in enumerate(order):
+                    cx_, cy_ = cell % cols, cell // cols
+                    x, y = gap + cx_ * (cw + gap), gap + cy_ * (ch + gap)
+                    chains.append(f"[mf{k}_{i}]crop={cw}:{ch}:{x}:{y}[mc{k}_{i}]")
+                    chains.append(f"[{cur}][mc{k}_{i}]overlay=x={x}:y={y}:eof_action=pass:"
+                                  f"enable='between(t,{t - d + i * step:.3f},{t:.3f})'[fo{k}_{i}]")
+                    cur = f"fo{k}_{i}"
+    return cur
+
+
 # ---------- dựng ----------
 
 def is_image(p):
@@ -358,6 +438,8 @@ def main():
     def add_input(args):
         inputs.append(args)
         return len(inputs) - 1
+
+    cur = region_fx(plan, base, tmp, add_input, chains, cur, grade)
 
     def push(src_label, start, end, x="0", y="0"):
         nonlocal cur, n
