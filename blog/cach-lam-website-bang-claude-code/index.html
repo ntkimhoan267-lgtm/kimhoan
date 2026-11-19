@@ -88,6 +88,14 @@
         "@type": "Answer",
         "text": "Có. Toàn bộ code nằm trong thư mục trên máy bạn và trong tài khoản GitHub của bạn. Bạn có thể chuyển sang dịch vụ lưu trữ khác bất cứ lúc nào, vì đây là website HTML tĩnh, không phụ thuộc nền tảng nào."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "Website làm bằng Claude Code trên GitHub Pages có làm được form liên hệ không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Không theo cách thông thường, vì GitHub Pages chỉ chạy website tĩnh, không có máy chủ nhận dữ liệu. Thay vào đó, dùng nút Zalo hoặc Messenger, liên kết tới Google Forms, hoặc một dịch vụ nhận form như Formspree để tin nhắn gửi về email."
+      }
     }
   ]
 }
@@ -317,8 +325,8 @@
     </div>
     <div class="meta-dot"></div>
     <span class="meta-item">
-      <span class="vi">14 phút đọc</span>
-      <span class="en">14 min read</span>
+      <span class="vi">17 phút đọc</span>
+      <span class="en">17 min read</span>
     </span>
     <div class="meta-dot"></div>
     <span class="meta-item">19.11.2026</span>
@@ -426,6 +434,8 @@
         <tr><td><span class="vi">Máy tính</span><span class="en">A computer</span></td><td><span class="vi">macOS, Windows hoặc Linux.</span><span class="en">macOS, Windows or Linux.</span></td></tr>
         <tr class="best"><td><span class="vi">Tài khoản Claude trả phí</span><span class="en">A paid Claude account</span></td><td><span class="vi">Gói Pro trở lên, hoặc tài khoản Claude Console trả theo lượt dùng. Gói miễn phí không dùng được Claude Code.</span><span class="en">Pro or higher, or a pay-as-you-go Claude Console account. The free plan does not include Claude Code.</span></td></tr>
         <tr><td><span class="vi">Tài khoản GitHub</span><span class="en">A GitHub account</span></td><td><span class="vi">Miễn phí. Dùng để lưu code và đưa website lên mạng ở bước 9.</span><span class="en">Free. Stores your code and hosts the site in step 9.</span></td></tr>
+        <tr><td><span class="vi">Git</span><span class="en">Git</span></td><td><span class="vi">Lưu lịch sử thay đổi và đẩy code lên GitHub. Mac tự đề nghị cài khi dùng lần đầu. Windows cài Git for Windows.</span><span class="en">Saves your change history and pushes code to GitHub. A Mac offers to install it on first use. On Windows, install Git for Windows.</span></td></tr>
+        <tr><td><span class="vi">Node.js</span><span class="en">Node.js</span></td><td><span class="vi">Chỉ cần cho bước 8 (kiểm tra tự động). Cài bản LTS miễn phí.</span><span class="en">Only needed for step 8 (automated checks). Install the free LTS version.</span></td></tr>
         <tr><td><span class="vi">Tên miền</span><span class="en">A domain name</span></td><td><span class="vi">Không bắt buộc. Không có thì website chạy ở địa chỉ miễn phí của GitHub.</span><span class="en">Optional. Without one, the site runs on a free GitHub address.</span></td></tr>
         <tr><td><span class="vi">Nội dung và ảnh</span><span class="en">Your content and photos</span></td><td><span class="vi">Logo, ảnh sản phẩm, thông tin liên hệ thật. Đây là phần AI không làm thay bạn được.</span><span class="en">Logo, product photos, real contact details. This is the part AI cannot do for you.</span></td></tr>
       </tbody>
@@ -489,8 +499,8 @@ claude</pre>
   </p>
   <div class="inline-cta">
     <p>
-      <span class="vi"><strong>Bộ skill làm website bằng Claude Code</strong> · 5 skill + CLAUDE.md mẫu + hướng dẫn cài · file .zip 11KB</span>
-      <span class="en"><strong>Claude Code website skill pack</strong> · 5 skills + sample CLAUDE.md + install guide · 11KB .zip</span>
+      <span class="vi"><strong>Bộ skill làm website bằng Claude Code</strong> · 5 skill + CLAUDE.md mẫu + hướng dẫn cài · file .zip 12KB</span>
+      <span class="en"><strong>Claude Code website skill pack</strong> · 5 skills + sample CLAUDE.md + install guide · 12KB .zip</span>
     </p>
     <a href="/downloads/bo-skill-lam-website-claude-code.zip" download>
       <span class="vi">Tải bộ skill ↓</span>
@@ -633,6 +643,22 @@ End the plan with a list of anything I still need to provide.</pre>
     <span class="vi">Trong bộ skill có sẵn một file CLAUDE.md mẫu, bạn chỉ cần điền vào chỗ trống.</span>
     <span class="en">The skill pack includes a ready-made CLAUDE.md template; just fill in the blanks.</span>
   </p>
+  <h3><span class="vi">Bật lưu lịch sử bằng git ngay từ bây giờ</span><span class="en">Turn on git history right now</span></h3>
+  <p>
+    <span class="vi">Git ghi lại từng phiên bản của website, giống nút "hoàn tác" cho cả dự án. Bật nó ngay sau khi có trang đầu tiên, để mọi lần sửa ở bước 6 trở đi đều có đường lui.</span>
+    <span class="en">Git records every version of your site, like an undo button for the whole project. Turn it on as soon as the first page exists, so every change from step 6 onwards can be rolled back.</span>
+  </p>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Khởi tạo git cho dự án này, tạo file .gitignore phù hợp và commit bản đầu tiên.
+Từ giờ, mỗi khi làm xong một phần mình duyệt, hãy commit với lời nhắn tiếng Việt ngắn gọn mô tả thay đổi.</pre>
+    <pre class="en">Initialise git for this project, create a suitable .gitignore and commit the first version.
+From now on, whenever you finish a part I have approved, commit it with a short message describing the change.</pre>
+  </div>
+  <p>
+    <span class="vi">Lỡ sửa hỏng, chỉ cần nói "quay lại bản commit trước". Muốn Claude nhớ thói quen này lâu dài, thêm dòng "commit sau mỗi phần đã duyệt" vào <code>CLAUDE.md</code>.</span>
+    <span class="en">If a change breaks something, just say "go back to the previous commit". To make this a lasting habit, add "commit after each approved part" to <code>CLAUDE.md</code>.</span>
+  </p>
   <div class="divider"></div>
 
   <h2 id="buoc-6">
@@ -659,6 +685,25 @@ Change only these things and leave everything else as it is.</pre>
   </div>
   <div class="highlight-box">
     <p><span class="vi"><strong>Nguyên tắc của mình:</strong> mỗi lần chỉ sửa 2–4 điểm. Góp ý dồn 15 điểm một lúc thì dễ bị sót, và khó biết thay đổi nào làm hỏng chỗ nào.</span><span class="en"><strong>My rule:</strong> ask for 2–4 changes at a time. Fifteen changes in one go means some get missed, and it is hard to tell which change broke what.</span></p>
+  </div>
+  <h3><span class="vi">Form liên hệ: website tĩnh không tự gửi được</span><span class="en">Contact forms: a static site cannot send them on its own</span></h3>
+  <p>
+    <span class="vi">GitHub Pages chỉ chạy website tĩnh, không có máy chủ xử lý dữ liệu. Vì vậy một form "Gửi tin nhắn" tự viết sẽ không gửi đi đâu cả, dù trông vẫn bình thường. Có ba cách thay thế:</span>
+    <span class="en">GitHub Pages only serves static files, with no server to process data. A hand-built "Send message" form therefore goes nowhere, even though it looks fine. There are three alternatives:</span>
+  </p>
+  <ul>
+    <li><span class="vi"><strong>Nút nhắn tin trực tiếp:</strong> Zalo, Messenger, gọi điện. Đơn giản nhất và hợp với khách Việt.</span><span class="en"><strong>Direct message buttons:</strong> Zalo, Messenger or a call link. The simplest option, and what Vietnamese customers expect.</span></li>
+    <li><span class="vi"><strong>Google Forms:</strong> miễn phí, câu trả lời tự vào Google Sheets. Gắn bằng nút link hoặc nhúng vào trang.</span><span class="en"><strong>Google Forms:</strong> free, with responses landing in Google Sheets. Link to it from a button or embed it on the page.</span></li>
+    <li><span class="vi"><strong>Dịch vụ nhận form</strong> như Formspree: giữ form đẹp trên website, tin nhắn gửi về email. Gói miễn phí có giới hạn số lượt gửi mỗi tháng.</span><span class="en"><strong>A form service</strong> such as Formspree: keeps a styled form on your site and emails you each message. The free tier caps monthly submissions.</span></li>
+  </ul>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Website này chạy trên GitHub Pages nên không có máy chủ xử lý form.
+Làm phần liên hệ theo cách: [nút Zalo số ... và Messenger / nút mở Google Form ở link ... / form gửi qua Formspree, mình sẽ đưa mã form].
+Bỏ mọi form không gửi được, và thử bấm từng nút xem có mở đúng không.</pre>
+    <pre class="en">This site runs on GitHub Pages, so there is no server to process forms.
+Build the contact section using: [a Zalo button for ... and a Messenger button / a button opening my Google Form at ... / a form sent through Formspree, I will give you the form ID].
+Remove any form that cannot actually send, and test that each button opens the right place.</pre>
   </div>
   <div class="divider"></div>
 
@@ -692,6 +737,16 @@ My domain is [yourdomain.com].</pre>
     <span class="vi">Với bộ skill, gõ <code>/seo-setup</code> là đủ. Claude sẽ hỏi tên miền và từ khoá nếu chưa biết.</span>
     <span class="en">With the skill pack, typing <code>/seo-setup</code> is enough. Claude asks for the domain and keywords if it does not have them.</span>
   </p>
+  <h3><span class="vi">Gắn Google Analytics để biết ai đang xem</span><span class="en">Add Google Analytics to see who visits</span></h3>
+  <p>
+    <span class="vi">Không bắt buộc, nhưng nên có ngay từ đầu để có số liệu so sánh về sau. Tạo tài khoản miễn phí tại Google Analytics, tạo luồng dữ liệu Web cho tên miền của bạn, rồi lấy <strong>mã đo lường</strong> dạng G-XXXXXXXXXX.</span>
+    <span class="en">Optional, but worth adding from day one so you have numbers to compare later. Create a free Google Analytics account, add a Web data stream for your domain, and copy the <strong>measurement ID</strong>, which looks like G-XXXXXXXXXX.</span>
+  </p>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Gắn Google Analytics 4 với mã đo lường [G-XXXXXXXXXX] vào mọi trang của website. Đặt đoạn mã trong thẻ head, không làm chậm trang, rồi chỉ mình cách kiểm tra mã đã chạy chưa.</pre>
+    <pre class="en">Add Google Analytics 4 with measurement ID [G-XXXXXXXXXX] to every page of the site. Put the snippet in the head without slowing the page down, then show me how to check that it is working.</pre>
+  </div>
   <div class="divider"></div>
 
   <h2 id="buoc-8">
@@ -702,6 +757,17 @@ My domain is [yourdomain.com].</pre>
   <p>
     <span class="vi">Phần lớn khách sẽ xem website trên điện thoại, nên đừng chỉ nhìn trên máy tính. Claude Code có thể tự mở trình duyệt ẩn, chụp màn hình ở nhiều kích thước, tìm lỗi và sửa.</span>
     <span class="en">Most visitors will see your site on a phone, so do not judge it on a laptop alone. Claude Code can open a headless browser, take screenshots at several sizes, find problems and fix them.</span>
+  </p>
+  <div class="highlight-box">
+    <p><span class="vi"><strong>Cần Node.js cho bước này.</strong> Phần kiểm tra tự động dùng Playwright, mà Playwright chạy trên Node.js. Bộ cài Claude Code không kèm Node.js. Gõ lệnh dưới trong Terminal: hiện số phiên bản là đã có, báo lỗi thì tải bản LTS tại nodejs.org rồi cài như phần mềm bình thường.</span><span class="en"><strong>This step needs Node.js.</strong> The automated checks use Playwright, which runs on Node.js, and the Claude Code installer does not include it. Run the command below in a terminal: a version number means you have it; an error means you should download the LTS version from nodejs.org and install it like any other app.</span></p>
+  </div>
+  <div class="prompt cmd">
+    <div class="prompt-head"><span class="vi">Kiểm tra Node.js</span><span class="en">Check for Node.js</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre>node --version</pre>
+  </div>
+  <p>
+    <span class="vi">Có Node.js rồi thì Claude tự cài Playwright và trình duyệt kiểm tra khi chạy prompt dưới, bạn chỉ cần đồng ý khi được hỏi.</span>
+    <span class="en">Once Node.js is installed, Claude installs Playwright and its test browser itself when you run the prompt below; just approve when asked.</span>
   </p>
   <div class="prompt">
     <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
@@ -736,16 +802,40 @@ List what you find, fix it, then run the checks again.</pre>
     <span class="vi">GitHub Pages cho bạn đưa website tĩnh lên mạng miễn phí, có HTTPS, và gắn được tên miền riêng. Đây cũng là cách iamkimhoan.vn đang chạy.</span>
     <span class="en">GitHub Pages hosts static websites for free, with HTTPS, and supports custom domains. It is also how iamkimhoan.vn runs.</span>
   </p>
+  <h3><span class="vi">Trước tiên: đăng nhập GitHub trên máy một lần</span><span class="en">First: sign in to GitHub on your computer once</span></h3>
+  <p>
+    <span class="vi">Lần đầu đẩy code lên, GitHub đòi xác thực và <strong>không nhận mật khẩu tài khoản</strong>. Cách dễ nhất là cài GitHub CLI rồi đăng nhập qua trình duyệt. Làm một lần, từ đó Claude đẩy code thoải mái.</span>
+    <span class="en">The first time you push, GitHub asks you to authenticate and <strong>will not accept your account password</strong>. The easiest fix is to install the GitHub CLI and sign in through your browser. Do it once and Claude can push freely from then on.</span>
+  </p>
+  <div class="prompt cmd">
+    <div class="prompt-head"><span class="vi">macOS (cần Homebrew)</span><span class="en">macOS (needs Homebrew)</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre>brew install gh</pre>
+  </div>
+  <div class="prompt cmd">
+    <div class="prompt-head"><span class="vi">Windows PowerShell</span><span class="en">Windows PowerShell</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre>winget install --id GitHub.cli</pre>
+  </div>
+  <div class="prompt cmd">
+    <div class="prompt-head"><span class="vi">Đăng nhập</span><span class="en">Sign in</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre>gh auth login</pre>
+  </div>
+  <p>
+    <span class="vi">Khi được hỏi, chọn lần lượt: <strong>GitHub.com</strong>, giao thức <strong>HTTPS</strong>, đồng ý dùng tài khoản GitHub cho Git, rồi <strong>Login with a web browser</strong>. Terminal hiện một mã 8 ký tự, bạn dán mã đó vào trang GitHub vừa mở là xong. Mac chưa có Homebrew thì nhờ Claude cài giúp, hoặc tải bộ cài GitHub CLI tại cli.github.com.</span>
+    <span class="en">When prompted, choose <strong>GitHub.com</strong>, the <strong>HTTPS</strong> protocol, agree to use your GitHub credentials for Git, then <strong>Login with a web browser</strong>. The terminal shows an 8-character code; paste it into the GitHub page that opens and you are done. If your Mac has no Homebrew, ask Claude to install it, or download the GitHub CLI installer from cli.github.com.</span>
+  </p>
+  <div class="highlight-box">
+    <p><span class="vi"><strong>Lưu ý quyền riêng tư:</strong> với tài khoản GitHub miễn phí, GitHub Pages chỉ chạy trên repository <strong>Public</strong>, nghĩa là ai cũng xem được toàn bộ code và file trong thư mục dự án. Đừng để giấy tờ, file khách hàng, mật khẩu hay mã API trong thư mục website.</span><span class="en"><strong>Privacy note:</strong> on a free GitHub account, GitHub Pages only works with a <strong>Public</strong> repository, which means anyone can see all the code and files in your project folder. Never keep documents, client files, passwords or API keys in the website folder.</span></p>
+  </div>
   <div class="prompt">
     <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
     <pre class="vi">Đưa website lên GitHub Pages:
-1. Khởi tạo git và tạo file .gitignore phù hợp
+1. Kiểm tra mọi thay đổi đã được commit
 2. Hướng dẫn mình từng bước tạo repository trên GitHub và đẩy code lên
 3. Bật GitHub Pages từ nhánh main
 4. Gắn tên miền [tenmien.com]: tạo file CNAME và cho mình danh sách bản ghi DNS cần thêm ở nhà cung cấp tên miền
 Giải thích ngắn gọn từng bước, vì mình không rành kỹ thuật.</pre>
     <pre class="en">Publish the site on GitHub Pages:
-1. Initialise git and create a suitable .gitignore
+1. Check that every change has been committed
 2. Walk me through creating a repository on GitHub and pushing the code
 3. Turn on GitHub Pages from the main branch
 4. Connect my domain [yourdomain.com]: create the CNAME file and give me the DNS records to add at my domain registrar
@@ -754,6 +844,11 @@ Keep each step short, I am not technical.</pre>
   <p>
     <span class="vi">Claude sẽ đưa bạn 4 bản ghi A và 1 bản ghi CNAME để thêm ở trang quản lý tên miền. DNS có thể mất vài giờ mới nhận. Khi GitHub báo tên miền đã đúng, bật <strong>Enforce HTTPS</strong> trong mục Settings → Pages.</span>
     <span class="en">Claude gives you four A records and one CNAME record to add in your domain registrar's dashboard. DNS can take a few hours to update. Once GitHub confirms the domain, switch on <strong>Enforce HTTPS</strong> under Settings → Pages.</span>
+  </p>
+  <h3><span class="vi">Mở thử trên điện thoại thật</span><span class="en">Try it on a real phone</span></h3>
+  <p>
+    <span class="vi">Ảnh chụp từ trình duyệt ẩn ở bước 8 không thay được việc tự bấm thử. Mở website trên điện thoại của bạn, bấm từng nút liên hệ, mở menu, gửi link cho một người bạn qua Zalo xem ảnh chia sẻ có hiện không. Thấy chỗ nào lạ thì chụp màn hình và kéo vào Claude Code.</span>
+    <span class="en">Screenshots from the headless browser in step 8 cannot replace tapping through it yourself. Open the site on your own phone, tap every contact button, open the menu, and send the link to a friend on a messaging app to check the share preview. If anything looks off, take a screenshot and drag it into Claude Code.</span>
   </p>
   <h3><span class="vi">Cuối cùng: báo cho Google biết</span><span class="en">Finally: tell Google about your site</span></h3>
   <p>
@@ -839,7 +934,7 @@ Keep each step short, I am not technical.</pre>
     <li><span class="vi"><strong>Để AI tự điền thông tin thật.</strong> Giá, số điện thoại, địa chỉ phải do bạn đưa. Luôn đọc lại nội dung trước khi đăng.</span><span class="en"><strong>Letting AI fill in real details.</strong> Prices, phone numbers and addresses must come from you. Always proofread before publishing.</span></li>
     <li><span class="vi"><strong>Phiên làm việc quá dài.</strong> Khi chuyển sang việc khác hẳn, gõ <code>/clear</code> để bắt đầu cuộc trò chuyện mới. Quy tắc trong CLAUDE.md vẫn được giữ.</span><span class="en"><strong>Sessions that run too long.</strong> When you switch to an unrelated task, type <code>/clear</code> to start fresh. Your CLAUDE.md rules still apply.</span></li>
     <li><span class="vi"><strong>Ảnh quá nặng.</strong> Ảnh chụp từ điện thoại thường 3–5MB. Nhờ Claude nén về dưới 300KB để website tải nhanh.</span><span class="en"><strong>Oversized photos.</strong> Phone photos are often 3–5MB. Ask Claude to compress them below 300KB so pages load fast.</span></li>
-    <li><span class="vi"><strong>Không lưu lịch sử.</strong> Nhờ Claude commit sau mỗi phần làm xong. Lỡ sửa hỏng thì quay lại được bản trước.</span><span class="en"><strong>No save points.</strong> Ask Claude to commit after each finished part. If a change breaks something, you can go back.</span></li>
+    <li><span class="vi"><strong>Không lưu lịch sử.</strong> Bật git từ bước 5 và nhờ Claude commit sau mỗi phần làm xong. Lỡ sửa hỏng thì quay lại được bản trước.</span><span class="en"><strong>No save points.</strong> Turn on git in step 5 and ask Claude to commit after each finished part. If a change breaks something, you can go back.</span></li>
   </ul>
   <p>
     <span class="vi">Nếu bạn muốn xem mình dùng AI cho những việc khác ra sao, mình có viết riêng về <a href="/blog/sinh-vien-marketing-dung-ai-moi-ngay/" class="lnk">cách mình dùng AI mỗi ngày</a>.</span>
@@ -885,6 +980,15 @@ Keep each step short, I am not technical.</pre>
       <p>
         <span class="vi">Có. Toàn bộ code nằm trong thư mục trên máy bạn và trong tài khoản GitHub của bạn. Bạn có thể chuyển sang dịch vụ lưu trữ khác bất cứ lúc nào, vì đây là website HTML tĩnh, không phụ thuộc nền tảng nào.</span>
         <span class="en">Yes. All the code lives in a folder on your computer and in your own GitHub account. Because it is a plain static HTML site, you can move it to any other host at any time.</span>
+      </p>
+    </div>
+  </details>
+  <details class="faq">
+    <summary><span class="vi">Website làm bằng Claude Code trên GitHub Pages có làm được form liên hệ không?</span><span class="en">Can a Claude Code website on GitHub Pages have a contact form?</span></summary>
+    <div class="faq-answer">
+      <p>
+        <span class="vi">Không theo cách thông thường, vì GitHub Pages chỉ chạy website tĩnh, không có máy chủ nhận dữ liệu. Thay vào đó, dùng nút Zalo hoặc Messenger, liên kết tới Google Forms, hoặc một dịch vụ nhận form như Formspree để tin nhắn gửi về email.</span>
+        <span class="en">Not in the usual way, because GitHub Pages only serves static files and has no server to receive data. Use Zalo or Messenger buttons, a link to Google Forms, or a form service such as Formspree that emails you each message instead.</span>
       </p>
     </div>
   </details>
