@@ -7,19 +7,8 @@
  "caption_style": "pill",
  "music": {
   "src": "music02.mp3",
-  "volume": 0.13
+  "volume": 0.07
  },
- "flash": [
-  {
-   "times": [
-    5.05,
-    27.28
-   ],
-   "power": 0.35,
-   "punch": 1.05,
-   "shake": 0
-  }
- ],
  "overlays": [
   {
    "type": "png",
@@ -292,6 +281,39 @@
      "color": "white",
      "size": 150
     }
+   ]
+  },
+  {
+   "type": "label",
+   "start": 29.5,
+   "end": 33.52,
+   "text": "Tour TRIP 7N6Đ đã gồm visa đoàn",
+   "color": "yellow",
+   "y": 0.62,
+   "size": 42
+  }
+ ],
+ "fx": [
+  {
+   "type": "frameflick",
+   "t": 5.05,
+   "frames": 10,
+   "box": [
+    135,
+    520,
+    810,
+    880
+   ]
+  },
+  {
+   "type": "frameflick",
+   "t": 27.25,
+   "frames": 10,
+   "box": [
+    135,
+    520,
+    810,
+    880
    ]
   }
  ]

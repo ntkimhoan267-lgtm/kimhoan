@@ -5,20 +5,6 @@
  "audio": "work/mix.wav",
  "captions": "captions.json",
  "caption_style": "pill",
- "flash": [
-  {
-   "times": [
-    4.4,
-    14.4,
-    25.05,
-    35.0,
-    42.0
-   ],
-   "power": 0.35,
-   "punch": 1.05,
-   "shake": 0
-  }
- ],
  "overlays": [
   {
    "type": "png",
@@ -387,5 +373,66 @@
     }
    ]
   }
- ]
+ ],
+ "fx": [
+  {
+   "type": "frameflick",
+   "t": 4.4,
+   "frames": 10,
+   "box": [
+    135,
+    520,
+    810,
+    880
+   ]
+  },
+  {
+   "type": "frameflick",
+   "t": 14.4,
+   "frames": 10,
+   "box": [
+    135,
+    520,
+    810,
+    880
+   ]
+  },
+  {
+   "type": "frameflick",
+   "t": 25.05,
+   "frames": 10,
+   "box": [
+    135,
+    520,
+    810,
+    880
+   ]
+  },
+  {
+   "type": "frameflick",
+   "t": 35.0,
+   "frames": 10,
+   "box": [
+    135,
+    520,
+    810,
+    880
+   ]
+  },
+  {
+   "type": "frameflick",
+   "t": 41.9,
+   "frames": 10,
+   "box": [
+    135,
+    520,
+    810,
+    880
+   ]
+  }
+ ],
+ "music": {
+  "src": "music02.mp3",
+  "volume": 0.07
+ }
 }
