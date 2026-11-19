@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cách làm website bằng Claude Code: 9 bước có prompt mẫu</title>
+<meta name="description" content="Hướng dẫn làm website bằng Claude Code cho người không biết code: 9 bước từ cài đặt, viết brief, Plan mode, SEO đến GitHub Pages. Có prompt mẫu và bộ skill tải về.">
+<meta name="keywords" content="cách làm website bằng claude code, claude code, làm website bằng ai, claude code tiếng việt, prompt làm website, claude code skills, github pages, tự làm website không cần code">
+<meta name="author" content="Nguyễn Thị Kim Hoàn">
+<link rel="canonical" href="https://iamkimhoan.vn/blog/cach-lam-website-bang-claude-code/">
+<meta property="og:title" content="Cách làm website bằng Claude Code: 9 bước có prompt mẫu">
+<meta property="og:description" content="Từ cài đặt tới website chạy trên tên miền riêng. Prompt mẫu cho từng bước và bộ skill Claude Code tải về dùng ngay.">
+<meta property="og:image" content="https://iamkimhoan.vn/images/thumb-cach-lam-website-bang-claude-code.jpg">
+<meta property="og:url" content="https://iamkimhoan.vn/blog/cach-lam-website-bang-claude-code/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="vi_VN">
+<meta property="article:published_time" content="2026-11-19">
+<meta property="article:author" content="Nguyễn Thị Kim Hoàn">
+<meta property="article:section" content="Hướng dẫn AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cách làm website bằng Claude Code: 9 bước có prompt mẫu">
+<meta name="twitter:description" content="Prompt mẫu cho từng bước và bộ skill Claude Code tải về dùng ngay.">
+<meta name="twitter:image" content="https://iamkimhoan.vn/images/thumb-cach-lam-website-bang-claude-code.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Cách làm website bằng Claude Code: hướng dẫn 9 bước cho người không biết code",
+  "description": "Hướng dẫn làm website bằng Claude Code từ cài đặt, viết brief, Plan mode, SEO đến GitHub Pages, có prompt mẫu và bộ skill tải về.",
+  "image": "https://iamkimhoan.vn/images/thumb-cach-lam-website-bang-claude-code.jpg",
+  "datePublished": "2026-11-19",
+  "dateModified": "2026-11-19",
+  "inLanguage": "vi-VN",
+  "articleSection": "Hướng dẫn AI",
+  "author": {
+    "@type": "Person",
+    "name": "Nguyễn Thị Kim Hoàn",
+    "url": "https://iamkimhoan.vn/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Nguyễn Thị Kim Hoàn",
+    "url": "https://iamkimhoan.vn/"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://iamkimhoan.vn/blog/cach-lam-website-bang-claude-code/"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Làm website bằng Claude Code có cần biết code không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Không. Bạn mô tả bằng tiếng Việt, Claude viết code. Bạn cần biết rõ mình muốn gì, đọc kỹ kế hoạch Claude đưa ra và kiểm tra kết quả trên trình duyệt. Biết một chút HTML sẽ giúp bạn góp ý nhanh hơn, nhưng không bắt buộc."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Làm website bằng Claude Code tốn bao nhiêu tiền?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Bạn cần một gói Claude trả phí từ Pro trở lên, hoặc tài khoản Claude Console trả theo lượt dùng. GitHub Pages miễn phí. Tên miền riêng là tuỳ chọn, trả phí hằng năm cho nhà cung cấp tên miền."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Claude Code khác gì so với chat với Claude trên claude.ai?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Khi chat, Claude chỉ đưa code cho bạn tự chép vào file. Claude Code làm việc trực tiếp trong thư mục trên máy bạn: tự tạo và sửa file, chạy lệnh, chụp màn hình kiểm tra, và đẩy code lên GitHub."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Website làm bằng Claude Code có thuộc về mình không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Có. Toàn bộ code nằm trong thư mục trên máy bạn và trong tài khoản GitHub của bạn. Bạn có thể chuyển sang dịch vụ lưu trữ khác bất cứ lúc nào, vì đây là website HTML tĩnh, không phụ thuộc nền tảng nào."
+      }
+    }
+  ]
+}
+</script>
+
+<style>
+  :root {
+    --pastel-yellow:#F9E45B; --deep-navy:#0D1B3E; --navy-mid:#1A2E5C;
+    --navy-light:#2D4080; --cream:#FDFAF0; --light-beige:#F5F0E0;
+    --mint:#B8EDD9; --text-dark:#0D1B3E; --text-mid:#3A4A7A; --stamp:#C0392B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;}
+
+  #progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--pastel-yellow);z-index:300;width:0%;transition:width 0.1s linear;}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;backdrop-filter:blur(16px);background:rgba(253,250,240,0.92);border-bottom:1px solid rgba(13,27,62,0.08);transition:box-shadow 0.3s;}
+  nav.scrolled{box-shadow:0 4px 32px rgba(13,27,62,0.10);}
+  .nav-inner{max-width:760px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;font-style:italic;color:var(--deep-navy);text-decoration:none;}
+  .nav-logo span{color:var(--pastel-yellow);}
+  .nav-logo img{height:26px;width:auto;display:block;}
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .nav-back{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;transition:color 0.2s;}
+  .nav-back:hover{color:var(--deep-navy);}
+
+  .lang-toggle{display:flex;align-items:center;gap:4px;background:var(--deep-navy);border-radius:20px;padding:4px 6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.72rem;user-select:none;}
+  .lang-btn{padding:3px 10px;border-radius:14px;color:rgba(255,255,255,0.5);transition:all 0.25s;font-weight:700;letter-spacing:0.05em;}
+  .lang-btn.active{background:var(--pastel-yellow);color:var(--deep-navy);}
+
+  .vi{display:block;} .en{display:none;}
+  body.lang-en .vi{display:none;} body.lang-en .en{display:block;}
+  span.vi{display:inline;} span.en{display:none;}
+  body.lang-en span.vi{display:none;} body.lang-en span.en{display:inline;}
+
+  .article-hero{padding:110px 24px 56px;max-width:760px;margin:0 auto;}
+  .kicker{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+  .kicker::before{content:'';display:block;width:24px;height:2px;background:var(--pastel-yellow);flex:none;}
+  .article-title{font-family:'Playfair Display',serif;font-size:clamp(1.85rem,4.5vw,2.7rem);font-weight:900;line-height:1.16;color:var(--deep-navy);margin-bottom:18px;}
+  .article-subtitle{font-size:1.05rem;color:var(--text-mid);line-height:1.65;max-width:620px;margin-bottom:28px;}
+  .article-meta{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid rgba(13,27,62,0.1);}
+  .author-row{display:flex;align-items:center;gap:10px;}
+  .author-avatar{width:36px;height:36px;border-radius:50%;background:var(--navy-mid);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;}
+  .author-avatar img{width:100%;height:100%;object-fit:cover;object-position:top;}
+  .author-name{font-size:0.88rem;font-weight:600;color:var(--deep-navy);}
+  .meta-dot{width:4px;height:4px;border-radius:50%;background:var(--text-mid);opacity:0.35;flex-shrink:0;}
+  .meta-item{font-family:'Space Mono',monospace;font-size:0.67rem;color:var(--text-mid);letter-spacing:0.06em;}
+
+  .article-body{max-width:760px;margin:0 auto;padding:44px 24px 40px;}
+  .article-body p{font-size:1.05rem;line-height:1.85;color:var(--text-dark);margin-bottom:1.5rem;}
+  .article-body h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--deep-navy);margin:3.2rem 0 1rem;scroll-margin-top:80px;}
+  .article-body h3{font-size:1.08rem;font-weight:700;color:var(--deep-navy);margin:2.2rem 0 0.8rem;}
+  .article-body strong{color:var(--deep-navy);font-weight:700;}
+  .article-body em{font-style:italic;}
+  .article-body ul{margin:0 0 1.5rem;padding-left:0;list-style:none;}
+  .article-body li{font-size:1.02rem;line-height:1.75;color:var(--text-dark);margin-bottom:0.7rem;padding-left:26px;position:relative;}
+  .article-body li::before{content:'';position:absolute;left:6px;top:11px;width:6px;height:6px;border-radius:50%;background:var(--pastel-yellow);}
+
+  .divider{width:40px;height:2px;background:var(--pastel-yellow);margin:3rem auto;}
+
+  .answer-box{background:var(--deep-navy);border-radius:14px;padding:24px 28px;margin:2rem 0;}
+  .answer-box .lbl{font-family:'Space Mono',monospace;font-size:0.64rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(249,228,91,0.85);margin-bottom:9px;}
+  .answer-box p{color:rgba(253,250,240,0.9);margin:0;font-size:1.02rem;line-height:1.75;}
+  .answer-box strong{color:var(--pastel-yellow);}
+
+  .highlight-box{background:var(--light-beige);border:1px solid rgba(13,27,62,0.08);border-radius:12px;padding:22px 26px;margin:2rem 0;}
+  .highlight-box p{margin:0;font-size:0.97rem;color:var(--text-mid);line-height:1.75;}
+  .highlight-box p + p{margin-top:0.9rem;}
+
+  /* ── BẢNG SO SÁNH ── */
+  .table-wrap{overflow-x:auto;margin:2rem 0;border:1px solid rgba(13,27,62,0.1);border-radius:12px;background:#fff;}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:0.92rem;}
+  th,td{padding:12px 14px;text-align:left;border-bottom:1px solid rgba(13,27,62,0.08);}
+  th{background:var(--light-beige);font-weight:700;color:var(--deep-navy);font-size:0.86rem;}
+  td:first-child{font-weight:600;color:var(--deep-navy);}
+  tr:last-child td{border-bottom:none;}
+  .yes{color:#1F7A55;font-weight:700;}
+  .no{color:var(--stamp);font-weight:700;}
+  .best{background:rgba(184,237,217,0.35);}
+
+  .cover{margin:0 0 2rem;}
+  .inline-photo{margin:2.2rem 0;}
+  .inline-photo img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid rgba(13,27,62,0.1);}
+  .inline-photo figcaption{font-size:0.8rem;color:var(--text-mid);text-align:center;margin-top:10px;font-style:italic;line-height:1.55;}
+  .cover img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid rgba(13,27,62,0.1);}
+  .cover figcaption{font-size:0.8rem;color:var(--text-mid);text-align:center;margin-top:10px;font-style:italic;line-height:1.55;}
+
+  /* ── SƠ ĐỒ ── */
+  .figure{margin:2.2rem 0;}
+  .figure svg{width:100%;height:auto;display:block;border:1px solid rgba(13,27,62,0.1);border-radius:12px;background:#fff;}
+  .figure figcaption{font-size:0.8rem;color:var(--text-mid);text-align:center;margin-top:10px;line-height:1.55;font-style:italic;}
+
+  /* ── TOC ── */
+  .toc{background:#fff;border:1px solid rgba(13,27,62,0.1);border-radius:12px;padding:20px 24px;margin:0 0 2.5rem;}
+  .toc-label{font-family:'Space Mono',monospace;font-size:0.66rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mid);margin-bottom:12px;}
+  .toc ol{margin:0;padding-left:20px;}
+  .toc li{font-size:0.95rem;line-height:1.6;margin-bottom:6px;padding-left:0;color:var(--text-mid);}
+  .toc li::before{display:none;}
+  .toc a{color:var(--text-mid);text-decoration:none;border-bottom:1px solid transparent;transition:all 0.2s;}
+  .toc a:hover{color:var(--deep-navy);border-bottom-color:var(--pastel-yellow);}
+
+  /* ── CTA GIỮA BÀI ── */
+  .inline-cta{background:var(--light-beige);border:1px solid rgba(13,27,62,0.1);border-left:4px solid var(--pastel-yellow);border-radius:12px;padding:20px 24px;margin:2.2rem 0;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+  .inline-cta p{margin:0;font-size:0.95rem;color:var(--text-mid);line-height:1.6;flex:1;min-width:220px;}
+  .inline-cta a{display:inline-flex;align-items:center;gap:7px;background:var(--deep-navy);color:var(--pastel-yellow);padding:11px 22px;border-radius:6px;font-weight:700;font-size:0.87rem;text-decoration:none;white-space:nowrap;transition:all 0.25s;}
+  .inline-cta a:hover{background:var(--navy-mid);transform:translateY(-2px);}
+
+  /* ── FAQ ── */
+  .faq{border:1px solid rgba(13,27,62,0.12);border-radius:12px;background:#fff;margin-bottom:12px;overflow:hidden;transition:border-color 0.25s,box-shadow 0.25s;}
+  .faq[open]{border-color:var(--deep-navy);box-shadow:0 10px 30px -18px rgba(13,27,62,0.5);}
+  .faq summary{cursor:pointer;list-style:none;padding:18px 52px 18px 22px;font-weight:700;font-size:1rem;color:var(--deep-navy);line-height:1.5;position:relative;user-select:none;}
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{content:'+';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:1.35rem;font-weight:400;color:var(--text-mid);transition:color 0.25s;line-height:1;}
+  .faq[open] summary::after{content:'−';color:var(--deep-navy);}
+  .faq summary:hover{background:var(--light-beige);}
+  .faq summary:focus-visible{outline:3px solid var(--pastel-yellow);outline-offset:-3px;}
+  .faq-answer{padding:0 22px 20px;}
+  .faq-answer p{font-size:0.99rem;line-height:1.8;color:var(--text-mid);margin:0;}
+
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin:2.5rem 0 0;}
+  .tag{background:var(--light-beige);border:1px solid rgba(13,27,62,0.1);border-radius:20px;padding:5px 14px;font-size:0.78rem;font-weight:500;color:var(--text-mid);transition:all 0.2s;cursor:default;}
+  .tag:hover{background:var(--pastel-yellow);border-color:var(--pastel-yellow);color:var(--deep-navy);}
+
+  .sources{max-width:760px;margin:0 auto;padding:0 24px;}
+  .sources-label{font-family:'Space Mono',monospace;font-size:0.66rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mid);margin-bottom:12px;}
+  .sources ul{list-style:none;margin:0;}
+  .sources li{font-size:0.84rem;line-height:1.65;color:var(--text-mid);margin-bottom:7px;padding-left:16px;position:relative;}
+  .sources li::before{content:'—';position:absolute;left:0;color:var(--text-mid);opacity:0.5;}
+  .sources a{color:var(--deep-navy);text-decoration:none;border-bottom:1px solid rgba(249,228,91,0.7);}
+
+  .disclaimer{max-width:760px;margin:0 auto;padding:22px 24px 20px;}
+  .disclaimer p{font-size:0.8rem;color:var(--text-mid);line-height:1.7;font-style:italic;opacity:0.9;}
+  .disclaimer a{color:var(--deep-navy);}
+
+  .article-cta{max-width:760px;margin:0 auto;padding:24px 24px 72px;}
+  .cta-box{background:var(--deep-navy);border-radius:16px;padding:36px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .cta-box h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--cream);margin-bottom:6px;}
+  .cta-box p{font-size:0.85rem;color:rgba(253,250,240,0.55);line-height:1.6;}
+  .cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--pastel-yellow);color:var(--deep-navy);padding:12px 28px;border-radius:4px;font-weight:700;font-size:0.88rem;text-decoration:none;white-space:nowrap;transition:all 0.25s;flex-shrink:0;}
+  .cta-btn:hover{background:var(--mint);transform:translateY(-2px);}
+
+  .related{max-width:760px;margin:0 auto;padding:0 24px 80px;border-top:1px solid rgba(13,27,62,0.08);}
+  .related-label{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-mid);margin:44px 0 22px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;}
+  @media(max-width:540px){.related-grid{grid-template-columns:1fr;}}
+  .related-card{border:1px solid rgba(13,27,62,0.1);border-radius:12px;padding:20px;background:white;transition:all 0.25s;text-decoration:none;display:block;}
+  .related-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(13,27,62,0.1);}
+  .related-chip{background:var(--light-beige);border-radius:10px;padding:3px 10px;font-size:0.67rem;font-family:'Space Mono',monospace;font-weight:700;color:var(--text-mid);display:inline-block;margin-bottom:10px;}
+  .related-card h4{font-family:'Playfair Display',serif;font-size:0.98rem;font-weight:700;color:var(--deep-navy);line-height:1.35;margin-bottom:6px;}
+  .related-card p{font-size:0.82rem;color:var(--text-mid);line-height:1.55;}
+
+  footer{border-top:1px solid rgba(13,27,62,0.08);text-align:center;padding:34px 24px 44px;}
+  .footer-mark{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:1rem;color:var(--deep-navy);margin-bottom:7px;}
+  .footer-text{font-size:0.78rem;color:var(--text-mid);line-height:1.6;margin-bottom:10px;}
+  .footer-link{font-family:'Space Mono',monospace;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;color:var(--deep-navy);text-decoration:none;border-bottom:1px solid var(--pastel-yellow);}
+
+  .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(.2,.8,.2,1),transform 0.7s cubic-bezier(.2,.8,.2,1);}
+  .fade-up.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    .fade-up{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ── PROMPT MẪU ── */
+  .article-body code{font-family:'Space Mono',monospace;font-size:0.84em;background:var(--light-beige);border:1px solid rgba(13,27,62,0.08);border-radius:4px;padding:1px 6px;}
+  .lnk{color:var(--deep-navy);border-bottom:1px solid var(--pastel-yellow);text-decoration:none;}
+  .prompt{margin:1.6rem 0 2rem;border-radius:12px;overflow:hidden;background:var(--deep-navy);border:1px solid rgba(13,27,62,0.2);}
+  .prompt-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px 9px 18px;background:var(--navy-mid);font-family:'Space Mono',monospace;font-size:0.66rem;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:rgba(249,228,91,0.9);}
+  .copy-btn{font-family:'Be Vietnam Pro',sans-serif;font-size:0.76rem;font-weight:700;letter-spacing:0;text-transform:none;background:var(--pastel-yellow);color:var(--deep-navy);border:0;border-radius:6px;padding:6px 13px;cursor:pointer;transition:background 0.2s;}
+  .copy-btn:hover{background:var(--mint);}
+  .copy-btn:focus-visible{outline:3px solid var(--mint);outline-offset:2px;}
+  .copy-btn.done{background:var(--mint);}
+  .prompt pre{margin:0;padding:16px 18px 18px;font-family:'Space Mono',monospace;font-size:0.83rem;line-height:1.75;color:var(--cream);white-space:pre-wrap;word-break:break-word;overflow-x:auto;}
+  .prompt.cmd pre{color:var(--mint);}
+  .prompt.cmd .prompt-head{color:rgba(184,237,217,0.9);}
+  .highlight-box code{font-family:'Space Mono',monospace;font-size:0.84em;}
+</style>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0B1F45">
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Kim Hoàn"><img src="/images/brand/logo-wordmark.png" alt="Kim Hoàn" width="801" height="152"></a>
+    <div class="nav-right">
+      <a href="/blog/" class="nav-back">
+        <span class="vi">← Tất cả bài viết</span>
+        <span class="en">← All posts</span>
+      </a>
+      <div class="lang-toggle" onclick="toggleLang()" role="button" tabindex="0" aria-label="Đổi ngôn ngữ / Switch language">
+        <div class="lang-btn" id="btn-en">EN</div>
+        <div class="lang-btn active" id="btn-vi">VI</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="article-hero fade-up">
+  <div class="kicker">
+    <span class="vi">Hướng dẫn AI · Website</span>
+    <span class="en">AI Guide · Websites</span>
+  </div>
+
+  <h1 class="article-title">
+    <span class="vi">Cách làm website bằng Claude Code: hướng dẫn 9 bước cho người không biết code</span>
+    <span class="en">How to Build a Website with Claude Code: a 9-Step Guide for Non-Coders</span>
+  </h1>
+
+  <p class="article-subtitle">
+    <span class="vi">Từ lúc cài đặt tới lúc website chạy trên tên miền riêng. Có prompt mẫu để sao chép từng bước và bộ skill tải về máy dùng ngay.</span>
+    <span class="en">From installation to a live site on your own domain. Copy-ready prompts for every step, plus a skill pack you can download and use straight away.</span>
+  </p>
+
+  <div class="article-meta">
+    <div class="author-row">
+      <div class="author-avatar">
+        <img src="/hero.jpg" alt="Kim Hoàn" onerror="this.style.display='none'">
+      </div>
+      <div class="author-name">Nguyễn Thị Kim Hoàn</div>
+    </div>
+    <div class="meta-dot"></div>
+    <span class="meta-item">
+      <span class="vi">14 phút đọc</span>
+      <span class="en">14 min read</span>
+    </span>
+    <div class="meta-dot"></div>
+    <span class="meta-item">19.11.2026</span>
+    <div class="meta-dot"></div>
+    <span class="meta-item">
+      <span class="vi">Hướng dẫn AI</span>
+      <span class="en">AI Guide</span>
+    </span>
+  </div>
+</header>
+
+<article class="article-body">
+
+  <figure class="cover fade-up">
+    <img src="/images/thumb-cach-lam-website-bang-claude-code.jpg"
+         alt="Cách làm website bằng Claude Code – hướng dẫn 9 bước có prompt mẫu"
+         width="1200" height="630" loading="eager">
+    <figcaption>
+      <span class="vi">Cả portfolio iamkimhoan.vn mà bạn đang đọc được mình xây theo đúng quy trình trong bài.</span>
+      <span class="en">The iamkimhoan.vn portfolio you are reading was built with exactly the process in this guide.</span>
+    </figcaption>
+  </figure>
+
+  <div class="toc fade-up">
+    <div class="toc-label">
+      <span class="vi">Nội dung bài viết</span>
+      <span class="en">In this guide</span>
+    </div>
+    <ol>
+      <li><a href="#chuan-bi"><span class="vi">Cần chuẩn bị gì?</span><span class="en">What you need</span></a></li>
+      <li><a href="#buoc-1"><span class="vi">Bước 1: Cài Claude Code</span><span class="en">Step 1: Install Claude Code</span></a></li>
+      <li><a href="#buoc-2"><span class="vi">Bước 2: Cài bộ skill làm website</span><span class="en">Step 2: Install the website skill pack</span></a></li>
+      <li><a href="#buoc-3"><span class="vi">Bước 3: Viết brief cùng Claude</span><span class="en">Step 3: Write the brief with Claude</span></a></li>
+      <li><a href="#buoc-4"><span class="vi">Bước 4: Lên kế hoạch bằng Plan mode</span><span class="en">Step 4: Plan with Plan mode</span></a></li>
+      <li><a href="#buoc-5"><span class="vi">Bước 5: Dựng trang và tạo CLAUDE.md</span><span class="en">Step 5: Build the page and create CLAUDE.md</span></a></li>
+      <li><a href="#buoc-6"><span class="vi">Bước 6: Sửa theo góp ý</span><span class="en">Step 6: Revise from feedback</span></a></li>
+      <li><a href="#buoc-7"><span class="vi">Bước 7: Làm SEO</span><span class="en">Step 7: Set up SEO</span></a></li>
+      <li><a href="#buoc-8"><span class="vi">Bước 8: Kiểm tra trên 3 cỡ màn hình</span><span class="en">Step 8: Test on three screen sizes</span></a></li>
+      <li><a href="#buoc-9"><span class="vi">Bước 9: Đưa website lên mạng</span><span class="en">Step 9: Put the site online</span></a></li>
+      <li><a href="#bo-skill"><span class="vi">Bộ skill tải về: bên trong có gì?</span><span class="en">The skill pack: what is inside</span></a></li>
+      <li><a href="#meo"><span class="vi">Mẹo và lỗi hay gặp</span><span class="en">Tips and common mistakes</span></a></li>
+      <li><a href="#faq"><span class="vi">Câu hỏi thường gặp</span><span class="en">Frequently asked questions</span></a></li>
+    </ol>
+  </div>
+
+  <p>
+    <span class="vi">Mình không học lập trình. Nhưng cả website này, từ trang chủ, trang dịch vụ visa đến blog song ngữ, đều do mình làm bằng <strong>Claude Code</strong>: mình nói bằng tiếng Việt, Claude viết code, mình duyệt từng phần.</span>
+    <span class="en">I never studied programming. Yet this whole site, from the homepage and the visa service page to the bilingual blog, was built with <strong>Claude Code</strong>: I describe what I want in plain Vietnamese, Claude writes the code, and I review every part.</span>
+  </p>
+  <p>
+    <span class="vi">Bài này là đúng quy trình mình dùng, chia thành 9 bước. Mỗi bước có prompt mẫu để bạn bấm sao chép, và cuối bài có <a href="#bo-skill" class="lnk">bộ skill</a> để Claude Code tự làm theo quy trình đó trên máy bạn.</span>
+    <span class="en">This post is the exact process I use, split into 9 steps. Each step has a sample prompt you can copy with one click, and at the end there is a <a href="#bo-skill" class="lnk">skill pack</a> that makes Claude Code follow the same process on your own computer.</span>
+  </p>
+  <div class="answer-box">
+    <div class="lbl">
+      <span class="vi">Câu trả lời ngắn</span>
+      <span class="en">Short answer</span>
+    </div>
+    <p>
+      <span class="vi"><strong>Cài Claude Code, mô tả website bằng lời, để Claude viết code, rồi đưa lên GitHub Pages miễn phí.</strong> Bạn cần một tài khoản Claude trả phí và khoảng một buổi chiều cho website đầu tiên. Không cần biết code, nhưng cần biết rõ mình muốn gì và chịu khó duyệt từng phần.</span>
+      <span class="en"><strong>Install Claude Code, describe the site in plain words, let Claude write the code, then publish it free on GitHub Pages.</strong> You need a paid Claude account and about an afternoon for your first site. No coding required, but you do need to know what you want and review each part carefully.</span>
+    </p>
+  </div>
+
+  <figure class="figure fade-up">
+    <svg viewBox="0 0 420 538" role="img" aria-label="Quy trình 9 bước làm website bằng Claude Code" font-family="'Be Vietnam Pro',sans-serif" style="max-width:440px;margin:0 auto;">
+      <rect x="0" y="0" width="420" height="538" fill="#FFFFFF"/>
+      <rect x="10" y="10" width="400" height="164" rx="14" fill="#F5F0E0"/>
+      <text x="30" y="36" font-family="'Space Mono',monospace" font-size="12" font-weight="700" letter-spacing="1.5" fill="#3A4A7A">CHUẨN BỊ</text>
+      <circle cx="44" cy="62" r="14" fill="#0D1B3E"/><text x="44" y="67" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">1</text><text x="70" y="67" font-size="15" font-weight="600" fill="#0D1B3E">Cài Claude Code</text>
+      <circle cx="44" cy="102" r="14" fill="#0D1B3E"/><text x="44" y="107" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">2</text><text x="70" y="107" font-size="15" font-weight="600" fill="#0D1B3E">Cài bộ skill</text>
+      <circle cx="44" cy="142" r="14" fill="#0D1B3E"/><text x="44" y="147" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">3</text><text x="70" y="147" font-size="15" font-weight="600" fill="#0D1B3E">Viết brief cùng Claude</text>
+      <rect x="10" y="186" width="400" height="164" rx="14" fill="#FDFAF0" stroke="#F9E45B" stroke-width="2"/>
+      <text x="30" y="212" font-family="'Space Mono',monospace" font-size="12" font-weight="700" letter-spacing="1.5" fill="#3A4A7A">XÂY · bước 5–6 lặp lại tới khi ưng</text>
+      <circle cx="44" cy="238" r="14" fill="#0D1B3E"/><text x="44" y="243" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">4</text><text x="70" y="243" font-size="15" font-weight="600" fill="#0D1B3E">Lên kế hoạch (Plan mode)</text>
+      <circle cx="44" cy="278" r="14" fill="#0D1B3E"/><text x="44" y="283" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">5</text><text x="70" y="283" font-size="15" font-weight="600" fill="#0D1B3E">Dựng trang + CLAUDE.md</text>
+      <circle cx="44" cy="318" r="14" fill="#0D1B3E"/><text x="44" y="323" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">6</text><text x="70" y="323" font-size="15" font-weight="600" fill="#0D1B3E">Sửa theo góp ý</text>
+      <rect x="10" y="362" width="400" height="164" rx="14" fill="#DDF5EC"/>
+      <text x="30" y="388" font-family="'Space Mono',monospace" font-size="12" font-weight="700" letter-spacing="1.5" fill="#3A4A7A">LÊN SÓNG</text>
+      <circle cx="44" cy="414" r="14" fill="#0D1B3E"/><text x="44" y="419" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">7</text><text x="70" y="419" font-size="15" font-weight="600" fill="#0D1B3E">Làm SEO</text>
+      <circle cx="44" cy="454" r="14" fill="#0D1B3E"/><text x="44" y="459" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">8</text><text x="70" y="459" font-size="15" font-weight="600" fill="#0D1B3E">Kiểm tra 3 cỡ màn hình</text>
+      <circle cx="44" cy="494" r="14" fill="#0D1B3E"/><text x="44" y="499" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">9</text><text x="70" y="499" font-size="15" font-weight="600" fill="#0D1B3E">Đưa lên GitHub Pages</text>
+    </svg>
+    <figcaption>
+      <span class="vi">9 bước chia làm 3 giai đoạn. Phần "Xây" là nơi bạn dành nhiều thời gian nhất.</span>
+      <span class="en">Nine steps in three phases: prepare, build, launch. The build phase (steps 4–6) is where most of your time goes.</span>
+    </figcaption>
+  </figure>
+
+  <div class="divider"></div>
+
+  <h2 id="chuan-bi">
+    <span class="vi">Cần chuẩn bị gì?</span>
+    <span class="en">What you need</span>
+  </h2>
+
+  <p>
+    <span class="vi">Claude Code là trợ lý lập trình của Anthropic. Khác với khi chat trên claude.ai, Claude Code làm việc <strong>trực tiếp trong thư mục trên máy bạn</strong>: tự tạo file, viết code, chạy lệnh, mở trình duyệt kiểm tra. Bạn chỉ cần nói việc cần làm.</span>
+    <span class="en">Claude Code is Anthropic's coding assistant. Unlike chatting on claude.ai, Claude Code works <strong>directly in a folder on your computer</strong>: it creates files, writes code, runs commands and checks the result in a browser. You just say what needs doing.</span>
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="vi">Cần có</span><span class="en">You need</span></th><th><span class="vi">Ghi chú</span><span class="en">Notes</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="vi">Máy tính</span><span class="en">A computer</span></td><td><span class="vi">macOS, Windows hoặc Linux.</span><span class="en">macOS, Windows or Linux.</span></td></tr>
+        <tr class="best"><td><span class="vi">Tài khoản Claude trả phí</span><span class="en">A paid Claude account</span></td><td><span class="vi">Gói Pro trở lên, hoặc tài khoản Claude Console trả theo lượt dùng. Gói miễn phí không dùng được Claude Code.</span><span class="en">Pro or higher, or a pay-as-you-go Claude Console account. The free plan does not include Claude Code.</span></td></tr>
+        <tr><td><span class="vi">Tài khoản GitHub</span><span class="en">A GitHub account</span></td><td><span class="vi">Miễn phí. Dùng để lưu code và đưa website lên mạng ở bước 9.</span><span class="en">Free. Stores your code and hosts the site in step 9.</span></td></tr>
+        <tr><td><span class="vi">Tên miền</span><span class="en">A domain name</span></td><td><span class="vi">Không bắt buộc. Không có thì website chạy ở địa chỉ miễn phí của GitHub.</span><span class="en">Optional. Without one, the site runs on a free GitHub address.</span></td></tr>
+        <tr><td><span class="vi">Nội dung và ảnh</span><span class="en">Your content and photos</span></td><td><span class="vi">Logo, ảnh sản phẩm, thông tin liên hệ thật. Đây là phần AI không làm thay bạn được.</span><span class="en">Logo, product photos, real contact details. This is the part AI cannot do for you.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="highlight-box">
+    <p><span class="vi">Chưa quen Terminal? Claude Code còn có <strong>ứng dụng desktop</strong>, <strong>bản web tại claude.ai/code</strong> và tiện ích cho VS Code. Prompt trong bài dùng được ở mọi nơi. Mình hướng dẫn bằng Terminal vì đây là cách đầy đủ tính năng nhất.</span><span class="en">Not comfortable with the terminal? Claude Code also comes as a <strong>desktop app</strong>, a <strong>web version at claude.ai/code</strong> and a VS Code extension. The prompts here work everywhere. I use the terminal in this guide because it has the full feature set.</span></p>
+  </div>
+  <div class="divider"></div>
+
+  <h2 id="buoc-1">
+    <span class="vi">Bước 1: Cài Claude Code</span>
+    <span class="en">Step 1: Install Claude Code</span>
+  </h2>
+
+  <p>
+    <span class="vi">Mở Terminal (trên Mac: nhấn Cmd + Space, gõ "Terminal"). Dán lệnh dưới rồi nhấn Enter. Lệnh không hiện tiến độ khi tải, cứ chờ tới khi xong.</span>
+    <span class="en">Open Terminal (on a Mac: press Cmd + Space and type "Terminal"). Paste the command below and press Enter. It shows no progress while downloading, so just wait for it to finish.</span>
+  </p>
+  <div class="prompt cmd">
+    <div class="prompt-head"><span class="vi">macOS / Linux</span><span class="en">macOS / Linux</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre>curl -fsSL https://claude.ai/install.sh | bash</pre>
+  </div>
+  <p>
+    <span class="vi">Trên Windows, mở <strong>PowerShell</strong> và dán lệnh này. Nên cài thêm Git for Windows để Claude Code chạy lệnh ổn định hơn.</span>
+    <span class="en">On Windows, open <strong>PowerShell</strong> and paste this instead. Installing Git for Windows as well helps Claude Code run commands reliably.</span>
+  </p>
+  <div class="prompt cmd">
+    <div class="prompt-head"><span class="vi">Windows PowerShell</span><span class="en">Windows PowerShell</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre>irm https://claude.ai/install.ps1 | iex</pre>
+  </div>
+  <p>
+    <span class="vi">Cài xong, <strong>mở cửa sổ Terminal mới</strong>, tạo thư mục cho website và khởi động Claude Code. Lần đầu chạy, Claude Code mở trình duyệt để bạn đăng nhập tài khoản Claude.</span>
+    <span class="en">Once installed, <strong>open a new terminal window</strong>, create a folder for the site and start Claude Code. On first run, Claude Code opens your browser so you can sign in to your Claude account.</span>
+  </p>
+  <div class="prompt cmd">
+    <div class="prompt-head"><span class="vi">Lệnh Terminal</span><span class="en">Terminal command</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre>claude --version
+mkdir website-cua-toi
+cd website-cua-toi
+claude</pre>
+  </div>
+  <p>
+    <span class="vi">Nếu Terminal báo không tìm thấy lệnh <code>claude</code>, đóng hẳn Terminal rồi mở lại. Vẫn lỗi thì xem trang khắc phục sự cố trong tài liệu chính thức ở cuối bài.</span>
+    <span class="en">If the terminal says <code>claude</code> is not found, quit the terminal completely and reopen it. If it still fails, see the troubleshooting page in the official docs linked at the end.</span>
+  </p>
+  <div class="divider"></div>
+
+  <h2 id="buoc-2">
+    <span class="vi">Bước 2: Cài bộ skill làm website</span>
+    <span class="en">Step 2: Install the website skill pack</span>
+  </h2>
+
+  <p>
+    <span class="vi"><strong>Skill</strong> là một file hướng dẫn mà Claude Code đọc khi làm đúng loại việc đó. Giống như đưa cho Claude một quy trình làm việc chuẩn, để lần nào nó cũng làm đúng các bước, kể cả những bước bạn quên dặn.</span>
+    <span class="en">A <strong>skill</strong> is an instruction file Claude Code reads whenever it does that kind of task. It is like handing Claude a standard operating procedure, so it follows every step each time, including the ones you forget to mention.</span>
+  </p>
+  <p>
+    <span class="vi">Mình đóng gói 5 skill cho 5 giai đoạn làm website, kèm một file CLAUDE.md mẫu. Tải về, rồi cách dễ nhất là nhờ chính Claude Code cài:</span>
+    <span class="en">I packaged 5 skills for the 5 stages of building a site, plus a sample CLAUDE.md. Download it, and the easiest way to install is to ask Claude Code itself:</span>
+  </p>
+  <div class="inline-cta">
+    <p>
+      <span class="vi"><strong>Bộ skill làm website bằng Claude Code</strong> · 5 skill + CLAUDE.md mẫu + hướng dẫn cài · file .zip 11KB</span>
+      <span class="en"><strong>Claude Code website skill pack</strong> · 5 skills + sample CLAUDE.md + install guide · 11KB .zip</span>
+    </p>
+    <a href="/downloads/bo-skill-lam-website-claude-code.zip" download>
+      <span class="vi">Tải bộ skill ↓</span>
+      <span class="en">Download the pack ↓</span>
+    </a>
+  </div>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Giải nén file bo-skill-lam-website-claude-code.zip trong thư mục Downloads, rồi chép các thư mục trong skills/ vào ~/.claude/skills/ để dùng cho mọi dự án. Xong thì liệt kê các skill đã cài.</pre>
+    <pre class="en">Unzip bo-skill-lam-website-claude-code.zip from my Downloads folder, then copy the folders inside skills/ into ~/.claude/skills/ so they work in every project. When done, list the skills you installed.</pre>
+  </div>
+  <p>
+    <span class="vi">Cài xong, gõ <code>/exit</code> rồi chạy lại <code>claude</code>. Gõ dấu <code>/</code> là thấy các skill mới như <code>/website-brief</code>, <code>/check-site</code>. Cách cài thủ công có trong file HUONG-DAN.txt trong gói.</span>
+    <span class="en">Then type <code>/exit</code> and run <code>claude</code> again. Type <code>/</code> and you will see the new skills such as <code>/website-brief</code> and <code>/check-site</code>. Manual install steps are in HUONG-DAN.txt inside the pack.</span>
+  </p>
+  <div class="divider"></div>
+
+  <h2 id="buoc-3">
+    <span class="vi">Bước 3: Viết brief cùng Claude</span>
+    <span class="en">Step 3: Write the brief with Claude</span>
+  </h2>
+
+  <p>
+    <span class="vi">Đây là bước quyết định website đẹp hay không, và là bước người mới hay bỏ qua nhất. Claude chỉ làm tốt khi biết rõ <strong>website cho ai và họ cần làm gì</strong>. Thay vì tự viết một đoạn mô tả dài, hãy để Claude phỏng vấn bạn.</span>
+    <span class="en">This step decides whether the site turns out well, and it is the one beginners skip most. Claude only does good work when it knows <strong>who the site is for and what they need to do</strong>. Instead of writing a long description yourself, let Claude interview you.</span>
+  </p>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Mình muốn làm website [loại website: portfolio cá nhân / giới thiệu tiệm bánh / landing page khoá học].
+Trước khi viết code, hãy phỏng vấn mình từng câu một để làm rõ:
+1. Website dành cho ai, khi vào trang họ cần làm gì nhất?
+2. Có những trang hoặc mục nào?
+3. Thông tin liên hệ thật (Zalo, điện thoại, địa chỉ).
+4. Màu sắc, phong cách, website tham khảo mình thích.
+5. Nội dung và hình ảnh mình đã có.
+Hỏi xong, tóm tắt vào file BRIEF.md để mình duyệt. Chưa viết code.</pre>
+    <pre class="en">I want to build a [type of site: personal portfolio / bakery website / course landing page].
+Before writing any code, interview me one question at a time to clarify:
+1. Who is the site for, and what is the one thing they should do on it?
+2. Which pages or sections it needs.
+3. My real contact details (phone, messaging app, address).
+4. Colours, style, and sites I like for reference.
+5. What content and photos I already have.
+When you are done, summarise everything in BRIEF.md for me to review. Do not write code yet.</pre>
+  </div>
+  <p>
+    <span class="vi">Đã cài bộ skill thì chỉ cần gõ <code>/website-brief</code> kèm một câu mô tả. Claude sẽ tự hỏi đủ 6 câu theo thứ tự.</span>
+    <span class="en">With the skill pack installed, just type <code>/website-brief</code> followed by one sentence. Claude asks all six questions in order.</span>
+  </p>
+  <figure class="inline-photo fade-up">
+    <img src="/images/claude-code-phong-van-brief.jpg" alt="Claude Code phỏng vấn người dùng để viết brief website" width="1200" height="700" loading="lazy">
+    <figcaption>
+      <span class="vi">Minh hoạ: Claude hỏi từng câu, có gợi ý trả lời. Bạn trả lời bằng tiếng Việt bình thường.</span>
+      <span class="en">Illustration: Claude asks one question at a time with example answers. You reply in plain language.</span>
+    </figcaption>
+  </figure>
+  <div class="highlight-box">
+    <p><span class="vi"><strong>Mẹo:</strong> chép ảnh logo và ảnh sản phẩm vào thư mục <code>images/</code> trong thư mục website ngay từ bây giờ. Claude sẽ thấy và dùng ảnh thật thay vì ảnh minh hoạ.</span><span class="en"><strong>Tip:</strong> copy your logo and product photos into an <code>images/</code> folder inside the project now. Claude will find them and use real photos instead of placeholders.</span></p>
+  </div>
+  <div class="divider"></div>
+
+  <h2 id="buoc-4">
+    <span class="vi">Bước 4: Lên kế hoạch bằng Plan mode</span>
+    <span class="en">Step 4: Plan with Plan mode</span>
+  </h2>
+
+  <p>
+    <span class="vi">Nhấn <strong>Shift + Tab</strong> vài lần cho tới khi dòng dưới cùng hiện <strong>plan mode on</strong>. Ở chế độ này Claude chỉ đọc và lập kế hoạch, không sửa file nào. Bạn duyệt kế hoạch trước, rồi mới cho Claude làm.</span>
+    <span class="en">Press <strong>Shift + Tab</strong> a few times until the bottom line shows <strong>plan mode on</strong>. In this mode Claude only reads and plans; it changes no files. You approve the plan first, then let Claude build.</span>
+  </p>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Đọc BRIEF.md và lên kế hoạch xây website:
+- Cấu trúc thư mục và danh sách file
+- Bố cục từng mục trên trang chủ, từ trên xuống
+- Màu, font Google Fonts, khoảng cách dùng chung
+- Website tĩnh HTML/CSS/JS thuần, không framework, để đưa lên GitHub Pages miễn phí
+- Làm cho điện thoại trước, rồi mới tới máy tính
+Cuối kế hoạch, liệt kê những gì mình còn phải cung cấp.</pre>
+    <pre class="en">Read BRIEF.md and plan the website:
+- Folder structure and list of files
+- Layout of each homepage section, top to bottom
+- Shared colours, Google Fonts and spacing
+- A static HTML/CSS/JS site with no framework, so it can be hosted free on GitHub Pages
+- Mobile first, then desktop
+End the plan with a list of anything I still need to provide.</pre>
+  </div>
+  <figure class="inline-photo fade-up">
+    <img src="/images/claude-code-plan-mode.jpg" alt="Kế hoạch xây website do Claude Code lập trong Plan mode" width="1200" height="700" loading="lazy">
+    <figcaption>
+      <span class="vi">Minh hoạ: kế hoạch gồm cấu trúc file, các mục trên trang và danh sách bạn cần bổ sung. Chưa có file nào bị sửa.</span>
+      <span class="en">Illustration: the plan lists files, page sections and what you still need to supply. No files have been changed yet.</span>
+    </figcaption>
+  </figure>
+  <p>
+    <span class="vi">Đọc kỹ kế hoạch. Muốn đổi gì thì cứ nói, ví dụ "bỏ mục bản đồ, thêm mục khách hàng nói gì". Khi ưng, chọn đồng ý để Claude bắt đầu làm.</span>
+    <span class="en">Read the plan carefully. Ask for changes in plain words, for example "drop the map section and add a testimonials section". When you are happy, approve it and Claude starts building.</span>
+  </p>
+  <div class="divider"></div>
+
+  <h2 id="buoc-5">
+    <span class="vi">Bước 5: Dựng trang và tạo CLAUDE.md</span>
+    <span class="en">Step 5: Build the page and create CLAUDE.md</span>
+  </h2>
+
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Kế hoạch ổn. Bắt đầu dựng trang chủ.
+- Viết nội dung thật từ BRIEF.md, không dùng lorem ipsum. Chỗ nào thiếu thông tin thì ghi [CẦN ĐIỀN].
+- Dùng ảnh trong thư mục images/, nén nhẹ nếu ảnh quá nặng.
+- Xong thì chỉ mình cách mở trang trên máy để xem.</pre>
+    <pre class="en">The plan looks good. Start building the homepage.
+- Write real copy from BRIEF.md, no lorem ipsum. Where information is missing, write [TO FILL].
+- Use the photos in images/ and compress any that are too heavy.
+- When done, tell me how to open the page on my computer.</pre>
+  </div>
+  <p>
+    <span class="vi">Trong lúc làm, Claude sẽ hỏi xin phép trước khi tạo file hay chạy lệnh. Đọc lướt rồi chọn <strong>Yes</strong>. Xong việc, mở file <code>index.html</code> bằng trình duyệt là thấy website.</span>
+    <span class="en">While it works, Claude asks permission before creating files or running commands. Skim each request and choose <strong>Yes</strong>. When it finishes, open <code>index.html</code> in your browser to see the site.</span>
+  </p>
+  <h3><span class="vi">Tạo CLAUDE.md: "trí nhớ" của dự án</span><span class="en">Create CLAUDE.md: the project's memory</span></h3>
+  <p>
+    <span class="vi">Mỗi lần mở Claude Code là một cuộc trò chuyện mới. File <code>CLAUDE.md</code> ở thư mục gốc là thứ Claude luôn đọc đầu tiên, nên mọi quy tắc của dự án nên nằm ở đây. Gõ <code>/init</code> để Claude tự tạo, rồi bổ sung:</span>
+    <span class="en">Every Claude Code session starts fresh. The <code>CLAUDE.md</code> file in the project root is the first thing Claude reads, so every project rule belongs there. Type <code>/init</code> to have Claude create it, then add to it:</span>
+  </p>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Bổ sung vào CLAUDE.md các quy tắc của dự án:
+- Màu và font thương hiệu, logo luôn dùng file images/logo.png
+- Giọng văn: [thân thiện, xưng &quot;mình – bạn&quot; / trang trọng, xưng &quot;chúng tôi – quý khách&quot;]
+- Không bịa thông tin thật như giá, số điện thoại, địa chỉ
+- Luôn kiểm tra trên điện thoại trước khi báo xong</pre>
+    <pre class="en">Add the project rules to CLAUDE.md:
+- Brand colours and fonts; always use images/logo.png for the logo
+- Tone of voice: [friendly and casual / formal]
+- Never invent real details such as prices, phone numbers or addresses
+- Always check the mobile layout before reporting a task as done</pre>
+  </div>
+  <p>
+    <span class="vi">Trong bộ skill có sẵn một file CLAUDE.md mẫu, bạn chỉ cần điền vào chỗ trống.</span>
+    <span class="en">The skill pack includes a ready-made CLAUDE.md template; just fill in the blanks.</span>
+  </p>
+  <div class="divider"></div>
+
+  <h2 id="buoc-6">
+    <span class="vi">Bước 6: Sửa theo góp ý</span>
+    <span class="en">Step 6: Revise from feedback</span>
+  </h2>
+
+  <p>
+    <span class="vi">Bản đầu tiên hiếm khi đúng ý ngay. Cách sửa hiệu quả nhất là <strong>góp ý cụ thể, đánh số, và dặn giữ nguyên phần còn lại</strong>. Bạn cũng có thể kéo thả ảnh chụp màn hình vào cửa sổ Claude Code để chỉ đúng chỗ cần sửa.</span>
+    <span class="en">The first version is rarely exactly right. The most effective way to revise is <strong>specific, numbered feedback, plus an instruction to leave everything else alone</strong>. You can also drag a screenshot into the Claude Code window to point at the exact spot.</span>
+  </p>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Sửa theo góp ý:
+1. Tiêu đề phần đầu ngắn lại, nói rõ mình làm gì cho ai.
+2. Nút liên hệ đổi thành nhắn Zalo số [số điện thoại].
+3. Mục dịch vụ xếp thành thẻ: 1 cột trên điện thoại, 3 cột trên máy tính.
+Chỉ sửa những chỗ này, giữ nguyên phần còn lại.</pre>
+    <pre class="en">Revise as follows:
+1. Shorten the hero headline so it says clearly what I do and for whom.
+2. Change the contact button to open a chat on [messaging app] with [phone number].
+3. Lay out the services as cards: 1 column on mobile, 3 on desktop.
+Change only these things and leave everything else as it is.</pre>
+  </div>
+  <div class="highlight-box">
+    <p><span class="vi"><strong>Nguyên tắc của mình:</strong> mỗi lần chỉ sửa 2–4 điểm. Góp ý dồn 15 điểm một lúc thì dễ bị sót, và khó biết thay đổi nào làm hỏng chỗ nào.</span><span class="en"><strong>My rule:</strong> ask for 2–4 changes at a time. Fifteen changes in one go means some get missed, and it is hard to tell which change broke what.</span></p>
+  </div>
+  <div class="divider"></div>
+
+  <h2 id="buoc-7">
+    <span class="vi">Bước 7: Làm SEO</span>
+    <span class="en">Step 7: Set up SEO</span>
+  </h2>
+
+  <p>
+    <span class="vi">SEO giúp Google hiểu website của bạn, và giúp link chia sẻ lên Facebook, Zalo hiện ảnh và tiêu đề đẹp. Phần này nhiều chi tiết kỹ thuật nhưng bạn không cần nhớ, chỉ cần đưa Claude tên miền và từ khoá.</span>
+    <span class="en">SEO helps Google understand your site, and makes links shared on Facebook or messaging apps show a proper image and title. It is full of technical details, but you do not need to remember them: just give Claude your domain and keywords.</span>
+  </p>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Làm SEO cơ bản cho toàn bộ website:
+- Thẻ title và meta description riêng cho từng trang, có từ khoá [từ khoá chính]
+- Thẻ Open Graph để chia sẻ Facebook, Zalo hiện ảnh (ảnh 1200×630)
+- Dữ liệu có cấu trúc JSON-LD phù hợp với loại website
+- favicon, sitemap.xml, robots.txt
+- Thuộc tính alt có ý nghĩa cho mọi ảnh
+Tên miền của mình là [tenmien.com].</pre>
+    <pre class="en">Set up basic SEO for the whole site:
+- A unique title and meta description per page, using the keyword [main keyword]
+- Open Graph tags so shared links show an image (1200×630)
+- Structured data (JSON-LD) that fits the type of site
+- favicon, sitemap.xml, robots.txt
+- Meaningful alt text on every image
+My domain is [yourdomain.com].</pre>
+  </div>
+  <p>
+    <span class="vi">Với bộ skill, gõ <code>/seo-setup</code> là đủ. Claude sẽ hỏi tên miền và từ khoá nếu chưa biết.</span>
+    <span class="en">With the skill pack, typing <code>/seo-setup</code> is enough. Claude asks for the domain and keywords if it does not have them.</span>
+  </p>
+  <div class="divider"></div>
+
+  <h2 id="buoc-8">
+    <span class="vi">Bước 8: Kiểm tra trên 3 cỡ màn hình</span>
+    <span class="en">Step 8: Test on three screen sizes</span>
+  </h2>
+
+  <p>
+    <span class="vi">Phần lớn khách sẽ xem website trên điện thoại, nên đừng chỉ nhìn trên máy tính. Claude Code có thể tự mở trình duyệt ẩn, chụp màn hình ở nhiều kích thước, tìm lỗi và sửa.</span>
+    <span class="en">Most visitors will see your site on a phone, so do not judge it on a laptop alone. Claude Code can open a headless browser, take screenshots at several sizes, find problems and fix them.</span>
+  </p>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Kiểm tra toàn bộ website trước khi đưa lên mạng:
+1. Chụp màn hình ở 3 cỡ: điện thoại 375px, tablet 768px, máy tính 1280px
+2. Tìm chỗ bị tràn ngang, chữ chồng nhau, ảnh vỡ
+3. Kiểm tra mọi link và nút đều hoạt động
+4. Báo lỗi JavaScript nếu có
+Liệt kê lỗi tìm được, sửa, rồi kiểm tra lại lần nữa.</pre>
+    <pre class="en">Test the whole site before it goes live:
+1. Take screenshots at 3 sizes: phone 375px, tablet 768px, desktop 1280px
+2. Look for horizontal overflow, overlapping text and broken images
+3. Check that every link and button works
+4. Report any JavaScript errors
+List what you find, fix it, then run the checks again.</pre>
+  </div>
+  <figure class="inline-photo fade-up">
+    <img src="/images/claude-code-kiem-tra-3-man-hinh.jpg" alt="Kiểm tra website iamkimhoan.vn trên máy tính, tablet và điện thoại" width="1200" height="680" loading="lazy">
+    <figcaption>
+      <span class="vi">Trang chủ iamkimhoan.vn ở 3 cỡ màn hình. Mình chạy bước kiểm tra này sau mỗi lần sửa.</span>
+      <span class="en">The iamkimhoan.vn homepage at three screen sizes. I run this check after every change.</span>
+    </figcaption>
+  </figure>
+  <div class="divider"></div>
+
+  <h2 id="buoc-9">
+    <span class="vi">Bước 9: Đưa website lên mạng</span>
+    <span class="en">Step 9: Put the site online</span>
+  </h2>
+
+  <p>
+    <span class="vi">GitHub Pages cho bạn đưa website tĩnh lên mạng miễn phí, có HTTPS, và gắn được tên miền riêng. Đây cũng là cách iamkimhoan.vn đang chạy.</span>
+    <span class="en">GitHub Pages hosts static websites for free, with HTTPS, and supports custom domains. It is also how iamkimhoan.vn runs.</span>
+  </p>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Đưa website lên GitHub Pages:
+1. Khởi tạo git và tạo file .gitignore phù hợp
+2. Hướng dẫn mình từng bước tạo repository trên GitHub và đẩy code lên
+3. Bật GitHub Pages từ nhánh main
+4. Gắn tên miền [tenmien.com]: tạo file CNAME và cho mình danh sách bản ghi DNS cần thêm ở nhà cung cấp tên miền
+Giải thích ngắn gọn từng bước, vì mình không rành kỹ thuật.</pre>
+    <pre class="en">Publish the site on GitHub Pages:
+1. Initialise git and create a suitable .gitignore
+2. Walk me through creating a repository on GitHub and pushing the code
+3. Turn on GitHub Pages from the main branch
+4. Connect my domain [yourdomain.com]: create the CNAME file and give me the DNS records to add at my domain registrar
+Keep each step short, I am not technical.</pre>
+  </div>
+  <p>
+    <span class="vi">Claude sẽ đưa bạn 4 bản ghi A và 1 bản ghi CNAME để thêm ở trang quản lý tên miền. DNS có thể mất vài giờ mới nhận. Khi GitHub báo tên miền đã đúng, bật <strong>Enforce HTTPS</strong> trong mục Settings → Pages.</span>
+    <span class="en">Claude gives you four A records and one CNAME record to add in your domain registrar's dashboard. DNS can take a few hours to update. Once GitHub confirms the domain, switch on <strong>Enforce HTTPS</strong> under Settings → Pages.</span>
+  </p>
+  <h3><span class="vi">Cuối cùng: báo cho Google biết</span><span class="en">Finally: tell Google about your site</span></h3>
+  <p>
+    <span class="vi">Vào Google Search Console, thêm website và chọn xác minh bằng thẻ HTML. Dán thẻ đó cho Claude:</span>
+    <span class="en">Open Google Search Console, add your site and choose HTML tag verification. Paste the tag to Claude:</span>
+  </p>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Mình xác minh website trên Google Search Console bằng thẻ meta này: [dán thẻ]. Chèn vào trang chủ, đẩy lên GitHub, rồi nhắc mình gửi sitemap.xml.</pre>
+    <pre class="en">I am verifying my site in Google Search Console with this meta tag: [paste tag]. Add it to the homepage, push to GitHub, then remind me to submit sitemap.xml.</pre>
+  </div>
+  <p>
+    <span class="vi">Từ giờ, mỗi lần muốn sửa website: mở Claude Code trong thư mục dự án, nói việc cần sửa, kiểm tra, rồi bảo Claude đẩy lên. Website tự cập nhật sau 1–2 phút.</span>
+    <span class="en">From now on, to change the site: open Claude Code in the project folder, describe the change, test it, then ask Claude to push. The live site updates within a minute or two.</span>
+  </p>
+  <div class="divider"></div>
+
+  <h2 id="bo-skill">
+    <span class="vi">Bộ skill tải về: bên trong có gì?</span>
+    <span class="en">The skill pack: what is inside</span>
+  </h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Skill</th><th><span class="vi">Dùng ở bước</span><span class="en">Step</span></th><th><span class="vi">Làm gì</span><span class="en">What it does</span></th></tr></thead>
+      <tbody>
+        <tr><td><code>/website-brief</code></td><td>3</td><td><span class="vi">Phỏng vấn bạn 6 câu, viết BRIEF.md, không code trước khi bạn duyệt.</span><span class="en">Interviews you with 6 questions and writes BRIEF.md; no code until you approve.</span></td></tr>
+        <tr><td><code>/build-page</code></td><td>5–6</td><td><span class="vi">Dựng và sửa trang: điện thoại trước, nội dung thật, ảnh nén gọn, chỉ sửa đúng chỗ được nhắc.</span><span class="en">Builds and edits pages: mobile first, real copy, compressed images, changes only what you asked.</span></td></tr>
+        <tr><td><code>/seo-setup</code></td><td>7</td><td><span class="vi">Title, meta, Open Graph, JSON-LD, favicon, sitemap, robots.</span><span class="en">Titles, meta, Open Graph, JSON-LD, favicon, sitemap, robots.</span></td></tr>
+        <tr><td><code>/check-site</code></td><td>8</td><td><span class="vi">Chụp 3 cỡ màn hình, tìm tràn ngang, ảnh vỡ, link hỏng, lỗi JS, sửa và kiểm tra lại.</span><span class="en">Screenshots at 3 sizes, finds overflow, broken images and links, JS errors; fixes and re-checks.</span></td></tr>
+        <tr><td><code>/deploy-github-pages</code></td><td>9</td><td><span class="vi">Git, GitHub Pages, tên miền riêng, HTTPS, Search Console.</span><span class="en">Git, GitHub Pages, custom domain, HTTPS, Search Console.</span></td></tr>
+        <tr><td>CLAUDE.md</td><td>5</td><td><span class="vi">File quy tắc mẫu cho dự án: thương hiệu, giọng văn, quy tắc làm việc.</span><span class="en">A project rules template: brand, tone of voice, working rules.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <figure class="figure fade-up">
+    <svg viewBox="0 0 720 230" role="img" aria-label="Cấu trúc thư mục bộ skill sau khi cài" font-family="'Space Mono',monospace">
+      <rect x="0" y="0" width="720" height="230" fill="#0D1B3E"/>
+      <g font-size="15" fill="#FDFAF0">
+        <text x="32" y="44" fill="#F9E45B">~/.claude/skills/</text>
+        <text x="52" y="76">├── website-brief/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
+        <text x="52" y="104">├── build-page/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
+        <text x="52" y="132">├── seo-setup/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
+        <text x="52" y="160">├── check-site/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
+        <text x="52" y="188">└── deploy-github-pages/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
+      </g>
+      <g font-family="'Be Vietnam Pro',sans-serif" font-size="13" fill="#FDFAF0" fill-opacity="0.72">
+        <text x="430" y="76">mỗi skill = 1 thư mục</text>
+        <text x="430" y="98">+ 1 file SKILL.md</text>
+        <text x="430" y="140">gõ / trong Claude Code</text>
+        <text x="430" y="162">để gọi đúng skill</text>
+      </g>
+    </svg>
+    <figcaption>
+      <span class="vi">Sau khi cài, mỗi skill nằm trong một thư mục riêng. Đặt ở ~/.claude/skills/ thì dùng được cho mọi dự án trên máy.</span>
+      <span class="en">Once installed, each skill lives in its own folder. Placed in ~/.claude/skills/, they work in every project on your computer.</span>
+    </figcaption>
+  </figure>
+  <p>
+    <span class="vi">Mỗi skill là một file chữ bình thường. Bạn mở ra sửa được như sửa văn bản, ví dụ thêm màu thương hiệu vào <code>build-page</code> để mọi trang mới đều đúng màu. Muốn skill chỉ áp dụng cho một website, chép vào thư mục <code>.claude/skills/</code> bên trong dự án đó.</span>
+    <span class="en">Each skill is a plain text file. You can edit it like any document, for example adding your brand colours to <code>build-page</code> so every new page matches. To limit a skill to one website, copy it into that project's <code>.claude/skills/</code> folder instead.</span>
+  </p>
+  <div class="inline-cta">
+    <p>
+      <span class="vi">Tải bộ skill, giải nén và cài theo bước 2. Miễn phí, dùng và sửa thoải mái.</span>
+      <span class="en">Download the pack, unzip it and install as in step 2. Free to use and adapt.</span>
+    </p>
+    <a href="/downloads/bo-skill-lam-website-claude-code.zip" download>
+      <span class="vi">Tải bộ skill ↓</span>
+      <span class="en">Download the pack ↓</span>
+    </a>
+  </div>
+  <div class="divider"></div>
+
+  <h2 id="meo">
+    <span class="vi">Mẹo và lỗi hay gặp</span>
+    <span class="en">Tips and common mistakes</span>
+  </h2>
+
+  <ul>
+    <li><span class="vi"><strong>Bỏ qua bước brief.</strong> Prompt "làm cho mình website bán hàng" sẽ ra một website chung chung. Mười phút trả lời câu hỏi tiết kiệm cả buổi sửa.</span><span class="en"><strong>Skipping the brief.</strong> "Make me an online shop" produces a generic site. Ten minutes of answering questions saves an afternoon of fixes.</span></li>
+    <li><span class="vi"><strong>Để AI tự điền thông tin thật.</strong> Giá, số điện thoại, địa chỉ phải do bạn đưa. Luôn đọc lại nội dung trước khi đăng.</span><span class="en"><strong>Letting AI fill in real details.</strong> Prices, phone numbers and addresses must come from you. Always proofread before publishing.</span></li>
+    <li><span class="vi"><strong>Phiên làm việc quá dài.</strong> Khi chuyển sang việc khác hẳn, gõ <code>/clear</code> để bắt đầu cuộc trò chuyện mới. Quy tắc trong CLAUDE.md vẫn được giữ.</span><span class="en"><strong>Sessions that run too long.</strong> When you switch to an unrelated task, type <code>/clear</code> to start fresh. Your CLAUDE.md rules still apply.</span></li>
+    <li><span class="vi"><strong>Ảnh quá nặng.</strong> Ảnh chụp từ điện thoại thường 3–5MB. Nhờ Claude nén về dưới 300KB để website tải nhanh.</span><span class="en"><strong>Oversized photos.</strong> Phone photos are often 3–5MB. Ask Claude to compress them below 300KB so pages load fast.</span></li>
+    <li><span class="vi"><strong>Không lưu lịch sử.</strong> Nhờ Claude commit sau mỗi phần làm xong. Lỡ sửa hỏng thì quay lại được bản trước.</span><span class="en"><strong>No save points.</strong> Ask Claude to commit after each finished part. If a change breaks something, you can go back.</span></li>
+  </ul>
+  <p>
+    <span class="vi">Nếu bạn muốn xem mình dùng AI cho những việc khác ra sao, mình có viết riêng về <a href="/blog/sinh-vien-marketing-dung-ai-moi-ngay/" class="lnk">cách mình dùng AI mỗi ngày</a>.</span>
+    <span class="en">If you want to see how I use AI for everything else, I wrote separately about <a href="/blog/sinh-vien-marketing-dung-ai-moi-ngay/" class="lnk">how I use AI every day</a>.</span>
+  </p>
+  <div class="divider"></div>
+
+  <h2 id="faq">
+    <span class="vi">Câu hỏi thường gặp</span>
+    <span class="en">Frequently asked questions</span>
+  </h2>
+
+  <details class="faq">
+    <summary><span class="vi">Làm website bằng Claude Code có cần biết code không?</span><span class="en">Do I need to know how to code to build a website with Claude Code?</span></summary>
+    <div class="faq-answer">
+      <p>
+        <span class="vi">Không. Bạn mô tả bằng tiếng Việt, Claude viết code. Bạn cần biết rõ mình muốn gì, đọc kỹ kế hoạch Claude đưa ra và kiểm tra kết quả trên trình duyệt. Biết một chút HTML sẽ giúp bạn góp ý nhanh hơn, nhưng không bắt buộc.</span>
+        <span class="en">No. You describe what you want in plain language and Claude writes the code. You do need to know what you want, read the plans Claude proposes and check the result in a browser. A little HTML helps you give faster feedback, but it is not required.</span>
+      </p>
+    </div>
+  </details>
+  <details class="faq">
+    <summary><span class="vi">Làm website bằng Claude Code tốn bao nhiêu tiền?</span><span class="en">How much does it cost to build a website with Claude Code?</span></summary>
+    <div class="faq-answer">
+      <p>
+        <span class="vi">Bạn cần một gói Claude trả phí từ Pro trở lên, hoặc tài khoản Claude Console trả theo lượt dùng. GitHub Pages miễn phí. Tên miền riêng là tuỳ chọn, trả phí hằng năm cho nhà cung cấp tên miền.</span>
+        <span class="en">You need a paid Claude plan (Pro or higher) or a pay-as-you-go Claude Console account. GitHub Pages hosting is free. A custom domain is optional and billed yearly by your domain registrar.</span>
+      </p>
+    </div>
+  </details>
+  <details class="faq">
+    <summary><span class="vi">Claude Code khác gì so với chat với Claude trên claude.ai?</span><span class="en">How is Claude Code different from chatting with Claude on claude.ai?</span></summary>
+    <div class="faq-answer">
+      <p>
+        <span class="vi">Khi chat, Claude chỉ đưa code cho bạn tự chép vào file. Claude Code làm việc trực tiếp trong thư mục trên máy bạn: tự tạo và sửa file, chạy lệnh, chụp màn hình kiểm tra, và đẩy code lên GitHub.</span>
+        <span class="en">In a chat, Claude hands you code to copy into files yourself. Claude Code works directly in a folder on your computer: it creates and edits files, runs commands, takes screenshots to check its work and pushes code to GitHub.</span>
+      </p>
+    </div>
+  </details>
+  <details class="faq">
+    <summary><span class="vi">Website làm bằng Claude Code có thuộc về mình không?</span><span class="en">Do I own a website built with Claude Code?</span></summary>
+    <div class="faq-answer">
+      <p>
+        <span class="vi">Có. Toàn bộ code nằm trong thư mục trên máy bạn và trong tài khoản GitHub của bạn. Bạn có thể chuyển sang dịch vụ lưu trữ khác bất cứ lúc nào, vì đây là website HTML tĩnh, không phụ thuộc nền tảng nào.</span>
+        <span class="en">Yes. All the code lives in a folder on your computer and in your own GitHub account. Because it is a plain static HTML site, you can move it to any other host at any time.</span>
+      </p>
+    </div>
+  </details>
+
+  <div class="tag-row">
+    <span class="tag"><span class="vi">Claude Code</span><span class="en">Claude Code</span></span>
+    <span class="tag"><span class="vi">Làm website bằng AI</span><span class="en">AI Website Building</span></span>
+    <span class="tag"><span class="vi">Prompt mẫu</span><span class="en">Sample Prompts</span></span>
+    <span class="tag"><span class="vi">Skills</span><span class="en">Skills</span></span>
+    <span class="tag"><span class="vi">GitHub Pages</span><span class="en">GitHub Pages</span></span>
+  </div>
+
+</article>
+
+<div class="sources">
+  <div class="sources-label">
+    <span class="vi">Nguồn tham khảo</span>
+    <span class="en">Sources</span>
+  </div>
+  <ul>
+    <li><a href="https://code.claude.com/docs/en/quickstart" target="_blank" rel="noopener">Claude Code Docs — Quickstart</a></li>
+    <li><a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code Docs — Skills</a></li>
+    <li><a href="https://code.claude.com/docs/en/troubleshoot-install" target="_blank" rel="noopener">Claude Code Docs — Troubleshoot installation</a></li>
+    <li><a href="https://docs.github.com/pages" target="_blank" rel="noopener">GitHub Docs — GitHub Pages</a></li>
+    <li><a href="https://search.google.com/search-console" target="_blank" rel="noopener">Google Search Console</a></li>
+  </ul>
+</div>
+
+<div class="disclaimer">
+  <p>
+    <span class="vi">Cập nhật ngày 19/11/2026. Claude Code được cập nhật thường xuyên, lệnh cài đặt và giao diện có thể thay đổi. Kiểm tra <a href="https://code.claude.com/docs" target="_blank" rel="noopener">tài liệu chính thức</a> nếu một bước không còn đúng. Hình terminal trong bài là ảnh minh hoạ.</span>
+    <span class="en">Updated 19 November 2026. Claude Code updates frequently, so install commands and the interface may change. Check the <a href="https://code.claude.com/docs" target="_blank" rel="noopener">official documentation</a> if a step no longer matches. The terminal images in this post are illustrations.</span>
+  </p>
+</div>
+
+<div class="article-cta fade-up">
+  <div class="cta-box">
+    <div>
+      <h3>
+        <span class="vi">Muốn có website mà không tự làm?</span>
+        <span class="en">Want a website without building it yourself?</span>
+      </h3>
+      <p>
+        <span class="vi">Mình làm website và landing page song ngữ, chuẩn SEO, bằng đúng quy trình trong bài. Nhắn mình để trao đổi.</span>
+        <span class="en">I build bilingual, SEO-ready websites and landing pages with exactly this process. Message me to talk it through.</span>
+      </p>
+    </div>
+    <a href="/#contact" class="cta-btn">
+      <span class="vi">Liên hệ mình →</span>
+      <span class="en">Get in touch →</span>
+    </a>
+  </div>
+</div>
+
+<div class="related fade-up">
+  <div class="related-label">
+    <span class="vi">Bài viết khác</span>
+    <span class="en">More posts</span>
+  </div>
+  <div class="related-grid">
+    <a href="/blog/sinh-vien-marketing-dung-ai-moi-ngay/" class="related-card">
+      <span class="related-chip"><span class="vi">AI &amp; Marketing</span><span class="en">AI &amp; Marketing</span></span>
+      <h4>
+        <span class="vi">Tôi là sinh viên Marketing và tôi dùng AI như thế nào mỗi ngày</span>
+        <span class="en">I'm a Marketing Student — Here's How I Use AI Every Day</span>
+      </h4>
+      <p>
+        <span class="vi">Nếu biết dùng, AI trở thành người bạn đồng hành tốt nhất bạn từng có.</span>
+        <span class="en">Used well, AI becomes the best study partner you have ever had.</span>
+      </p>
+    </a>
+    <a href="/blog/mot-ngay-binh-thuong/" class="related-card">
+      <span class="related-chip"><span class="vi">Câu chuyện</span><span class="en">Personal Story</span></span>
+      <h4>
+        <span class="vi">Một ngày bình thường của mình — sinh viên, content creator &amp; người học AI</span>
+        <span class="en">A Day in My Life — Student, Content Creator &amp; AI Learner</span>
+      </h4>
+      <p>
+        <span class="vi">Không phải morning routine hoàn hảo — chỉ là một ngày thật sự của mình.</span>
+        <span class="en">Not a perfect morning routine — just what my day actually looks like.</span>
+      </p>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-mark">Kim Hoàn Portfolio</div>
+  <div class="footer-text">© 2026 · Made with ♥ by Kim Hoàn</div>
+  <a href="/" class="footer-link">
+    <span class="vi">← Về trang chủ</span>
+    <span class="en">← Home</span>
+  </a>
+</footer>
+
+<script>
+  // ── ĐỔI NGÔN NGỮ ──
+  let lang = 'vi';
+  function toggleLang() {
+    lang = lang === 'vi' ? 'en' : 'vi';
+    document.body.classList.toggle('lang-en', lang === 'en');
+    document.getElementById('btn-vi').classList.toggle('active', lang === 'vi');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.documentElement.lang = lang;
+    document.title = lang === 'en'
+      ? 'How to Build a Website with Claude Code: 9 Steps with Sample Prompts'
+      : 'Cách làm website bằng Claude Code: 9 bước có prompt mẫu';
+  }
+
+  // ── THANH TIẾN ĐỘ + ĐỔ BÓNG NAV ──
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('progress-bar').style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+
+  // ── HIỆN DẦN KHI CUỘN ──
+  (function reveal(){
+    const items = document.querySelectorAll('.fade-up');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+      items.forEach(el => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+    items.forEach(el => io.observe(el));
+  })();
+</script>
+
+<script>
+  // ── SAO CHÉP PROMPT ──
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const box = btn.closest('.prompt');
+      const pre = [...box.querySelectorAll('pre')].find(p => p.offsetParent !== null) || box.querySelector('pre');
+      const done = () => { btn.classList.add('done'); setTimeout(() => btn.classList.remove('done'), 1500); };
+      const fallback = () => { const r = document.createRange(); r.selectNodeContents(pre); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); };
+      if (navigator.clipboard) navigator.clipboard.writeText(pre.innerText).then(done, fallback); else fallback();
+    });
+  });
+</script>
+</body>
+</html>
