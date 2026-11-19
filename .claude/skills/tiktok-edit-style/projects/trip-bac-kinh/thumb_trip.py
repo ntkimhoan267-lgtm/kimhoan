@@ -34,7 +34,7 @@ overlay_logo('brand/logo_overlay.png')
 L = lambda t, st='small', **k: dict(text=t, style=st, **k)
 cover(B + 'bg1.png', .42, 'brand/thumb_v1.jpg',
       [L('Đi Bắc Kinh 5 ngày'), L('hết bao nhiêu tiền?', 'caps', color='#FFB347', size=78)],
-      [('Tự túc ≈ 20 triệu', 'blue'), ('Tour TRIP 13.990.000đ', 'yellow')], big=True)
+      [('Tự túc ≈ 20 triệu', 'blue'), ('Tour TRIP 7N6Đ 23.990.000đ', 'yellow')], big=True)
 cover(B + 'bg2.png', .5, 'brand/thumb_v2.jpg',
       [L('Đi Trung Quốc lần đầu'), L('đừng mắc 3 lỗi này', 'caps', color='#FF7A6B', size=78),
        L('kẻo mất toi cả ngày', 'serif', color='#F7C6D9')],
