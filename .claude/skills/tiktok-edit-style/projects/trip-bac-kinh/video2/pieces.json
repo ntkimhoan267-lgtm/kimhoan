@@ -1,11 +1,11 @@
 {
  "src": "combined.wav",
- "lead": 0.3,
+ "lead": 0.0,
  "total": 44.5,
  "pieces": [
   {
    "name": "P1",
-   "in": 6.25,
+   "in": 5.95,
    "out": 10.05,
    "gap": 0.3
   },
