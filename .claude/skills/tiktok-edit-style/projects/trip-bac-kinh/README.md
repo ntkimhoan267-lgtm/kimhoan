@@ -55,7 +55,7 @@ Thư mục Drive riêng "Nhạc tour Trung Quốc (TRIP)" `1Eka2AIaynyG2v2RcHfGJ
 - Logo Kim Hoàn KHÔNG dùng cho TRIP (CLAUDE.md).
 
 ## Tour thật trên tripdn.com (tra 18/11/2026) — NGUỒN SỰ THẬT
-- Chỉ có **Tour Bắc Kinh 7N6Đ** (https://tripdn.com/tour/tour-bac-kinh-7n6d): khởi hành Đà Nẵng, Vietnam Airlines nối chuyến TP.HCM; niêm yết 25.490.000đ, **ưu đãi 24.990.000đ** (khi để lại SĐT/Gmail). Người dùng xác nhận đây là giá đúng.
+- Chỉ có **Tour Bắc Kinh 7N6Đ** (https://tripdn.com/tour/tour-bac-kinh-7n6d): khởi hành Đà Nẵng, Vietnam Airlines nối chuyến TP.HCM; niêm yết 25.490.000đ; **giá dùng trong video: 23.990.000đ** (người dùng đổi 19/11/2026, trước đó 24.990.000đ).
 - Ngày 2 Di Hòa Viên · Ngày 3 Vạn Lý Trường Thành (Cư Dung Quan), trưa vịt quay, Thập Tam Lăng, Tổ Chim · Ngày 4 Thiên An Môn, Tử Cấm Thành (hết suất → Cung Vương Phủ), tối phố Vương Phủ Tỉnh · Ngày 5 tàu cao tốc → Hàng Châu (Tây Hồ) · Ngày 6 Ô Trấn → Thượng Hải · Ngày 7 về.
 - Gồm: vé máy bay, KS 4*, ăn theo chương trình, **visa đoàn**, xe, HDV tiếng Việt địa phương, tàu cao tốc, vé tham quan, bảo hiểm. Không gồm: hộ chiếu, phòng đơn 150 USD, tip 42 USD, điểm mua sắm (bỏ 15 USD/điểm).
 - ⚠️ Video 1 (13.990.000đ, "5 ngày") và Video 3 (khách tự làm visa lẻ) lệch với tour này → báo người dùng, chờ quyết định sửa (video 1 phải thu âm lại câu giá).
