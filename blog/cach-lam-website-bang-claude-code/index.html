@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cách làm website bằng Claude Code: 9 bước có prompt mẫu</title>
-<meta name="description" content="Hướng dẫn làm website bằng Claude Code cho người không biết code: 9 bước từ cài đặt, viết brief, Plan mode, SEO đến GitHub Pages. Có prompt mẫu và bộ skill tải về.">
+<meta name="description" content="Hướng dẫn làm website bằng Claude Code cho người không biết code: 9 bước từ cài đặt, brief, Plan mode, SEO tới GitHub Pages. Có prompt mẫu và bộ skill.">
 <meta name="keywords" content="cách làm website bằng claude code, claude code, làm website bằng ai, claude code tiếng việt, prompt làm website, claude code skills, github pages, tự làm website không cần code">
 <meta name="author" content="Nguyễn Thị Kim Hoàn">
 <link rel="canonical" href="https://iamkimhoan.vn/blog/cach-lam-website-bang-claude-code/">
@@ -87,6 +87,14 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Có. Toàn bộ code nằm trong thư mục trên máy bạn và trong tài khoản GitHub của bạn. Bạn có thể chuyển sang dịch vụ lưu trữ khác bất cứ lúc nào, vì đây là website HTML tĩnh, không phụ thuộc nền tảng nào."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Website làm bằng Claude Code trên GitHub Pages có làm được form liên hệ không?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Không theo cách thông thường, vì GitHub Pages chỉ chạy website tĩnh, không có máy chủ nhận dữ liệu. Thay vào đó, dùng nút Zalo hoặc Messenger, liên kết tới Google Forms, hoặc một dịch vụ nhận form như Formspree để tin nhắn gửi về email."
       }
     }
   ]
@@ -179,6 +187,7 @@
   /* ── SƠ ĐỒ ── */
   .figure{margin:2.2rem 0;}
   .figure svg{width:100%;height:auto;display:block;border:1px solid rgba(13,27,62,0.1);border-radius:12px;background:#fff;}
+  .figure svg.en{display:none;} body.lang-en .figure svg.vi{display:none;} body.lang-en .figure svg.en{display:block;}
   .figure figcaption{font-size:0.8rem;color:var(--text-mid);text-align:center;margin-top:10px;line-height:1.55;font-style:italic;}
 
   /* ── TOC ── */
@@ -317,8 +326,8 @@
     </div>
     <div class="meta-dot"></div>
     <span class="meta-item">
-      <span class="vi">14 phút đọc</span>
-      <span class="en">14 min read</span>
+      <span class="vi">17 phút đọc</span>
+      <span class="en">17 min read</span>
     </span>
     <div class="meta-dot"></div>
     <span class="meta-item">19.11.2026</span>
@@ -384,7 +393,7 @@
   </div>
 
   <figure class="figure fade-up">
-    <svg viewBox="0 0 420 538" role="img" aria-label="Quy trình 9 bước làm website bằng Claude Code" font-family="'Be Vietnam Pro',sans-serif" style="max-width:440px;margin:0 auto;">
+    <svg class="vi" viewBox="0 0 420 538" role="img" aria-label="Quy trình 9 bước làm website bằng Claude Code" font-family="'Be Vietnam Pro',sans-serif" style="max-width:440px;margin:0 auto;">
       <rect x="0" y="0" width="420" height="538" fill="#FFFFFF"/>
       <rect x="10" y="10" width="400" height="164" rx="14" fill="#F5F0E0"/>
       <text x="30" y="36" font-family="'Space Mono',monospace" font-size="12" font-weight="700" letter-spacing="1.5" fill="#3A4A7A">CHUẨN BỊ</text>
@@ -392,7 +401,7 @@
       <circle cx="44" cy="102" r="14" fill="#0D1B3E"/><text x="44" y="107" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">2</text><text x="70" y="107" font-size="15" font-weight="600" fill="#0D1B3E">Cài bộ skill</text>
       <circle cx="44" cy="142" r="14" fill="#0D1B3E"/><text x="44" y="147" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">3</text><text x="70" y="147" font-size="15" font-weight="600" fill="#0D1B3E">Viết brief cùng Claude</text>
       <rect x="10" y="186" width="400" height="164" rx="14" fill="#FDFAF0" stroke="#F9E45B" stroke-width="2"/>
-      <text x="30" y="212" font-family="'Space Mono',monospace" font-size="12" font-weight="700" letter-spacing="1.5" fill="#3A4A7A">XÂY · bước 5–6 lặp lại tới khi ưng</text>
+      <text x="30" y="212" font-family="'Space Mono',monospace" font-size="12" font-weight="700" letter-spacing="1.5" fill="#3A4A7A">XÂY · bước 4–6 lặp lại tới khi ưng</text>
       <circle cx="44" cy="238" r="14" fill="#0D1B3E"/><text x="44" y="243" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">4</text><text x="70" y="243" font-size="15" font-weight="600" fill="#0D1B3E">Lên kế hoạch (Plan mode)</text>
       <circle cx="44" cy="278" r="14" fill="#0D1B3E"/><text x="44" y="283" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">5</text><text x="70" y="283" font-size="15" font-weight="600" fill="#0D1B3E">Dựng trang + CLAUDE.md</text>
       <circle cx="44" cy="318" r="14" fill="#0D1B3E"/><text x="44" y="323" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">6</text><text x="70" y="323" font-size="15" font-weight="600" fill="#0D1B3E">Sửa theo góp ý</text>
@@ -401,6 +410,24 @@
       <circle cx="44" cy="414" r="14" fill="#0D1B3E"/><text x="44" y="419" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">7</text><text x="70" y="419" font-size="15" font-weight="600" fill="#0D1B3E">Làm SEO</text>
       <circle cx="44" cy="454" r="14" fill="#0D1B3E"/><text x="44" y="459" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">8</text><text x="70" y="459" font-size="15" font-weight="600" fill="#0D1B3E">Kiểm tra 3 cỡ màn hình</text>
       <circle cx="44" cy="494" r="14" fill="#0D1B3E"/><text x="44" y="499" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">9</text><text x="70" y="499" font-size="15" font-weight="600" fill="#0D1B3E">Đưa lên GitHub Pages</text>
+    </svg>
+    <svg class="en" viewBox="0 0 420 538" role="img" aria-label="The 9-step process for building a website with Claude Code" font-family="'Be Vietnam Pro',sans-serif" style="max-width:440px;margin:0 auto;">
+      <rect x="0" y="0" width="420" height="538" fill="#FFFFFF"/>
+      <rect x="10" y="10" width="400" height="164" rx="14" fill="#F5F0E0"/>
+      <text x="30" y="36" font-family="'Space Mono',monospace" font-size="12" font-weight="700" letter-spacing="1.5" fill="#3A4A7A">PREPARE</text>
+      <circle cx="44" cy="62" r="14" fill="#0D1B3E"/><text x="44" y="67" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">1</text><text x="70" y="67" font-size="15" font-weight="600" fill="#0D1B3E">Install Claude Code</text>
+      <circle cx="44" cy="102" r="14" fill="#0D1B3E"/><text x="44" y="107" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">2</text><text x="70" y="107" font-size="15" font-weight="600" fill="#0D1B3E">Install the skill pack</text>
+      <circle cx="44" cy="142" r="14" fill="#0D1B3E"/><text x="44" y="147" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">3</text><text x="70" y="147" font-size="15" font-weight="600" fill="#0D1B3E">Write the brief with Claude</text>
+      <rect x="10" y="186" width="400" height="164" rx="14" fill="#FDFAF0" stroke="#F9E45B" stroke-width="2"/>
+      <text x="30" y="212" font-family="'Space Mono',monospace" font-size="12" font-weight="700" letter-spacing="1.5" fill="#3A4A7A">BUILD · repeat steps 4–6 until happy</text>
+      <circle cx="44" cy="238" r="14" fill="#0D1B3E"/><text x="44" y="243" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">4</text><text x="70" y="243" font-size="15" font-weight="600" fill="#0D1B3E">Plan (Plan mode)</text>
+      <circle cx="44" cy="278" r="14" fill="#0D1B3E"/><text x="44" y="283" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">5</text><text x="70" y="283" font-size="15" font-weight="600" fill="#0D1B3E">Build + CLAUDE.md</text>
+      <circle cx="44" cy="318" r="14" fill="#0D1B3E"/><text x="44" y="323" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">6</text><text x="70" y="323" font-size="15" font-weight="600" fill="#0D1B3E">Revise from feedback</text>
+      <rect x="10" y="362" width="400" height="164" rx="14" fill="#DDF5EC"/>
+      <text x="30" y="388" font-family="'Space Mono',monospace" font-size="12" font-weight="700" letter-spacing="1.5" fill="#3A4A7A">LAUNCH</text>
+      <circle cx="44" cy="414" r="14" fill="#0D1B3E"/><text x="44" y="419" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">7</text><text x="70" y="419" font-size="15" font-weight="600" fill="#0D1B3E">Set up SEO</text>
+      <circle cx="44" cy="454" r="14" fill="#0D1B3E"/><text x="44" y="459" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">8</text><text x="70" y="459" font-size="15" font-weight="600" fill="#0D1B3E">Test 3 screen sizes</text>
+      <circle cx="44" cy="494" r="14" fill="#0D1B3E"/><text x="44" y="499" fill="#F9E45B" text-anchor="middle" font-size="13" font-weight="700">9</text><text x="70" y="499" font-size="15" font-weight="600" fill="#0D1B3E">Publish on GitHub Pages</text>
     </svg>
     <figcaption>
       <span class="vi">9 bước chia làm 3 giai đoạn. Phần "Xây" là nơi bạn dành nhiều thời gian nhất.</span>
@@ -426,6 +453,8 @@
         <tr><td><span class="vi">Máy tính</span><span class="en">A computer</span></td><td><span class="vi">macOS, Windows hoặc Linux.</span><span class="en">macOS, Windows or Linux.</span></td></tr>
         <tr class="best"><td><span class="vi">Tài khoản Claude trả phí</span><span class="en">A paid Claude account</span></td><td><span class="vi">Gói Pro trở lên, hoặc tài khoản Claude Console trả theo lượt dùng. Gói miễn phí không dùng được Claude Code.</span><span class="en">Pro or higher, or a pay-as-you-go Claude Console account. The free plan does not include Claude Code.</span></td></tr>
         <tr><td><span class="vi">Tài khoản GitHub</span><span class="en">A GitHub account</span></td><td><span class="vi">Miễn phí. Dùng để lưu code và đưa website lên mạng ở bước 9.</span><span class="en">Free. Stores your code and hosts the site in step 9.</span></td></tr>
+        <tr><td><span class="vi">Git</span><span class="en">Git</span></td><td><span class="vi">Lưu lịch sử thay đổi và đẩy code lên GitHub. Mac tự đề nghị cài khi dùng lần đầu. Windows cài Git for Windows.</span><span class="en">Saves your change history and pushes code to GitHub. A Mac offers to install it on first use. On Windows, install Git for Windows.</span></td></tr>
+        <tr><td><span class="vi">Node.js</span><span class="en">Node.js</span></td><td><span class="vi">Chỉ cần cho bước 8 (kiểm tra tự động). Cài bản LTS miễn phí.</span><span class="en">Only needed for step 8 (automated checks). Install the free LTS version.</span></td></tr>
         <tr><td><span class="vi">Tên miền</span><span class="en">A domain name</span></td><td><span class="vi">Không bắt buộc. Không có thì website chạy ở địa chỉ miễn phí của GitHub.</span><span class="en">Optional. Without one, the site runs on a free GitHub address.</span></td></tr>
         <tr><td><span class="vi">Nội dung và ảnh</span><span class="en">Your content and photos</span></td><td><span class="vi">Logo, ảnh sản phẩm, thông tin liên hệ thật. Đây là phần AI không làm thay bạn được.</span><span class="en">Logo, product photos, real contact details. This is the part AI cannot do for you.</span></td></tr>
       </tbody>
@@ -489,8 +518,8 @@ claude</pre>
   </p>
   <div class="inline-cta">
     <p>
-      <span class="vi"><strong>Bộ skill làm website bằng Claude Code</strong> · 5 skill + CLAUDE.md mẫu + hướng dẫn cài · file .zip 11KB</span>
-      <span class="en"><strong>Claude Code website skill pack</strong> · 5 skills + sample CLAUDE.md + install guide · 11KB .zip</span>
+      <span class="vi"><strong>Bộ skill làm website bằng Claude Code</strong> · 5 skill + CLAUDE.md mẫu + hướng dẫn cài · file .zip 12KB</span>
+      <span class="en"><strong>Claude Code website skill pack</strong> · 5 skills + sample CLAUDE.md + install guide · 12KB .zip</span>
     </p>
     <a href="/downloads/bo-skill-lam-website-claude-code.zip" download>
       <span class="vi">Tải bộ skill ↓</span>
@@ -499,12 +528,12 @@ claude</pre>
   </div>
   <div class="prompt">
     <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
-    <pre class="vi">Giải nén file bo-skill-lam-website-claude-code.zip trong thư mục Downloads, rồi chép các thư mục trong skills/ vào ~/.claude/skills/ để dùng cho mọi dự án. Xong thì liệt kê các skill đã cài.</pre>
-    <pre class="en">Unzip bo-skill-lam-website-claude-code.zip from my Downloads folder, then copy the folders inside skills/ into ~/.claude/skills/ so they work in every project. When done, list the skills you installed.</pre>
+    <pre class="vi">Giải nén file bo-skill-lam-website-claude-code.zip trong thư mục Downloads (nếu đã thành thư mục thì dùng thư mục đó), rồi chép các thư mục trong skills/ vào ~/.claude/skills/ để dùng cho mọi dự án. Xong thì liệt kê các skill đã cài.</pre>
+    <pre class="en">Unzip bo-skill-lam-website-claude-code.zip from my Downloads folder (if it is already a folder, use that), then copy the folders inside skills/ into ~/.claude/skills/ so they work in every project. When done, list the skills you installed.</pre>
   </div>
   <p>
-    <span class="vi">Cài xong, gõ <code>/exit</code> rồi chạy lại <code>claude</code>. Gõ dấu <code>/</code> là thấy các skill mới như <code>/website-brief</code>, <code>/check-site</code>. Cách cài thủ công có trong file HUONG-DAN.txt trong gói.</span>
-    <span class="en">Then type <code>/exit</code> and run <code>claude</code> again. Type <code>/</code> and you will see the new skills such as <code>/website-brief</code> and <code>/check-site</code>. Manual install steps are in HUONG-DAN.txt inside the pack.</span>
+    <span class="vi">Cài xong, gõ <code>/exit</code> rồi chạy lại <code>claude</code> (hoặc gõ <code>/reload-skills</code>). Gõ dấu <code>/</code> là thấy các skill mới như <code>/website-brief</code>, <code>/check-site</code>. Cách cài thủ công có trong file HUONG-DAN.txt trong gói.</span>
+    <span class="en">Then type <code>/exit</code> and run <code>claude</code> again (or type <code>/reload-skills</code>). Type <code>/</code> and you will see the new skills such as <code>/website-brief</code> and <code>/check-site</code>. Manual install steps are in HUONG-DAN.txt inside the pack.</span>
   </p>
   <div class="divider"></div>
 
@@ -526,6 +555,7 @@ Trước khi viết code, hãy phỏng vấn mình từng câu một để làm 
 3. Thông tin liên hệ thật (Zalo, điện thoại, địa chỉ).
 4. Màu sắc, phong cách, website tham khảo mình thích.
 5. Nội dung và hình ảnh mình đã có.
+6. Website tiếng Việt, tiếng Anh hay song ngữ? Mình đã có tên miền chưa?
 Hỏi xong, tóm tắt vào file BRIEF.md để mình duyệt. Chưa viết code.</pre>
     <pre class="en">I want to build a [type of site: personal portfolio / bakery website / course landing page].
 Before writing any code, interview me one question at a time to clarify:
@@ -534,6 +564,7 @@ Before writing any code, interview me one question at a time to clarify:
 3. My real contact details (phone, messaging app, address).
 4. Colours, style, and sites I like for reference.
 5. What content and photos I already have.
+6. Vietnamese, English or bilingual? Do I already have a domain?
 When you are done, summarise everything in BRIEF.md for me to review. Do not write code yet.</pre>
   </div>
   <p>
@@ -541,7 +572,7 @@ When you are done, summarise everything in BRIEF.md for me to review. Do not wri
     <span class="en">With the skill pack installed, just type <code>/website-brief</code> followed by one sentence. Claude asks all six questions in order.</span>
   </p>
   <figure class="inline-photo fade-up">
-    <img src="/images/claude-code-phong-van-brief.jpg" alt="Claude Code phỏng vấn người dùng để viết brief website" width="1200" height="700" loading="lazy">
+    <img src="/images/claude-code-phong-van-brief.jpg" alt="Claude Code phỏng vấn người dùng để viết brief website" width="1200" height="760" loading="lazy">
     <figcaption>
       <span class="vi">Minh hoạ: Claude hỏi từng câu, có gợi ý trả lời. Bạn trả lời bằng tiếng Việt bình thường.</span>
       <span class="en">Illustration: Claude asks one question at a time with example answers. You reply in plain language.</span>
@@ -569,6 +600,7 @@ When you are done, summarise everything in BRIEF.md for me to review. Do not wri
 - Màu, font Google Fonts, khoảng cách dùng chung
 - Website tĩnh HTML/CSS/JS thuần, không framework, để đưa lên GitHub Pages miễn phí
 - Làm cho điện thoại trước, rồi mới tới máy tính
+- Mọi link và ảnh dùng đường dẫn tương đối (images/logo.png, không có / ở đầu)
 Cuối kế hoạch, liệt kê những gì mình còn phải cung cấp.</pre>
     <pre class="en">Read BRIEF.md and plan the website:
 - Folder structure and list of files
@@ -576,18 +608,19 @@ Cuối kế hoạch, liệt kê những gì mình còn phải cung cấp.</pre>
 - Shared colours, Google Fonts and spacing
 - A static HTML/CSS/JS site with no framework, so it can be hosted free on GitHub Pages
 - Mobile first, then desktop
+- Use relative paths for all links and images (images/logo.png, no leading /)
 End the plan with a list of anything I still need to provide.</pre>
   </div>
   <figure class="inline-photo fade-up">
-    <img src="/images/claude-code-plan-mode.jpg" alt="Kế hoạch xây website do Claude Code lập trong Plan mode" width="1200" height="700" loading="lazy">
+    <img src="/images/claude-code-plan-mode.jpg" alt="Kế hoạch xây website do Claude Code lập trong Plan mode" width="1200" height="760" loading="lazy">
     <figcaption>
       <span class="vi">Minh hoạ: kế hoạch gồm cấu trúc file, các mục trên trang và danh sách bạn cần bổ sung. Chưa có file nào bị sửa.</span>
       <span class="en">Illustration: the plan lists files, page sections and what you still need to supply. No files have been changed yet.</span>
     </figcaption>
   </figure>
   <p>
-    <span class="vi">Đọc kỹ kế hoạch. Muốn đổi gì thì cứ nói, ví dụ "bỏ mục bản đồ, thêm mục khách hàng nói gì". Khi ưng, chọn đồng ý để Claude bắt đầu làm.</span>
-    <span class="en">Read the plan carefully. Ask for changes in plain words, for example "drop the map section and add a testimonials section". When you are happy, approve it and Claude starts building.</span>
+    <span class="vi">Đọc kỹ kế hoạch. Muốn đổi gì thì cứ nói, ví dụ "bỏ mục bản đồ, thêm mục khách hàng nói gì". Khi ưng, chọn <strong>Yes, manually approve edits</strong> để Claude bắt đầu làm và hỏi bạn trước mỗi thay đổi. Chưa ưng thì chọn <strong>No, keep planning</strong> và nói điều cần sửa.</span>
+    <span class="en">Read the plan carefully. Ask for changes in plain words, for example "drop the map section and add a testimonials section". When you are happy, choose <strong>Yes, manually approve edits</strong> so Claude starts building and asks before each change. If not, choose <strong>No, keep planning</strong> and say what to change.</span>
   </p>
   <div class="divider"></div>
 
@@ -630,8 +663,24 @@ End the plan with a list of anything I still need to provide.</pre>
 - Always check the mobile layout before reporting a task as done</pre>
   </div>
   <p>
-    <span class="vi">Trong bộ skill có sẵn một file CLAUDE.md mẫu, bạn chỉ cần điền vào chỗ trống.</span>
-    <span class="en">The skill pack includes a ready-made CLAUDE.md template; just fill in the blanks.</span>
+    <span class="vi">Thay cho <code>/init</code>, bạn có thể dùng file CLAUDE.md mẫu trong bộ skill bằng cách nói: "Chép file CLAUDE.md trong bộ skill ở thư mục Downloads vào thư mục dự án, điền sẵn từ BRIEF.md, chỗ nào thiếu thì hỏi mình."</span>
+    <span class="en">Instead of <code>/init</code>, you can use the CLAUDE.md template from the skill pack by saying: "Copy CLAUDE.md from the skill pack in Downloads into this project, fill it in from BRIEF.md, and ask me about anything missing."</span>
+  </p>
+  <h3><span class="vi">Bật lưu lịch sử bằng git ngay từ bây giờ</span><span class="en">Turn on git history right now</span></h3>
+  <p>
+    <span class="vi">Git ghi lại từng phiên bản của website, giống nút "hoàn tác" cho cả dự án. Bật nó ngay sau khi có trang đầu tiên, để mọi lần sửa ở bước 6 trở đi đều có đường lui.</span>
+    <span class="en">Git records every version of your site, like an undo button for the whole project. Turn it on as soon as the first page exists, so every change from step 6 onwards can be rolled back.</span>
+  </p>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Khởi tạo git cho dự án này, tạo file .gitignore phù hợp và commit bản đầu tiên.
+Từ giờ, mỗi khi làm xong một phần mình duyệt, hãy commit với lời nhắn tiếng Việt ngắn gọn mô tả thay đổi.</pre>
+    <pre class="en">Initialise git for this project, create a suitable .gitignore and commit the first version.
+From now on, whenever you finish a part I have approved, commit it with a short message describing the change.</pre>
+  </div>
+  <p>
+    <span class="vi">Lỡ sửa hỏng, chỉ cần nói "quay lại bản commit trước". Muốn Claude nhớ thói quen này lâu dài, thêm dòng "commit sau mỗi phần đã duyệt" vào <code>CLAUDE.md</code>.</span>
+    <span class="en">If a change breaks something, just say "go back to the previous commit". To make this a lasting habit, add "commit after each approved part" to <code>CLAUDE.md</code>.</span>
   </p>
   <div class="divider"></div>
 
@@ -659,6 +708,25 @@ Change only these things and leave everything else as it is.</pre>
   </div>
   <div class="highlight-box">
     <p><span class="vi"><strong>Nguyên tắc của mình:</strong> mỗi lần chỉ sửa 2–4 điểm. Góp ý dồn 15 điểm một lúc thì dễ bị sót, và khó biết thay đổi nào làm hỏng chỗ nào.</span><span class="en"><strong>My rule:</strong> ask for 2–4 changes at a time. Fifteen changes in one go means some get missed, and it is hard to tell which change broke what.</span></p>
+  </div>
+  <h3><span class="vi">Form liên hệ: website tĩnh không tự gửi được</span><span class="en">Contact forms: a static site cannot send them on its own</span></h3>
+  <p>
+    <span class="vi">GitHub Pages chỉ chạy website tĩnh, không có máy chủ xử lý dữ liệu. Vì vậy một form "Gửi tin nhắn" tự viết sẽ không gửi đi đâu cả, dù trông vẫn bình thường. Có ba cách thay thế:</span>
+    <span class="en">GitHub Pages only serves static files, with no server to process data. A hand-built "Send message" form therefore goes nowhere, even though it looks fine. There are three alternatives:</span>
+  </p>
+  <ul>
+    <li><span class="vi"><strong>Nút nhắn tin trực tiếp:</strong> Zalo, Messenger, gọi điện. Đơn giản nhất và hợp với khách Việt.</span><span class="en"><strong>Direct message buttons:</strong> Zalo, Messenger or a call link. The simplest option, and what Vietnamese customers expect.</span></li>
+    <li><span class="vi"><strong>Google Forms:</strong> miễn phí, câu trả lời tự vào Google Sheets. Gắn bằng nút link hoặc nhúng vào trang.</span><span class="en"><strong>Google Forms:</strong> free, with responses landing in Google Sheets. Link to it from a button or embed it on the page.</span></li>
+    <li><span class="vi"><strong>Dịch vụ nhận form</strong> như Formspree: giữ form đẹp trên website, tin nhắn gửi về email. Gói miễn phí có giới hạn số lượt gửi mỗi tháng.</span><span class="en"><strong>A form service</strong> such as Formspree: keeps a styled form on your site and emails you each message. The free tier caps monthly submissions.</span></li>
+  </ul>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Website này chạy trên GitHub Pages nên không có máy chủ xử lý form.
+Làm phần liên hệ theo cách: [nút Zalo số ... và Messenger / nút mở Google Form ở link ... / form gửi qua Formspree, mình sẽ đưa mã form].
+Bỏ mọi form không gửi được, và thử bấm từng nút xem có mở đúng không.</pre>
+    <pre class="en">This site runs on GitHub Pages, so there is no server to process forms.
+Build the contact section using: [a Zalo button for ... and a Messenger button / a button opening my Google Form at ... / a form sent through Formspree, I will give you the form ID].
+Remove any form that cannot actually send, and test that each button opens the right place.</pre>
   </div>
   <div class="divider"></div>
 
@@ -692,6 +760,16 @@ My domain is [yourdomain.com].</pre>
     <span class="vi">Với bộ skill, gõ <code>/seo-setup</code> là đủ. Claude sẽ hỏi tên miền và từ khoá nếu chưa biết.</span>
     <span class="en">With the skill pack, typing <code>/seo-setup</code> is enough. Claude asks for the domain and keywords if it does not have them.</span>
   </p>
+  <h3><span class="vi">Gắn Google Analytics để biết ai đang xem</span><span class="en">Add Google Analytics to see who visits</span></h3>
+  <p>
+    <span class="vi">Không bắt buộc, nhưng nên có ngay từ đầu để có số liệu so sánh về sau. Tạo tài khoản miễn phí tại Google Analytics, tạo luồng dữ liệu Web cho tên miền của bạn, rồi lấy <strong>mã đo lường</strong> dạng G-XXXXXXXXXX.</span>
+    <span class="en">Optional, but worth adding from day one so you have numbers to compare later. Create a free Google Analytics account, add a Web data stream for your domain, and copy the <strong>measurement ID</strong>, which looks like G-XXXXXXXXXX.</span>
+  </p>
+  <div class="prompt">
+    <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre class="vi">Gắn Google Analytics 4 với mã đo lường [G-XXXXXXXXXX] vào mọi trang của website. Đặt đoạn mã trong thẻ head, không làm chậm trang, rồi chỉ mình cách kiểm tra mã đã chạy chưa.</pre>
+    <pre class="en">Add Google Analytics 4 with measurement ID [G-XXXXXXXXXX] to every page of the site. Put the snippet in the head without slowing the page down, then show me how to check that it is working.</pre>
+  </div>
   <div class="divider"></div>
 
   <h2 id="buoc-8">
@@ -702,6 +780,17 @@ My domain is [yourdomain.com].</pre>
   <p>
     <span class="vi">Phần lớn khách sẽ xem website trên điện thoại, nên đừng chỉ nhìn trên máy tính. Claude Code có thể tự mở trình duyệt ẩn, chụp màn hình ở nhiều kích thước, tìm lỗi và sửa.</span>
     <span class="en">Most visitors will see your site on a phone, so do not judge it on a laptop alone. Claude Code can open a headless browser, take screenshots at several sizes, find problems and fix them.</span>
+  </p>
+  <div class="highlight-box">
+    <p><span class="vi"><strong>Cần Node.js cho bước này.</strong> Phần kiểm tra tự động dùng Playwright, mà Playwright chạy trên Node.js. Bộ cài Claude Code không kèm Node.js. Mở <strong>một cửa sổ Terminal mới</strong> (không gõ vào Claude Code) và chạy lệnh dưới: hiện số phiên bản là đã có, báo lỗi thì tải bản LTS tại nodejs.org rồi cài như phần mềm bình thường.</span><span class="en"><strong>This step needs Node.js.</strong> The automated checks use Playwright, which runs on Node.js, and the Claude Code installer does not include it. Open <strong>a new terminal window</strong> (not inside Claude Code) and run the command below: a version number means you have it; an error means you should download the LTS version from nodejs.org and install it like any other app.</span></p>
+  </div>
+  <div class="prompt cmd">
+    <div class="prompt-head"><span class="vi">Kiểm tra Node.js</span><span class="en">Check for Node.js</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre>node --version</pre>
+  </div>
+  <p>
+    <span class="vi">Có Node.js rồi thì Claude tự cài Playwright và trình duyệt kiểm tra khi chạy prompt dưới, bạn chỉ cần đồng ý khi được hỏi.</span>
+    <span class="en">Once Node.js is installed, Claude installs Playwright and its test browser itself when you run the prompt below; just approve when asked.</span>
   </p>
   <div class="prompt">
     <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
@@ -736,24 +825,57 @@ List what you find, fix it, then run the checks again.</pre>
     <span class="vi">GitHub Pages cho bạn đưa website tĩnh lên mạng miễn phí, có HTTPS, và gắn được tên miền riêng. Đây cũng là cách iamkimhoan.vn đang chạy.</span>
     <span class="en">GitHub Pages hosts static websites for free, with HTTPS, and supports custom domains. It is also how iamkimhoan.vn runs.</span>
   </p>
+  <h3><span class="vi">Trước tiên: đăng nhập GitHub trên máy một lần</span><span class="en">First: sign in to GitHub on your computer once</span></h3>
+  <p>
+    <span class="vi">Lần đầu đẩy code lên, GitHub đòi xác thực và <strong>không nhận mật khẩu tài khoản</strong>. Cách dễ nhất là cài GitHub CLI rồi đăng nhập qua trình duyệt. Làm một lần, từ đó Claude đẩy code thoải mái.</span>
+    <span class="en">The first time you push, GitHub asks you to authenticate and <strong>will not accept your account password</strong>. The easiest fix is to install the GitHub CLI and sign in through your browser. Do it once and Claude can push freely from then on.</span>
+  </p>
+  <p>
+    <span class="vi">Các lệnh dưới chạy trong <strong>một cửa sổ Terminal mới</strong>, không gõ vào Claude Code. Cài xong <code>gh</code>, đóng Terminal rồi mở cửa sổ mới trước khi chạy <code>gh auth login</code>.</span>
+    <span class="en">Run these in <strong>a new terminal window</strong>, not inside Claude Code. After installing <code>gh</code>, close the terminal and open a fresh window before running <code>gh auth login</code>.</span>
+  </p>
+  <div class="prompt cmd">
+    <div class="prompt-head"><span class="vi">macOS (cần Homebrew)</span><span class="en">macOS (needs Homebrew)</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre>brew install gh</pre>
+  </div>
+  <div class="prompt cmd">
+    <div class="prompt-head"><span class="vi">Windows PowerShell</span><span class="en">Windows PowerShell</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre>winget install --id GitHub.cli</pre>
+  </div>
+  <div class="prompt cmd">
+    <div class="prompt-head"><span class="vi">Đăng nhập</span><span class="en">Sign in</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
+    <pre>gh auth login</pre>
+  </div>
+  <p>
+    <span class="vi">Khi được hỏi, chọn lần lượt: <strong>GitHub.com</strong>, giao thức <strong>HTTPS</strong>, đồng ý dùng tài khoản GitHub cho Git, rồi <strong>Login with a web browser</strong>. Terminal hiện một mã dạng XXXX-XXXX: nhấn Enter để mở trình duyệt, dán mã vào trang GitHub rồi bấm cho phép là xong. Mac chưa có Homebrew thì nhờ Claude cài giúp, hoặc tải bộ cài GitHub CLI tại cli.github.com.</span>
+    <span class="en">When prompted, choose <strong>GitHub.com</strong>, the <strong>HTTPS</strong> protocol, agree to use your GitHub credentials for Git, then <strong>Login with a web browser</strong>. The terminal shows a code like XXXX-XXXX: press Enter to open the browser, paste the code into the GitHub page and authorise, and you are done. If your Mac has no Homebrew, ask Claude to install it, or download the GitHub CLI installer from cli.github.com.</span>
+  </p>
+  <div class="highlight-box">
+    <p><span class="vi"><strong>Lưu ý quyền riêng tư:</strong> với tài khoản GitHub miễn phí, GitHub Pages chỉ chạy trên repository <strong>Public</strong>, nghĩa là ai cũng xem được toàn bộ code và file trong thư mục dự án. Đừng để giấy tờ, file khách hàng, mật khẩu hay mã API trong thư mục website.</span><span class="en"><strong>Privacy note:</strong> on a free GitHub account, GitHub Pages only works with a <strong>Public</strong> repository, which means anyone can see all the code and files in your project folder. Never keep documents, client files, passwords or API keys in the website folder.</span></p>
+  </div>
   <div class="prompt">
     <div class="prompt-head"><span class="vi">Prompt mẫu</span><span class="en">Sample prompt</span><button type="button" class="copy-btn"><span class="vi">Sao chép</span><span class="en">Copy</span></button></div>
     <pre class="vi">Đưa website lên GitHub Pages:
-1. Khởi tạo git và tạo file .gitignore phù hợp
+1. Kiểm tra mọi thay đổi đã được commit
 2. Hướng dẫn mình từng bước tạo repository trên GitHub và đẩy code lên
 3. Bật GitHub Pages từ nhánh main
 4. Gắn tên miền [tenmien.com]: tạo file CNAME và cho mình danh sách bản ghi DNS cần thêm ở nhà cung cấp tên miền
 Giải thích ngắn gọn từng bước, vì mình không rành kỹ thuật.</pre>
     <pre class="en">Publish the site on GitHub Pages:
-1. Initialise git and create a suitable .gitignore
+1. Check that every change has been committed
 2. Walk me through creating a repository on GitHub and pushing the code
 3. Turn on GitHub Pages from the main branch
 4. Connect my domain [yourdomain.com]: create the CNAME file and give me the DNS records to add at my domain registrar
 Keep each step short, I am not technical.</pre>
   </div>
   <p>
-    <span class="vi">Claude sẽ đưa bạn 4 bản ghi A và 1 bản ghi CNAME để thêm ở trang quản lý tên miền. DNS có thể mất vài giờ mới nhận. Khi GitHub báo tên miền đã đúng, bật <strong>Enforce HTTPS</strong> trong mục Settings → Pages.</span>
-    <span class="en">Claude gives you four A records and one CNAME record to add in your domain registrar's dashboard. DNS can take a few hours to update. Once GitHub confirms the domain, switch on <strong>Enforce HTTPS</strong> under Settings → Pages.</span>
+    <span class="vi">Claude sẽ đưa bạn 4 bản ghi A và 1 bản ghi CNAME để thêm ở trang quản lý tên miền. DNS có thể mất tới 24 giờ. Nhập tên miền ở <strong>Settings → Pages → Custom domain</strong>; khi GitHub báo đúng, bật <strong>Enforce HTTPS</strong> (nút này có thể cần thêm vài giờ mới bấm được).</span>
+    <span class="en">Claude gives you four A records and one CNAME record to add in your domain registrar's dashboard. DNS can take up to 24 hours. Enter the domain under <strong>Settings → Pages → Custom domain</strong>; once GitHub confirms it, switch on <strong>Enforce HTTPS</strong> (the option itself can take a few more hours to appear).</span>
+  </p>
+  <h3><span class="vi">Mở thử trên điện thoại thật</span><span class="en">Try it on a real phone</span></h3>
+  <p>
+    <span class="vi">Ảnh chụp từ trình duyệt ẩn ở bước 8 không thay được việc tự bấm thử. Mở website trên điện thoại của bạn, bấm từng nút liên hệ, mở menu, gửi link cho một người bạn qua Zalo xem ảnh chia sẻ có hiện không. Thấy chỗ nào lạ thì chụp màn hình và kéo vào Claude Code.</span>
+    <span class="en">Screenshots from the headless browser in step 8 cannot replace tapping through it yourself. Open the site on your own phone, tap every contact button, open the menu, and send the link to a friend on a messaging app to check the share preview. If anything looks off, take a screenshot and drag it into Claude Code.</span>
   </p>
   <h3><span class="vi">Cuối cùng: báo cho Google biết</span><span class="en">Finally: tell Google about your site</span></h3>
   <p>
@@ -791,26 +913,20 @@ Keep each step short, I am not technical.</pre>
   </div>
 
   <figure class="figure fade-up">
-    <svg viewBox="0 0 720 230" role="img" aria-label="Cấu trúc thư mục bộ skill sau khi cài" font-family="'Space Mono',monospace">
-      <rect x="0" y="0" width="720" height="230" fill="#0D1B3E"/>
+    <svg viewBox="0 0 380 210" role="img" aria-label="~/.claude/skills: website-brief, build-page, seo-setup, check-site, deploy-github-pages" font-family="'Space Mono',monospace" style="max-width:520px;margin:0 auto;">
+      <rect x="0" y="0" width="380" height="210" fill="#0D1B3E"/>
       <g font-size="15" fill="#FDFAF0">
-        <text x="32" y="44" fill="#F9E45B">~/.claude/skills/</text>
-        <text x="52" y="76">├── website-brief/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
-        <text x="52" y="104">├── build-page/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
-        <text x="52" y="132">├── seo-setup/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
-        <text x="52" y="160">├── check-site/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
-        <text x="52" y="188">└── deploy-github-pages/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
-      </g>
-      <g font-family="'Be Vietnam Pro',sans-serif" font-size="13" fill="#FDFAF0" fill-opacity="0.72">
-        <text x="430" y="76">mỗi skill = 1 thư mục</text>
-        <text x="430" y="98">+ 1 file SKILL.md</text>
-        <text x="430" y="140">gõ / trong Claude Code</text>
-        <text x="430" y="162">để gọi đúng skill</text>
+        <text x="24" y="40" fill="#F9E45B">~/.claude/skills/</text>
+        <text x="34" y="72">├── website-brief/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
+        <text x="34" y="100">├── build-page/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
+        <text x="34" y="128">├── seo-setup/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
+        <text x="34" y="156">├── check-site/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
+        <text x="34" y="184">└── deploy-github-pages/<tspan fill="#B8EDD9">SKILL.md</tspan></text>
       </g>
     </svg>
     <figcaption>
-      <span class="vi">Sau khi cài, mỗi skill nằm trong một thư mục riêng. Đặt ở ~/.claude/skills/ thì dùng được cho mọi dự án trên máy.</span>
-      <span class="en">Once installed, each skill lives in its own folder. Placed in ~/.claude/skills/, they work in every project on your computer.</span>
+      <span class="vi">Sau khi cài, mỗi skill là một thư mục chứa một file SKILL.md. Đặt ở ~/.claude/skills/ thì dùng được cho mọi dự án trên máy, gõ / trong Claude Code để gọi.</span>
+      <span class="en">Once installed, each skill is a folder holding one SKILL.md file. Placed in ~/.claude/skills/, they work in every project on your computer; type / in Claude Code to call one.</span>
     </figcaption>
   </figure>
   <p>
@@ -839,7 +955,7 @@ Keep each step short, I am not technical.</pre>
     <li><span class="vi"><strong>Để AI tự điền thông tin thật.</strong> Giá, số điện thoại, địa chỉ phải do bạn đưa. Luôn đọc lại nội dung trước khi đăng.</span><span class="en"><strong>Letting AI fill in real details.</strong> Prices, phone numbers and addresses must come from you. Always proofread before publishing.</span></li>
     <li><span class="vi"><strong>Phiên làm việc quá dài.</strong> Khi chuyển sang việc khác hẳn, gõ <code>/clear</code> để bắt đầu cuộc trò chuyện mới. Quy tắc trong CLAUDE.md vẫn được giữ.</span><span class="en"><strong>Sessions that run too long.</strong> When you switch to an unrelated task, type <code>/clear</code> to start fresh. Your CLAUDE.md rules still apply.</span></li>
     <li><span class="vi"><strong>Ảnh quá nặng.</strong> Ảnh chụp từ điện thoại thường 3–5MB. Nhờ Claude nén về dưới 300KB để website tải nhanh.</span><span class="en"><strong>Oversized photos.</strong> Phone photos are often 3–5MB. Ask Claude to compress them below 300KB so pages load fast.</span></li>
-    <li><span class="vi"><strong>Không lưu lịch sử.</strong> Nhờ Claude commit sau mỗi phần làm xong. Lỡ sửa hỏng thì quay lại được bản trước.</span><span class="en"><strong>No save points.</strong> Ask Claude to commit after each finished part. If a change breaks something, you can go back.</span></li>
+    <li><span class="vi"><strong>Không lưu lịch sử.</strong> Bật git từ bước 5 và nhờ Claude commit sau mỗi phần làm xong. Lỡ sửa hỏng thì quay lại được bản trước.</span><span class="en"><strong>No save points.</strong> Turn on git in step 5 and ask Claude to commit after each finished part. If a change breaks something, you can go back.</span></li>
   </ul>
   <p>
     <span class="vi">Nếu bạn muốn xem mình dùng AI cho những việc khác ra sao, mình có viết riêng về <a href="/blog/sinh-vien-marketing-dung-ai-moi-ngay/" class="lnk">cách mình dùng AI mỗi ngày</a>.</span>
@@ -885,6 +1001,15 @@ Keep each step short, I am not technical.</pre>
       <p>
         <span class="vi">Có. Toàn bộ code nằm trong thư mục trên máy bạn và trong tài khoản GitHub của bạn. Bạn có thể chuyển sang dịch vụ lưu trữ khác bất cứ lúc nào, vì đây là website HTML tĩnh, không phụ thuộc nền tảng nào.</span>
         <span class="en">Yes. All the code lives in a folder on your computer and in your own GitHub account. Because it is a plain static HTML site, you can move it to any other host at any time.</span>
+      </p>
+    </div>
+  </details>
+  <details class="faq">
+    <summary><span class="vi">Website làm bằng Claude Code trên GitHub Pages có làm được form liên hệ không?</span><span class="en">Can a Claude Code website on GitHub Pages have a contact form?</span></summary>
+    <div class="faq-answer">
+      <p>
+        <span class="vi">Không theo cách thông thường, vì GitHub Pages chỉ chạy website tĩnh, không có máy chủ nhận dữ liệu. Thay vào đó, dùng nút Zalo hoặc Messenger, liên kết tới Google Forms, hoặc một dịch vụ nhận form như Formspree để tin nhắn gửi về email.</span>
+        <span class="en">Not in the usual way, because GitHub Pages only serves static files and has no server to receive data. Use Zalo or Messenger buttons, a link to Google Forms, or a form service such as Formspree that emails you each message instead.</span>
       </p>
     </div>
   </details>
