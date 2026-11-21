@@ -119,6 +119,18 @@
   #who{display:flex;gap:6px;margin-bottom:9px;min-height:22px}
   #who span{font-family:var(--sans);font-size:11.5px;font-weight:600;color:#fff;border-radius:99px;padding:3px 9px;opacity:0;transform:translateY(4px);transition:opacity .35s,transform .35s}
   #who span.on{opacity:1;transform:none}
+  #stage.free{overflow-x:hidden;overflow-y:auto;scrollbar-width:none;outline:none}
+  #stage.free::-webkit-scrollbar{display:none}
+  .free [data-go]{cursor:pointer}
+  .free .btn,.free .hire{transition:transform .2s,opacity .2s}
+  .free .btn:hover,.free .hire:hover{transform:translateY(-2px);opacity:.88}
+  .free .links span:hover{color:#b07d0d}
+  .free .card,.free .wcard,.free .step{transition:transform .25s,box-shadow .25s}
+  .free .card:hover,.free .wcard:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(11,31,69,.16)}
+  .free .wcard img{transition:transform .5s}
+  .free .wcard:hover img{transform:scale(1.04)}
+  #hud{transition:opacity .35s}
+  #stage.free.scrolled ~ #hud{opacity:0;pointer-events:none}
   .typing em{background:none!important}
   .ch{visibility:hidden}
   .ch.on{visibility:visible}
@@ -134,7 +146,7 @@
           <div class="status b"><i></i>Đà Nẵng, Việt Nam · Sẵn sàng nhận việc</div>
           <h1 class="hero-title b">Marketing chạy bằng <em>AI</em>, kiểm duyệt bởi con người.</h1>
           <p class="hero-sub b">Mình là <strong>Kim Hoàn</strong>. Mình lên kế hoạch chiến dịch, sản xuất nội dung song ngữ số lượng lớn, chạy quảng cáo thương mại điện tử và xây website — dùng AI để làm nhanh hơn, và dùng chính sự đánh giá của mình để giữ mọi thứ chính xác, đúng chất thương hiệu.</p>
-          <div class="btns b"><span class="btn btn-p">Xem dự án →</span><span class="btn btn-g">Hợp tác với mình</span></div>
+          <div class="btns b"><span class="btn btn-p" data-go="work">Xem dự án →</span><span class="btn btn-g" data-go="contact">Hợp tác với mình</span></div>
           <div class="stats b">
             <div class="stat"><b>2+</b><span>năm làm AI marketing</span></div>
             <div class="stat"><b>3</b><span>website xây bằng AI</span></div>
@@ -208,10 +220,10 @@
     </div>
 
     <nav id="nav" class="b fixed">
-      <img class="logo b" src="../images/brand/logo-wordmark.png" alt="Kim Hoàn.">
-      <div class="links b"><span>Dịch vụ</span><span>Dự án</span><span>Quy trình</span><span>Kinh nghiệm</span></div>
+      <img class="logo b" data-go="hero" src="../images/brand/logo-wordmark.png" alt="Kim Hoàn.">
+      <div class="links b"><span data-go="services">Dịch vụ</span><span data-go="work">Dự án</span><span data-go="process">Quy trình</span><span data-go="contact">Liên hệ</span></div>
       <span class="lang b">EN / VI</span>
-      <span class="hire b">Thuê mình</span>
+      <span class="hire b" data-go="contact">Thuê mình</span>
     </nav>
   </div>
 </div>
@@ -388,6 +400,7 @@
     rings.push({ x: pub[0], y: pub[1], t: F + 3.1, col: WK[4].col });
     badges.push({ x: pub[0], y: pub[1], t: F + 3.1, txt: '🚀 Đã xuất bản iamkimhoan.vn', big: true });
     log(F + 3.1, '✓ iamkimhoan.vn đã lên sóng', 4);
+    move(4, F + 3.9, F + 4.9, startPos[4]);
     END = F + 5.2;
     segs.forEach(s => s.sort((a, b) => a.t0 - b.t0));
     logs.sort((a, b) => a.t - b.t);
@@ -526,7 +539,7 @@
     }
     ctx.globalAlpha = 1;
     for (const b of badges) {
-      const k = t - b.t, life = b.big ? 99 : 1.8; if (k < 0 || k > life) continue;
+      const k = t - b.t, life = b.big ? 2.1 : 1.8; if (k < 0 || k > life) continue;
       const a = Math.min(1, k / .15, (life - k) / .35), s = .8 + .2 * eout(clamp(k / .25));
       ctx.save(); ctx.globalAlpha = a; ctx.translate(b.x + 18, b.y - 42); ctx.scale(s, s);
       ctx.font = `700 ${b.big ? 22 : 14}px "Be Vietnam Pro", sans-serif`;
@@ -564,8 +577,25 @@
     replayBtn.style.display = t > END - 1.5 && !CAPTURE ? 'block' : 'none';
   }
 
-  let t0 = 0, tNow = 0;
-  const restart = () => { t0 = performance.now(); };
+  let t0 = 0, tNow = 0, free = false;
+  const stage = document.getElementById('stage'), nav = document.getElementById('nav');
+  stage.tabIndex = -1;
+  function enterFree() {
+    if (free) return; free = true;
+    page.style.transform = 'none'; nav.style.transform = '';
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height);
+    stage.classList.add('free'); stage.scrollTop = 0; stage.focus({ preventScroll: true });
+    hudTxt.innerHTML = '<span style="color:#7CFFB2">✓ Xong</span> · lăn chuột để xem website ↓';
+    replayBtn.style.display = 'block';
+  }
+  function exitFree() { free = false; stage.classList.remove('free', 'scrolled'); stage.scrollTop = 0; nav.style.transform = ''; }
+  stage.addEventListener('scroll', () => { if (free) { nav.style.transform = `translateY(${stage.scrollTop / S}px)`; stage.classList.toggle('scrolled', stage.scrollTop > 40); } });
+  document.addEventListener('click', ev => {
+    const g = free && ev.target.closest('[data-go]'); if (!g) return;
+    const sec = document.getElementById(g.dataset.go);
+    stage.scrollTo({ top: Math.max(0, (sec.offsetTop - (g.dataset.go === 'hero' ? 0 : NAV_H)) * S), behavior: 'smooth' });
+  });
+  const restart = () => { exitFree(); t0 = performance.now(); };
   async function boot() {
     await document.fonts.ready;
     await Promise.all([...document.images].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; })));
@@ -574,10 +604,13 @@
     window.__seek = s => render(s);
     if (CAPTURE) return;
     restart();
-    const loop = now => { tNow = Math.min(END, (now - t0) / 1000); render(tNow); requestAnimationFrame(loop); };
+    const loop = now => {
+      if (!free) { tNow = Math.min(END, (now - t0) / 1000); render(tNow); if (tNow >= END) enterFree(); }
+      requestAnimationFrame(loop);
+    };
     requestAnimationFrame(loop);
-    let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { measure(); restart(); }, 200); });
-    addEventListener('keydown', e => { if (e.key === 'r' || e.key === 'R') restart(); });
+    let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { const wasFree = free; exitFree(); measure(); if (wasFree) { render(END); enterFree(); } else restart(); }, 200); });
+    addEventListener('keydown', e => { if ((e.key === 'r' || e.key === 'R') && !e.ctrlKey && !e.metaKey) restart(); });
     replayBtn.onclick = restart;
   }
   boot();
