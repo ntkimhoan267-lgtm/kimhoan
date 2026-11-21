@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đàn chuột xây iamkimhoan.vn</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1F45; --yellow:#F5B82E; --ivory:#F8F5EC; --cream:#FDFAF0; --beige:#F5F0E0;
+    --ink:#0B1F45; --muted:#5b6478; --line:rgba(11,31,69,.12);
+    --serif:'Playfair Display',Georgia,serif; --sans:'Be Vietnam Pro',system-ui,sans-serif; --mono:'Space Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden;background:#06080f}
+  body{font-family:var(--sans);color:var(--ink)}
+  /* lưới nền khi trang còn trống */
+  #stage{position:fixed;inset:0;overflow:hidden;
+    background:#06080f;
+    background-image:linear-gradient(rgba(76,201,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(76,201,255,.06) 1px,transparent 1px);
+    background-size:40px 40px}
+  #scaler{position:absolute;left:0;top:0;width:1440px;transform-origin:0 0}
+  #page{position:relative;width:1440px;will-change:transform}
+  #fx{position:fixed;inset:0;pointer-events:none;z-index:50}
+  em{font-style:italic;color:var(--yellow)}
+
+  /* NAV (cố định) */
+  #nav{position:absolute;left:0;top:0;width:1440px;height:76px;z-index:20;display:flex;align-items:center;gap:40px;padding:0 64px;background:rgba(253,250,240,.96);border-bottom:1px solid var(--line)}
+  #nav .logo{height:30px}
+  #nav .links{display:flex;gap:34px;margin-left:auto;font-weight:500;font-size:15px}
+  #nav .lang{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:99px;padding:6px 12px}
+  #nav .hire{background:var(--navy);color:var(--cream);border-radius:99px;padding:11px 22px;font-weight:600;font-size:14px}
+
+  section{position:relative;padding:110px 64px}
+  .label{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#b07d0d;display:inline-block;margin-bottom:18px}
+  h2{font-family:var(--serif);font-size:54px;line-height:1.1;font-weight:900;max-width:820px}
+  .lead{font-size:18px;line-height:1.65;color:var(--muted);max-width:720px;margin-top:18px}
+  .dark{background:var(--navy);color:var(--ivory)}
+  .dark .lead{color:rgba(248,245,236,.7)}
+  .dark .label{color:var(--yellow)}
+
+  /* HERO */
+  #hero{background:var(--cream);padding-top:150px;display:grid;grid-template-columns:1.15fr .85fr;gap:60px;min-height:900px}
+  .lockup{height:74px;display:block;margin-bottom:26px}
+  .status{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:8px 16px;font-size:14px;font-weight:500}
+  .status i{width:9px;height:9px;border-radius:50%;background:#2bb673;box-shadow:0 0 0 4px rgba(43,182,115,.18)}
+  .hero-title{font-family:var(--serif);font-weight:900;font-size:70px;line-height:1.04;margin:26px 0 22px;letter-spacing:-.01em}
+  .hero-title em{color:var(--navy);background:linear-gradient(transparent 62%,var(--yellow) 62%)}
+  .hero-sub{font-size:18px;line-height:1.7;color:var(--muted);max-width:600px}
+  .btns{display:flex;gap:14px;margin-top:30px}
+  .btn{display:inline-block;padding:16px 28px;border-radius:99px;font-weight:600;font-size:16px}
+  .btn-p{background:var(--navy);color:var(--cream)}
+  .btn-g{border:1.5px solid var(--navy)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px;padding-top:28px;border-top:1px solid var(--line)}
+  .stat b{font-family:var(--serif);font-size:38px;display:block}
+  .stat span{font-size:13px;color:var(--muted);line-height:1.4;display:block;margin-top:4px}
+  .portrait{position:relative;padding:10px 0 0 30px}
+  .portrait-img{border-radius:220px 220px 26px 26px;overflow:hidden;height:600px;background:var(--beige)}
+  .portrait-img img{width:100%;height:100%;object-fit:cover;object-position:center 18%;display:block}
+  .float{position:absolute;background:#fff;border-radius:16px;padding:14px 18px;box-shadow:0 18px 40px rgba(11,31,69,.14);font-size:14px;font-weight:600}
+  .float b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#b07d0d;margin-bottom:4px}
+  .f1{left:-10px;top:330px}
+  .f2{right:-18px;top:90px;background:var(--yellow);color:var(--navy)}
+  .f2 b{color:var(--navy)}
+
+  /* SERVICES */
+  #services{background:var(--beige)}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:54px}
+  .card{background:#fff;border-radius:20px;padding:30px 30px 34px;border:1px solid var(--line);min-height:230px}
+  .card .n{font-family:var(--mono);font-size:13px;color:#b07d0d}
+  .card h3{font-family:var(--serif);font-size:25px;margin:14px 0 12px}
+  .card p{font-size:15px;line-height:1.65;color:var(--muted)}
+
+  /* WORK */
+  .work{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:54px}
+  .wcard{background:rgba(255,255,255,.05);border:1px solid rgba(248,245,236,.12);border-radius:20px;overflow:hidden}
+  .wcard img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+  .wcard div{padding:22px 24px 26px}
+  .wcard small{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow)}
+  .wcard h3{font-family:var(--serif);font-size:24px;margin:10px 0 8px}
+  .wcard p{font-size:14px;line-height:1.6;color:rgba(248,245,236,.7)}
+
+  /* PROCESS */
+  #process{background:var(--cream)}
+  .steps{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:54px}
+  .step{border-top:3px solid var(--navy);padding-top:18px}
+  .step .n{font-family:var(--serif);font-size:42px;font-weight:900;color:var(--yellow);-webkit-text-stroke:1px var(--navy)}
+  .step h4{font-size:17px;margin:10px 0 8px}
+  .step p{font-size:13.5px;line-height:1.6;color:var(--muted)}
+  .step span{display:inline-block;margin-top:12px;font-family:var(--mono);font-size:11px;background:var(--navy);color:var(--cream);border-radius:99px;padding:4px 10px}
+
+  /* CONTACT */
+  #contact{display:grid;grid-template-columns:1fr 1fr;gap:70px;padding-bottom:70px}
+  .info{margin-top:34px;display:grid;gap:16px}
+  .info div{border-bottom:1px solid rgba(248,245,236,.14);padding-bottom:14px;font-size:16px}
+  .info b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow);margin-bottom:6px;font-weight:400}
+  .form{background:var(--cream);color:var(--navy);border-radius:24px;padding:34px;display:grid;gap:16px;align-self:start}
+  .field{border:1.5px solid var(--line);border-radius:12px;padding:16px;font-size:15px;color:var(--muted);background:#fff}
+  .field.big{height:120px}
+  .form .btn{text-align:center}
+  footer{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(248,245,236,.14);padding-top:30px;margin-top:20px;font-family:var(--mono);font-size:12px;color:rgba(248,245,236,.6)}
+  footer img{height:28px}
+
+  /* HUD terminal */
+  #hud{position:fixed;left:24px;bottom:24px;z-index:60;font-family:var(--mono);font-size:14px;color:#d8f3ff;background:rgba(6,8,15,.82);border:1px solid rgba(76,201,255,.35);border-radius:12px;padding:12px 16px;min-width:360px;backdrop-filter:blur(6px);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  #hud .row{display:flex;justify-content:space-between;gap:20px}
+  #hud .bar{height:4px;background:rgba(76,201,255,.15);border-radius:4px;margin-top:9px;overflow:hidden}
+  #hud .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#4cc9ff,var(--yellow))}
+  #hud .ok{color:#7CFFB2}
+  #replay{position:fixed;right:24px;bottom:24px;z-index:60;font-family:var(--mono);font-size:13px;color:#d8f3ff;background:rgba(6,8,15,.82);border:1px solid rgba(76,201,255,.35);border-radius:12px;padding:12px 16px;cursor:pointer;display:none}
+  .capture #replay{display:none!important}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="scaler">
+    <div id="page">
+      <section id="hero" class="b">
+        <div>
+          <img class="lockup b" src="../images/brand/logo-lockup.png" alt="Kim Hoàn — AI Marketing Specialist">
+          <div class="status b"><i></i>Đà Nẵng, Việt Nam · Sẵn sàng nhận việc</div>
+          <h1 class="hero-title b">Marketing chạy bằng <em>AI</em>, kiểm duyệt bởi con người.</h1>
+          <p class="hero-sub b">Mình là <strong>Kim Hoàn</strong>. Mình lên kế hoạch chiến dịch, sản xuất nội dung song ngữ số lượng lớn, chạy quảng cáo thương mại điện tử và xây website — dùng AI để làm nhanh hơn, và dùng chính sự đánh giá của mình để giữ mọi thứ chính xác, đúng chất thương hiệu.</p>
+          <div class="btns"><span class="btn btn-p b">Xem dự án →</span><span class="btn btn-g b">Hợp tác với mình</span></div>
+          <div class="stats">
+            <div class="stat b"><b>2+</b><span>năm làm AI marketing</span></div>
+            <div class="stat b"><b>3</b><span>website xây bằng AI</span></div>
+            <div class="stat b"><b>4</b><span>chứng chỉ Google &amp; Claude Academy</span></div>
+            <div class="stat b"><b>EN/VI</b><span>nội dung song ngữ</span></div>
+          </div>
+        </div>
+        <div class="portrait">
+          <div class="portrait-img b"><img src="../hero.jpg" alt="Kim Hoàn"></div>
+          <div class="float f1 b"><b>Hiện tại</b>AI Marketing Specialist</div>
+          <div class="float f2 b"><b>Công cụ</b>Claude · Gemini · Canva</div>
+        </div>
+      </section>
+
+      <section id="services" class="sec b">
+        <span class="label b">Mình làm gì</span>
+        <h2 class="b">Một người, một hệ thống marketing <em style="color:#b07d0d">liên kết</em>.</h2>
+        <p class="lead b">Nghiên cứu định hình kế hoạch, kế hoạch dẫn dắt nội dung, và kết quả quảng cáo quay lại cải thiện vòng tiếp theo.</p>
+        <div class="grid3">
+          <div class="card b"><span class="n">01</span><h3>Lên kế hoạch chiến dịch</h3><p>Mục tiêu, khách hàng, kênh, lịch nội dung và ngân sách — AI hỗ trợ soạn, mình chốt.</p></div>
+          <div class="card b"><span class="n">02</span><h3>Nội dung AI số lượng lớn</h3><p>Bài đăng, quảng cáo, mô tả sản phẩm, blog song ngữ — AI sản xuất, mình biên tập lại.</p></div>
+          <div class="card b"><span class="n">03</span><h3>Quảng cáo TMĐT &amp; A/B test</h3><p>Thử mẫu quảng cáo với nhau, rồi dồn ngân sách vào mẫu thật sự ra đơn.</p></div>
+          <div class="card b"><span class="n">04</span><h3>Nghiên cứu &amp; báo cáo</h3><p>Thị trường, đối thủ, khách hàng — biến số liệu thành quyết định tiếp theo.</p></div>
+          <div class="card b"><span class="n">05</span><h3>Thư viện prompt &amp; tự động hoá</h3><p>Bộ prompt dùng lại được để cả nhóm ra nội dung đồng đều, đúng chất thương hiệu.</p></div>
+          <div class="card b"><span class="n">06</span><h3>Website xây bằng AI</h3><p>Website song ngữ chuẩn SEO, từ cấu trúc, nội dung đến lúc lên sóng.</p></div>
+        </div>
+      </section>
+
+      <section id="work" class="dark sec b">
+        <span class="label b">Dự án tiêu biểu</span>
+        <h2 class="b">Ba website, <em>xây bằng AI</em>.</h2>
+        <p class="lead b">Website thật, đang chạy, cho doanh nghiệp thật. Mình đặt chiến lược, kiểm tra nội dung và điều khiển công cụ AI để xây dựng.</p>
+        <div class="work">
+          <div class="wcard b"><img src="../images/work-tritravel.jpg" alt=""><div><small>Thương hiệu du lịch · Website</small><h3>TriTravel — Du lịch Đà Nẵng</h3><p>Tour, visa, di chuyển và blog gom về một nơi, song ngữ VI / EN.</p></div></div>
+          <div class="wcard b"><img src="../images/work-tripcompany.jpg" alt=""><div><small>Dịch vụ · Thu hút khách hàng</small><h3>TRIP — Visa &amp; dịch thuật</h3><p>Khách tìm đúng loại visa và liên hệ chỉ sau vài lần chạm.</p></div></div>
+          <div class="wcard b"><img src="../images/work-iamkimhoan.jpg" alt=""><div><small>Thương hiệu cá nhân · SEO</small><h3>iamkimhoan.vn</h3><p>Portfolio, trang visa và blog song ngữ, viết cùng AI, do mình biên tập.</p></div></div>
+        </div>
+      </section>
+
+      <section id="process" class="sec b">
+        <span class="label b">Cách mình làm</span>
+        <h2 class="b">AI làm phần nặng. <em style="color:#b07d0d">Mình ra quyết định.</em></h2>
+        <div class="steps">
+          <div class="step b"><div class="n">01</div><h4>Nghiên cứu</h4><p>Thị trường, đối thủ và câu hỏi của khách, tóm tắt bằng AI.</p><span>AI + mình</span></div>
+          <div class="step b"><div class="n">02</div><h4>Lên kế hoạch</h4><p>Mục tiêu, khách hàng, kênh và ngân sách.</p><span>Mình</span></div>
+          <div class="step b"><div class="n">03</div><h4>Sản xuất bằng AI</h4><p>Nội dung, hình ảnh, nhiều phiên bản từ prompt đã kiểm chứng.</p><span>AI + mình</span></div>
+          <div class="step b"><div class="n">04</div><h4>Con người duyệt</h4><p>Kiểm tra thông tin, giọng điệu, chất thương hiệu.</p><span>Mình</span></div>
+          <div class="step b"><div class="n">05</div><h4>Triển khai &amp; A/B</h4><p>Đăng bài, chạy quảng cáo, cho phiên bản cạnh tranh.</p><span>AI + mình</span></div>
+          <div class="step b"><div class="n">06</div><h4>Đo lường</h4><p>Giữ cái hiệu quả, biến việc lặp lại thành quy trình.</p><span>AI + mình</span></div>
+        </div>
+      </section>
+
+      <section id="contact" class="dark sec b">
+        <div>
+          <span class="label b">Liên hệ</span>
+          <h2 class="b">Cùng xây marketing <em>chạy bằng AI</em> cho bạn.</h2>
+          <p class="lead b">Tuyển dụng, dự án hay chỉ là một câu hỏi — gửi tin nhắn, mình sẽ trả lời qua email.</p>
+          <div class="info">
+            <div class="b"><b>Địa điểm</b>Đà Nẵng, Việt Nam · nhận làm từ xa</div>
+            <div class="b"><b>Ngôn ngữ</b>Tiếng Anh · Tiếng Việt</div>
+          </div>
+        </div>
+        <div class="form b">
+          <div class="field b">Họ tên</div>
+          <div class="field b">Chủ đề</div>
+          <div class="field big b">Lời nhắn</div>
+          <span class="btn btn-p b">Gửi tin nhắn →</span>
+        </div>
+        <footer class="b"><img src="../images/brand/logo-wordmark-cream.png" alt="Kim Hoàn."><span>© 2026 · iamkimhoan.vn</span></footer>
+      </section>
+    </div>
+
+    <nav id="nav" class="b fixed">
+      <img class="logo" src="../images/brand/logo-wordmark.png" alt="Kim Hoàn.">
+      <div class="links"><span>Dịch vụ</span><span>Dự án</span><span>Quy trình</span><span>Kinh nghiệm</span></div>
+      <span class="lang">EN / VI</span>
+      <span class="hire">Thuê mình</span>
+    </nav>
+  </div>
+</div>
+<canvas id="fx"></canvas>
+<div id="hud"><div class="row"><span id="hudTxt">▍ khởi động đàn chuột…</span><span id="hudPct">0%</span></div><div class="bar"><i id="hudBar"></i></div></div>
+<button id="replay">↻ Xem lại (R)</button>
+
+<script>
+(() => {
+  const CAPTURE = /capture/.test(location.search);
+  if (CAPTURE) document.body.classList.add('capture');
+  const DESIGN_W = 1440, NAV_H = 76, DT = 1 / 60, N = 150;
+
+  // random có seed để mỗi lần chạy giống nhau
+  let seed = 2026;
+  const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+  const ease = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+
+  const scaler = document.getElementById('scaler'), page = document.getElementById('page');
+  const cv = document.getElementById('fx'), ctx = cv.getContext('2d');
+  const hudTxt = document.getElementById('hudTxt'), hudPct = document.getElementById('hudPct'), hudBar = document.getElementById('hudBar');
+  const replayBtn = document.getElementById('replay');
+
+  let W, H, S, VH, dpr, els = [], scrollKeys = [], END = 0, t = 0, cursors = [], sparks = [], maxScroll = 0;
+  const COLORS = ['#F5B82E', '#ffffff', '#4cc9ff', '#ff5fa2', '#7CFFB2', '#b98cff', '#ffd36b', '#5ef2ff'];
+
+  function measure() {
+    W = innerWidth; H = innerHeight; dpr = Math.min(devicePixelRatio || 1, 2);
+    S = W / DESIGN_W; VH = H / S;
+    scaler.style.transform = `scale(${S})`;
+    cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    page.style.transform = 'none';
+    els.forEach(e => { e.node.style.opacity = 1; e.node.style.clipPath = 'none'; e.node.style.filter = 'none'; });
+    els = [...document.querySelectorAll('.b')].map(node => {
+      const r = node.getBoundingClientRect();
+      return { node, fixed: node.classList.contains('fixed'), x: r.left / S, y: r.top / S, w: r.width / S, h: r.height / S,
+               tag: node.tagName.toLowerCase(), sec: node.closest('section')?.id || 'nav', start: 0, done: false };
+    });
+    maxScroll = page.offsetHeight - VH;
+    schedule();
+  }
+
+  function schedule() {
+    // thứ tự dựng: nav trước, rồi từng section theo chiều dọc
+    const order = [...els].sort((a, b) => (a.fixed ? -1 : 0) - (b.fixed ? -1 : 0) || a.y - b.y || a.x - b.x);
+    // các phần tử nằm trong phần tử khác thì dựng sau cha
+    els = order;
+    scrollKeys = [];
+    let T = 1.4, cur = 0, lastSec = null;
+    const scrollTo = (to, dur) => { to = clamp(to, 0, maxScroll); if (Math.abs(to - cur) < 4) return 0; scrollKeys.push({ t0: T, t1: T + dur, from: cur, to }); cur = to; return dur; };
+    for (const e of els) {
+      if (!e.fixed && e.sec !== lastSec) {
+        lastSec = e.sec;
+        const sec = document.getElementById(e.sec);
+        const top = sec.offsetTop - NAV_H;
+        T += scrollTo(top, 1.0);
+      }
+      if (!e.fixed) {
+        if (e.y + e.h > cur + VH - 30) T += scrollTo(Math.min(e.y + e.h - VH + 60, e.y - NAV_H - 20), 0.55);
+        else if (e.y < cur + NAV_H + 10) T += scrollTo(e.y - NAV_H - 30, 0.55);
+      }
+      e.start = T;
+      const area = e.w * e.h;
+      T += area > 200000 ? 0.5 : area > 40000 ? 0.36 : 0.24;
+    }
+    T += 1.2;
+    const finishAt = T;
+    scrollKeys.push({ t0: T, t1: T + 2.6, from: cur, to: 0 });
+    END = T + 2.6 + 2.2;
+    window.__END = END; window.__FINISH = finishAt;
+  }
+
+  function scrollAt(tt) {
+    let v = 0;
+    for (const k of scrollKeys) {
+      if (tt >= k.t1) v = k.to;
+      else if (tt >= k.t0) return k.from + (k.to - k.from) * ease((tt - k.t0) / (k.t1 - k.t0));
+      else break;
+    }
+    return v;
+  }
+  const scrolling = tt => scrollKeys.some(k => tt >= k.t0 && tt < k.t1);
+
+  function screenRect(e, sc) {
+    const y = e.fixed ? e.y : e.y - sc;
+    return { x: e.x * S, y: y * S, w: e.w * S, h: e.h * S };
+  }
+
+  function initCursors() {
+    seed = 2026; cursors = []; sparks = [];
+    for (let i = 0; i < N; i++) {
+      const side = i % 4, a = rnd();
+      const x = side === 0 ? -40 - rnd() * 300 : side === 1 ? W + 40 + rnd() * 300 : a * W;
+      const y = side === 2 ? -40 - rnd() * 300 : side === 3 ? H + 40 + rnd() * 300 : a * H;
+      cursors.push({ x, y, vx: 0, vy: 0, u: rnd(), v: rnd(), k: 22 + rnd() * 22, c: 5 + rnd() * 3,
+        j: 6 + rnd() * 22, w1: 1.5 + rnd() * 4, w2: 1.5 + rnd() * 4, p1: rnd() * 7, p2: rnd() * 7,
+        col: COLORS[i % COLORS.length], sz: .85 + rnd() * .5, trail: [] });
+    }
+  }
+
+  function targetsFor(tt, sc) {
+    const active = els.filter(e => tt >= e.start - .3 && tt < e.start + .75);
+    const finish = window.__FINISH;
+    return (c, i) => {
+      let tx, ty;
+      if (tt > finish + 1.6) { // xong: bay toả ra ngoài màn hình
+        const ang = (i / N) * Math.PI * 2 + c.p1 * .2, R = Math.max(W, H) * (0.9 + c.u * .5);
+        return [W / 2 + Math.cos(ang) * R, H / 2 + Math.sin(ang) * R];
+      }
+      if (tt > finish - .4 || tt < 1.2) { // tụ thành vòng xoáy giữa màn hình
+        const ang = (i / N) * Math.PI * 2 + tt * 1.6, R = Math.min(W, H) * (.12 + .2 * c.u);
+        return [W / 2 + Math.cos(ang) * R, H / 2 + Math.sin(ang) * R * .7];
+      }
+      if (scrolling(tt) && active.length === 0) { // đẩy trang lên
+        tx = (i + .5) / N * W; ty = H - 70 - c.v * 120 + Math.sin(tt * 9 + c.p1) * 14;
+        return [tx, ty];
+      }
+      if (!active.length) {
+        const ang = (i / N) * Math.PI * 2 + tt, R = Math.min(W, H) * (.1 + .25 * c.u);
+        return [W / 2 + Math.cos(ang) * R, H / 2 + Math.sin(ang) * R * .6];
+      }
+      const e = active[i % active.length], r = screenRect(e, sc);
+      // chỉ bám phần đang thấy trên màn hình
+      const y0 = Math.max(r.y, 0), y1 = Math.min(r.y + r.h, H), vh = Math.max(20, y1 - y0);
+      const a = tt - e.start;
+      if (a > .3) { // giai đoạn "sơn": bám theo mép quét từ trái sang phải
+        const edge = r.x + ease(clamp((a - .35) / .4)) * r.w;
+        tx = edge + (c.u - .5) * Math.min(90, r.w * .35) + Math.sin(tt * c.w1 + c.p1) * c.j * .6;
+      } else {
+        tx = r.x + c.u * r.w + Math.sin(tt * c.w1 + c.p1) * c.j;
+      }
+      ty = y0 + c.v * vh + Math.cos(tt * c.w2 + c.p2) * c.j;
+      return [tx, ty];
+    };
+  }
+
+  function step() {
+    t += DT;
+    const sc = scrollAt(t), tgt = targetsFor(t, sc);
+    cursors.forEach((c, i) => {
+      const [tx, ty] = tgt(c, i);
+      c.vx += ((tx - c.x) * c.k - c.vx * c.c) * DT;
+      c.vy += ((ty - c.y) * c.k - c.vy * c.c) * DT;
+      const sp = Math.hypot(c.vx, c.vy), mx = 2600 * (W / 1920);
+      if (sp > mx) { c.vx *= mx / sp; c.vy *= mx / sp; }
+      c.x += c.vx * DT; c.y += c.vy * DT;
+      c.trail.unshift([c.x, c.y]); if (c.trail.length > 9) c.trail.pop();
+    });
+    // tia lửa khi một khối hiện ra
+    for (const e of els) {
+      const rt = e.start + .4;
+      if (t >= rt && t - DT < rt) {
+        const r = screenRect(e, sc);
+        for (let k = 0; k < 5; k++) sparks.push({ x: r.x + rnd() * r.w, y: r.y + rnd() * r.h, t0: t, col: COLORS[(k + 3) % COLORS.length] });
+      }
+    }
+    sparks = sparks.filter(s => t - s.t0 < .5);
+  }
+
+  const ARROW = [[0, 0], [0, 17], [4.4, 13], [7.4, 19.8], [10.4, 18.5], [7.5, 11.9], [12.8, 11.9]];
+  function drawCursor(c) {
+    const s = c.sz * 1.15 * Math.max(.8, W / 1600);
+    for (let k = 1; k < c.trail.length; k++) {
+      const [x0, y0] = c.trail[k - 1], [x1, y1] = c.trail[k];
+      ctx.globalAlpha = .35 * (1 - k / c.trail.length);
+      ctx.strokeStyle = c.col; ctx.lineWidth = 3 * s * (1 - k / c.trail.length);
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    ctx.save(); ctx.translate(c.x, c.y); ctx.scale(s, s);
+    ctx.shadowColor = c.col; ctx.shadowBlur = 8;
+    ctx.beginPath(); ARROW.forEach(([x, y], k) => k ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath();
+    ctx.fillStyle = c.col; ctx.fill();
+    ctx.shadowBlur = 0; ctx.lineWidth = 1.3; ctx.strokeStyle = 'rgba(6,8,15,.85)'; ctx.stroke();
+    ctx.restore();
+  }
+
+  function render() {
+    const sc = scrollAt(t);
+    page.style.transform = `translateY(${-sc}px)`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    let built = 0;
+    for (const e of els) {
+      const r = (t - e.start - .35) / .4;
+      if (r >= 1) {
+        built++;
+        if (!e.done) { e.node.style.opacity = 1; e.node.style.clipPath = 'none'; e.node.style.filter = 'none'; e.done = true; }
+      } else {
+        e.done = false;
+        const rr = clamp(r);
+        e.node.style.opacity = r > 0 ? 1 : 0;
+        e.node.style.clipPath = `inset(0 ${(1 - ease(rr)) * 100}% 0 0)`;
+        e.node.style.filter = `blur(${(1 - rr) * 5}px) brightness(${1 + (1 - rr) * .6})`;
+      }
+      // khung wireframe như công cụ thiết kế
+      const a = t - e.start;
+      if (a > 0 && a < 1.4) {
+        const q = screenRect(e, sc), p = clamp(a / .45), fade = a > .9 ? 1 - (a - .9) / .5 : 1;
+        ctx.globalAlpha = fade; ctx.strokeStyle = '#4cc9ff'; ctx.lineWidth = 1.5;
+        const per = 2 * (q.w + q.h), L = per * p;
+        ctx.beginPath(); ctx.moveTo(q.x, q.y);
+        const segs = [[q.x + q.w, q.y, q.w], [q.x + q.w, q.y + q.h, q.h], [q.x, q.y + q.h, q.w], [q.x, q.y, q.h]];
+        let left = L, px = q.x, py = q.y;
+        for (const [nx, ny, len] of segs) {
+          if (left <= 0) break;
+          const f = Math.min(1, left / len); ctx.lineTo(px + (nx - px) * f, py + (ny - py) * f);
+          px = nx; py = ny; left -= len;
+        }
+        ctx.stroke();
+        if (r < 0) { ctx.fillStyle = 'rgba(76,201,255,.07)'; ctx.fillRect(q.x, q.y, q.w, q.h); }
+        ctx.fillStyle = '#fff'; ctx.strokeStyle = '#4cc9ff';
+        for (const [hx, hy] of [[q.x, q.y], [q.x + q.w, q.y], [q.x, q.y + q.h], [q.x + q.w, q.y + q.h]]) { ctx.fillRect(hx - 3.5, hy - 3.5, 7, 7); ctx.strokeRect(hx - 3.5, hy - 3.5, 7, 7); }
+        const lab = `${e.tag}  ${Math.round(e.w)}×${Math.round(e.h)}`;
+        ctx.font = `600 ${Math.max(10, 11 * S)}px "Space Mono", monospace`;
+        const tw = ctx.measureText(lab).width;
+        ctx.fillStyle = '#4cc9ff'; ctx.fillRect(q.x, q.y - 18, tw + 10, 16);
+        ctx.fillStyle = '#06080f'; ctx.fillText(lab, q.x + 5, q.y - 6);
+        ctx.globalAlpha = 1;
+      }
+    }
+    for (const s of sparks) {
+      const k = (t - s.t0) / .5;
+      ctx.globalAlpha = 1 - k; ctx.strokeStyle = s.col; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(s.x, s.y, 4 + k * 26, 0, Math.PI * 2); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    cursors.forEach(drawCursor);
+
+    const pct = Math.round(built / els.length * 100);
+    hudBar.style.width = pct + '%'; hudPct.textContent = pct + '%';
+    if (pct >= 100) { hudTxt.innerHTML = '<span class="ok">✓ iamkimhoan.vn đã xây xong</span>'; }
+    else if (t < 1.3) hudTxt.textContent = `▍ gọi ${N} con chuột tới…`;
+    else {
+      const act = els.find(e => t >= e.start && t < e.start + .5);
+      hudTxt.textContent = `▍ ${N} chuột đang dựng ${act ? '#' + act.sec : 'trang'}…`;
+    }
+    replayBtn.style.display = t > END - 1 ? 'block' : 'none';
+  }
+
+  function restart() { t = 0; els.forEach(e => e.done = false); initCursors(); render(); }
+
+  async function boot() {
+    await document.fonts.ready;
+    await Promise.all([...document.images].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; })));
+    measure(); initCursors(); render();
+    window.__ready = true;
+    window.__advance = n => { for (let i = 0; i < n; i++) step(); render(); };
+    if (CAPTURE) return;
+    let last = performance.now(), acc = 0;
+    const loop = now => {
+      acc += Math.min(.1, (now - last) / 1000); last = now;
+      while (acc >= DT) { if (t < END) step(); acc -= DT; }
+      render(); requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+    addEventListener('resize', () => { measure(); render(); });
+    addEventListener('keydown', e => { if (e.key === 'r' || e.key === 'R') restart(); });
+    replayBtn.onclick = restart;
+  }
+  boot();
+})();
+</script>
+</body>
+</html>
