@@ -116,6 +116,12 @@
   #hud .ok{color:#7CFFB2}
   #replay{position:fixed;right:24px;bottom:24px;z-index:60;font-family:var(--mono);font-size:13px;color:#d8f3ff;background:rgba(6,8,15,.82);border:1px solid rgba(76,201,255,.35);border-radius:12px;padding:12px 16px;cursor:pointer;display:none}
   .capture #replay{display:none!important}
+  #who{display:flex;gap:6px;margin-bottom:9px;min-height:22px}
+  #who span{font-family:var(--sans);font-size:11.5px;font-weight:600;color:#fff;border-radius:99px;padding:3px 9px;opacity:0;transform:translateY(4px);transition:opacity .35s,transform .35s}
+  #who span.on{opacity:1;transform:none}
+  .typing em{background:none!important}
+  .ch{visibility:hidden}
+  .ch.on{visibility:visible}
 </style>
 </head>
 <body>
@@ -128,12 +134,12 @@
           <div class="status b"><i></i>Đà Nẵng, Việt Nam · Sẵn sàng nhận việc</div>
           <h1 class="hero-title b">Marketing chạy bằng <em>AI</em>, kiểm duyệt bởi con người.</h1>
           <p class="hero-sub b">Mình là <strong>Kim Hoàn</strong>. Mình lên kế hoạch chiến dịch, sản xuất nội dung song ngữ số lượng lớn, chạy quảng cáo thương mại điện tử và xây website — dùng AI để làm nhanh hơn, và dùng chính sự đánh giá của mình để giữ mọi thứ chính xác, đúng chất thương hiệu.</p>
-          <div class="btns"><span class="btn btn-p b">Xem dự án →</span><span class="btn btn-g b">Hợp tác với mình</span></div>
-          <div class="stats">
-            <div class="stat b"><b>2+</b><span>năm làm AI marketing</span></div>
-            <div class="stat b"><b>3</b><span>website xây bằng AI</span></div>
-            <div class="stat b"><b>4</b><span>chứng chỉ Google &amp; Claude Academy</span></div>
-            <div class="stat b"><b>EN/VI</b><span>nội dung song ngữ</span></div>
+          <div class="btns b"><span class="btn btn-p">Xem dự án →</span><span class="btn btn-g">Hợp tác với mình</span></div>
+          <div class="stats b">
+            <div class="stat"><b>2+</b><span>năm làm AI marketing</span></div>
+            <div class="stat"><b>3</b><span>website xây bằng AI</span></div>
+            <div class="stat"><b>4</b><span>chứng chỉ Google &amp; Claude Academy</span></div>
+            <div class="stat"><b>EN/VI</b><span>nội dung song ngữ</span></div>
           </div>
         </div>
         <div class="portrait">
@@ -186,52 +192,87 @@
           <span class="label b">Liên hệ</span>
           <h2 class="b">Cùng xây marketing <em>chạy bằng AI</em> cho bạn.</h2>
           <p class="lead b">Tuyển dụng, dự án hay chỉ là một câu hỏi — gửi tin nhắn, mình sẽ trả lời qua email.</p>
-          <div class="info">
-            <div class="b"><b>Địa điểm</b>Đà Nẵng, Việt Nam · nhận làm từ xa</div>
-            <div class="b"><b>Ngôn ngữ</b>Tiếng Anh · Tiếng Việt</div>
+          <div class="info b">
+            <div><b>Địa điểm</b>Đà Nẵng, Việt Nam · nhận làm từ xa</div>
+            <div><b>Ngôn ngữ</b>Tiếng Anh · Tiếng Việt</div>
           </div>
         </div>
         <div class="form b">
-          <div class="field b">Họ tên</div>
-          <div class="field b">Chủ đề</div>
-          <div class="field big b">Lời nhắn</div>
-          <span class="btn btn-p b">Gửi tin nhắn →</span>
+          <div class="field">Họ tên</div>
+          <div class="field">Chủ đề</div>
+          <div class="field big">Lời nhắn</div>
+          <span class="btn btn-p">Gửi tin nhắn →</span>
         </div>
         <footer class="b"><img src="../images/brand/logo-wordmark-cream.png" alt="Kim Hoàn."><span>© 2026 · iamkimhoan.vn</span></footer>
       </section>
     </div>
 
     <nav id="nav" class="b fixed">
-      <img class="logo" src="../images/brand/logo-wordmark.png" alt="Kim Hoàn.">
-      <div class="links"><span>Dịch vụ</span><span>Dự án</span><span>Quy trình</span><span>Kinh nghiệm</span></div>
-      <span class="lang">EN / VI</span>
-      <span class="hire">Thuê mình</span>
+      <img class="logo b" src="../images/brand/logo-wordmark.png" alt="Kim Hoàn.">
+      <div class="links b"><span>Dịch vụ</span><span>Dự án</span><span>Quy trình</span><span>Kinh nghiệm</span></div>
+      <span class="lang b">EN / VI</span>
+      <span class="hire b">Thuê mình</span>
     </nav>
   </div>
 </div>
 <canvas id="fx"></canvas>
-<div id="hud"><div class="row"><span id="hudTxt">▍ khởi động đàn chuột…</span><span id="hudPct">0%</span></div><div class="bar"><i id="hudBar"></i></div></div>
+<div id="hud"><div id="who"></div><div class="row"><span id="hudTxt">▍ đang mở dự án…</span><span id="hudPct">0%</span></div><div class="bar"><i id="hudBar"></i></div></div>
 <button id="replay">↻ Xem lại (R)</button>
 
 <script>
 (() => {
   const CAPTURE = /capture/.test(location.search);
   if (CAPTURE) document.body.classList.add('capture');
-  const DESIGN_W = 1440, NAV_H = 76, DT = 1 / 60, N = 150;
-
-  // random có seed để mỗi lần chạy giống nhau
-  let seed = 2026;
-  const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const DESIGN_W = 1440, NAV_H = 76;
   const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
-  const ease = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const eout = x => 1 - Math.pow(1 - x, 3);
+  const lerp = (a, b, p) => a + (b - a) * p;
+  const lerp2 = (a, b, p) => [lerp(a[0], b[0], p), lerp(a[1], b[1], p)];
+
+  // 5 cộng tác viên, mỗi người một việc
+  const WK = [
+    { name: 'Bố cục',   col: '#1fb6ff', ink: '#ffffff' },
+    { name: 'Nội dung', col: '#ff4f9a', ink: '#ffffff' },
+    { name: 'Hình ảnh', col: '#22c48a', ink: '#ffffff' },
+    { name: 'Màu sắc',  col: '#F5B82E', ink: '#0B1F45' },
+    { name: 'Kim Hoàn', col: '#0B1F45', ink: '#F8F5EC' },
+  ];
+  const KIND_W = { box: 0, text: 1, img: 2, fill: 3 };
+  const SEC = { hero: 'Trang đầu', services: 'Dịch vụ', work: 'Dự án', process: 'Quy trình', contact: 'Liên hệ' };
 
   const scaler = document.getElementById('scaler'), page = document.getElementById('page');
   const cv = document.getElementById('fx'), ctx = cv.getContext('2d');
   const hudTxt = document.getElementById('hudTxt'), hudPct = document.getElementById('hudPct'), hudBar = document.getElementById('hudBar');
-  const replayBtn = document.getElementById('replay');
+  const who = document.getElementById('who'), replayBtn = document.getElementById('replay');
+  who.innerHTML = WK.map(w => `<span style="background:${w.col};color:${w.ink};${w.col === '#0B1F45' ? 'box-shadow:0 0 0 1px rgba(248,245,236,.5)' : ''}">${w.name}</span>`).join('');
+  const chips = [...who.children];
 
-  let W, H, S, VH, dpr, els = [], scrollKeys = [], END = 0, t = 0, cursors = [], sparks = [], maxScroll = 0;
-  const COLORS = ['#F5B82E', '#ffffff', '#4cc9ff', '#ff5fa2', '#7CFFB2', '#b98cff', '#ffd36b', '#5ef2ff'];
+  let W, H, S, VH, dpr, maxScroll, els = [], segs, keys, rings, badges, logs, joinAt, startPos, END, FIN;
+
+  // tách chữ thành từng ký tự để "gõ"
+  function wrapChars(el) {
+    const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodes = [], spans = [];
+    while (tw.nextNode()) nodes.push(tw.currentNode);
+    for (const n of nodes) {
+      if (!n.nodeValue.trim()) continue;
+      const frag = document.createDocumentFragment();
+      for (const ch of n.nodeValue.replace(/\s+/g, ' ')) {
+        const sp = document.createElement('span'); sp.className = 'ch'; sp.textContent = ch; frag.appendChild(sp); spans.push(sp);
+      }
+      n.parentNode.replaceChild(frag, n);
+    }
+    return spans;
+  }
+  const kindOf = n => n.tagName === 'SECTION' ? 'fill' : n.tagName === 'IMG' ? 'img'
+    : (/^(H1|H2|P)$/.test(n.tagName) || n.matches('.label,.links,.lang')) ? 'text' : 'box';
+
+  const nodes = [...document.querySelectorAll('.b')];
+  const base = nodes.map(node => {
+    const kind = kindOf(node);
+    return { node, kind, spans: kind === 'text' ? wrapChars(node) : null, fixed: !!node.closest('#nav'),
+             sec: node.closest('#nav') ? 'hero' : node.closest('section').id };
+  });
 
   function measure() {
     W = innerWidth; H = innerHeight; dpr = Math.min(devicePixelRatio || 1, 2);
@@ -239,231 +280,303 @@
     scaler.style.transform = `scale(${S})`;
     cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
     page.style.transform = 'none';
-    els.forEach(e => { e.node.style.opacity = 1; e.node.style.clipPath = 'none'; e.node.style.filter = 'none'; });
-    els = [...document.querySelectorAll('.b')].map(node => {
-      const r = node.getBoundingClientRect();
-      return { node, fixed: node.classList.contains('fixed'), x: r.left / S, y: r.top / S, w: r.width / S, h: r.height / S,
-               tag: node.tagName.toLowerCase(), sec: node.closest('section')?.id || 'nav', start: 0, done: false };
+    base.forEach(b => { const s = b.node.style; s.opacity = 1; s.clipPath = s.transform = s.filter = ''; });
+    els = base.map(b => {
+      const r = b.node.getBoundingClientRect();
+      return Object.assign({}, b, { x: r.left / S, y: r.top / S, w: r.width / S, h: r.height / S, k: -1, st: '' });
     });
-    maxScroll = page.offsetHeight - VH;
+    els.forEach(e => { const p = e.node.parentElement.closest('.b'); e.parent = p ? els.find(o => o.node === p) : null; });
+    // thứ tự: nav trước, rồi từ trên xuống
+    els.sort((a, b) => (b.fixed - a.fixed) || (a.y - b.y) || (a.x - b.x));
+    els.forEach(e => e.spans && e.spans.forEach(s => s.classList.remove('on')));
+    maxScroll = Math.max(0, page.offsetHeight - VH);
     schedule();
   }
 
   function schedule() {
-    // thứ tự dựng: nav trước, rồi từng section theo chiều dọc
-    const order = [...els].sort((a, b) => (a.fixed ? -1 : 0) - (b.fixed ? -1 : 0) || a.y - b.y || a.x - b.x);
-    // các phần tử nằm trong phần tử khác thì dựng sau cha
-    els = order;
-    scrollKeys = [];
-    let T = 1.4, cur = 0, lastSec = null;
-    const scrollTo = (to, dur) => { to = clamp(to, 0, maxScroll); if (Math.abs(to - cur) < 4) return 0; scrollKeys.push({ t0: T, t1: T + dur, from: cur, to }); cur = to; return dur; };
+    segs = WK.map(() => []); keys = []; rings = []; badges = []; logs = [];
+    startPos = [[-180, H * .3], [W + 60, H * .22], [W * .25, -90], [W + 60, H * .8], [W * .5, H + 90]];
+    const pos = startPos.map(p => p.slice()), free = WK.map(() => 0);
+    const pxs = 2800 * Math.max(.6, W / 1920);
+    const move = (wi, t0, t1, to) => { segs[wi].push({ type: 'move', t0, t1, from: pos[wi].slice(), to: to.slice(), bend: wi % 2 ? 1 : -1 }); pos[wi] = to.slice(); };
+    const log = (t, txt, wi) => logs.push({ t, txt, wi });
+
+    // mở đầu: Kim Hoàn vào trước, rồi mời 4 cộng tác viên
+    joinAt = [];
+    [4, 0, 1, 2, 3].forEach((wi, k) => {
+      const t0 = .25 + k * .32; joinAt[wi] = t0;
+      move(wi, t0, t0 + 1, [W * (.3 + .1 * k), H * (.45 + (k % 2 ? .1 : -.05))]);
+      free[wi] = t0 + 1;
+      log(t0, wi === 4 ? 'Kim Hoàn đã mở dự án iamkimhoan.vn' : `${WK[wi].name} đã tham gia`, wi);
+    });
+
+    let cur = 0, T0 = 2.2, lastEnd = 2.2, curSec = null;
+    const scrollTo = (to, at, dur) => { to = clamp(to, 0, maxScroll); if (Math.abs(to - cur) < 4) return at; keys.push({ t0: at, t1: at + dur, from: cur, to }); cur = to; return at + dur; };
+    const scr = e => ({ x: e.x * S, y: (e.fixed ? e.y : e.y - cur) * S, w: e.w * S, h: e.h * S });
+
+    const review = () => {
+      let t = Math.max(T0, lastEnd);
+      const head = els.find(e => e.sec === curSec && e.kind === 'text' && /H1|H2/.test(e.node.tagName));
+      const r = scr(head);
+      const pt = [Math.min(r.x + r.w * .55, W - 160), r.y + r.h * .5];
+      const ms = Math.max(t - .6, free[4]);
+      move(4, ms, ms + .5, pt);
+      const tc = ms + .6;
+      rings.push({ x: pt[0], y: pt[1], t: tc, col: WK[4].col });
+      badges.push({ x: pt[0], y: pt[1], t: tc, txt: `✓ Đã duyệt · ${SEC[curSec]}` });
+      log(tc, `Kim Hoàn đã duyệt ${SEC[curSec]} ✓`, 4);
+      free[4] = tc + .9;
+      return Math.max(t, tc + .35);
+    };
+
     for (const e of els) {
-      if (!e.fixed && e.sec !== lastSec) {
-        lastSec = e.sec;
-        const sec = document.getElementById(e.sec);
-        const top = sec.offsetTop - NAV_H;
-        T += scrollTo(top, 1.0);
+      if (e.sec !== curSec) {
+        if (curSec) { const t = review(); T0 = scrollTo(document.getElementById(e.sec).offsetTop - NAV_H, t, .9); }
+        curSec = e.sec;
+      } else if (!e.fixed && e.kind !== 'fill' && (e.y + e.h > cur + VH - 16 || e.y < cur + NAV_H - 4)) {
+        const t = Math.max(T0, lastEnd) + .15;
+        const to = e.y + e.h > cur + VH - 16 ? Math.min(e.y - NAV_H - 24, e.y + e.h - VH + 48) : e.y - NAV_H - 24;
+        T0 = scrollTo(to, t, .65);
       }
-      if (!e.fixed) {
-        if (e.y + e.h > cur + VH - 30) T += scrollTo(Math.min(e.y + e.h - VH + 60, e.y - NAV_H - 20), 0.55);
-        else if (e.y < cur + NAV_H + 10) T += scrollTo(e.y - NAV_H - 30, 0.55);
+      const wi = KIND_W[e.kind], r = scr(e);
+      let to, endPos, dur, msg;
+      if (e.kind === 'box') {
+        to = [r.x, r.y]; endPos = [r.x + r.w, r.y + r.h];
+        dur = .3 + .25 * clamp(Math.hypot(r.w, r.h) / (900 * S));
+        msg = `Bố cục đang vẽ khung · ${SEC[e.sec]}`;
+      } else if (e.kind === 'text') {
+        const n = e.spans.length;
+        to = [r.x + 3, r.y + Math.min(r.h, 46 * S) / 2]; endPos = [to[0] + 34, to[1] + 40];
+        dur = .2 + n / (n > 140 ? 300 : n > 50 ? 120 : 48);
+        const txt = e.node.textContent.replace(/\s+/g, ' ').trim();
+        msg = `Nội dung đang gõ “${txt.length > 26 ? txt.slice(0, 26) + '…' : txt}”`;
+      } else if (e.kind === 'img') {
+        endPos = [r.x + r.w / 2, r.y + r.h / 2];
+        to = [clamp(endPos[0] - 220 * S - r.w * .3, 40, W - 40), clamp(endPos[1] + 170 * S, 40, H - 40)];
+        dur = .75; msg = `Hình ảnh đang thả ảnh vào ${SEC[e.sec]}`;
+      } else {
+        const y0 = Math.max(r.y, NAV_H * S), y1 = Math.min(r.y + r.h, H);
+        e.vr = { x0: r.x + 40 * S, y0: y0 + 30 * S, x1: r.x + r.w - 40 * S, y1: y1 - 30 * S };
+        to = [e.vr.x0, e.vr.y0]; endPos = [(e.vr.x0 + e.vr.x1) / 2, (e.vr.y0 + e.vr.y1) / 2];
+        dur = 1.25; msg = `Màu sắc đang tô nền ${SEC[e.sec]}`;
       }
-      e.start = T;
-      const area = e.w * e.h;
-      T += area > 200000 ? 0.5 : area > 40000 ? 0.36 : 0.24;
+      const travel = .18 + Math.hypot(to[0] - pos[wi][0], to[1] - pos[wi][1]) / pxs;
+      const dep = !e.parent ? 0 : e.parent.kind === 'fill' ? e.parent.t0 + (e.parent.t1 - e.parent.t0) * .72 : e.parent.end + .05;
+      const start = Math.max(free[wi] + travel, T0, dep);
+      move(wi, start - travel, start, to);
+      e.t0 = start; e.t1 = start + dur; e.from = to; e.to = endPos; e.wi = wi;
+      e.end = e.t1 + (e.kind === 'text' ? 0 : .25);
+      segs[wi].push({ type: 'act', t0: e.t0, t1: e.t1, e });
+      pos[wi] = e.kind === 'img' || e.kind === 'box' || e.kind === 'fill' ? endPos.slice() : endPos.slice();
+      free[wi] = e.t1 + .06;
+      if (e.kind !== 'img') rings.push({ x: to[0], y: to[1], t: e.t0, col: WK[wi].col });
+      if (e.kind === 'fill') rings.push({ x: endPos[0], y: endPos[1], t: e.t0 + dur * .55, col: WK[wi].col });
+      log(e.t0, msg, wi);
+      lastEnd = Math.max(lastEnd, e.end);
+      // Kim Hoàn thỉnh thoảng lướt tới xem phần vừa làm xong
+      if (e.kind !== 'fill' && e.end > free[4] + 1.8) {
+        const hp = [clamp(r.x + r.w * .75, 30, W - 140), clamp(r.y + r.h * .5 + 26, NAV_H * S + 20, H - 40)];
+        move(4, e.end + .1, e.end + .9, hp); free[4] = e.end + 1.3;
+      }
     }
-    T += 1.2;
-    const finishAt = T;
-    scrollKeys.push({ t0: T, t1: T + 2.6, from: cur, to: 0 });
-    END = T + 2.6 + 2.2;
-    window.__END = END; window.__FINISH = finishAt;
+    const F = review();
+    FIN = F;
+    keys.push({ t0: F + .2, t1: F + 2.8, from: cur, to: 0 }); cur = 0;
+    [0, 1, 2, 3].forEach(i => { const t0 = Math.max(free[i], F + .3 + i * .3); move(i, t0, t0 + 1.1, startPos[i]); log(t0, `${WK[i].name} đã xong việc`, i); });
+    const pub = [W * .56, H * .62];
+    move(4, Math.max(free[4], F + .5), Math.max(free[4], F + .5) + 1, pub);
+    rings.push({ x: pub[0], y: pub[1], t: F + 3.1, col: WK[4].col });
+    badges.push({ x: pub[0], y: pub[1], t: F + 3.1, txt: '🚀 Đã xuất bản iamkimhoan.vn', big: true });
+    log(F + 3.1, '✓ iamkimhoan.vn đã lên sóng', 4);
+    END = F + 5.2;
+    segs.forEach(s => s.sort((a, b) => a.t0 - b.t0));
+    logs.sort((a, b) => a.t - b.t);
+    window.__END = END;
+    window.__dbg = () => ({ els: els.map(e => [e.sec, e.kind, (e.node.className || e.node.tagName).slice(0, 14), +e.t0.toFixed(2), +e.t1.toFixed(2)]), keys });
   }
 
-  function scrollAt(tt) {
+  function scrollAt(t) {
     let v = 0;
-    for (const k of scrollKeys) {
-      if (tt >= k.t1) v = k.to;
-      else if (tt >= k.t0) return k.from + (k.to - k.from) * ease((tt - k.t0) / (k.t1 - k.t0));
+    for (const k of keys) {
+      if (t >= k.t1) v = k.to;
+      else if (t >= k.t0) return lerp(k.from, k.to, eio((t - k.t0) / (k.t1 - k.t0)));
       else break;
     }
     return v;
   }
-  const scrolling = tt => scrollKeys.some(k => tt >= k.t0 && tt < k.t1);
 
-  function screenRect(e, sc) {
-    const y = e.fixed ? e.y : e.y - sc;
-    return { x: e.x * S, y: y * S, w: e.w * S, h: e.h * S };
-  }
-
-  function initCursors() {
-    seed = 2026; cursors = []; sparks = [];
-    for (let i = 0; i < N; i++) {
-      const side = i % 4, a = rnd();
-      const x = side === 0 ? -40 - rnd() * 300 : side === 1 ? W + 40 + rnd() * 300 : a * W;
-      const y = side === 2 ? -40 - rnd() * 300 : side === 3 ? H + 40 + rnd() * 300 : a * H;
-      cursors.push({ x, y, vx: 0, vy: 0, u: rnd(), v: rnd(), k: 22 + rnd() * 22, c: 5 + rnd() * 3,
-        j: 6 + rnd() * 22, w1: 1.5 + rnd() * 4, w2: 1.5 + rnd() * 4, p1: rnd() * 7, p2: rnd() * 7,
-        col: COLORS[i % COLORS.length], sz: .85 + rnd() * .5, trail: [] });
+  function posAt(wi, t) {
+    let s = null;
+    for (const g of segs[wi]) { if (g.t0 > t) break; s = g; }
+    const wob = [Math.sin(t * 1.3 + wi * 1.7) * 4, Math.cos(t * 1.1 + wi) * 4];
+    if (!s) return { p: startPos[wi], down: false };
+    const p = clamp((t - s.t0) / (s.t1 - s.t0));
+    if (s.type === 'move') {
+      if (t > s.t1) return { p: [s.to[0] + wob[0], s.to[1] + wob[1]], down: false };
+      const q = eio(p), mx = (s.from[0] + s.to[0]) / 2, my = (s.from[1] + s.to[1]) / 2;
+      const dx = s.to[0] - s.from[0], dy = s.to[1] - s.from[1], d = Math.hypot(dx, dy) || 1;
+      const cx = mx - dy / d * d * .16 * s.bend, cy = my + dx / d * d * .16 * s.bend;
+      const a = (1 - q) * (1 - q), b = 2 * (1 - q) * q, c = q * q;
+      return { p: [a * s.from[0] + b * cx + c * s.to[0], a * s.from[1] + b * cy + c * s.to[1]], down: false };
     }
+    const e = s.e;
+    if (t > s.t1) return { p: [e.to[0] + wob[0], e.to[1] + wob[1]], down: false };
+    if (e.kind === 'box' || e.kind === 'img') return { p: lerp2(e.from, e.to, eio(p)), down: true };
+    if (e.kind === 'text') return { p: lerp2(e.from, e.to, eout(clamp((t - s.t0) / .45))), down: t - s.t0 < .12 };
+    const v = e.vr;
+    if (p < .45) return { p: lerp2([v.x0, v.y0], [v.x1, v.y1], eio(p / .45)), down: true };
+    return { p: lerp2([v.x1, v.y1], e.to, eio(clamp((p - .45) / .1))), down: p > .55 && p < .6 };
   }
 
-  function targetsFor(tt, sc) {
-    const active = els.filter(e => tt >= e.start - .3 && tt < e.start + .75);
-    const finish = window.__FINISH;
-    return (c, i) => {
-      let tx, ty;
-      if (tt > finish + 1.6) { // xong: bay toả ra ngoài màn hình
-        const ang = (i / N) * Math.PI * 2 + c.p1 * .2, R = Math.max(W, H) * (0.9 + c.u * .5);
-        return [W / 2 + Math.cos(ang) * R, H / 2 + Math.sin(ang) * R];
-      }
-      if (tt > finish - .4 || tt < 1.2) { // tụ thành vòng xoáy giữa màn hình
-        const ang = (i / N) * Math.PI * 2 + tt * 1.6, R = Math.min(W, H) * (.12 + .2 * c.u);
-        return [W / 2 + Math.cos(ang) * R, H / 2 + Math.sin(ang) * R * .7];
-      }
-      if (scrolling(tt) && active.length === 0) { // đẩy trang lên
-        tx = (i + .5) / N * W; ty = H - 70 - c.v * 120 + Math.sin(tt * 9 + c.p1) * 14;
-        return [tx, ty];
-      }
-      if (!active.length) {
-        const ang = (i / N) * Math.PI * 2 + tt, R = Math.min(W, H) * (.1 + .25 * c.u);
-        return [W / 2 + Math.cos(ang) * R, H / 2 + Math.sin(ang) * R * .6];
-      }
-      const e = active[i % active.length], r = screenRect(e, sc);
-      // chỉ bám phần đang thấy trên màn hình
-      const y0 = Math.max(r.y, 0), y1 = Math.min(r.y + r.h, H), vh = Math.max(20, y1 - y0);
-      const a = tt - e.start;
-      if (a > .3) { // giai đoạn "sơn": bám theo mép quét từ trái sang phải
-        const edge = r.x + ease(clamp((a - .35) / .4)) * r.w;
-        tx = edge + (c.u - .5) * Math.min(90, r.w * .35) + Math.sin(tt * c.w1 + c.p1) * c.j * .6;
-      } else {
-        tx = r.x + c.u * r.w + Math.sin(tt * c.w1 + c.p1) * c.j;
-      }
-      ty = y0 + c.v * vh + Math.cos(tt * c.w2 + c.p2) * c.j;
-      return [tx, ty];
-    };
+  const rectNow = (e, sc) => ({ x: e.x * S, y: (e.fixed ? e.y : e.y - sc) * S, w: e.w * S, h: e.h * S });
+  function setSt(e, st, css) { if (e.st === st && !css.anim) return; e.st = st; const s = e.node.style; s.opacity = css.o; s.transform = css.tf || ''; s.clipPath = css.clip || ''; }
+  function setChars(e, k) {
+    if (k === e.k) return;
+    const n = e.spans.length;
+    if (k > e.k) for (let i = Math.max(0, e.k); i < k; i++) e.spans[i].classList.add('on');
+    else for (let i = k; i < Math.min(n, e.k < 0 ? n : e.k); i++) e.spans[i].classList.remove('on');
+    e.k = k;
   }
 
-  function step() {
-    t += DT;
-    const sc = scrollAt(t), tgt = targetsFor(t, sc);
-    cursors.forEach((c, i) => {
-      const [tx, ty] = tgt(c, i);
-      c.vx += ((tx - c.x) * c.k - c.vx * c.c) * DT;
-      c.vy += ((ty - c.y) * c.k - c.vy * c.c) * DT;
-      const sp = Math.hypot(c.vx, c.vy), mx = 2600 * (W / 1920);
-      if (sp > mx) { c.vx *= mx / sp; c.vy *= mx / sp; }
-      c.x += c.vx * DT; c.y += c.vy * DT;
-      c.trail.unshift([c.x, c.y]); if (c.trail.length > 9) c.trail.pop();
-    });
-    // tia lửa khi một khối hiện ra
-    for (const e of els) {
-      const rt = e.start + .4;
-      if (t >= rt && t - DT < rt) {
-        const r = screenRect(e, sc);
-        for (let k = 0; k < 5; k++) sparks.push({ x: r.x + rnd() * r.w, y: r.y + rnd() * r.h, t0: t, col: COLORS[(k + 3) % COLORS.length] });
-      }
-    }
-    sparks = sparks.filter(s => t - s.t0 < .5);
-  }
-
+  function rr(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
   const ARROW = [[0, 0], [0, 17], [4.4, 13], [7.4, 19.8], [10.4, 18.5], [7.5, 11.9], [12.8, 11.9]];
-  function drawCursor(c) {
-    const s = c.sz * 1.15 * Math.max(.8, W / 1600);
-    for (let k = 1; k < c.trail.length; k++) {
-      const [x0, y0] = c.trail[k - 1], [x1, y1] = c.trail[k];
-      ctx.globalAlpha = .35 * (1 - k / c.trail.length);
-      ctx.strokeStyle = c.col; ctx.lineWidth = 3 * s * (1 - k / c.trail.length);
-      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
-    }
-    ctx.globalAlpha = 1;
-    ctx.save(); ctx.translate(c.x, c.y); ctx.scale(s, s);
-    ctx.shadowColor = c.col; ctx.shadowBlur = 8;
-    ctx.beginPath(); ARROW.forEach(([x, y], k) => k ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath();
-    ctx.fillStyle = c.col; ctx.fill();
-    ctx.shadowBlur = 0; ctx.lineWidth = 1.3; ctx.strokeStyle = 'rgba(6,8,15,.85)'; ctx.stroke();
-    ctx.restore();
-  }
 
-  function render() {
+  function render(t) {
     const sc = scrollAt(t);
     page.style.transform = `translateY(${-sc}px)`;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
-    let built = 0;
+    let done = 0;
+
     for (const e of els) {
-      const r = (t - e.start - .35) / .4;
-      if (r >= 1) {
-        built++;
-        if (!e.done) { e.node.style.opacity = 1; e.node.style.clipPath = 'none'; e.node.style.filter = 'none'; e.done = true; }
-      } else {
-        e.done = false;
-        const rr = clamp(r);
-        e.node.style.opacity = r > 0 ? 1 : 0;
-        e.node.style.clipPath = `inset(0 ${(1 - ease(rr)) * 100}% 0 0)`;
-        e.node.style.filter = `blur(${(1 - rr) * 5}px) brightness(${1 + (1 - rr) * .6})`;
-      }
-      // khung wireframe như công cụ thiết kế
-      const a = t - e.start;
-      if (a > 0 && a < 1.4) {
-        const q = screenRect(e, sc), p = clamp(a / .45), fade = a > .9 ? 1 - (a - .9) / .5 : 1;
-        ctx.globalAlpha = fade; ctx.strokeStyle = '#4cc9ff'; ctx.lineWidth = 1.5;
-        const per = 2 * (q.w + q.h), L = per * p;
-        ctx.beginPath(); ctx.moveTo(q.x, q.y);
-        const segs = [[q.x + q.w, q.y, q.w], [q.x + q.w, q.y + q.h, q.h], [q.x, q.y + q.h, q.w], [q.x, q.y, q.h]];
-        let left = L, px = q.x, py = q.y;
-        for (const [nx, ny, len] of segs) {
-          if (left <= 0) break;
-          const f = Math.min(1, left / len); ctx.lineTo(px + (nx - px) * f, py + (ny - py) * f);
-          px = nx; py = ny; left -= len;
+      const col = WK[e.wi].col;
+      if (e.kind === 'text') {
+        if (t < e.t0) { setSt(e, 'h', { o: 0 }); setChars(e, 0); }
+        else {
+          setSt(e, 'v', { o: 1 });
+          e.node.classList.toggle('typing', t < e.t1);
+          const n = e.spans.length;
+          setChars(e, Math.floor(n * clamp((t - e.t0 - .15) / (e.t1 - e.t0 - .2))));
+          if (t < e.t1 + .5) {
+            const q = rectNow(e, sc);
+            ctx.globalAlpha = .55; ctx.setLineDash([4, 4]); ctx.strokeStyle = col; ctx.lineWidth = 1;
+            ctx.strokeRect(q.x - 4, q.y - 3, q.w + 8, q.h + 6); ctx.setLineDash([]); ctx.globalAlpha = 1;
+            const k = e.k, sp = e.spans[Math.max(0, k - 1)].getBoundingClientRect();
+            const cx = k > 0 ? sp.right : sp.left;
+            if (t < e.t1 || Math.floor(t * 4) % 2 === 0) { ctx.fillStyle = col; ctx.fillRect(cx, sp.top, 2, sp.height); }
+          }
         }
-        ctx.stroke();
-        if (r < 0) { ctx.fillStyle = 'rgba(76,201,255,.07)'; ctx.fillRect(q.x, q.y, q.w, q.h); }
-        ctx.fillStyle = '#fff'; ctx.strokeStyle = '#4cc9ff';
-        for (const [hx, hy] of [[q.x, q.y], [q.x + q.w, q.y], [q.x, q.y + q.h], [q.x + q.w, q.y + q.h]]) { ctx.fillRect(hx - 3.5, hy - 3.5, 7, 7); ctx.strokeRect(hx - 3.5, hy - 3.5, 7, 7); }
-        const lab = `${e.tag}  ${Math.round(e.w)}×${Math.round(e.h)}`;
-        ctx.font = `600 ${Math.max(10, 11 * S)}px "Space Mono", monospace`;
-        const tw = ctx.measureText(lab).width;
-        ctx.fillStyle = '#4cc9ff'; ctx.fillRect(q.x, q.y - 18, tw + 10, 16);
-        ctx.fillStyle = '#06080f'; ctx.fillText(lab, q.x + 5, q.y - 6);
-        ctx.globalAlpha = 1;
+      } else if (e.kind === 'fill') {
+        const tc = e.t0 + (e.t1 - e.t0) * .55;
+        if (t < tc) setSt(e, 'h', { o: 0 });
+        else if (t < e.t1) {
+          const lx = (e.to[0]) / S - e.x, ly = (e.to[1] / S + sc) - e.y;
+          const R = Math.hypot(Math.max(lx, e.w - lx), Math.max(ly, e.h - ly)) * eout((t - tc) / (e.t1 - tc));
+          setSt(e, 'a', { o: 1, clip: `circle(${R}px at ${lx}px ${ly}px)`, anim: 1 });
+          ctx.globalAlpha = .7 * (1 - (t - tc) / (e.t1 - tc)); ctx.strokeStyle = col; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.arc(e.to[0], e.to[1] + (sc - sc), R * S, 0, Math.PI * 2); ctx.stroke(); ctx.globalAlpha = 1;
+        } else setSt(e, 'v', { o: 1 });
+        if (t >= e.t0 && t < e.t0 + (e.t1 - e.t0) * .45) {
+          const c = posAt(e.wi, t).p, v = e.vr;
+          ctx.setLineDash([6, 5]); ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.fillStyle = col + '14';
+          ctx.fillRect(v.x0, v.y0, c[0] - v.x0, c[1] - v.y0); ctx.strokeRect(v.x0, v.y0, c[0] - v.x0, c[1] - v.y0); ctx.setLineDash([]);
+        }
+      } else {
+        if (t < e.t1) setSt(e, 'h', { o: 0 });
+        else if (t < e.t1 + .3) {
+          const p = eout((t - e.t1) / .3);
+          setSt(e, 'a', { o: p, tf: e.kind === 'img' ? `scale(${1.05 - .05 * p})` : `translateY(${(1 - p) * 6}px)`, anim: 1 });
+        } else setSt(e, 'v', { o: 1 });
+        const q = rectNow(e, sc);
+        if (t >= e.t0 && t < e.t1) {
+          const c = posAt(e.wi, t).p;
+          if (e.kind === 'box') {
+            const x0 = e.from[0], y0 = e.from[1], w = c[0] - x0, h = c[1] - y0;
+            ctx.fillStyle = col + '1a'; ctx.fillRect(x0, y0, w, h);
+            ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.strokeRect(x0, y0, w, h);
+            ctx.fillStyle = '#fff';
+            for (const [hx, hy] of [[x0, y0], [x0 + w, y0], [x0, y0 + h], [x0 + w, y0 + h]]) { ctx.fillRect(hx - 3.5, hy - 3.5, 7, 7); ctx.strokeRect(hx - 3.5, hy - 3.5, 7, 7); }
+            const lab = `${Math.round(Math.abs(w) / S)} × ${Math.round(Math.abs(h) / S)}`;
+            ctx.font = '700 11px "Space Mono", monospace';
+            const tw = ctx.measureText(lab).width;
+            rr(c[0] - tw / 2 - 7, c[1] + 26, tw + 14, 19, 5); ctx.fillStyle = col; ctx.fill();
+            ctx.fillStyle = '#fff'; ctx.fillText(lab, c[0] - tw / 2, c[1] + 39);
+          } else {
+            ctx.setLineDash([6, 5]); ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.strokeRect(q.x, q.y, q.w, q.h); ctx.setLineDash([]);
+            const img = e.node, p = eio(clamp((t - e.t0) / (e.t1 - e.t0)));
+            const gw = lerp(130, Math.min(q.w, 260), p * p), gh = gw * (img.naturalHeight / img.naturalWidth || .7);
+            const pop = clamp((t - e.t0) / .18);
+            ctx.save(); ctx.globalAlpha = .9 * pop; ctx.shadowColor = 'rgba(0,0,0,.35)'; ctx.shadowBlur = 18;
+            try { ctx.drawImage(img, c[0] - gw * .35, c[1] - gh * .35, gw * pop, gh * pop); } catch (_) {}
+            ctx.restore();
+          }
+        }
+        if (t >= e.t1 && t < e.t1 + .7) {
+          ctx.globalAlpha = 1 - (t - e.t1) / .7; ctx.strokeStyle = col; ctx.lineWidth = 2;
+          ctx.strokeRect(q.x, q.y, q.w, q.h); ctx.globalAlpha = 1;
+        }
       }
+      if (t >= e.end) done++;
     }
-    for (const s of sparks) {
-      const k = (t - s.t0) / .5;
-      ctx.globalAlpha = 1 - k; ctx.strokeStyle = s.col; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.arc(s.x, s.y, 4 + k * 26, 0, Math.PI * 2); ctx.stroke();
+
+    for (const r of rings) {
+      const k = (t - r.t) / .45; if (k < 0 || k > 1) continue;
+      ctx.globalAlpha = 1 - k; ctx.strokeStyle = r.col === '#0B1F45' ? '#F5B82E' : r.col; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(r.x, r.y, 5 + k * 22, 0, Math.PI * 2); ctx.stroke();
     }
     ctx.globalAlpha = 1;
-    cursors.forEach(drawCursor);
-
-    const pct = Math.round(built / els.length * 100);
-    hudBar.style.width = pct + '%'; hudPct.textContent = pct + '%';
-    if (pct >= 100) { hudTxt.innerHTML = '<span class="ok">✓ iamkimhoan.vn đã xây xong</span>'; }
-    else if (t < 1.3) hudTxt.textContent = `▍ gọi ${N} con chuột tới…`;
-    else {
-      const act = els.find(e => t >= e.start && t < e.start + .5);
-      hudTxt.textContent = `▍ ${N} chuột đang dựng ${act ? '#' + act.sec : 'trang'}…`;
+    for (const b of badges) {
+      const k = t - b.t, life = b.big ? 99 : 1.8; if (k < 0 || k > life) continue;
+      const a = Math.min(1, k / .15, (life - k) / .35), s = .8 + .2 * eout(clamp(k / .25));
+      ctx.save(); ctx.globalAlpha = a; ctx.translate(b.x + 18, b.y - 42); ctx.scale(s, s);
+      ctx.font = `700 ${b.big ? 22 : 14}px "Be Vietnam Pro", sans-serif`;
+      const tw = ctx.measureText(b.txt).width, ph = b.big ? 48 : 30;
+      if (b.big) { ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.translate(W / 2, NAV_H * S + 28); ctx.scale(s, s); ctx.translate(-(tw + 44) / 2, 0); }
+      rr(0, 0, tw + (b.big ? 44 : 26), ph, ph / 2); ctx.fillStyle = b.big ? '#0B1F45' : '#1f9d63'; ctx.fill();
+      if (b.big) { ctx.strokeStyle = '#F5B82E'; ctx.lineWidth = 2; ctx.stroke(); }
+      ctx.fillStyle = b.big ? '#F8F5EC' : '#fff'; ctx.fillText(b.txt, b.big ? 22 : 13, b.big ? 31 : 20);
+      ctx.restore();
     }
-    replayBtn.style.display = t > END - 1 ? 'block' : 'none';
+
+    // con trỏ + bảng tên (vẽ sau cùng)
+    WK.forEach((w, wi) => {
+      if (t < joinAt[wi]) return;
+      const { p: [x, y], down } = posAt(wi, t);
+      ctx.save(); ctx.translate(x, y); const s = down ? 1.12 : 1.28; ctx.scale(s, s);
+      ctx.shadowColor = 'rgba(0,0,0,.35)'; ctx.shadowBlur = 6; ctx.shadowOffsetY = 2;
+      ctx.beginPath(); ARROW.forEach(([ax, ay], k) => k ? ctx.lineTo(ax, ay) : ctx.moveTo(ax, ay)); ctx.closePath();
+      ctx.fillStyle = w.col; ctx.fill(); ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+      ctx.lineWidth = 1.5; ctx.strokeStyle = '#fff'; ctx.stroke();
+      ctx.restore();
+      ctx.font = '600 12px "Be Vietnam Pro", sans-serif';
+      const tw = ctx.measureText(w.name).width;
+      rr(x + 15, y + 22, tw + 16, 21, 10.5); ctx.fillStyle = w.col; ctx.fill();
+      if (w.col === '#0B1F45') { ctx.strokeStyle = 'rgba(248,245,236,.7)'; ctx.lineWidth = 1; ctx.stroke(); }
+      ctx.fillStyle = w.ink; ctx.fillText(w.name, x + 23, y + 36.5);
+    });
+
+    // HUD
+    chips.forEach((c, i) => c.classList.toggle('on', t >= joinAt[i]));
+    const pct = Math.round(done / els.length * 100);
+    hudBar.style.width = pct + '%'; hudPct.textContent = pct + '%';
+    let L = null; for (const l of logs) { if (l.t > t) break; L = l; }
+    if (L) { const c = WK[L.wi].col === '#0B1F45' ? '#F5B82E' : WK[L.wi].col; hudTxt.innerHTML = `<span style="color:${c}">●</span> ${L.txt}`; }
+    replayBtn.style.display = t > END - 1.5 && !CAPTURE ? 'block' : 'none';
   }
 
-  function restart() { t = 0; els.forEach(e => e.done = false); initCursors(); render(); }
-
+  let t0 = 0, tNow = 0;
+  const restart = () => { t0 = performance.now(); };
   async function boot() {
     await document.fonts.ready;
     await Promise.all([...document.images].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; })));
-    measure(); initCursors(); render();
+    measure(); render(0);
     window.__ready = true;
-    window.__advance = n => { for (let i = 0; i < n; i++) step(); render(); };
+    window.__seek = s => render(s);
     if (CAPTURE) return;
-    let last = performance.now(), acc = 0;
-    const loop = now => {
-      acc += Math.min(.1, (now - last) / 1000); last = now;
-      while (acc >= DT) { if (t < END) step(); acc -= DT; }
-      render(); requestAnimationFrame(loop);
-    };
+    restart();
+    const loop = now => { tNow = Math.min(END, (now - t0) / 1000); render(tNow); requestAnimationFrame(loop); };
     requestAnimationFrame(loop);
-    addEventListener('resize', () => { measure(); render(); });
+    let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { measure(); restart(); }, 200); });
     addEventListener('keydown', e => { if (e.key === 'r' || e.key === 'R') restart(); });
     replayBtn.onclick = restart;
   }
