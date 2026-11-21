@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Đàn chuột xây iamkimhoan.vn</title>
+<title>Kim Hoàn — AI Marketing Specialist</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -131,6 +131,23 @@
   .free .wcard:hover img{transform:scale(1.04)}
   #hud{transition:opacity .35s}
   #stage.free.scrolled ~ #hud{opacity:0;pointer-events:none}
+  #stage:not(.free) #scaler{pointer-events:none}
+  a{color:inherit;text-decoration:none}
+  .lang .on-l{color:var(--navy);font-weight:700}
+  .lang{color:var(--muted)}
+  .free .lang{cursor:pointer}
+  .free .lang:hover{border-color:var(--navy)}
+  .free .card{cursor:pointer}
+  .card .go{display:inline-block;margin-top:14px;font-size:13px;font-weight:600;color:#b07d0d;opacity:0;transform:translateX(-4px);transition:.25s}
+  .free .card:hover .go{opacity:1;transform:none}
+  .wcard .more{display:inline-block;margin-top:14px;font-size:14px;font-weight:600;color:var(--yellow);border-bottom:1px solid rgba(245,184,46,.4);padding-bottom:2px}
+  .free .wcard:hover .more{border-color:var(--yellow)}
+  .info a:hover{color:var(--yellow)}
+  .field{font-family:var(--sans);width:100%;outline:none;color:var(--navy);resize:none}
+  .field::placeholder{color:var(--muted)}
+  .field:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(245,184,46,.35)}
+  button.btn{border:0;cursor:pointer;font-family:var(--sans)}
+  footer a:hover{color:var(--yellow)}
   .typing em{background:none!important}
   .ch{visibility:hidden}
   .ch.on{visibility:visible}
@@ -143,87 +160,86 @@
       <section id="hero" class="b">
         <div>
           <img class="lockup b" src="../images/brand/logo-lockup.png" alt="Kim Hoàn — AI Marketing Specialist">
-          <div class="status b"><i></i>Đà Nẵng, Việt Nam · Sẵn sàng nhận việc</div>
-          <h1 class="hero-title b">Marketing chạy bằng <em>AI</em>, kiểm duyệt bởi con người.</h1>
-          <p class="hero-sub b">Mình là <strong>Kim Hoàn</strong>. Mình lên kế hoạch chiến dịch, sản xuất nội dung song ngữ số lượng lớn, chạy quảng cáo thương mại điện tử và xây website — dùng AI để làm nhanh hơn, và dùng chính sự đánh giá của mình để giữ mọi thứ chính xác, đúng chất thương hiệu.</p>
-          <div class="btns b"><span class="btn btn-p" data-go="work">Xem dự án →</span><span class="btn btn-g" data-go="contact">Hợp tác với mình</span></div>
+          <div class="status b" data-en="<i></i>Đà Nẵng, Vietnam · Open to work"><i></i>Đà Nẵng, Việt Nam · Sẵn sàng nhận việc</div>
+          <h1 class="hero-title b" data-en="Marketing that runs on <em>AI</em>, checked by a human.">Marketing chạy bằng <em>AI</em>, kiểm duyệt bởi con người.</h1>
+          <p class="hero-sub b" data-en="I'm <strong>Kim Hoàn</strong>. I plan campaigns, produce bilingual content at scale, run e-commerce ads and build websites — using AI to move faster, and my own judgment to keep everything accurate and on-brand.">Mình là <strong>Kim Hoàn</strong>. Mình lên kế hoạch chiến dịch, sản xuất nội dung song ngữ số lượng lớn, chạy quảng cáo thương mại điện tử và xây website — dùng AI để làm nhanh hơn, và dùng chính sự đánh giá của mình để giữ mọi thứ chính xác, đúng chất thương hiệu.</p>
+          <div class="btns b"><span class="btn btn-p" data-go="work" data-en="See my work →">Xem dự án →</span><span class="btn btn-g" data-go="contact" data-en="Work with me">Hợp tác với mình</span></div>
           <div class="stats b">
-            <div class="stat"><b>2+</b><span>năm làm AI marketing</span></div>
-            <div class="stat"><b>3</b><span>website xây bằng AI</span></div>
-            <div class="stat"><b>4</b><span>chứng chỉ Google &amp; Claude Academy</span></div>
-            <div class="stat"><b>EN/VI</b><span>nội dung song ngữ</span></div>
+            <div class="stat"><b>2+</b><span data-en="years in AI marketing">năm làm AI marketing</span></div>
+            <div class="stat"><b>3</b><span data-en="websites built with AI">website xây bằng AI</span></div>
+            <div class="stat"><b>4</b><span data-en="Google &amp; Claude Academy certificates">chứng chỉ Google &amp; Claude Academy</span></div>
+            <div class="stat"><b>EN/VI</b><span data-en="bilingual content">nội dung song ngữ</span></div>
           </div>
         </div>
         <div class="portrait">
           <div class="portrait-img b"><img src="../hero.jpg" alt="Kim Hoàn"></div>
-          <div class="float f1 b"><b>Hiện tại</b>AI Marketing Specialist</div>
-          <div class="float f2 b"><b>Công cụ</b>Claude · Gemini · Canva</div>
+          <div class="float f1 b" data-en="<b>Now</b>AI Marketing Specialist"><b>Hiện tại</b>AI Marketing Specialist</div>
+          <div class="float f2 b" data-en="<b>Daily tools</b>Claude · Gemini · Canva"><b>Công cụ</b>Claude · Gemini · Canva</div>
         </div>
       </section>
 
       <section id="services" class="sec b">
-        <span class="label b">Mình làm gì</span>
-        <h2 class="b">Một người, một hệ thống marketing <em style="color:#b07d0d">liên kết</em>.</h2>
-        <p class="lead b">Nghiên cứu định hình kế hoạch, kế hoạch dẫn dắt nội dung, và kết quả quảng cáo quay lại cải thiện vòng tiếp theo.</p>
+        <span class="label b" data-en="What I do">Mình làm gì</span>
+        <h2 class="b" data-en="One person, one &lt;em style=&quot;color:#b07d0d&quot;&gt;connected&lt;/em&gt; marketing system.">Một người, một hệ thống marketing <em style="color:#b07d0d">liên kết</em>.</h2>
+        <p class="lead b" data-en="Research shapes the plan, the plan drives the content, and ad results feed back to improve the next round.">Nghiên cứu định hình kế hoạch, kế hoạch dẫn dắt nội dung, và kết quả quảng cáo quay lại cải thiện vòng tiếp theo.</p>
         <div class="grid3">
-          <div class="card b"><span class="n">01</span><h3>Lên kế hoạch chiến dịch</h3><p>Mục tiêu, khách hàng, kênh, lịch nội dung và ngân sách — AI hỗ trợ soạn, mình chốt.</p></div>
-          <div class="card b"><span class="n">02</span><h3>Nội dung AI số lượng lớn</h3><p>Bài đăng, quảng cáo, mô tả sản phẩm, blog song ngữ — AI sản xuất, mình biên tập lại.</p></div>
-          <div class="card b"><span class="n">03</span><h3>Quảng cáo TMĐT &amp; A/B test</h3><p>Thử mẫu quảng cáo với nhau, rồi dồn ngân sách vào mẫu thật sự ra đơn.</p></div>
-          <div class="card b"><span class="n">04</span><h3>Nghiên cứu &amp; báo cáo</h3><p>Thị trường, đối thủ, khách hàng — biến số liệu thành quyết định tiếp theo.</p></div>
-          <div class="card b"><span class="n">05</span><h3>Thư viện prompt &amp; tự động hoá</h3><p>Bộ prompt dùng lại được để cả nhóm ra nội dung đồng đều, đúng chất thương hiệu.</p></div>
-          <div class="card b"><span class="n">06</span><h3>Website xây bằng AI</h3><p>Website song ngữ chuẩn SEO, từ cấu trúc, nội dung đến lúc lên sóng.</p></div>
+          <div class="card b" data-go="contact" data-subject="Lên kế hoạch chiến dịch" data-en="&lt;span class=&quot;n&quot;&gt;01&lt;/span&gt;&lt;h3&gt;Campaign planning&lt;/h3&gt;&lt;p&gt;Goals, audience, channels, content calendar and budget — AI drafts, I decide.&lt;/p&gt;&lt;span class=&quot;go&quot;&gt;Ask about this →&lt;/span&gt;"><span class="n">01</span><h3>Lên kế hoạch chiến dịch</h3><p>Mục tiêu, khách hàng, kênh, lịch nội dung và ngân sách — AI hỗ trợ soạn, mình chốt.</p><span class="go">Hỏi về dịch vụ này →</span></div>
+          <div class="card b" data-go="contact" data-subject="Nội dung AI số lượng lớn" data-en="&lt;span class=&quot;n&quot;&gt;02&lt;/span&gt;&lt;h3&gt;AI content at scale&lt;/h3&gt;&lt;p&gt;Posts, ads, product descriptions and bilingual blogs — AI produces, I edit.&lt;/p&gt;&lt;span class=&quot;go&quot;&gt;Ask about this →&lt;/span&gt;"><span class="n">02</span><h3>Nội dung AI số lượng lớn</h3><p>Bài đăng, quảng cáo, mô tả sản phẩm, blog song ngữ — AI sản xuất, mình biên tập lại.</p><span class="go">Hỏi về dịch vụ này →</span></div>
+          <div class="card b" data-go="contact" data-subject="Quảng cáo TMĐT & A/B test" data-en="&lt;span class=&quot;n&quot;&gt;03&lt;/span&gt;&lt;h3&gt;E-commerce ads &amp;amp; A/B testing&lt;/h3&gt;&lt;p&gt;Test ad variants against each other, then move budget to the ones that sell.&lt;/p&gt;&lt;span class=&quot;go&quot;&gt;Ask about this →&lt;/span&gt;"><span class="n">03</span><h3>Quảng cáo TMĐT &amp; A/B test</h3><p>Thử mẫu quảng cáo với nhau, rồi dồn ngân sách vào mẫu thật sự ra đơn.</p><span class="go">Hỏi về dịch vụ này →</span></div>
+          <div class="card b" data-go="contact" data-subject="Nghiên cứu & báo cáo" data-en="&lt;span class=&quot;n&quot;&gt;04&lt;/span&gt;&lt;h3&gt;Research &amp;amp; reporting&lt;/h3&gt;&lt;p&gt;Market, competitors, customers — turning data into the next decision.&lt;/p&gt;&lt;span class=&quot;go&quot;&gt;Ask about this →&lt;/span&gt;"><span class="n">04</span><h3>Nghiên cứu &amp; báo cáo</h3><p>Thị trường, đối thủ, khách hàng — biến số liệu thành quyết định tiếp theo.</p><span class="go">Hỏi về dịch vụ này →</span></div>
+          <div class="card b" data-go="contact" data-subject="Thư viện prompt & tự động hoá" data-en="&lt;span class=&quot;n&quot;&gt;05&lt;/span&gt;&lt;h3&gt;Prompt library &amp;amp; automation&lt;/h3&gt;&lt;p&gt;Reusable prompts so the whole team ships consistent, on-brand content.&lt;/p&gt;&lt;span class=&quot;go&quot;&gt;Ask about this →&lt;/span&gt;"><span class="n">05</span><h3>Thư viện prompt &amp; tự động hoá</h3><p>Bộ prompt dùng lại được để cả nhóm ra nội dung đồng đều, đúng chất thương hiệu.</p><span class="go">Hỏi về dịch vụ này →</span></div>
+          <div class="card b" data-go="contact" data-subject="Website xây bằng AI" data-en="&lt;span class=&quot;n&quot;&gt;06&lt;/span&gt;&lt;h3&gt;Websites built with AI&lt;/h3&gt;&lt;p&gt;Bilingual, SEO-ready websites, from structure and content to launch.&lt;/p&gt;&lt;span class=&quot;go&quot;&gt;Ask about this →&lt;/span&gt;"><span class="n">06</span><h3>Website xây bằng AI</h3><p>Website song ngữ chuẩn SEO, từ cấu trúc, nội dung đến lúc lên sóng.</p><span class="go">Hỏi về dịch vụ này →</span></div>
         </div>
       </section>
 
       <section id="work" class="dark sec b">
-        <span class="label b">Dự án tiêu biểu</span>
-        <h2 class="b">Ba website, <em>xây bằng AI</em>.</h2>
-        <p class="lead b">Website thật, đang chạy, cho doanh nghiệp thật. Mình đặt chiến lược, kiểm tra nội dung và điều khiển công cụ AI để xây dựng.</p>
+        <span class="label b" data-en="Selected work">Dự án tiêu biểu</span>
+        <h2 class="b" data-en="Three websites, &lt;em&gt;built with AI&lt;/em&gt;.">Ba website, <em>xây bằng AI</em>.</h2>
+        <p class="lead b" data-en="Real, live websites for real businesses. I set the strategy, check the content and direct the AI tools that build them.">Website thật, đang chạy, cho doanh nghiệp thật. Mình đặt chiến lược, kiểm tra nội dung và điều khiển công cụ AI để xây dựng.</p>
         <div class="work">
-          <div class="wcard b"><img src="../images/work-tritravel.jpg" alt=""><div><small>Thương hiệu du lịch · Website</small><h3>TriTravel — Du lịch Đà Nẵng</h3><p>Tour, visa, di chuyển và blog gom về một nơi, song ngữ VI / EN.</p></div></div>
-          <div class="wcard b"><img src="../images/work-tripcompany.jpg" alt=""><div><small>Dịch vụ · Thu hút khách hàng</small><h3>TRIP — Visa &amp; dịch thuật</h3><p>Khách tìm đúng loại visa và liên hệ chỉ sau vài lần chạm.</p></div></div>
-          <div class="wcard b"><img src="../images/work-iamkimhoan.jpg" alt=""><div><small>Thương hiệu cá nhân · SEO</small><h3>iamkimhoan.vn</h3><p>Portfolio, trang visa và blog song ngữ, viết cùng AI, do mình biên tập.</p></div></div>
+          <a class="wcard b" href="https://tritravel.vn" target="_blank" rel="noopener"><img src="../images/work-tritravel.jpg" alt=""><div data-en="&lt;small&gt;Travel brand · Website&lt;/small&gt;&lt;h3&gt;TriTravel — Đà Nẵng travel&lt;/h3&gt;&lt;p&gt;Tours, visas, transport and blog in one place, bilingual VI / EN.&lt;/p&gt;&lt;span class=&quot;more&quot;&gt;Visit tritravel.vn ↗&lt;/span&gt;"><small>Thương hiệu du lịch · Website</small><h3>TriTravel — Du lịch Đà Nẵng</h3><p>Tour, visa, di chuyển và blog gom về một nơi, song ngữ VI / EN.</p><span class="more">Xem tritravel.vn ↗</span></div></a>
+          <a class="wcard b" href="https://tripdn.com" target="_blank" rel="noopener"><img src="../images/work-tripcompany.jpg" alt=""><div data-en="&lt;small&gt;Service business · Lead generation&lt;/small&gt;&lt;h3&gt;TRIP — Visa &amp;amp; translation&lt;/h3&gt;&lt;p&gt;Visitors find the right visa and get in touch in a few taps.&lt;/p&gt;&lt;span class=&quot;more&quot;&gt;Visit tripdn.com ↗&lt;/span&gt;"><small>Dịch vụ · Thu hút khách hàng</small><h3>TRIP — Visa &amp; dịch thuật</h3><p>Khách tìm đúng loại visa và liên hệ chỉ sau vài lần chạm.</p><span class="more">Xem tripdn.com ↗</span></div></a>
+          <a class="wcard b" href="https://iamkimhoan.vn/blog/" target="_blank" rel="noopener"><img src="../images/work-iamkimhoan.jpg" alt=""><div data-en="&lt;small&gt;Personal brand · SEO&lt;/small&gt;&lt;h3&gt;iamkimhoan.vn&lt;/h3&gt;&lt;p&gt;Portfolio, visa pages and a bilingual blog, written with AI and edited by me.&lt;/p&gt;&lt;span class=&quot;more&quot;&gt;Read the blog ↗&lt;/span&gt;"><small>Thương hiệu cá nhân · SEO</small><h3>iamkimhoan.vn</h3><p>Portfolio, trang visa và blog song ngữ, viết cùng AI, do mình biên tập.</p><span class="more">Đọc blog ↗</span></div></a>
         </div>
       </section>
 
       <section id="process" class="sec b">
-        <span class="label b">Cách mình làm</span>
-        <h2 class="b">AI làm phần nặng. <em style="color:#b07d0d">Mình ra quyết định.</em></h2>
+        <span class="label b" data-en="How I work">Cách mình làm</span>
+        <h2 class="b" data-en="AI does the heavy lifting. &lt;em style=&quot;color:#b07d0d&quot;&gt;I make the calls.&lt;/em&gt;">AI làm phần nặng. <em style="color:#b07d0d">Mình ra quyết định.</em></h2>
         <div class="steps">
-          <div class="step b"><div class="n">01</div><h4>Nghiên cứu</h4><p>Thị trường, đối thủ và câu hỏi của khách, tóm tắt bằng AI.</p><span>AI + mình</span></div>
-          <div class="step b"><div class="n">02</div><h4>Lên kế hoạch</h4><p>Mục tiêu, khách hàng, kênh và ngân sách.</p><span>Mình</span></div>
-          <div class="step b"><div class="n">03</div><h4>Sản xuất bằng AI</h4><p>Nội dung, hình ảnh, nhiều phiên bản từ prompt đã kiểm chứng.</p><span>AI + mình</span></div>
-          <div class="step b"><div class="n">04</div><h4>Con người duyệt</h4><p>Kiểm tra thông tin, giọng điệu, chất thương hiệu.</p><span>Mình</span></div>
-          <div class="step b"><div class="n">05</div><h4>Triển khai &amp; A/B</h4><p>Đăng bài, chạy quảng cáo, cho phiên bản cạnh tranh.</p><span>AI + mình</span></div>
-          <div class="step b"><div class="n">06</div><h4>Đo lường</h4><p>Giữ cái hiệu quả, biến việc lặp lại thành quy trình.</p><span>AI + mình</span></div>
+          <div class="step b" data-en="&lt;div class=&quot;n&quot;&gt;01&lt;/div&gt;&lt;h4&gt;Research&lt;/h4&gt;&lt;p&gt;Market, competitors and customer questions, summarised with AI.&lt;/p&gt;&lt;span&gt;AI + me&lt;/span&gt;"><div class="n">01</div><h4>Nghiên cứu</h4><p>Thị trường, đối thủ và câu hỏi của khách, tóm tắt bằng AI.</p><span>AI + mình</span></div>
+          <div class="step b" data-en="&lt;div class=&quot;n&quot;&gt;02&lt;/div&gt;&lt;h4&gt;Plan&lt;/h4&gt;&lt;p&gt;Goals, audience, channels and budget.&lt;/p&gt;&lt;span&gt;Me&lt;/span&gt;"><div class="n">02</div><h4>Lên kế hoạch</h4><p>Mục tiêu, khách hàng, kênh và ngân sách.</p><span>Mình</span></div>
+          <div class="step b" data-en="&lt;div class=&quot;n&quot;&gt;03&lt;/div&gt;&lt;h4&gt;Create with AI&lt;/h4&gt;&lt;p&gt;Copy, visuals and variations from tested prompts.&lt;/p&gt;&lt;span&gt;AI + me&lt;/span&gt;"><div class="n">03</div><h4>Sản xuất bằng AI</h4><p>Nội dung, hình ảnh, nhiều phiên bản từ prompt đã kiểm chứng.</p><span>AI + mình</span></div>
+          <div class="step b" data-en="&lt;div class=&quot;n&quot;&gt;04&lt;/div&gt;&lt;h4&gt;Human review&lt;/h4&gt;&lt;p&gt;Checked for facts, tone and brand fit.&lt;/p&gt;&lt;span&gt;Me&lt;/span&gt;"><div class="n">04</div><h4>Con người duyệt</h4><p>Kiểm tra thông tin, giọng điệu, chất thương hiệu.</p><span>Mình</span></div>
+          <div class="step b" data-en="&lt;div class=&quot;n&quot;&gt;05&lt;/div&gt;&lt;h4&gt;Launch &amp;amp; A/B test&lt;/h4&gt;&lt;p&gt;Publish, run ads and let versions compete.&lt;/p&gt;&lt;span&gt;AI + me&lt;/span&gt;"><div class="n">05</div><h4>Triển khai &amp; A/B</h4><p>Đăng bài, chạy quảng cáo, cho phiên bản cạnh tranh.</p><span>AI + mình</span></div>
+          <div class="step b" data-en="&lt;div class=&quot;n&quot;&gt;06&lt;/div&gt;&lt;h4&gt;Measure&lt;/h4&gt;&lt;p&gt;Keep what works, turn repeats into reusable workflows.&lt;/p&gt;&lt;span&gt;AI + me&lt;/span&gt;"><div class="n">06</div><h4>Đo lường</h4><p>Giữ cái hiệu quả, biến việc lặp lại thành quy trình.</p><span>AI + mình</span></div>
         </div>
       </section>
 
       <section id="contact" class="dark sec b">
         <div>
-          <span class="label b">Liên hệ</span>
-          <h2 class="b">Cùng xây marketing <em>chạy bằng AI</em> cho bạn.</h2>
-          <p class="lead b">Tuyển dụng, dự án hay chỉ là một câu hỏi — gửi tin nhắn, mình sẽ trả lời qua email.</p>
-          <div class="info b">
-            <div><b>Địa điểm</b>Đà Nẵng, Việt Nam · nhận làm từ xa</div>
-            <div><b>Ngôn ngữ</b>Tiếng Anh · Tiếng Việt</div>
-          </div>
+          <span class="label b" data-en="Contact">Liên hệ</span>
+          <h2 class="b" data-en="Let's build &lt;em&gt;AI-powered&lt;/em&gt; marketing for you.">Cùng xây marketing <em>chạy bằng AI</em> cho bạn.</h2>
+          <p class="lead b" data-en="Hiring, a project or just a question — send a message and I'll reply by email.">Tuyển dụng, dự án hay chỉ là một câu hỏi — gửi tin nhắn, mình sẽ trả lời qua email.</p>
+          <div class="info b" data-en="&lt;div&gt;&lt;b&gt;Email&lt;/b&gt;&lt;a href=&quot;mailto:ntkimhoan267@gmail.com&quot;&gt;ntkimhoan267@gmail.com&lt;/a&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Location&lt;/b&gt;Đà Nẵng, Vietnam · open to remote work&lt;/div&gt;&lt;div&gt;&lt;b&gt;Languages&lt;/b&gt;English · Vietnamese&lt;/div&gt;"><div><b>Email</b><a href="mailto:ntkimhoan267@gmail.com">ntkimhoan267@gmail.com</a></div><div><b>Địa điểm</b>Đà Nẵng, Việt Nam · nhận làm từ xa</div><div><b>Ngôn ngữ</b>Tiếng Anh · Tiếng Việt</div></div>
         </div>
-        <div class="form b">
-          <div class="field">Họ tên</div>
-          <div class="field">Chủ đề</div>
-          <div class="field big">Lời nhắn</div>
-          <span class="btn btn-p">Gửi tin nhắn →</span>
-        </div>
-        <footer class="b"><img src="../images/brand/logo-wordmark-cream.png" alt="Kim Hoàn."><span>© 2026 · iamkimhoan.vn</span></footer>
+        <form class="form b" action="https://formspree.io/f/xbdqlaje" method="POST" target="_blank">
+          <input type="hidden" name="_subject" value="Tin nhắn mới từ Portfolio Kim Hoàn!">
+          <input class="field" type="text" name="name" required placeholder="Họ tên" data-ph-en="Your name">
+          <input class="field" type="email" name="email" required placeholder="Email của bạn" data-ph-en="you@email.com">
+          <input class="field" type="text" name="subject" id="f-subject" placeholder="Chủ đề" data-ph-en="Job opportunity / Project">
+          <textarea class="field big" name="message" required placeholder="Lời nhắn" data-ph-en="Tell me about the role or project…"></textarea>
+          <button type="submit" class="btn btn-p" data-en="Send message →">Gửi tin nhắn →</button>
+        </form>
+        <footer class="b"><img src="../images/brand/logo-wordmark-cream.png" alt="Kim Hoàn."><a href="https://iamkimhoan.vn" target="_blank" rel="noopener">© 2026 · iamkimhoan.vn ↗</a></footer>
       </section>
     </div>
 
     <nav id="nav" class="b fixed">
       <img class="logo b" data-go="hero" src="../images/brand/logo-wordmark.png" alt="Kim Hoàn.">
-      <div class="links b"><span data-go="services">Dịch vụ</span><span data-go="work">Dự án</span><span data-go="process">Quy trình</span><span data-go="contact">Liên hệ</span></div>
-      <span class="lang b">EN / VI</span>
-      <span class="hire b" data-go="contact">Thuê mình</span>
+      <div class="links b"><span data-go="services" data-en="Services">Dịch vụ</span><span data-go="work" data-en="Work">Dự án</span><span data-go="process" data-en="Process">Quy trình</span><span data-go="contact" data-en="Contact">Liên hệ</span><a href="https://iamkimhoan.vn/blog/" target="_blank" rel="noopener">Blog ↗</a></div>
+      <span class="lang b" data-lang><span class="on-l">VI</span> / EN</span>
+      <span class="hire b" data-go="contact" data-en="Hire me">Thuê mình</span>
     </nav>
   </div>
 </div>
@@ -279,6 +295,16 @@
   const kindOf = n => n.tagName === 'SECTION' ? 'fill' : n.tagName === 'IMG' ? 'img'
     : (/^(H1|H2|P)$/.test(n.tagName) || n.matches('.label,.links,.lang')) ? 'text' : 'box';
 
+  // lưu bản tiếng Việt trước khi tách chữ, để đổi EN / VI sau khi dựng xong
+  document.querySelectorAll('[data-en]').forEach(el => { el.dataset.vi = el.innerHTML; });
+  document.querySelectorAll('[data-ph-en]').forEach(el => { el.dataset.phVi = el.placeholder; });
+  let lang = 'vi', langChanged = false;
+  function setLang(l) {
+    lang = l; langChanged = true; document.documentElement.lang = l;
+    document.querySelectorAll('[data-en]').forEach(el => { el.innerHTML = l === 'en' ? el.dataset.en : el.dataset.vi; });
+    document.querySelectorAll('[data-ph-en]').forEach(el => { el.placeholder = l === 'en' ? el.dataset.phEn : el.dataset.phVi; });
+    document.querySelector('[data-lang]').innerHTML = l === 'en' ? 'VI / <span class="on-l">EN</span>' : '<span class="on-l">VI</span> / EN';
+  }
   const nodes = [...document.querySelectorAll('.b')];
   const base = nodes.map(node => {
     const kind = kindOf(node);
@@ -585,17 +611,24 @@
     page.style.transform = 'none'; nav.style.transform = '';
     ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height);
     stage.classList.add('free'); stage.scrollTop = 0; stage.focus({ preventScroll: true });
-    hudTxt.innerHTML = '<span style="color:#7CFFB2">✓ Xong</span> · lăn chuột để xem website ↓';
+    hudTxt.innerHTML = '<span style="color:#7CFFB2">✓ Xong</span> · lăn chuột để xem, bấm vào các mục để mở';
     replayBtn.style.display = 'block';
   }
   function exitFree() { free = false; stage.classList.remove('free', 'scrolled'); stage.scrollTop = 0; nav.style.transform = ''; }
   stage.addEventListener('scroll', () => { if (free) { nav.style.transform = `translateY(${stage.scrollTop / S}px)`; stage.classList.toggle('scrolled', stage.scrollTop > 40); } });
   document.addEventListener('click', ev => {
-    const g = free && ev.target.closest('[data-go]'); if (!g) return;
+    if (!free) return;
+    if (ev.target.closest('[data-lang]')) { setLang(lang === 'vi' ? 'en' : 'vi'); return; }
+    const g = ev.target.closest('[data-go]'); if (!g) return;
     const sec = document.getElementById(g.dataset.go);
     stage.scrollTo({ top: Math.max(0, (sec.offsetTop - (g.dataset.go === 'hero' ? 0 : NAV_H)) * S), behavior: 'smooth' });
+    if (g.dataset.subject) {
+      const f = document.getElementById('f-subject');
+      f.value = (lang === 'en' ? 'Service: ' : 'Dịch vụ: ') + g.querySelector('h3').textContent;
+      setTimeout(() => f.form.querySelector('[name=name]').focus({ preventScroll: true }), 700);
+    }
   });
-  const restart = () => { exitFree(); t0 = performance.now(); };
+  const restart = () => { if (langChanged) { location.reload(); return; } exitFree(); t0 = performance.now(); };
   async function boot() {
     await document.fonts.ready;
     await Promise.all([...document.images].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; })));
@@ -610,7 +643,7 @@
     };
     requestAnimationFrame(loop);
     let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { const wasFree = free; exitFree(); measure(); if (wasFree) { render(END); enterFree(); } else restart(); }, 200); });
-    addEventListener('keydown', e => { if ((e.key === 'r' || e.key === 'R') && !e.ctrlKey && !e.metaKey) restart(); });
+    addEventListener('keydown', e => { if ((e.key === 'r' || e.key === 'R') && !e.ctrlKey && !e.metaKey && !/INPUT|TEXTAREA/.test(e.target.tagName)) restart(); });
     replayBtn.onclick = restart;
   }
   boot();
